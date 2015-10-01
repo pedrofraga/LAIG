@@ -72,6 +72,7 @@ MySceneGraph.prototype.parseGlobalsExample= function(rootElement) {
 	}
 	
 	this.list=[];
+	this.list2=[];
 	// iterate over every element
 	var nnodes=tempList[0].children.length;
 	for (var i=0; i< nnodes; i++)

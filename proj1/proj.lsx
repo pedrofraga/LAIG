@@ -1,154 +1,300 @@
-<SCENE>
+    <SCENE>
 
-<INITIALS>
-    <frustum near="60" far="-10"/>                      <!-- frustum planes-->
-    <translate x="0" y="10" z="0" />                 <!-- initial translate -->
-    <rotation axis="x" angle="0" />                  <!-- initial rotation 3 -->
-    <rotation axis="y" angle="0" />                  <!-- initial rotation 2 -->
-    <rotation axis="z" angle="0" />                  <!-- initial rotation 1 -->
-    <scale sx="1" sy="1" sz="1" />                  <!-- initial scaling -->
-    <reference length="1" />                          <!-- axis length; "0" means no axis-->
-</INITIALS>
-
-
-<ILLUMINATION>
-    <ambient r="76" g="76" b="76" a="90" />            <!-- global ambient -->
-    <background r="0" g="0" b="0" a="0" />         <!-- background color -->
-</ILLUMINATION>
+        <INITIALS>
+            <frustum near="60" far="-10"/>                      <!-- frustum planes-->
+            <translate x="0" y="10" z="0" />                 <!-- initial translate -->
+            <rotation axis="x" angle="0" />                  <!-- initial rotation 3 -->
+            <rotation axis="y" angle="0" />                  <!-- initial rotation 2 -->
+            <rotation axis="z" angle="0" />                  <!-- initial rotation 1 -->
+            <scale sx="1" sy="1" sz="1" />                  <!-- initial scaling -->
+            <reference length="1" />                          <!-- axis length; "0" means no axis-->
+        </INITIALS>
 
 
-<LIGHTS>
-    <LIGHT id="lightone">                                    <!-- light identifier -->
-        <enable value ="1" />                         <!-- enable/disable -->
-        <position x="4" y="6" z="1" w="1" />       <!-- light position -->
-        <ambient r="0" g="0" b="0" a="255" />        <!-- ambient component -->
-        <diffuse r="255" g="255" b="255" a="255" />        <!-- diffuse component -->
-        <specular r="255" g="255" b="0" a="255" />       <!-- specular component -->
-    </LIGHT>
-
-    <!-- NOTE: this block "LIGHT" must be repeated as necessary with different "id" -->
-    
-</LIGHTS>
-
-<LIGHTS>
-    <LIGHT id="lightwo">                                    <!-- light identifier -->
-        <enable value ="0" />                         <!-- enable/disable -->
-        <position x="10.5" y="6" z="1" w="1" />       <!-- light position -->
-        <ambient r="0" g="0" b="0" a="255" />        <!-- ambient component -->
-        <diffuse r="255" g="255" b="255" a="255" />        <!-- diffuse component -->
-        <specular r="0" g="0" b="0" a="0" />       <!-- specular component -->
-    </LIGHT>
-
-    <!-- NOTE: this block "LIGHT" must be repeated as necessary with different "id" -->
-    
-</LIGHTS>
-
-<LIGHTS>
-    <LIGHT id="lighthree">                                    <!-- light identifier -->
-        <enable value ="1" />                         <!-- enable/disable -->
-        <position x="10.5" y="6" z="5" w="1" />       <!-- light position -->
-        <ambient r="0" g="0" b="0" a="255" />        <!-- ambient component -->
-        <diffuse r="255" g="255" b="255" a="255" />        <!-- diffuse component -->
-        <specular r="255" g="255" b="255" a="0" />       <!-- specular component -->
-    </LIGHT>
-
-    <!-- NOTE: this block "LIGHT" must be repeated as necessary with different "id" -->
-    
-</LIGHTS>
-
-<LIGHTS>
-    <LIGHT id="lightfour">                                    <!-- light identifier -->
-        <enable value ="1" />                         <!-- enable/disable -->
-        <position x="4" y="6" z="5" w="1" />       <!-- light position -->
-        <ambient r="ff" g="ff" b="ff" a="ff" />        <!-- ambient component -->
-        <diffuse r="ff" g="ff" b="ff" a="ff" />        <!-- diffuse component -->
-        <specular r="ff" g="ff" b="ff" a="ff" />       <!-- specular component -->
-    </LIGHT>
-
-    <!-- NOTE: this block "LIGHT" must be repeated as necessary with different "id" -->
-    
-</LIGHTS>
+        <ILLUMINATION>
+            <ambient r="76" g="76" b="76" a="90" />            <!-- global ambient -->
+            <background r="0" g="0" b="0" a="0" />         <!-- background color -->
+        </ILLUMINATION>
 
 
-<TEXTURES>
-    <TEXTURE id="ss">
-        <file path="ss" />                             <!-- path to file -->
-        <amplif_factor s="ff" t="ff" />                <!-- x/s, y/t -->
-    </TEXTURE>
+        <LIGHTS>
+            <LIGHT id="lightone">                                    <!-- light identifier -->
+                <enable value ="1" />                         <!-- enable/disable -->
+                <position x="4" y="6" z="1" w="1" />       <!-- light position -->
+                <ambient r="0" g="0" b="0" a="255" />        <!-- ambient component -->
+                <diffuse r="255" g="255" b="255" a="255" />        <!-- diffuse component -->
+                <specular r="255" g="255" b="0" a="255" />       <!-- specular component -->
+            </LIGHT>
 
-    <!-- NOTE: this block "TEXTURE" must be repeated as necessary with different "id" -->
-    
-</TEXTURES>
+            <!-- NOTE: this block "LIGHT" must be repeated as necessary with different "id" -->
+            
+        </LIGHTS>
 
+        <LIGHTS>
+            <LIGHT id="lightwo">                                    <!-- light identifier -->
+                <enable value ="0" />                         <!-- enable/disable -->
+                <position x="10.5" y="6" z="1" w="1" />       <!-- light position -->
+                <ambient r="0" g="0" b="0" a="255" />        <!-- ambient component -->
+                <diffuse r="255" g="255" b="255" a="255" />        <!-- diffuse component -->
+                <specular r="0" g="0" b="0" a="0" />       <!-- specular component -->
+            </LIGHT>
 
-<MATERIALS>
-    <MATERIAL id="ss">                                  
-        <shininess value="ff" />
-        <specular r="ff" g="ff" b="ff" a="ff" />        <!-- specular reflection -->
-        <diffuse r="ff" g="ff" b="ff" a="ff" />         <!-- diffuse reflection -->
-        <ambient r="ff" g="ff" b="ff" a="ff" />         <!-- ambient reflection -->
-        <emission r="ff" g="ff" b="ff" a="ff" />        <!-- emission component -->
-    </MATERIAL>
+            <!-- NOTE: this block "LIGHT" must be repeated as necessary with different "id" -->
+            
+        </LIGHTS>
 
-    <!-- NOTE: the "MATERIAL" block may be repeated as required. Each defined material requires a distinct "id" -->
+        <LIGHTS>
+            <LIGHT id="lighthree">                                    <!-- light identifier -->
+                <enable value ="1" />                         <!-- enable/disable -->
+                <position x="10.5" y="6" z="5" w="1" />       <!-- light position -->
+                <ambient r="0" g="0" b="0" a="255" />        <!-- ambient component -->
+                <diffuse r="255" g="255" b="255" a="255" />        <!-- diffuse component -->
+                <specular r="255" g="255" b="255" a="0" />       <!-- specular component -->
+            </LIGHT>
 
-</MATERIALS>
+            <!-- NOTE: this block "LIGHT" must be repeated as necessary with different "id" -->
+            
+        </LIGHTS>
 
+        <LIGHTS>
+            <LIGHT id="lightfour">                                    <!-- light identifier -->
+                <enable value ="1" />                         <!-- enable/disable -->
+                <position x="4" y="6" z="5" w="1" />       <!-- light position -->
+                <ambient r="ff" g="ff" b="ff" a="ff" />        <!-- ambient component -->
+                <diffuse r="ff" g="ff" b="ff" a="ff" />        <!-- diffuse component -->
+                <specular r="ff" g="ff" b="ff" a="ff" />       <!-- specular component -->
+            </LIGHT>
 
-<LEAVES>
-
-    <!-- next lines define nodes of type leaf; they may be repeated, in any order, as necessary -->
-    <LEAF id="ss" type="rectangle" args="ff ff ff ff" />
-    <LEAF id="ss" type="cylinder" args="ff ff ff ii ii" /> 
-    <LEAF id="ss" type="sphere" args="ff ii ii" />
-    <LEAF id="ss" type="triangle" args="ff ff ff  ff ff ff  ff ff ff" />
-
-    <!-- Parameters of the above primitives:                                                         -->
-        <!--rectangle: 2D coordinates for left-top and right-bottom vertices.                        -->
-        <!-- cylinder:  height, bottom radius, top radius, sections along height, parts per section  -->
-        <!-- sphere:    radius, parts along radius, parts per section                                -->
-        <!-- triangle:   coordinates of each vertex                                                  -->
-
-</LEAVES>
-
-
-<NODES>
-
-    <ROOT id="ss" />     <!-- identifier of root node of the scene graph; this node     -->
-                         <!--   must be defined in one of the following NODE declarations -->
-
-    <NODE id="ss">       <!--   defines one intermediate node; may be repeated as necessary -->
-
-        <!-- next two lines are mandatory -->
-        <MATERIAL id="ss" />      <!-- declared material superimposes the material received from parent node -->
-                                  <!-- id="null" maintains material from parent node        -->
-        <TEXTURE id="ss" />       <!-- declared texture superimposes the texture received from parent node -->
-                                  <!-- id="null" maintains texture from parent node       -->
-                                  <!-- id="clear" clears texture declaration received from parent node      -->
+            <!-- NOTE: this block "LIGHT" must be repeated as necessary with different "id" -->
+            
+        </LIGHTS>
 
 
-        <!-- geom. transf. are optional and may be repeated, in any order, as necessary -->
-        <TRANSLATION x="ff" y="ff" z="ff" />
-        <ROTATION axis="cc" angle="ff" />
-        <SCALE sx="ff" sy="ff" sz="ff" />
+        <TEXTURES>
+            <TEXTURE id="wood">
+                <file path="./res/wood.jpg" />                 <!-- path to file -->
+                <amplif_factor s="0" t="0" />                <!-- x/s, y/t -->
+            </TEXTURE>
 
 
-        <!-- declaring descendents, ate least one node or one leaf must be present -->
-        <DESCENDANTS>
-            <DESCENDANT id="ss" />       <!-- "ss" is the identifier of a node or of leaf; -->
-                                         <!-- may be repeatad as necessary. It can refer an -->
-                                         <!-- identifier of another node or leaf, later defined in the lsx file. -->
-        </DESCENDANTS>
-
-    </NODE>
-
-</NODES>
-
-<NODE>
+            <TEXTURE id="metal">
+                <file path="./res/metal.jpg" />                 <!-- path to file -->
+                <amplif_factor s="0" t="0" />                <!-- x/s, y/t -->
+            </TEXTURE>
+            <!-- NOTE: this block "TEXTURE" must be repeated as necessary with different "id" -->
+            
+        </TEXTURES>
 
 
-</NODE>
+        <MATERIALS>
+            <MATERIAL id="tableAppearance">                                  
+                <shininess value="3" />
+                <specular r="25" g="25" b="25" a="255" />        <!-- specular reflection -->
+                <diffuse r="204" g="204" b="204" a="255" />         <!-- diffuse reflection -->
+                <ambient r="76" g="76" b="76" a="255" />         <!-- ambient reflection -->
+                <emission r="0" g="0" b="0" a="0" />        <!-- emission component -->
+            </MATERIAL>
+
+            <MATERIAL id="metalAppearance">                                  
+                <shininess value="120" />
+                <specular r="25" g="25" b="25" a="255" />        <!-- specular reflection -->
+                <diffuse r="180" g="180" b="180" a="255" />         <!-- diffuse reflection -->
+                <ambient r="204" g="204" b="204" a="255" />         <!-- ambient reflection -->
+                <emission r="0" g="0" b="0" a="0" />        <!-- emission component -->
+            </MATERIAL>
+
+            <!-- NOTE: the "MATERIAL" block may be repeated as required. Each defined material requires a distinct "id" -->
+
+        </MATERIALS>
+
+
+        <LEAVES>
+
+            <!-- next lines define nodes of type leaf; they may be repeated, in any order, as necessary -->
+            <LEAF id="square" type="rectangle" args="0 1 1 0" />
+            <LEAF id="cylinder" type="cylinder" args="1 0.5 0.5 25 20" /> 
+           <!--- <LEAF id="ss" type="sphere" args="ff ii ii" />
+           <LEAF id="ss" type="triangle" args="ff ff ff  ff ff ff  ff ff ff" /> -->
+
+           <!-- Parameters of the above primitives:                                                         -->
+           <!--rectangle: 2D coordinates for left-top and right-bottom vertices.                        -->
+           <!-- cylinder:  height, bottom radius, top radius, sections along height, parts per section  -->
+           <!-- sphere:    radius, parts along radius, parts per section                                -->
+           <!-- triangle:   coordinates of each vertex                                                  -->
+
+       </LEAVES>
+
+
+       <NODES>
+
+        <ROOT id="table" />     <!-- identifier of root node of the scene graph; this node     -->
+        
+        <NODE id="table">       
+            <DESCENDANTS>
+                <DESCENDANT id="tampo" />
+                <DESCENDANT id="backrightleg" /> 
+                <DESCENDANT id="backleftleg" />   
+                <DESCENDANT id="frontrightleg" />   
+                <DESCENDANT id="frontleftleg" />                                                    
+            </DESCENDANTS>
+
+        </NODE>
+
+        <NODE id="bottom_square">       
+            <MATERIAL id="tableAppearance" />      
+
+            <TEXTURE id="wood" />      
+            <ROTATION axis="x" angle="90" />            
+
+            <DESCENDANTS>
+                <DESCENDANT id="square" />                               
+            </DESCENDANTS>
+
+        </NODE>
+
+
+        <NODE id="top_square">       
+            <MATERIAL id="tableAppearance" />      
+
+            <TEXTURE id="wood" />      
+            <TRANSLATION x="0" y="1" z="1" />
+            <ROTATION axis="x" angle="-90" />         
+
+            <DESCENDANTS>
+                <DESCENDANT id="square" />                               
+            </DESCENDANTS>
+
+        </NODE>
+
+
+
+        <NODE id="left_square">       
+            <MATERIAL id="tableAppearance" />      
+
+            <TEXTURE id="wood" />      
+            <ROTATION axis="y" angle="90" />         
+
+            <DESCENDANTS>
+                <DESCENDANT id="square" />                               
+            </DESCENDANTS>
+
+        </NODE>
+
+        <NODE id="right_square">       
+            <MATERIAL id="tableAppearance" />      
+
+            <TEXTURE id="wood" />    
+            <TRANSLATION x="1" y="0" z="1" />  
+            <ROTATION axis="y" angle="-90" />         
+
+            <DESCENDANTS>
+                <DESCENDANT id="square" />                               
+            </DESCENDANTS>
+
+        </NODE>
+
+        <NODE id="back_square">       
+            <MATERIAL id="tableAppearance" />      
+
+            <TEXTURE id="wood" />    
+            <TRANSLATION x="1" y="0" z="0" />  
+            <ROTATION axis="y" angle="180" />         
+
+            <DESCENDANTS>
+                <DESCENDANT id="square" />                               
+            </DESCENDANTS>
+
+        </NODE>
+
+        <NODE id="front_square">       
+            <MATERIAL id="tableAppearance" />      
+
+            <TEXTURE id="wood" />    
+            <TRANSLATION x="0" y="0" z="1" />          
+
+            <DESCENDANTS>
+                <DESCENDANT id="square" />                               
+            </DESCENDANTS>
+
+        </NODE>
+
+        <NODE id="tampo">       
+            <MATERIAL id="tableAppearance" />      
+
+            <TEXTURE id="wood" />    
+            <TRANSLATION x="0" y="10" z="0" />  
+            <SCALE sx="15" sy="1" sz="30" />        
+
+            <DESCENDANTS>
+                <DESCENDANT id="front_square" />    
+                <DESCENDANT id="back_square" />      
+                <DESCENDANT id="right_square" /> 
+                <DESCENDANT id="left_square" />  
+                <DESCENDANT id="top_square" />   
+                <DESCENDANT id="bottom_square" />               
+            </DESCENDANTS>
+
+        </NODE>
+
+
+        <NODE id="backrightleg">       
+            <MATERIAL id="metalAppearance" />      
+
+            <TEXTURE id="metal" />    
+            <SCALE sx="1" sy="10" sz="1" />          
+
+            <DESCENDANTS>
+                <DESCENDANT id="cylinder" />                               
+            </DESCENDANTS>
+
+        </NODE>
+
+        <NODE id="backleftleg">       
+            <MATERIAL id="metalAppearance" />      
+
+            <TEXTURE id="metal" />    
+            <TRANSLATION x="15" y="0" z="0" />  
+            <SCALE sx="1" sy="10" sz="1" />         
+
+            <DESCENDANTS>
+                <DESCENDANT id="cylinder" />                               
+            </DESCENDANTS>
+
+        </NODE>
+
+
+        <NODE id="frontleftleg">       
+            <MATERIAL id="metalAppearance" />      
+
+            <TEXTURE id="metal" />  
+            <TRANSLATION x="15" y="0" z="30" />  
+            <SCALE sx="1" sy="10" sz="1" />          
+
+            <DESCENDANTS>
+                <DESCENDANT id="cylinder" />                               
+            </DESCENDANTS>
+
+        </NODE>
+
+        <NODE id="frontrightleg">       
+            <MATERIAL id="metalAppearance" />      
+
+            <TEXTURE id="metal" />  
+            <TRANSLATION x="0" y="0" z="30" />  
+            <SCALE sx="1" sy="10" sz="1" />          
+
+            <DESCENDANTS>
+                <DESCENDANT id="cylinder" />                               
+            </DESCENDANTS>
+
+        </NODE>
+
+
+
+
+    </NODES>
+
+
 
 
 </SCENE>
- 

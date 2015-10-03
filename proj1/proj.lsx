@@ -32,7 +32,7 @@
 
         <LIGHTS>
             <LIGHT id="lightwo">                                    <!-- light identifier -->
-                <enable value ="0" />                         <!-- enable/disable -->
+                <enable value ="1" />                         <!-- enable/disable -->
                 <position x="10.5" y="6" z="1" w="1" />       <!-- light position -->
                 <ambient r="0" g="0" b="0" a="255" />        <!-- ambient component -->
                 <diffuse r="255" g="255" b="255" a="255" />        <!-- diffuse component -->
@@ -172,7 +172,7 @@
             <MATERIAL id="tableAppearance" />      
 
             <TEXTURE id="wood" />      
-            <ROTATION axis="y" angle="90" />         
+            <ROTATION axis="y" angle="-90" />         
 
             <DESCENDANTS>
                 <DESCENDANT id="square" />                               
@@ -185,7 +185,7 @@
 
             <TEXTURE id="wood" />    
             <TRANSLATION x="1" y="0" z="1" />  
-            <ROTATION axis="y" angle="-90" />         
+            <ROTATION axis="y" angle="90" />         
 
             <DESCENDANTS>
                 <DESCENDANT id="square" />                               
@@ -237,11 +237,12 @@
         </NODE>
 
 
-        <NODE id="backrightleg">       
+        <NODE id="backleftleg">       
             <MATERIAL id="metalAppearance" />      
 
-            <TEXTURE id="metal" />    
-            <SCALE sx="1" sy="10" sz="1" />          
+            <TEXTURE id="metal" />   
+            <ROTATION axis="x" angle="-90" />   
+            <SCALE sx="1" sy="1" sz="10" />          
 
             <DESCENDANTS>
                 <DESCENDANT id="cylinder" />                               
@@ -249,12 +250,13 @@
 
         </NODE>
 
-        <NODE id="backleftleg">       
+        <NODE id="backrightleg">       
             <MATERIAL id="metalAppearance" />      
 
-            <TEXTURE id="metal" />    
+            <TEXTURE id="metal" /> 
+            <ROTATION axis="x" angle="-90" />   
             <TRANSLATION x="15" y="0" z="0" />  
-            <SCALE sx="1" sy="10" sz="1" />         
+            <SCALE sx="1" sy="1" sz="10" />         
 
             <DESCENDANTS>
                 <DESCENDANT id="cylinder" />                               
@@ -267,8 +269,10 @@
             <MATERIAL id="metalAppearance" />      
 
             <TEXTURE id="metal" />  
-            <TRANSLATION x="15" y="0" z="30" />  
-            <SCALE sx="1" sy="10" sz="1" />          
+              
+            <TRANSLATION x="15" y="0" z="30" />
+            <ROTATION axis="x" angle="-90" />  
+            <SCALE sx="1" sy="1" sz="10" />            
 
             <DESCENDANTS>
                 <DESCENDANT id="cylinder" />                               
@@ -280,8 +284,10 @@
             <MATERIAL id="metalAppearance" />      
 
             <TEXTURE id="metal" />  
-            <TRANSLATION x="0" y="0" z="30" />  
-            <SCALE sx="1" sy="10" sz="1" />          
+           
+            <TRANSLATION x="0" y="0" z="30" />
+            <ROTATION axis="x" angle="-90" />  
+            <SCALE sx="1" sy="1" sz="10" />            
 
             <DESCENDANTS>
                 <DESCENDANT id="cylinder" />                               

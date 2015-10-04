@@ -81,6 +81,11 @@
                 <file path="./res/metal.jpg" />                 <!-- path to file -->
                 <amplif_factor s="0" t="0" />                <!-- x/s, y/t -->
             </TEXTURE>
+
+            <TEXTURE id="map">
+                <file path="./res/globe.jpg" />                 <!-- path to file -->
+                <amplif_factor s="0" t="0" />                <!-- x/s, y/t -->
+            </TEXTURE>
             <!-- NOTE: this block "TEXTURE" must be repeated as necessary with different "id" -->
             
         </TEXTURES>
@@ -113,8 +118,8 @@
             <!-- next lines define nodes of type leaf; they may be repeated, in any order, as necessary -->
             <LEAF id="square" type="rectangle" args="0 1 1 0" />
             <LEAF id="cylinder" type="cylinder" args="1 0.5 0.5 25 20" /> 
-           <!--- <LEAF id="ss" type="sphere" args="ff ii ii" />
-           <LEAF id="ss" type="triangle" args="ff ff ff  ff ff ff  ff ff ff" /> -->
+            <LEAF id="sphere" type="sphere" args="1 25 20" />
+            <!--<LEAF id="ss" type="triangle" args="ff ff ff  ff ff ff  ff ff ff" /> -->
 
            <!-- Parameters of the above primitives:                                                         -->
            <!--rectangle: 2D coordinates for left-top and right-bottom vertices.                        -->
@@ -135,7 +140,8 @@
                 <DESCENDANT id="backrightleg" /> 
                 <DESCENDANT id="backleftleg" />   
                 <DESCENDANT id="frontrightleg" />   
-                <DESCENDANT id="frontleftleg" />                                                    
+                <DESCENDANT id="frontleftleg" />
+                <DESCENDANT id="globe" />                                                  
             </DESCENDANTS>
 
         </NODE>
@@ -295,8 +301,19 @@
 
         </NODE>
 
+        <NODE id="globe">       
+            <MATERIAL id="metalAppearance" />      
 
+            <TEXTURE id="map" />  
+           
+            <TRANSLATION x="7" y="11" z="15" /> 
+            <SCALE sx="1" sy="1" sz="1" />            
 
+            <DESCENDANTS>
+                <DESCENDANT id="sphere" />                               
+            </DESCENDANTS>
+
+        </NODE>
 
     </NODES>
 

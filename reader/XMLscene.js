@@ -52,8 +52,18 @@ XMLscene.prototype.onGraphLoaded = function ()
 	this.gl.clearColor(this.graph.background['r'],this.graph.background['g'],this.graph.background['b'],this.graph.background['a']);
 	this.setAmbient(this.graph.ambient['r'],this.graph.ambient['g'],this.graph.ambient['b'],this.graph.ambient['a']);
 	
-	this.lights[0].setVisible(true);
-    this.lights[0].enable();
+	for(var i = 0; i < this.graph.lightsArray.length; i++){
+		if(this.graph.lightsArray[i].enabled == 1){
+			this.lights[i].enable();
+			this.lights[i].setVisible(true);
+		}else
+			this.lights[i].disable();
+		
+		this.lights[i].setPosition(this.graph.lightsArray[i].position.x,
+									this.graph.lightsArray[i].position.y,
+									this.graph.lightsArray[i].position.z,
+									this.graph.lightsArray[i].position.w);
+	}
 };
 
 XMLscene.prototype.display = function () {

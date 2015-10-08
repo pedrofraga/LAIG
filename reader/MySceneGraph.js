@@ -78,10 +78,41 @@ MySceneGraph.prototype.parser= function(rootElement) {
 	}
 
 	if (lights.length != 1) {
-		return "either zero or more than one 'lights' element found.";
+		return "Either 0 or more than 1 'lights' elements found.";
 	}
 	
-	var lightsArray = lights[0].children;
+	var lsxLightsArray = lights[0].getElementsByTagName('LIGHT');
+	
+	if (lsxLightsArray == null) {
+		return "lightsArray element is missing.";
+	}
+
+	if (lsxLightsArray.length == 0) {
+		return "zero 'lightsArray' elements found.";
+	}
+	
+	this.lightsArray = [];
+	
+	
+	for(var i = 0; i < lsxLightsArray.length; i++){
+		var lightChildren = lsxLightsArray[i].children;
+		
+		var position = new LightPosition(lightChildren[1].attributes.getNamedItem("x").value
+										, lightChildren[1].attributes.getNamedItem("y").value
+										, lightChildren[1].attributes.getNamedItem("z").value
+										, lightChildren[1].attributes.getNamedItem("w").value);
+		
+		console.log("light number " + i + " with x = " + lightChildren[1].attributes.getNamedItem("x").value
+										+ " with y = " + lightChildren[1].attributes.getNamedItem("y").value
+										+ " with z = " + lightChildren[1].attributes.getNamedItem("z").value
+										+ " with w = " + lightChildren[1].attributes.getNamedItem("w").value);
+		
+		var light = new Light(lightChildren[0].attributes.getNamedItem("value").value
+								, position);
+		this.lightsArray[i] = light;
+	}
+	
+	
 	
 };
 	
@@ -89,9 +120,26 @@ MySceneGraph.prototype.parser= function(rootElement) {
  * Callback to be executed on any read error
  */
  
+ 
 MySceneGraph.prototype.onXMLError=function (message) {
 	console.error("XML Loading Error: "+message);	
 	this.loadedOk=false;
 };
+
+/*
+ *	Light Classes
+ */
+ 
+function Light(enable, position){
+   this.enabled = enable;
+   this.position = position;
+}
+
+function LightPosition(x, y, z, w){
+   this.x = x;
+   this.y = y;
+   this.z = z;
+   this.w = w;
+}
 
 

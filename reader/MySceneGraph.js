@@ -27,7 +27,7 @@ MySceneGraph.prototype.onXMLReady=function()
 	var rootElement = this.reader.xmlDoc.documentElement;
 	
 	// Here should go the calls for different functions to parse the various blocks
-	var error = this.parseGlobalsExample(rootElement);
+	var error = this.parser(rootElement);
 
 	if (error != null) {
 		this.onXMLError(error);
@@ -45,45 +45,44 @@ MySceneGraph.prototype.onXMLReady=function()
 /*
  * Example of method that parses elements of one block and stores information in a specific data structure
  */
-MySceneGraph.prototype.parseGlobalsExample= function(rootElement) {
+MySceneGraph.prototype.parser= function(rootElement) {
 	
-	var elems =  rootElement.getElementsByTagName('globals');
-	if (elems == null) {
-		return "globals element is missing.";
+	// getting illumination node
+	var illumination =  rootElement.getElementsByTagName('ILLUMINATION');
+	if (illumination == null) {
+		return "illumi element is missing.";
 	}
 
-	if (elems.length != 1) {
-		return "either zero or more than one 'globals' element found.";
-	}
-
-	// various examples of different types of access
-	var globals = elems[0];
-	this.background = this.reader.getRGBA(globals, 'background');
-	this.drawmode = this.reader.getItem(globals, 'drawmode', ["fill","line","point"]);
-	this.cullface = this.reader.getItem(globals, 'cullface', ["back","front","none", "frontandback"]);
-	this.cullorder = this.reader.getItem(globals, 'cullorder', ["ccw","cw"]);
-
-	console.log("Globals read from file: {background=" + this.background + ", drawmode=" + this.drawmode + ", cullface=" + this.cullface + ", cullorder=" + this.cullorder + "}");
-
-	var tempList=rootElement.getElementsByTagName('list');
-
-	if (tempList == null  || tempList.length==0) {
-		return "list element is missing.";
+	if (illumination.length != 1) {
+		return "either zero or more than one 'illumi' element found.";
 	}
 	
-	this.list=[];
-	this.list2=[];
-	// iterate over every element
-	var nnodes=tempList[0].children.length;
-	for (var i=0; i< nnodes; i++)
-	{
-		var e=tempList[0].children[i];
+	var illumi = illumination[0].children;
+	this.ambient = [];
+	this.ambient['r'] = illumi[0].attributes.getNamedItem("r").value;
+	this.ambient['g'] = illumi[0].attributes.getNamedItem("g").value;
+	this.ambient['b'] = illumi[0].attributes.getNamedItem("b").value;
+	this.ambient['a']= illumi[0].attributes.getNamedItem("a").value;
+	
+	this.background = [];
+	this.background['r'] = illumi[1].attributes.getNamedItem("r").value;
+	this.background['g'] = illumi[1].attributes.getNamedItem("g").value;
+	this.background['b'] = illumi[1].attributes.getNamedItem("b").value;
+	this.background['a']= illumi[1].attributes.getNamedItem("a").value;
+	
+	//getting lights
+	var lights =  rootElement.getElementsByTagName('LIGHTS');
+	
+	if (lights == null) {
+		return "lights element is missing.";
+	}
 
-		// process each element and store its information
-		this.list[e.id]=e.attributes.getNamedItem("coords").value;
-		console.log("Read list item id "+ e.id+" with value "+this.list[e.id]);
-	};
-
+	if (lights.length != 1) {
+		return "either zero or more than one 'lights' element found.";
+	}
+	
+	var lightsArray = lights[0].children;
+	
 };
 	
 /*

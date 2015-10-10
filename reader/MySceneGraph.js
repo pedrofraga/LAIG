@@ -60,8 +60,11 @@ MySceneGraph.prototype.parser= function(rootElement) {
 
 	this.ambient = [];
 	this.background = [];
+	this.diffuse = [];
+	this.specular = [];
+	this.shininess;
 	
-	getIllumination(illumination, this.ambient, this.background);
+	getIllumination(illumination, this.ambient, this.background, this.diffuse, this.specular, this.shininess);
 	
 	
 	//getting lights
@@ -109,20 +112,58 @@ MySceneGraph.prototype.onXMLError=function (message) {
 *
 */
 
-function getIllumination(illumination, ambient, background){
-	
-	var illumiAmbient = illumination[0].getElementsByTagName('ambient')[0];
-	ambient['r'] = illumiAmbient.attributes.getNamedItem("r").value;
-	ambient['g'] = illumiAmbient.attributes.getNamedItem("g").value;
-	ambient['b'] = illumiAmbient.attributes.getNamedItem("b").value;
-	ambient['a']= illumiAmbient.attributes.getNamedItem("a").value;
+function getIllumination(illumination, ambient, background, diffuse, specular, shininess){
 
-	var illumiBackground = illumination[0].getElementsByTagName('background')[0];
-	
-	background['r'] = illumiBackground.attributes.getNamedItem("r").value;
-	background['g'] = illumiBackground.attributes.getNamedItem("g").value;
-	background['b'] = illumiBackground.attributes.getNamedItem("b").value;
-	background['a']= illumiBackground.attributes.getNamedItem("a").value;
+
+	if(illumination[0].getElementsByTagName('ambient')[0] != null){
+		var illumiAmbient = illumination[0].getElementsByTagName('ambient')[0];
+		ambient['r'] = illumiAmbient.attributes.getNamedItem("r").value;
+		ambient['g'] = illumiAmbient.attributes.getNamedItem("g").value;
+		ambient['b'] = illumiAmbient.attributes.getNamedItem("b").value;
+		ambient['a']= illumiAmbient.attributes.getNamedItem("a").value;
+	}
+
+	if(illumination[0].getElementsByTagName('background')[0] != null){
+		var illumiBackground = illumination[0].getElementsByTagName('background')[0];
+		background['r'] = illumiBackground.attributes.getNamedItem("r").value;
+		background['g'] = illumiBackground.attributes.getNamedItem("g").value;
+		background['b'] = illumiBackground.attributes.getNamedItem("b").value;
+		background['a']= illumiBackground.attributes.getNamedItem("a").value;
+	}
+
+	if(illumination[0].getElementsByTagName('diffuse')[0] != null){
+		var illumiDiffuse = illumination[0].getElementsByTagName('diffuse')[0];
+		diffuse['r'] = illumiDiffuse.attributes.getNamedItem("r").value;
+		diffuse['g'] = illumiDiffuse.attributes.getNamedItem("g").value;
+		diffuse['b'] = illumiDiffuse.attributes.getNamedItem("b").value;
+		diffuse['a']= illumiDiffuse.attributes.getNamedItem("a").value;
+
+	}
+
+	if(illumination[0].getElementsByTagName('specular')[0] != null){
+		var illumiSpecular = illumination[0].getElementsByTagName('specular')[0];
+		specular['r'] = illumiSpecular.attributes.getNamedItem("r").value;
+		specular['g'] = illumiSpecular.attributes.getNamedItem("g").value;
+		specular['b'] = illumiSpecular.attributes.getNamedItem("b").value;
+		specular['a']= illumiSpecular.attributes.getNamedItem("a").value;
+
+	}
+
+	if(illumination[0].getElementsByTagName('specular')[0] != null){
+		var illumiSpecular = illumination[0].getElementsByTagName('specular')[0];
+		specular['r'] = illumiSpecular.attributes.getNamedItem("r").value;
+		specular['g'] = illumiSpecular.attributes.getNamedItem("g").value;
+		specular['b'] = illumiSpecular.attributes.getNamedItem("b").value;
+		specular['a']= illumiSpecular.attributes.getNamedItem("a").value;
+
+	}
+
+
+	if(illumination[0].getElementsByTagName('shininess')[0] != null){
+		var illumiShininess = illumination[0].getElementsByTagName('shininess')[0];
+		shininess = illumiShininess.attributes.getNamedItem("value").value;
+	}
+
 }
 
 

@@ -149,16 +149,7 @@ function getIllumination(illumination, ambient, background, diffuse, specular, s
 
 	}
 
-	if(illumination[0].getElementsByTagName('specular')[0] != null){
-		var illumiSpecular = illumination[0].getElementsByTagName('specular')[0];
-		specular['r'] = illumiSpecular.attributes.getNamedItem("r").value;
-		specular['g'] = illumiSpecular.attributes.getNamedItem("g").value;
-		specular['b'] = illumiSpecular.attributes.getNamedItem("b").value;
-		specular['a']= illumiSpecular.attributes.getNamedItem("a").value;
-
-	}
-
-
+	
 	if(illumination[0].getElementsByTagName('shininess')[0] != null){
 		var illumiShininess = illumination[0].getElementsByTagName('shininess')[0];
 		shininess = illumiShininess.attributes.getNamedItem("value").value;

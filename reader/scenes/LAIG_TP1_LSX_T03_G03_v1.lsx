@@ -27,7 +27,6 @@
                 <specular r="1" g="1" b="0" a="1" />       <!-- specular component -->
             </LIGHT>
 
-            <!-- NOTE: this block "LIGHT" must be repeated as necessary with different "id" -->
             
             <LIGHT id="lightwo">                                    <!-- light identifier -->
                 <enable value ="1" />                         <!-- enable/disable -->
@@ -37,7 +36,6 @@
                 <specular r="0" g="0" b="0" a="0" />       <!-- specular component -->
             </LIGHT>
 
-            <!-- NOTE: this block "LIGHT" must be repeated as necessary with different "id" -->
             
             <LIGHT id="lighthree">                                    <!-- light identifier -->
                 <enable value ="1" />                         <!-- enable/disable -->
@@ -47,7 +45,6 @@
                 <specular r="1" g="1" b="1" a="0" />       <!-- specular component -->
             </LIGHT>
 
-            <!-- NOTE: this block "LIGHT" must be repeated as necessary with different "id" -->
             
             <LIGHT id="lightfour">                                    <!-- light identifier -->
                 <enable value ="1" />                         <!-- enable/disable -->
@@ -56,8 +53,6 @@
                 <diffuse r="1" g="1" b="1" a="1" />        <!-- diffuse component -->
                 <specular r="1" g="1" b="1" a="0" />       <!-- specular component -->
             </LIGHT>
-
-            <!-- NOTE: this block "LIGHT" must be repeated as necessary with different "id" -->
             
         </LIGHTS>
 
@@ -78,7 +73,6 @@
                 <file path="./res/globe.jpg" />                 <!-- path to file -->
                 <amplif_factor s="0" t="0" />                <!-- x/s, y/t -->
             </TEXTURE>
-            <!-- NOTE: this block "TEXTURE" must be repeated as necessary with different "id" -->
             
         </TEXTURES>
 
@@ -99,8 +93,6 @@
                 <ambient r="204" g="204" b="204" a="1" />         <!-- ambient reflection -->
                 <emission r="0" g="0" b="0" a="0" />        <!-- emission component -->
             </MATERIAL>
-
-            <!-- NOTE: the "MATERIAL" block may be repeated as required. Each defined material requires a distinct "id" -->
 
         </MATERIALS>
 

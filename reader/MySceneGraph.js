@@ -4,7 +4,7 @@ function MySceneGraph(filename, scene) {
 	
 	// Establish bidirectional references between scene and graph
 	this.scene = scene;
-	scene.graph=this;
+	scene.graph = this;
 		
 	// File reading 
 	this.reader = new CGFXMLreader();
@@ -49,6 +49,7 @@ MySceneGraph.prototype.parser= function(rootElement) {
 	
 	// getting illumination node
 	var illumination =  rootElement.getElementsByTagName('ILLUMINATION');
+
 	if (illumination == null) {
 		return "illumi element is missing.";
 	}
@@ -56,19 +57,12 @@ MySceneGraph.prototype.parser= function(rootElement) {
 	if (illumination.length != 1) {
 		return "either zero or more than one 'illumi' element found.";
 	}
-	
-	var illumi = illumination[0].children;
+
 	this.ambient = [];
-	this.ambient['r'] = illumi[0].attributes.getNamedItem("r").value;
-	this.ambient['g'] = illumi[0].attributes.getNamedItem("g").value;
-	this.ambient['b'] = illumi[0].attributes.getNamedItem("b").value;
-	this.ambient['a']= illumi[0].attributes.getNamedItem("a").value;
-	
 	this.background = [];
-	this.background['r'] = illumi[1].attributes.getNamedItem("r").value;
-	this.background['g'] = illumi[1].attributes.getNamedItem("g").value;
-	this.background['b'] = illumi[1].attributes.getNamedItem("b").value;
-	this.background['a']= illumi[1].attributes.getNamedItem("a").value;
+	
+	getIllumination(illumination, this.ambient, this.background);
+	
 	
 	//getting lights
 	var lights =  rootElement.getElementsByTagName('LIGHTS');
@@ -80,7 +74,7 @@ MySceneGraph.prototype.parser= function(rootElement) {
 	if (lights.length != 1) {
 		return "Either 0 or more than 1 'lights' elements found.";
 	}
-	
+
 	var lsxLightsArray = lights[0].getElementsByTagName('LIGHT');
 	
 	if (lsxLightsArray == null) {
@@ -92,26 +86,8 @@ MySceneGraph.prototype.parser= function(rootElement) {
 	}
 	
 	this.lightsArray = [];
-	
-	
-	for(var i = 0; i < lsxLightsArray.length; i++){
-		var lightChildren = lsxLightsArray[i].children;
-		
-		var position = new LightPosition(lightChildren[1].attributes.getNamedItem("x").value
-										, lightChildren[1].attributes.getNamedItem("y").value
-										, lightChildren[1].attributes.getNamedItem("z").value
-										, lightChildren[1].attributes.getNamedItem("w").value);
-		
-		console.log("light number " + i + " with x = " + lightChildren[1].attributes.getNamedItem("x").value
-										+ " with y = " + lightChildren[1].attributes.getNamedItem("y").value
-										+ " with z = " + lightChildren[1].attributes.getNamedItem("z").value
-										+ " with w = " + lightChildren[1].attributes.getNamedItem("w").value);
-		
-		var light = new Light(lightChildren[0].attributes.getNamedItem("value").value
-								, position);
-		this.lightsArray[i] = light;
-	}
-	
+
+	getLights(lsxLightsArray, this.lightsArray);
 	
 	
 };
@@ -126,13 +102,79 @@ MySceneGraph.prototype.onXMLError=function (message) {
 	this.loadedOk=false;
 };
 
+
+/*
+*	Some more
+*	functions
+*
+*/
+
+function getIllumination(illumination, ambient, background){
+	
+	var illumiAmbient = illumination[0].getElementsByTagName('ambient')[0];
+	ambient['r'] = illumiAmbient.attributes.getNamedItem("r").value;
+	ambient['g'] = illumiAmbient.attributes.getNamedItem("g").value;
+	ambient['b'] = illumiAmbient.attributes.getNamedItem("b").value;
+	ambient['a']= illumiAmbient.attributes.getNamedItem("a").value;
+
+	var illumiBackground = illumination[0].getElementsByTagName('background')[0];
+	
+	background['r'] = illumiBackground.attributes.getNamedItem("r").value;
+	background['g'] = illumiBackground.attributes.getNamedItem("g").value;
+	background['b'] = illumiBackground.attributes.getNamedItem("b").value;
+	background['a']= illumiBackground.attributes.getNamedItem("a").value;
+}
+
+
+
+function getLights(lsxLightsArray, lightsArray){
+
+	for(var i = 0; i < lsxLightsArray.length; i++){
+		
+		var lightEnabled = lsxLightsArray[i].getElementsByTagName('enable')[0];
+
+		if(lsxLightsArray[i].getElementsByTagName('position')[0] != null){
+			var lightPosition = lsxLightsArray[i].getElementsByTagName('position')[0];
+			var position = new LightPosition(lightPosition.attributes.getNamedItem("x").value
+										, lightPosition.attributes.getNamedItem("y").value
+										, lightPosition.attributes.getNamedItem("z").value
+										, lightPosition.attributes.getNamedItem("w").value);
+		}else{
+			var position = null;
+		}
+		
+		if(lsxLightsArray[i].getElementsByTagName('ambient')[0] != null){
+			var lightAmbient = lsxLightsArray[i].getElementsByTagName('ambient')[0];
+			var ambient = new RGBA(lightAmbient.attributes.getNamedItem("r").value
+								,lightAmbient.attributes.getNamedItem("g").value
+								,lightAmbient.attributes.getNamedItem("b").value
+								,lightAmbient.attributes.getNamedItem("a").value);
+		}else{
+			var ambient = null;
+		}
+
+		
+		var enabled = lightEnabled.attributes.getNamedItem("value").value;
+		
+		
+		
+		var light = new Light(enabled, position, ambient);
+
+		lightsArray[i] = light;
+	}
+
+}
+
+
+
 /*
  *	Light Classes
  */
  
-function Light(enable, position){
+function Light(enable, position, ambient){
    this.enabled = enable;
    this.position = position;
+   this.ambient = ambient;
 }
 
 function LightPosition(x, y, z, w){
@@ -140,6 +182,13 @@ function LightPosition(x, y, z, w){
    this.y = y;
    this.z = z;
    this.w = w;
+}
+
+function RGBA(r, g, b, a){
+	this.r = r;
+	this.g = g;
+	this.b = b;
+	this.a = a;
 }
 
 

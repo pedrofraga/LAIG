@@ -53,19 +53,24 @@ XMLscene.prototype.onGraphLoaded = function ()
 	this.setAmbient(this.graph.ambient['r'],this.graph.ambient['g'],this.graph.ambient['b'],this.graph.ambient['a']);
 	
 	for(var i = 0; i < this.graph.lightsArray.length; i++){
-		console.log(this.graph.lightsArray[i]);
 		
-		if(this.graph.lightsArray[i].enabled == 1){
-			this.lights[i].enable();
-		}else
-			this.lights[i].disable();
+		if(this.graph.lightsArray[i].enabled == 1)	this.lights[i].enable();
+		else this.lights[i].disable();
 		
-		this.lights[i].setVisible(true);	
-		this.lights[i].setPosition(this.graph.lightsArray[i].position.x,
+		this.lights[i].setVisible(true);
+
+		if(this.graph.lightsArray[i].position != null)
+			this.lights[i].setPosition(this.graph.lightsArray[i].position.x,
 									this.graph.lightsArray[i].position.y,
 									this.graph.lightsArray[i].position.z,
 									this.graph.lightsArray[i].position.w);
-		this.lights[i].update();
+
+		if(this.graph.lightsArray[i].ambient != null)
+			this.lights[i].setAmbient(this.graph.lightsArray[i].ambient.r,
+									this.graph.lightsArray[i].ambient.g,
+									this.graph.lightsArray[i].ambient.b,
+									this.graph.lightsArray[i].ambient.a);
+
 	}
 };
 
@@ -96,7 +101,9 @@ XMLscene.prototype.display = function () {
 	// This is one possible way to do it
 	if (this.graph.loadedOk)
 	{
-		this.lights[0].update();
+		for(var i = 0; i < this.graph.lightsArray.length; i++){
+			this.lights[i].update();
+		}
 	};	
 
     this.shader.unbind();

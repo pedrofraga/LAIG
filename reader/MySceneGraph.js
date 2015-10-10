@@ -88,6 +88,30 @@ MySceneGraph.prototype.parser= function(rootElement) {
 	this.lightsArray = [];
 
 	getLights(lsxLightsArray, this.lightsArray);
+
+	var leaves = rootElement.getElementsByTagName('LEAVES');
+
+	if (leaves == null) {
+		return "leaves element is missing.";
+	}
+
+	if (leaves.length != 1) {
+		return "Either 0 or more than 1 'leaves' elements found.";
+	}
+
+	var lsxLeavesArray = leaves[0].getElementsByTagName('LEAF');
+
+	if (lsxLeavesArray == null) {
+		return "there is no leaf elements";
+	}
+
+	if (lsxLeavesArray.length == 0) {
+		return "0 LEAF elements found";
+	}
+
+	this.leavesArray = [];
+
+	getLeaves(lsxLeavesArray, this.leavesArray);
 	
 	
 };
@@ -104,7 +128,7 @@ MySceneGraph.prototype.onXMLError=function (message) {
 
 
 /*
-*	Some more
+*	Some more needed
 *	functions
 *
 */
@@ -158,11 +182,38 @@ function getLights(lsxLightsArray, lightsArray){
 			var ambient = null;
 		}
 
+		if(lsxLightsArray[i].getElementsByTagName('diffuse')[0] != null){
+			var lightDiffuse = lsxLightsArray[i].getElementsByTagName('diffuse')[0];
+			var diffuse = new RGBA(lightDiffuse.attributes.getNamedItem("r").value
+								,lightDiffuse.attributes.getNamedItem("g").value
+								,lightDiffuse.attributes.getNamedItem("b").value
+								,lightDiffuse.attributes.getNamedItem("a").value);
+		}else{
+			var diffuse = null;
+		}
+
+
+		if(lsxLightsArray[i].getElementsByTagName('specular')[0] != null){
+			var lightSpecular = lsxLightsArray[i].getElementsByTagName('specular')[0];
+			var specular = new RGBA(lightSpecular.attributes.getNamedItem("r").value
+								,lightSpecular.attributes.getNamedItem("g").value
+								,lightSpecular.attributes.getNamedItem("b").value
+								,lightSpecular.attributes.getNamedItem("a").value);
+		}else{
+			var specular = null;
+		}
+
+		if(lsxLightsArray[i].getElementsByTagName('shininess')[0] != null){
+			var lightShininess = lsxLightsArray[i].getElementsByTagName('shininess')[0];
+			var shininess = lightShininess.attributes.getNamedItem("value").value;
+		}else{
+			var shininess = null;
+		}
 		
 		
 		
 		
-		var light = new Light(enabled, position, ambient);
+		var light = new Light(enabled, position, ambient, diffuse, specular, shininess);
 
 		lightsArray[i] = light;
 	}
@@ -170,15 +221,37 @@ function getLights(lsxLightsArray, lightsArray){
 }
 
 
+function getLeaves(lsxLeavesArray, leavesArray) {
+	for(var i = 0; i < lsxLeavesArray.length; i++){
+		var type = lsxLeavesArray[i].attributes.getNamedItem("type").value;
+
+		switch(id){
+			case "sphere":
+				break;
+			case "rectangle":
+				break;
+			case "triangle":
+				break; 
+			case "cylinder":
+				break;
+			default:
+				console.error("leaf with type (" + type + ") it's not supported by this parser");
+		}
+	}
+}
+
 
 /*
  *	Light Classes
  */
  
-function Light(enable, position, ambient){
+function Light(enable, position, ambient, diffuse, specular, shininess){
    this.enabled = enable;
    this.position = position;
    this.ambient = ambient;
+   this.diffuse = diffuse;
+   this.specular = specular;
+   this.shininess = shininess;
 }
 
 function LightPosition(x, y, z, w){
@@ -193,6 +266,12 @@ function RGBA(r, g, b, a){
 	this.g = g;
 	this.b = b;
 	this.a = a;
+}
+
+
+function Leaf(type, object){
+	this.type = type;
+	this.object = object;
 }
 
 

@@ -122,7 +122,7 @@
 			<MATERIAL id="null" />      
             <TEXTURE id="null" /> 
             <DESCENDANTS>
-                <DESCENDANT id="tampo" />
+                <DESCENDANT id="cover" />
                 <DESCENDANT id="backrightleg" /> 
                 <DESCENDANT id="backleftleg" />   
                 <DESCENDANT id="frontrightleg" />   
@@ -210,7 +210,7 @@
 
         </NODE>
 
-        <NODE id="tampo">       
+        <NODE id="cover">       
             <MATERIAL id="tableAppearance" />      
 
             <TEXTURE id="wood" />    
@@ -230,7 +230,7 @@
 
 
         <NODE id="backleftleg">       
-            <MATERIAL id="metalAppearance" />      
+            <MATERIAL id="metalAppearance" />     
 
             <TEXTURE id="metal" />   
             <ROTATION axis="x" angle="-90" />   

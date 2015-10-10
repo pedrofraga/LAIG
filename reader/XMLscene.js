@@ -43,6 +43,7 @@ XMLscene.prototype.setDefaultAppearance = function () {
     this.setDiffuse(0.2, 0.4, 0.8, 1.0);
     this.setSpecular(0.2, 0.4, 0.8, 1.0);
     this.setShininess(10.0);
+
 };
 
 // Handler called when the graph is finally loaded. 
@@ -50,11 +51,11 @@ XMLscene.prototype.setDefaultAppearance = function () {
 XMLscene.prototype.onGraphLoaded = function () 
 {
 	this.gl.clearColor(this.graph.background['r'],this.graph.background['g'],this.graph.background['b'],this.graph.background['a']);
-	this.setAmbient(this.graph.ambient['r'],this.graph.ambient['g'],this.graph.ambient['b'],this.graph.ambient['a']);
+	this.setGlobalAmbientLight(this.graph.ambient['r'],this.graph.ambient['g'],this.graph.ambient['b'],this.graph.ambient['a']);
 
 	this.getLSXLights();
 
-	
+
 };
 
 XMLscene.prototype.display = function () {
@@ -101,6 +102,8 @@ XMLscene.prototype.display = function () {
 
 XMLscene.prototype.getLSXLights = function (){
 
+	this.shader.bind();
+
 	for(var i = 0; i < this.graph.lightsArray.length; i++){
 		
 		if(this.graph.lightsArray[i].enabled != null){
@@ -135,4 +138,6 @@ XMLscene.prototype.getLSXLights = function (){
 									this.graph.lightsArray[i].specular.a);
 
 	}
+
+	this.shader.unbind();
 }

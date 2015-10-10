@@ -214,7 +214,6 @@ function getLights(lsxLightsArray, lightsArray){
 		
 		
 		var light = new Light(enabled, position, ambient, diffuse, specular, shininess);
-
 		lightsArray[i] = light;
 	}
 
@@ -223,20 +222,13 @@ function getLights(lsxLightsArray, lightsArray){
 
 function getLeaves(lsxLeavesArray, leavesArray) {
 	for(var i = 0; i < lsxLeavesArray.length; i++){
-		var type = lsxLeavesArray[i].attributes.getNamedItem("type").value;
 
-		switch(id){
-			case "sphere":
-				break;
-			case "rectangle":
-				break;
-			case "triangle":
-				break; 
-			case "cylinder":
-				break;
-			default:
-				console.error("leaf with type (" + type + ") it's not supported by this parser");
-		}
+		var type = lsxLeavesArray[i].attributes.getNamedItem("type").value;
+		var id = lsxLeavesArray[i].attributes.getNamedItem("id").value;
+		var args = lsxLeavesArray[i].attributes.getNamedItem("args").value.match(/[^ ]+/g);
+
+		var object = new Leaf(id, type, args);
+		leavesArray[i] = object;
 	}
 }
 
@@ -269,9 +261,10 @@ function RGBA(r, g, b, a){
 }
 
 
-function Leaf(type, object){
+function Leaf(id, type, args){
+	this.id = id;
 	this.type = type;
-	this.object = object;
+	this.args = args;
 }
 
 

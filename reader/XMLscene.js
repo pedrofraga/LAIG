@@ -53,16 +53,19 @@ XMLscene.prototype.onGraphLoaded = function ()
 	this.setAmbient(this.graph.ambient['r'],this.graph.ambient['g'],this.graph.ambient['b'],this.graph.ambient['a']);
 	
 	for(var i = 0; i < this.graph.lightsArray.length; i++){
+		console.log(this.graph.lightsArray[i]);
+		
 		if(this.graph.lightsArray[i].enabled == 1){
 			this.lights[i].enable();
-			this.lights[i].setVisible(true);
 		}else
 			this.lights[i].disable();
 		
+		this.lights[i].setVisible(true);	
 		this.lights[i].setPosition(this.graph.lightsArray[i].position.x,
 									this.graph.lightsArray[i].position.y,
 									this.graph.lightsArray[i].position.z,
 									this.graph.lightsArray[i].position.w);
+		this.lights[i].update();
 	}
 };
 

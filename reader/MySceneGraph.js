@@ -131,7 +131,12 @@ function getLights(lsxLightsArray, lightsArray){
 
 	for(var i = 0; i < lsxLightsArray.length; i++){
 		
-		var lightEnabled = lsxLightsArray[i].getElementsByTagName('enable')[0];
+		if(lsxLightsArray[i].getElementsByTagName('enable')[0] != null){
+			var lightEnabled = lsxLightsArray[i].getElementsByTagName('enable')[0];
+			var enabled = lightEnabled.attributes.getNamedItem("value").value;
+		}else{
+			var enabled = null;
+		}
 
 		if(lsxLightsArray[i].getElementsByTagName('position')[0] != null){
 			var lightPosition = lsxLightsArray[i].getElementsByTagName('position')[0];
@@ -154,7 +159,6 @@ function getLights(lsxLightsArray, lightsArray){
 		}
 
 		
-		var enabled = lightEnabled.attributes.getNamedItem("value").value;
 		
 		
 		

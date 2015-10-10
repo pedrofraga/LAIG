@@ -54,8 +54,10 @@ XMLscene.prototype.onGraphLoaded = function ()
 	
 	for(var i = 0; i < this.graph.lightsArray.length; i++){
 		
-		if(this.graph.lightsArray[i].enabled == 1)	this.lights[i].enable();
-		else this.lights[i].disable();
+		if(this.graph.lightsArray[i].enabled != null){
+			if(this.graph.lightsArray[i].enabled == 1)	this.lights[i].enable();
+			else this.lights[i].disable();
+		}
 		
 		this.lights[i].setVisible(true);
 

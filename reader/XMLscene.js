@@ -22,7 +22,7 @@ XMLscene.prototype.init = function (application) {
 
 	this.axis=new CGFaxis(this);
 
-	this.geometricalObjects = [];
+	this.object;
 
 };
 
@@ -58,6 +58,7 @@ XMLscene.prototype.onGraphLoaded = function ()
 
 	this.getLSXLights();
 
+	this.object = new MyObject(this, this.graph.rootNode);
 
 };
 
@@ -92,7 +93,7 @@ XMLscene.prototype.display = function () {
 			this.lights[i].update();
 		}
 		
-		this.displayGeometry(this.graph.rootNode, [], [], []);
+		this.object.display();
 	};	
 
     this.shader.unbind();
@@ -166,27 +167,5 @@ XMLscene.prototype.getLSXIllumination = function (){
 }
 
 
-
-XMLscene.prototype.displayGeometry = function (rootNode, rotations, translations, scales){
-	
-	if(rootNode != null){
-
-		if(rootNode.rotation != null){
-			rotations.push(rootNode.rotation);
-		}
-
-		if(rootNode.translation != null){
-			translations.push(rootNode.translation);
-		}
-
-		if(rootNode.scale != null){
-			scales.push(rootNode.scale);
-		}
-
-		for(var i = 0; i < rootNode.descendants.length; i++){
-			this.displayGeometry(rootNode.descendants[i], rotations, translations, scales);
-		}
-	}
-}
 
 

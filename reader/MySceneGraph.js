@@ -72,10 +72,13 @@ MySceneGraph.prototype.parser= function(rootElement) {
 
 	getLeaves(rootElement, this.leavesArray);
 
-	this.rootNode;
+	this.rootNode = new Node("null");
 
 	getGeometryNodes(rootElement, this.leavesArray ,this.rootNode);
-	
+
+	console.error(this.rootNode);
+
+	return this.rootNode;
 	
 };
 	
@@ -271,7 +274,7 @@ function getLeaves(rootElement, leavesArray) {
 }
 
 
-function getGeometryNodes(rootElement, leavesArray, rootNode){
+function getGeometryNodes(rootElement, leavesArray, returnRootNode){
 	var nodes = rootElement.getElementsByTagName("NODES");
 
 	if(nodes == null){
@@ -310,14 +313,14 @@ function getGeometryNodes(rootElement, leavesArray, rootNode){
 		return;
 	}
 
-	rootNode = new Node(rootID);
+	returnRootNode = new Node(rootID);
 	
-	if(constructTree(lsxNodesArray, leavesArray, rootNode) == -1){
+	if(constructTree(lsxNodesArray, leavesArray, returnRootNode) == -1){
 		console.error("please reconstruct your .lsx file");
-		rootNode = null;
+		returnRootNode = null;
 	}
 	
-	console.log(rootNode);
+	console.log(returnRootNode);
 }
 
 
@@ -342,7 +345,7 @@ function getGeometry(lsxNodesArray, leavesArray, root, i){
 				var node = new Node(id);
 				root.descendants[i] = node;
 
-				if(getNodeInfo(lsxDescendantsArray[i], root.descendants[i]) == -1) return -1;
+				if(getNodeInfo(lsxNodesArray[i], root.descendants[i]) == -1) return -1;
 
 				if(constructTree(lsxNodesArray, leavesArray, root.descendants[i]) == -1){
 					return -1;
@@ -389,7 +392,6 @@ function checkLeafs(leavesArray, id){
 function getNodeInfo(lsxNode, node){
 	var rotation = lsxNode.getElementsByTagName("ROTATION");
 	if(rotation != null){
-		console.log("rotation length = " + rotation.length);
 		if(rotation.length == 1){	
 				node.rotation = new Rotation(rotation[0].attributes.getNamedItem("axis").value,
 												rotation[0].attributes.getNamedItem("angle").value);

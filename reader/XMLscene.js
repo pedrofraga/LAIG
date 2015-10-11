@@ -60,6 +60,8 @@ XMLscene.prototype.onGraphLoaded = function ()
 
 	this.object = new MyObject(this, this.graph.rootNode);
 
+	console.log(this.graph.rootNode);
+
 };
 
 XMLscene.prototype.display = function () {

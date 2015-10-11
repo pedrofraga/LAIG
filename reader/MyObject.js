@@ -21,7 +21,6 @@ MyObject.prototype.display = function () {
 MyObject.prototype.displayRoot = function (rootNode, rotations, translations, scales){
 	
 	if(rootNode != null){
-		console.log("teste");
 
 		if(rootNode.id == "square" || 
 			rootNode.id == "sphere" || 
@@ -41,7 +40,7 @@ MyObject.prototype.displayRoot = function (rootNode, rotations, translations, sc
 		}
 
 		for(var i = 0; i < rootNode.descendants.length; i++){
-			var returnValue = this.displayGeometry(rootNode.descendants[i], rotations, translations, scales);
+			var returnValue = this.displayRoot(rootNode.descendants[i], rotations, translations, scales);
 			switch(returnValue){
 				case "square":
 					var square = new Square(this.scene, 0, 1, 1,0);

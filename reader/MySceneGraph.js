@@ -72,14 +72,11 @@ MySceneGraph.prototype.parser= function(rootElement) {
 
 	getLeaves(rootElement, this.leavesArray);
 
-	this.rootNode = new Node("null");
-
-	getGeometryNodes(rootElement, this.leavesArray ,this.rootNode);
-
-	console.error(this.rootNode);
-
-	return this.rootNode;
+	this.rootNode = getGeometryNodes(rootElement, this.leavesArray);
 	
+	if(this.rootNode == null){
+		return ".lsx file it's not well formed";
+	}	
 };
 	
 /*
@@ -274,7 +271,7 @@ function getLeaves(rootElement, leavesArray) {
 }
 
 
-function getGeometryNodes(rootElement, leavesArray, returnRootNode){
+function getGeometryNodes(rootElement, leavesArray){
 	var nodes = rootElement.getElementsByTagName("NODES");
 
 	if(nodes == null){
@@ -320,7 +317,8 @@ function getGeometryNodes(rootElement, leavesArray, returnRootNode){
 		returnRootNode = null;
 	}
 	
-	console.log(returnRootNode);
+
+	return returnRootNode;
 }
 
 
@@ -390,6 +388,7 @@ function checkLeafs(leavesArray, id){
 }
 
 function getNodeInfo(lsxNode, node){
+
 	var rotation = lsxNode.getElementsByTagName("ROTATION");
 	if(rotation != null){
 		if(rotation.length == 1){	

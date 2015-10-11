@@ -21,6 +21,9 @@ XMLscene.prototype.init = function (application) {
     this.gl.depthFunc(this.gl.LEQUAL);
 
 	this.axis=new CGFaxis(this);
+
+	this.geometricalObjects = [];
+
 };
 
 XMLscene.prototype.initLights = function () {
@@ -50,20 +53,8 @@ XMLscene.prototype.setDefaultAppearance = function () {
 // As loading is asynchronous, this may be called already after the application has started the run loop
 XMLscene.prototype.onGraphLoaded = function () 
 {
-	if(this.graph.background != null)
-		this.gl.clearColor(this.graph.background['r'],this.graph.background['g'],this.graph.background['b'],this.graph.background['a']);
-	
-	if(this.graph.ambient != null)
-		this.setAmbient(this.graph.ambient['r'],this.graph.ambient['g'],this.graph.ambient['b'],this.graph.ambient['a']);
 
-	if(this.graph.diffuse != null)
-		this.setDiffuse(this.graph.diffuse['r'],this.graph.diffuse['g'],this.graph.diffuse['b'],this.graph.diffuse['a']);
-
-	if(this.graph.specular != null)
-		this.setSpecular(this.graph.specular['r'],this.graph.specular['g'],this.graph.specular['b'],this.graph.specular['a']);
-
-	if(this.graph.shininess != null)
-		this.setShininess(this.graph.shininess);
+	this.getLSXIllumination();
 
 	this.getLSXLights();
 
@@ -100,6 +91,8 @@ XMLscene.prototype.display = function () {
 		for(var i = 0; i < this.graph.lightsArray.length; i++){
 			this.lights[i].update();
 		}
+		
+		this.displayGeometry(this.graph.rootNode, [], [], []);
 	};	
 
     this.shader.unbind();
@@ -153,3 +146,47 @@ XMLscene.prototype.getLSXLights = function (){
 
 	this.shader.unbind();
 }
+
+XMLscene.prototype.getLSXIllumination = function (){
+
+	if(this.graph.background != null)
+		this.gl.clearColor(this.graph.background['r'],this.graph.background['g'],this.graph.background['b'],this.graph.background['a']);
+	
+	if(this.graph.ambient != null)
+		this.setGlobalAmbientLight(this.graph.ambient['r'],this.graph.ambient['g'],this.graph.ambient['b'],this.graph.ambient['a']);
+
+	if(this.graph.diffuse != null)
+		this.setDiffuse(this.graph.diffuse['r'],this.graph.diffuse['g'],this.graph.diffuse['b'],this.graph.diffuse['a']);
+
+	if(this.graph.specular != null)
+		this.setSpecular(this.graph.specular['r'],this.graph.specular['g'],this.graph.specular['b'],this.graph.specular['a']);
+
+	if(this.graph.shininess != null)
+		this.setShininess(this.graph.shininess);
+}
+
+
+
+XMLscene.prototype.displayGeometry = function (rootNode, rotations, translations, scales){
+	
+	if(rootNode != null){
+
+		if(rootNode.rotation != null){
+			rotations.push(rootNode.rotation);
+		}
+
+		if(rootNode.translation != null){
+			translations.push(rootNode.translation);
+		}
+
+		if(rootNode.scale != null){
+			scales.push(rootNode.scale);
+		}
+
+		for(var i = 0; i < rootNode.descendants.length; i++){
+			this.displayGeometry(rootNode.descendants[i], rotations, translations, scales);
+		}
+	}
+}
+
+

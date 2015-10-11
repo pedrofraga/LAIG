@@ -126,8 +126,7 @@
                 <DESCENDANT id="backrightleg" /> 
                 <DESCENDANT id="backleftleg" />   
                 <DESCENDANT id="frontrightleg" />   
-                <DESCENDANT id="frontleftleg" />
-                <DESCENDANT id="globe" />                                                  
+                <DESCENDANT id="frontleftleg" />                                              
             </DESCENDANTS>
 
         </NODE>
@@ -162,8 +161,8 @@
 
         <NODE id="left_square">       
             <MATERIAL id="tableAppearance" />      
-
-            <TEXTURE id="wood" />      
+            <TEXTURE id="wood" />  
+                
             <ROTATION axis="y" angle="-90" />         
 
             <DESCENDANTS>

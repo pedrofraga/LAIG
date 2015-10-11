@@ -343,7 +343,12 @@ function getGeometry(lsxNodesArray, leavesArray, root, i){
 				var node = new Node(id);
 				root.descendants[i] = node;
 
-				if(getNodeInfo(lsxNodesArray[i], root.descendants[i]) == -1) return -1;
+				for(var a = 0; a < lsxNodesArray.length; a++){
+					if(lsxNodesArray[a].attributes.getNamedItem("id").value == id){
+						if(getNodeInfo(lsxNodesArray[a], root.descendants[i]) == -1) return -1;
+						break;
+					}
+				}
 
 				if(constructTree(lsxNodesArray, leavesArray, root.descendants[i]) == -1){
 					return -1;
@@ -389,39 +394,24 @@ function checkLeafs(leavesArray, id){
 
 function getNodeInfo(lsxNode, node){
 
-	var rotation = lsxNode.getElementsByTagName("ROTATION");
-	if(rotation != null){
-		if(rotation.length == 1){	
-				node.rotation = new Rotation(rotation[0].attributes.getNamedItem("axis").value,
-												rotation[0].attributes.getNamedItem("angle").value);
-		}else if(rotation.length > 1){
-			console.log("there's more than 1 rotation tag in node with id " + node.id);
-			return -1;
+	var childrenArray = lsxNode.children;
+
+	for(var i = 0; i < childrenArray.length; i++){
+		if(childrenArray[i].localName == "ROTATION"){
+			node.transforms.push(new Rotation(childrenArray[i].attributes.getNamedItem("axis").value,
+												childrenArray[i].attributes.getNamedItem("angle").value));
 		}
-	}
 
-	var scale = lsxNode.getElementsByTagName("SCALE");
-	if(scale != null){
-		if(scale.length == 1){
-				node.scale = new Scale(scale[0].attributes.getNamedItem("sx").value,
-												scale[0].attributes.getNamedItem("sy").value,
-												scale[0].attributes.getNamedItem("sz").value);
-		}else if(scale.length > 1){
-			console.log("there's more than 1 scale tag in node with id " + node.id);
-			return -1;
+		if(childrenArray[i].localName == "SCALE"){
+			node.transforms.push(new Scale(childrenArray[i].attributes.getNamedItem("sx").value,
+												childrenArray[i].attributes.getNamedItem("sy").value,
+												childrenArray[i].attributes.getNamedItem("sz").value));
 		}
-	}
 
-
-	var translation = lsxNode.getElementsByTagName("TRANSLATION");
-	if(translation != null){
-		if(translation.length == 1){	
-				node.translation = new Translation(translation[0].attributes.getNamedItem("x").value,
-												translation[0].attributes.getNamedItem("y").value,
-												translation[0].attributes.getNamedItem("z").value);
-		}else if(translation.length > 1){
-			console.log("there's more than 1 translation tag in node with id " + node.id);
-			return -1;
+		if(childrenArray[i].localName == "TRANSLATION"){
+			node.transforms.push(new Translation(childrenArray[i].attributes.getNamedItem("x").value,
+												childrenArray[i].attributes.getNamedItem("y").value,
+												childrenArray[i].attributes.getNamedItem("z").value));
 		}
 	}
 
@@ -470,9 +460,7 @@ function Node(id){
 	this.texture = null;
 	this.material = null;
 
-	this.translation = null;
-	this.rotation = null;
-	this.scale = null;
+	this.transforms = [];
 
 	this.descendants = [];
 }
@@ -493,7 +481,7 @@ function Scale(sx, sy, sz){
 
 function Rotation(axis, angle){
 	this.axis = axis;
-	this.angle = angle
+	this.angle = angle;
 }
 
 

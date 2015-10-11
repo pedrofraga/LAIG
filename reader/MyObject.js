@@ -14,11 +14,11 @@ MyObject.prototype = Object.create(CGFobject.prototype);
 MyObject.prototype.constructor= MyObject;
 
 MyObject.prototype.display = function () {
-	this.displayRoot(this.rootNode, [], [], []);
+	this.displayRoot(this.rootNode, []);
 };
 
 
-MyObject.prototype.displayRoot = function (rootNode, rotations, translations, scales){
+MyObject.prototype.displayRoot = function (rootNode, transf){
 	
 	if(rootNode != null){
 
@@ -27,32 +27,87 @@ MyObject.prototype.displayRoot = function (rootNode, rotations, translations, sc
 			rootNode.id == "cylinder")
 				return rootNode.id;
 
-		if(rootNode.rotation != null){
-			rotations.push(rootNode.rotation);
-		}
 
-		if(rootNode.translation != null){
-			translations.push(rootNode.translation);
+		for(var i = 0; i < rootNode.transforms.length; i++){
+			transf.push(rootNode.transforms[i]);
 		}
-
-		if(rootNode.scale != null){
-			scales.push(rootNode.scale);
-		}
+		
 
 		for(var i = 0; i < rootNode.descendants.length; i++){
-			var returnValue = this.displayRoot(rootNode.descendants[i], rotations, translations, scales);
+
+			var returnValue = this.displayRoot(rootNode.descendants[i], transf);
+
 			switch(returnValue){
 				case "square":
-					var square = new Square(this.scene, 0, 1, 1,0);
-					square.display();
+					var object = new Square(this.scene, 0, 1, 1,0);
+
+					this.scene.pushMatrix();
+
+					for(var i = 0; i < transf.length; i++){
+						if(transf[i].constructor.name == "Rotation"){
+							this.rotate(transf[i]);
+						}
+					}
+
+					object.display();
+					this.scene.popMatrix();
+
 					break;
 				case "sphere":
 					break;
 				case "cylinder":
+					/*var object = new Cylinder(0.5, 25, 20);
+					this.scene.pushMatrix();
+					for(var i = 0; i < scales.length; i++){
+						this.scale(scales[i]);
+					}
+
+					for(var i = 0; i < rotations.length; i++){
+						this.rotate(rotations[i]);
+					}
+
+					for(var i = 0; i < translations.length; i++){
+						this.translate(translations[i]);
+					}
+
+					object.display();
+					this.scene.popMatrix();*/
 					break;
 			}
+			
 		}
 	}
 
 	return 0;
+}
+
+
+MyObject.prototype.rotate = function (rotation){
+	switch (rotation.axis){
+		case "x":
+			this.scene.rotate(this.toRadian(rotation.angle),1,0,0);
+			break;
+		case "y":
+			this.scene.rotate(this.toRadian(rotation.angle),0,1,0);
+			break;
+		case "z":
+			this.scene.rotate(this.toRadian(rotation.angle),0,0,1);
+			break;
+		default:
+			console.error("there is no " + rotation.axis + " axis");
+			break;
+	}
+}
+
+MyObject.prototype.scale = function (scale){
+	this.scene.scale(parseFloat(scale.sx), parseFloat(scale.sy), parseFloat(scale.sz));
+}
+
+
+MyObject.prototype.translate = function (translation){
+	this.scene.translate(parseFloat(translation.x), parseFloat(translation.y), parseFloat(translation.z));
+}
+
+MyObject.prototype.toRadian = function (degrees){
+	return parseFloat(degrees) * (Math.PI/180);
 }

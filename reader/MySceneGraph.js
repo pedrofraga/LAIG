@@ -5,7 +5,7 @@ function MySceneGraph(filename, scene) {
 	// Establish bidirectional references between scene and graph
 	this.scene = scene;
 	scene.graph = this;
-		
+	
 	// File reading 
 	this.reader = new CGFXMLreader();
 
@@ -15,17 +15,17 @@ function MySceneGraph(filename, scene) {
 	 * If any error occurs, the reader calls onXMLError on this object, with an error message
 	 */
 	 
-	this.reader.open('scenes/'+filename, this);  
-}
+	 this.reader.open('scenes/'+filename, this);  
+	}
 
 /*
  * Callback to be executed after successful reading
  */
-MySceneGraph.prototype.onXMLReady=function() 
-{
-	console.log("XML Loading finished.");
-	var rootElement = this.reader.xmlDoc.documentElement;
-	
+ MySceneGraph.prototype.onXMLReady=function() 
+ {
+ 	console.log("XML Loading finished.");
+ 	var rootElement = this.reader.xmlDoc.documentElement;
+ 	
 	// Here should go the calls for different functions to parse the various blocks
 	var error = this.parser(rootElement);
 
@@ -45,6 +45,26 @@ MySceneGraph.prototype.onXMLReady=function()
 
 MySceneGraph.prototype.parser= function(rootElement) {
 	
+	//getting initials node
+
+	var initials = rootElement.getElementsByTagName('INITIALS');
+
+	if(initials == null){
+		return 'initials element is missing';
+	}
+
+	if(initials.length != 1){
+		return "either zero or more than one initials element found.";
+	}
+
+	this.frustum = [];
+	this.translation = [];
+	this.rotation = [];
+	this.scale = [];
+	this.reference;
+
+	getInitials(initials, this.frustum, this.translation, this.rotation, this.scale, this.reference);
+
 	// getting illumination node
 	var illumination =  rootElement.getElementsByTagName('ILLUMINATION');
 
@@ -58,17 +78,23 @@ MySceneGraph.prototype.parser= function(rootElement) {
 
 	this.ambient = [];
 	this.background = [];
-	this.diffuse = [];
-	this.specular = [];
-	this.shininess;
 	
-	getIllumination(illumination, this.ambient, this.background, this.diffuse, this.specular, this.shininess);
+	
+	getIllumination(illumination, this.ambient, this.background);
 	
 	this.lightsArray = [];
 
 	getLights(rootElement, this.lightsArray);
 
 	this.leavesArray = [];
+
+	this.texturesArray = [];
+
+	getTextures(rootElement, this.texturesArray);
+
+	this.materialsArray = [];
+
+	getMaterials(rootElement, this.materialsArray);
 
 	getLeaves(rootElement, this.leavesArray);
 
@@ -78,16 +104,16 @@ MySceneGraph.prototype.parser= function(rootElement) {
 		return ".lsx file it's not well formed";
 	}	
 };
-	
+
 /*
  * Callback to be executed on any read error
  */
  
  
-MySceneGraph.prototype.onXMLError=function (message) {
-	console.error("XML Loading Error: "+message);	
-	this.loadedOk=false;
-};
+ MySceneGraph.prototype.onXMLError=function (message) {
+ 	console.error("XML Loading Error: "+message);	
+ 	this.loadedOk=false;
+ };
 
 
 /*
@@ -96,7 +122,52 @@ MySceneGraph.prototype.onXMLError=function (message) {
 *
 */
 
-function getIllumination(illumination, ambient, background, diffuse, specular, shininess){
+function getInitials(initials, frustum, translation, rotation, scale, reference){
+
+	if(initials[0].getElementsByTagName('frustum')[0] != null){
+		var initialsFrustum = initials[0].getElementsByTagName('frustum')[0];
+		frustum['near'] = initialsFrustum.attributes.getNamedItem("near").value;
+		frustum['far'] = initialsFrustum.attributes.getNamedItem("far").value;
+	}
+
+	if(initials[0].getElementsByTagName('translation')[0] != null){
+		var initialsTransl = initials[0].getElementsByTagName('translation')[0];
+		translation['x'] = initialsTransl.attributes.getNamedItem("x").value;
+		translation['y'] = initialsTransl.attributes.getNamedItem("y").value;
+		translation['z'] = initialsTransl.attributes.getNamedItem("z").value;
+	}
+
+	if(initials[0].getElementsByTagName('rotation')[0] != null){
+		var initialsRot = initials[0].getElementsByTagName('rotation')[0];
+		rotation[0] = new Rotation(initialsRot.attributes.getNamedItem("axis").value, initialsRot.attributes.getNamedItem("angle").value);
+	}
+
+	if(initials[0].getElementsByTagName('rotation')[1] != null){
+		var initialsRot = initials[0].getElementsByTagName('rotation')[1];
+		rotation[1] = new Rotation(initialsRot.attributes.getNamedItem("axis").value, initialsRot.attributes.getNamedItem("angle").value);
+	}
+
+	if(initials[0].getElementsByTagName('rotation')[2] != null){
+		var initialsRot = initials[0].getElementsByTagName('rotation')[2];
+		rotation[2] = new Rotation(initialsRot.attributes.getNamedItem("axis").value, initialsRot.attributes.getNamedItem("angle").value);
+	}
+
+	if(initials[0].getElementsByTagName('scale')[0] != null){
+		var initialsScale = initials[0].getElementsByTagName('scale')[0];
+		scale['sx'] = initialsScale.attributes.getNamedItem("sx").value;
+		scale['sy'] = initialsScale.attributes.getNamedItem("sy").value;
+		scale['sz'] = initialsScale.attributes.getNamedItem("sz").value;
+	}
+
+	if(initials[0].getElementsByTagName('reference')[0] != null){
+		var initialsRef = initials[0].getElementsByTagName('reference')[0];
+		reference = initialsRef.attributes.getNamedItem("length").value;
+	}
+
+}
+
+
+function getIllumination(illumination, ambient, background){
 
 
 	if(illumination[0].getElementsByTagName('ambient')[0] != null){
@@ -114,30 +185,127 @@ function getIllumination(illumination, ambient, background, diffuse, specular, s
 		background['b'] = illumiBackground.attributes.getNamedItem("b").value;
 		background['a']= illumiBackground.attributes.getNamedItem("a").value;
 	}
+}
 
-	if(illumination[0].getElementsByTagName('diffuse')[0] != null){
-		var illumiDiffuse = illumination[0].getElementsByTagName('diffuse')[0];
-		diffuse['r'] = illumiDiffuse.attributes.getNamedItem("r").value;
-		diffuse['g'] = illumiDiffuse.attributes.getNamedItem("g").value;
-		diffuse['b'] = illumiDiffuse.attributes.getNamedItem("b").value;
-		diffuse['a']= illumiDiffuse.attributes.getNamedItem("a").value;
+function getTextures(rootElement, texturesArray){
 
+	var textures =  rootElement.getElementsByTagName('TEXTURES');
+	
+	if (textures == null) {
+		console.log("textures element is missing.");
+		return;
 	}
 
-	if(illumination[0].getElementsByTagName('specular')[0] != null){
-		var illumiSpecular = illumination[0].getElementsByTagName('specular')[0];
-		specular['r'] = illumiSpecular.attributes.getNamedItem("r").value;
-		specular['g'] = illumiSpecular.attributes.getNamedItem("g").value;
-		specular['b'] = illumiSpecular.attributes.getNamedItem("b").value;
-		specular['a']= illumiSpecular.attributes.getNamedItem("a").value;
+	if (textures.length != 1) {
+		console.error("Either 0 or more than 1 'textures' elements found, textures were not loaded");
+		return;
+	}
 
+	var lsxTexturesArray = textures[0].getElementsByTagName('TEXTURE');
+	
+	if (lsxTexturesArray == null) {
+		console.log("texturesArray element is missing.");
+		return;
+	}
+
+	if (lsxTexturesArray.length == 0) {
+		console.error("zero 'texturesArray' elements found.");
+		return;
+	}
+	
+	for(var i = 0; i < lsxTexturesArray.length; i++){
+		
+		var id = lsxTexturesArray[i].attributes.getNamedItem("id").value;
+		
+		if(lsxTexturesArray[i].getElementsByTagName('file')[0] != null){
+			var fileTexture = lsxTexturesArray[i].getElementsByTagName('file')[0];
+			var path = fileTexture.attributes.getNamedItem("path").value;
+		}
+
+
+		if(lsxTexturesArray[i].getElementsByTagName('amplif_factor')[0] != null){
+			var amplif_factorTexture = lsxTexturesArray[i].getElementsByTagName('amplif_factor')[0];
+			var amplif_factor = new Amplif(amplif_factorTexture.attributes.getNamedItem("s").value
+				,amplif_factorTexture.attributes.getNamedItem("t").value)		
+		}
+
+		var texture = new Texture(id, path, amplif_factor);
+		texturesArray[i] = texture;
+	}
+	
+}
+
+function getMaterials(rootElement, materialsArray){
+
+	var materials =  rootElement.getElementsByTagName('MATERIALS');
+	
+	if (materials == null) {
+		console.log("materials element is missing.");
+		return;
+	}
+
+	if (materials.length != 1) {
+		console.error("Either 0 or more than 1 'materials' elements found, materials were not loaded");
+		return;
+	}
+
+	var lsxMaterialsArray = materials[0].getElementsByTagName('MATERIAL');
+	
+	if (lsxMaterialsArray == null) {
+		console.log("materialsArray element is missing.");
+		return;
+	}
+
+	if (lsxMaterialsArray.length == 0) {
+		console.error("zero 'materialsArray' elements found.");
+		return;
 	}
 
 	
-	if(illumination[0].getElementsByTagName('shininess')[0] != null){
-		var illumiShininess = illumination[0].getElementsByTagName('shininess')[0];
-		shininess = illumiShininess.attributes.getNamedItem("value").value;
+	for(var i = 0; i < lsxMaterialsArray.length; i++){
+		
+		var id = lsxMaterialsArray[i].attributes.getNamedItem("id").value;
+		
+		if(lsxMaterialsArray[i].getElementsByTagName('shininess')[0] != null){
+			var shininessMaterial = lsxMaterialsArray[i].getElementsByTagName('shininess')[0];
+			var shininess = shininessMaterial.attributes.getNamedItem("value").value;
+		}
+
+
+		if(lsxMaterialsArray[i].getElementsByTagName('specular')[0] != null){
+			var specularMaterial = lsxMaterialsArray[i].getElementsByTagName('specular')[0];
+			var specular = new RGBA(specularMaterial.attributes.getNamedItem("r").value
+				,specularMaterial.attributes.getNamedItem("g").value
+				,specularMaterial.attributes.getNamedItem("b").value
+				,specularMaterial.attributes.getNamedItem("a").value);
+		}
+		if(lsxMaterialsArray[i].getElementsByTagName('diffuse')[0] != null){
+			var diffuseMaterial = lsxMaterialsArray[i].getElementsByTagName('diffuse')[0];
+			var diffuse = new RGBA(diffuseMaterial.attributes.getNamedItem("r").value
+				,diffuseMaterial.attributes.getNamedItem("g").value
+				,diffuseMaterial.attributes.getNamedItem("b").value
+				,diffuseMaterial.attributes.getNamedItem("a").value);
+		}
+		if(lsxMaterialsArray[i].getElementsByTagName('ambient')[0] != null){
+			var ambientMaterial = lsxMaterialsArray[i].getElementsByTagName('ambient')[0];
+			var ambient = new RGBA(ambientMaterial.attributes.getNamedItem("r").value
+				,ambientMaterial.attributes.getNamedItem("g").value
+				,ambientMaterial.attributes.getNamedItem("b").value
+				,ambientMaterial.attributes.getNamedItem("a").value);
+		}
+		if(lsxMaterialsArray[i].getElementsByTagName('emission')[0] != null){
+			var emissionMaterial = lsxMaterialsArray[i].getElementsByTagName('emission')[0];
+			var emission = new RGBA(emissionMaterial.attributes.getNamedItem("r").value
+				,emissionMaterial.attributes.getNamedItem("g").value
+				,emissionMaterial.attributes.getNamedItem("b").value
+				,emissionMaterial.attributes.getNamedItem("a").value);
+		}
+		
+
+		var material = new Material(id, shininess, specular, diffuse, ambient, emission);
+		materialsArray[i] = material;
 	}
+	
 }
 
 
@@ -170,6 +338,8 @@ function getLights(rootElement, lightsArray){
 
 	for(var i = 0; i < lsxLightsArray.length; i++){
 		
+		var id = lsxLightsArray[i].attributes.getNamedItem("id").value; 
+
 		if(lsxLightsArray[i].getElementsByTagName('enable')[0] != null){
 			var lightEnabled = lsxLightsArray[i].getElementsByTagName('enable')[0];
 			var enabled = lightEnabled.attributes.getNamedItem("value").value;
@@ -180,9 +350,9 @@ function getLights(rootElement, lightsArray){
 		if(lsxLightsArray[i].getElementsByTagName('position')[0] != null){
 			var lightPosition = lsxLightsArray[i].getElementsByTagName('position')[0];
 			var position = new Position(lightPosition.attributes.getNamedItem("x").value
-										, lightPosition.attributes.getNamedItem("y").value
-										, lightPosition.attributes.getNamedItem("z").value
-										, lightPosition.attributes.getNamedItem("w").value);
+				, lightPosition.attributes.getNamedItem("y").value
+				, lightPosition.attributes.getNamedItem("z").value
+				, lightPosition.attributes.getNamedItem("w").value);
 		}else{
 			var position = null;
 		}
@@ -190,9 +360,9 @@ function getLights(rootElement, lightsArray){
 		if(lsxLightsArray[i].getElementsByTagName('ambient')[0] != null){
 			var lightAmbient = lsxLightsArray[i].getElementsByTagName('ambient')[0];
 			var ambient = new RGBA(lightAmbient.attributes.getNamedItem("r").value
-								,lightAmbient.attributes.getNamedItem("g").value
-								,lightAmbient.attributes.getNamedItem("b").value
-								,lightAmbient.attributes.getNamedItem("a").value);
+				,lightAmbient.attributes.getNamedItem("g").value
+				,lightAmbient.attributes.getNamedItem("b").value
+				,lightAmbient.attributes.getNamedItem("a").value);
 		}else{
 			var ambient = null;
 		}
@@ -200,9 +370,9 @@ function getLights(rootElement, lightsArray){
 		if(lsxLightsArray[i].getElementsByTagName('diffuse')[0] != null){
 			var lightDiffuse = lsxLightsArray[i].getElementsByTagName('diffuse')[0];
 			var diffuse = new RGBA(lightDiffuse.attributes.getNamedItem("r").value
-								,lightDiffuse.attributes.getNamedItem("g").value
-								,lightDiffuse.attributes.getNamedItem("b").value
-								,lightDiffuse.attributes.getNamedItem("a").value);
+				,lightDiffuse.attributes.getNamedItem("g").value
+				,lightDiffuse.attributes.getNamedItem("b").value
+				,lightDiffuse.attributes.getNamedItem("a").value);
 		}else{
 			var diffuse = null;
 		}
@@ -211,9 +381,9 @@ function getLights(rootElement, lightsArray){
 		if(lsxLightsArray[i].getElementsByTagName('specular')[0] != null){
 			var lightSpecular = lsxLightsArray[i].getElementsByTagName('specular')[0];
 			var specular = new RGBA(lightSpecular.attributes.getNamedItem("r").value
-								,lightSpecular.attributes.getNamedItem("g").value
-								,lightSpecular.attributes.getNamedItem("b").value
-								,lightSpecular.attributes.getNamedItem("a").value);
+				,lightSpecular.attributes.getNamedItem("g").value
+				,lightSpecular.attributes.getNamedItem("b").value
+				,lightSpecular.attributes.getNamedItem("a").value);
 		}else{
 			var specular = null;
 		}
@@ -228,7 +398,7 @@ function getLights(rootElement, lightsArray){
 		
 		
 		
-		var light = new Light(enabled, position, ambient, diffuse, specular, shininess);
+		var light = new Light(id, enabled, position, ambient, diffuse, specular, shininess);
 		lightsArray[i] = light;
 	}
 }
@@ -273,43 +443,43 @@ function getLeaves(rootElement, leavesArray) {
 
 function getGeometryNodes(rootElement, leavesArray){
 	var nodes = rootElement.getElementsByTagName("NODES");
-
+	
 	if(nodes == null){
 		console.log("There's not a \"nodes\" tag");
 		return;
 	}
-
+	
 	if(nodes.length != 1){
 		console.error("There's more than 1 \"nodes\" tag, geometry nodes were not loaded");
 		return;
 	}
-
+	
 	var rootNode = nodes[0].getElementsByTagName('ROOT');
-
+	
 	if(rootNode == null){
 		console.error("Couldn't read \"ROOT\" element from .lsx file");
 		return;
 	}
-
+	
 	if(rootNode.length != 1){
 		console.error("either there is 0 or more than 1 \"ROOT\" node, couldn't build a geometry");
 		return;
 	}
-
+	
 	var rootID = rootNode[0].attributes.getNamedItem("id").value;
-
+	
 	var lsxNodesArray = nodes[0].getElementsByTagName('NODE');
-
+	
 	if(lsxNodesArray == null){
 		console.log("Couldn't read a single \"node\" element from .lsx file");
 		return;
 	}
-
+	
 	if(lsxNodesArray.length == 0){
 		console.error("there's not \"node\" elements");
 		return;
 	}
-
+	
 	returnRootNode = new Node(rootID);
 	
 	if(constructTree(lsxNodesArray, leavesArray, returnRootNode) == -1){
@@ -317,62 +487,62 @@ function getGeometryNodes(rootElement, leavesArray){
 		returnRootNode = null;
 	}
 	
-
+	
 	return returnRootNode;
 }
 
 
 function getGeometry(lsxNodesArray, leavesArray, root, i){
-		var descendants = lsxNodesArray[i].getElementsByTagName("DESCENDANTS");
-
-		if(descendants == null){
-			console.error("node with id " + root.id + " has no descendants, geometry scene was not loaded");
-			return -1;
-		}
-
-		if(descendants.length != 1){
-			console.error("node with id " + root.id + " either has 0 or more than 1 \"DESCENDANTS\" tags, scene was not loaded");
-			return -1;
-		}
-
-		var lsxDescendantsArray = descendants[0].getElementsByTagName("DESCENDANT");
-
-		for(var i = 0; i < lsxDescendantsArray.length; i++){
-			if(lsxDescendantsArray[i].attributes.getNamedItem("id") != null){
-				var id = lsxDescendantsArray[i].attributes.getNamedItem("id").value;
-				var node = new Node(id);
-				root.descendants[i] = node;
-
-				for(var a = 0; a < lsxNodesArray.length; a++){
-					if(lsxNodesArray[a].attributes.getNamedItem("id").value == id){
-						if(getNodeInfo(lsxNodesArray[a], root.descendants[i]) == -1) return -1;
-						break;
-					}
+	var descendants = lsxNodesArray[i].getElementsByTagName("DESCENDANTS");
+	
+	if(descendants == null){
+		console.error("node with id " + root.id + " has no descendants, geometry scene was not loaded");
+		return -1;
+	}
+	
+	if(descendants.length != 1){
+		console.error("node with id " + root.id + " either has 0 or more than 1 \"DESCENDANTS\" tags, scene was not loaded");
+		return -1;
+	}
+	
+	var lsxDescendantsArray = descendants[0].getElementsByTagName("DESCENDANT");
+	
+	for(var i = 0; i < lsxDescendantsArray.length; i++){
+		if(lsxDescendantsArray[i].attributes.getNamedItem("id") != null){
+			var id = lsxDescendantsArray[i].attributes.getNamedItem("id").value;
+			var node = new Node(id);
+			root.descendants[i] = node;
+			
+			for(var a = 0; a < lsxNodesArray.length; a++){
+				if(lsxNodesArray[a].attributes.getNamedItem("id").value == id){
+					if(getNodeInfo(lsxNodesArray[a], root.descendants[i]) == -1) return -1;
+					break;
 				}
-
-				if(constructTree(lsxNodesArray, leavesArray, root.descendants[i]) == -1){
-					return -1;
-				}
-
-			} else{
-				console.error("node with id " + root.id + " has a descendant with no id");
+			}
+			
+			if(constructTree(lsxNodesArray, leavesArray, root.descendants[i]) == -1){
 				return -1;
 			}
+			
+		} else{
+			console.error("node with id " + root.id + " has a descendant with no id");
+			return -1;
 		}
-		return 0;
+	}
+	return 0;
 }
 
 function constructTree(lsxNodesArray, leavesArray, root){
 	for(var i = 0; i < lsxNodesArray.length; i++){
 		if(lsxNodesArray[i].attributes.getNamedItem("id").value == root.id){
-
+			
 			if(getGeometry(lsxNodesArray, leavesArray, root, i) == -1){
 				return -1;
 			}
-
+			
 			break;
 		}
-
+		
 		if(i == lsxNodesArray.length - 1){
 			if(checkLeafs(leavesArray, root.id) == -1){
 				console.error("there's not a node with this id \"" + root.id + "\", geometry was not loaded");
@@ -393,95 +563,128 @@ function checkLeafs(leavesArray, id){
 }
 
 function getNodeInfo(lsxNode, node){
-
+	
 	var childrenArray = lsxNode.children;
-
+	
 	for(var i = 0; i < childrenArray.length; i++){
 		if(childrenArray[i].localName == "ROTATION"){
 			node.transforms.push(new Rotation(childrenArray[i].attributes.getNamedItem("axis").value,
-												childrenArray[i].attributes.getNamedItem("angle").value));
+				childrenArray[i].attributes.getNamedItem("angle").value));
 		}
-
+		
 		if(childrenArray[i].localName == "SCALE"){
 			node.transforms.push(new Scale(childrenArray[i].attributes.getNamedItem("sx").value,
-												childrenArray[i].attributes.getNamedItem("sy").value,
-												childrenArray[i].attributes.getNamedItem("sz").value));
+				childrenArray[i].attributes.getNamedItem("sy").value,
+				childrenArray[i].attributes.getNamedItem("sz").value));
 		}
-
+		
 		if(childrenArray[i].localName == "TRANSLATION"){
 			node.transforms.push(new Translation(childrenArray[i].attributes.getNamedItem("x").value,
-												childrenArray[i].attributes.getNamedItem("y").value,
-												childrenArray[i].attributes.getNamedItem("z").value));
+				childrenArray[i].attributes.getNamedItem("y").value,
+				childrenArray[i].attributes.getNamedItem("z").value));
 		}
 	}
-
+	
 	return 0;
+}
+
+
+/*
+* Texture Classes
+*/
+
+function Texture(id, path, amplif_factor){
+	this.id = id;
+	this.path = path;
+	this.amplif_factor = amplif_factor;
+}
+
+function Amplif(s, t){
+	this.s = s;
+	this.t = t;
+}
+
+/*
+* Material Classes
+*/
+function Material(id, shininess, specular, diffuse, ambient, emission){
+	this.id = id;
+	this.shininess = shininess;
+	this.specular = specular;
+	this.diffuse = diffuse;
+	this.ambient = ambient;
+	this.emission = emission;
 }
 
 /*
  *	Light Classes
  */
  
-function Light(enable, position, ambient, diffuse, specular, shininess){
-   this.enabled = enable;
-   this.position = position;
-   this.ambient = ambient;
-   this.diffuse = diffuse;
-   this.specular = specular;
-   this.shininess = shininess;
-}
-
-function Position(x, y, z, w){
-   this.x = x;
-   this.y = y;
-   this.z = z;
-   this.w = w;
-}
-
-function RGBA(r, g, b, a){
-	this.r = r;
-	this.g = g;
-	this.b = b;
-	this.a = a;
-}
+ function Light(id, enable, position, ambient, diffuse, specular, shininess){
+ 	this.id = id;
+ 	this.enabled = enable;
+ 	this.position = position;
+ 	this.ambient = ambient;
+ 	this.diffuse = diffuse;
+ 	this.specular = specular;
+ 	this.shininess = shininess;
+ }
 
 
-function Leaf(id, type, args){
-	this.id = id;
+ function Position(x, y, z, w){
+ 	this.x = x;
+ 	this.y = y;
+ 	this.z = z;
+ 	this.w = w;
+ }
 
-	this.type = type;
-	this.args = args;
-}
-
-
-function Node(id){
-	this.id = id;
-
-	this.texture = null;
-	this.material = null;
-
-	this.transforms = [];
-
-	this.descendants = [];
-}
+ function RGBA(r, g, b, a){
+ 	this.r = r;
+ 	this.g = g;
+ 	this.b = b;
+ 	this.a = a;
+ }
 
 
-function Translation(x, y, z){
-	this.x = x;
-	this.y = y;
-	this.z = z;
-}
+ function Leaf(id, type, args){
+ 	this.id = id;
+ 	this.type = type;
+ 	this.args = args;
+ }
 
 
-function Scale(sx, sy, sz){
-	this.sx = sx;
-	this.sy = sy;
-	this.sz = sz;
-}
+ function Node(id){
+ 	this.id = id;
 
-function Rotation(axis, angle){
-	this.axis = axis;
-	this.angle = angle;
-}
+ 	this.texture = null;
+ 	this.material = null;
+
+ 	this.transforms = [];
+
+ 	this.descendants = [];
+ }
+
+
+ function Rotation(axis, angle){
+ 	this.axis = axis;
+ 	this.angle = angle;
+ }
+
+
+ function Translation(x, y, z){
+ 	this.x = x;
+ 	this.y = y;
+ 	this.z = z;
+ }
+
+
+ function Scale(sx, sy, sz){
+ 	this.sx = sx;
+ 	this.sy = sy;
+ 	this.sz = sz;
+ }
+
+
+
 
 

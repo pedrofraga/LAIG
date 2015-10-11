@@ -126,7 +126,8 @@
                 <DESCENDANT id="backrightleg" /> 
                 <DESCENDANT id="backleftleg" />   
                 <DESCENDANT id="frontrightleg" />   
-                <DESCENDANT id="frontleftleg" />                                              
+                <DESCENDANT id="frontleftleg" />   
+                <DESCENDANT id="globe" />                                           
             </DESCENDANTS>
 
         </NODE>
@@ -291,7 +292,7 @@
 
             <TEXTURE id="map" />  
            
-            <TRANSLATION x="7" y="11" z="20" /> 
+            <TRANSLATION x="7" y="13" z="15" /> 
             <SCALE sx="1" sy="1" sz="1" />            
 
             <DESCENDANTS>

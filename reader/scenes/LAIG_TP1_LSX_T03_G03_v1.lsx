@@ -291,7 +291,7 @@
 
             <TEXTURE id="map" />  
            
-            <TRANSLATION x="7" y="11" z="15" /> 
+            <TRANSLATION x="7" y="11" z="20" /> 
             <SCALE sx="1" sy="1" sz="1" />            
 
             <DESCENDANTS>

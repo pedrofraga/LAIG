@@ -27,23 +27,25 @@ MyObject.prototype.displayRoot = function (rootNode, transf){
 			rootNode.id == "cylinder")
 				return rootNode.id;
 
-		rootNode.transforms.reverse();
 		for(var i = 0; i < rootNode.transforms.length; i++){
 			transf.push(rootNode.transforms[i]);
 		}
-		rootNode.transforms.reverse();
 
 		for(var i = 0; i < rootNode.descendants.length; i++){
 
-			var transfClone = JSON.parse(JSON.stringify(transf));
+			var transfClone = [];
+			
+			transfClone = transf.slice(0);
+			
 			var returnValue = this.displayRoot(rootNode.descendants[i], transfClone);
+			
 
 			switch(returnValue){
 				case "square":
-					var object = new Square(this.scene, 0, 1, 1,0);
 
 					this.scene.pushMatrix();
-
+					var object = new Square(this.scene, 0, 1, 1, 0);
+					
 					transf.reverse();
 					for(var a = 0; a < transf.length; a++){
 						if(rootNode.transforms[a].constructor.name == "Rotation"){
@@ -55,6 +57,7 @@ MyObject.prototype.displayRoot = function (rootNode, transf){
 						}
 					}
 					transf.reverse();
+					
 
 					object.display();
 					this.scene.popMatrix();

@@ -102,7 +102,8 @@ MySceneGraph.prototype.parser= function(rootElement) {
 	
 	if(this.rootNode == null){
 		return ".lsx file it's not well formed";
-	}	
+	}
+
 };
 
 /*

@@ -27,15 +27,16 @@ MyObject.prototype.displayRoot = function (rootNode, transf){
 			rootNode.id == "cylinder")
 				return rootNode.id;
 
-
+		rootNode.transforms.reverse();
 		for(var i = 0; i < rootNode.transforms.length; i++){
 			transf.push(rootNode.transforms[i]);
 		}
-		
+		rootNode.transforms.reverse();
 
 		for(var i = 0; i < rootNode.descendants.length; i++){
 
-			var returnValue = this.displayRoot(rootNode.descendants[i], transf);
+			var transfClone = JSON.parse(JSON.stringify(transf));
+			var returnValue = this.displayRoot(rootNode.descendants[i], transfClone);
 
 			switch(returnValue){
 				case "square":
@@ -43,11 +44,17 @@ MyObject.prototype.displayRoot = function (rootNode, transf){
 
 					this.scene.pushMatrix();
 
-					for(var i = 0; i < transf.length; i++){
-						if(transf[i].constructor.name == "Rotation"){
-							this.rotate(transf[i]);
+					transf.reverse();
+					for(var a = 0; a < transf.length; a++){
+						if(rootNode.transforms[a].constructor.name == "Rotation"){
+							this.rotate(rootNode.transforms[a]);
+						}else if(rootNode.transforms[a].constructor.name == "Translation"){
+							this.translate(rootNode.transforms[a]);
+						}else if(rootNode.transforms[a].constructor.name == "Scale"){
+							this.scale(rootNode.transforms[a]);
 						}
 					}
+					transf.reverse();
 
 					object.display();
 					this.scene.popMatrix();
@@ -61,15 +68,12 @@ MyObject.prototype.displayRoot = function (rootNode, transf){
 					for(var i = 0; i < scales.length; i++){
 						this.scale(scales[i]);
 					}
-
 					for(var i = 0; i < rotations.length; i++){
 						this.rotate(rotations[i]);
 					}
-
 					for(var i = 0; i < translations.length; i++){
 						this.translate(translations[i]);
 					}
-
 					object.display();
 					this.scene.popMatrix();*/
 					break;
@@ -109,5 +113,5 @@ MyObject.prototype.translate = function (translation){
 }
 
 MyObject.prototype.toRadian = function (degrees){
-	return parseFloat(degrees) * (Math.PI/180);
+	return parseFloat(degrees) * Math.PI / 180;
 }

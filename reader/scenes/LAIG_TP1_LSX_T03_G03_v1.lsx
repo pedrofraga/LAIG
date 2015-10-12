@@ -122,12 +122,18 @@
 			<MATERIAL id="null" />      
             <TEXTURE id="null" /> 
             <DESCENDANTS>
-                <DESCENDANT id="cover" />
+               <!-- <DESCENDANT id="cover" />
                 <DESCENDANT id="backrightleg" /> 
                 <DESCENDANT id="backleftleg" />   
                 <DESCENDANT id="frontrightleg" />   
                 <DESCENDANT id="frontleftleg" />   
-                <DESCENDANT id="globe" />                                           
+                <DESCENDANT id="globe" /> -->  
+                <DESCENDANT id="front_square" />    
+                <DESCENDANT id="back_square" />      
+                <DESCENDANT id="right_square" /> 
+                <DESCENDANT id="left_square" />  
+                <DESCENDANT id="top_square" />   
+                <DESCENDANT id="bottom_square" />                                           
             </DESCENDANTS>
 
         </NODE>

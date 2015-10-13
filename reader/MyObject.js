@@ -74,12 +74,6 @@ MyObject.prototype.displayRoot = function (rootNode, transf){
 							}else if(this.leaves[a].type == "sphere"){
 								var object3 = new Sphere(this.scene, 25, 20);
 								
-								for (var j = 0; j < object3.indices.length; j++)
-								{
-										if (object3.indices[j] > (object3.vertices.length - 1))
-											console.error(object3.indices[j]);
-								}
-								
 								this.scene.pushMatrix();
 								for(var a = 0; a < transf.length; a++){
 									if(transf[a].constructor.name == "Rotation"){

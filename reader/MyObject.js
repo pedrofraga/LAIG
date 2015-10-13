@@ -46,17 +46,15 @@ MyObject.prototype.displayRoot = function (rootNode, transf){
 					this.scene.pushMatrix();
 					var object = new Square(this.scene, 0, 1, 1, 0);
 					
-					transf.reverse();
 					for(var a = 0; a < transf.length; a++){
-						if(rootNode.transforms[a].constructor.name == "Rotation"){
-							this.rotate(rootNode.transforms[a]);
-						}else if(rootNode.transforms[a].constructor.name == "Translation"){
-							this.translate(rootNode.transforms[a]);
-						}else if(rootNode.transforms[a].constructor.name == "Scale"){
-							this.scale(rootNode.transforms[a]);
+						if(transf[a].constructor.name == "Rotation"){
+							this.rotate(transf[a]);
+						}else if(transf[a].constructor.name == "Translation"){
+							this.translate(transf[a]);
+						}else if(transf[a].constructor.name == "Scale"){
+							this.scale(transf[a]);
 						}
 					}
-					transf.reverse();
 					
 
 					object.display();
@@ -66,19 +64,19 @@ MyObject.prototype.displayRoot = function (rootNode, transf){
 				case "sphere":
 					break;
 				case "cylinder":
-					/*var object = new Cylinder(0.5, 25, 20);
+					var object2 = new Cylinder(this.scene, 25, 20);
 					this.scene.pushMatrix();
-					for(var i = 0; i < scales.length; i++){
-						this.scale(scales[i]);
+					for(var a = 0; a < transf.length; a++){
+						if(transf[a].constructor.name == "Rotation"){
+							this.rotate(transf[a]);
+						}else if(transf[a].constructor.name == "Translation"){
+							this.translate(transf[a]);
+						}else if(transf[a].constructor.name == "Scale"){
+							this.scale(transf[a]);
+						}
 					}
-					for(var i = 0; i < rotations.length; i++){
-						this.rotate(rotations[i]);
-					}
-					for(var i = 0; i < translations.length; i++){
-						this.translate(translations[i]);
-					}
-					object.display();
-					this.scene.popMatrix();*/
+					object2.display();
+					this.scene.popMatrix();
 					break;
 			}
 			

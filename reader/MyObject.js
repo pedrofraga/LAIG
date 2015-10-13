@@ -10,6 +10,7 @@ function MyObject(scene, rootNode, leaves) {
 	this.leaves = leaves;
 	this.childObjects = [];
 	this.getTree(this.rootNode, []);
+	
 
 };
 

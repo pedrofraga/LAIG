@@ -64,7 +64,7 @@ MyObject.prototype.displayRoot = function (rootNode, transf){
 				case "sphere":
 					break;
 				case "cylinder":
-					var object2 = new Cylinder(this.scene, 25, 20);
+					var object2 = new Cylinder(this.scene, 25, 1);
 					this.scene.pushMatrix();
 					for(var a = 0; a < transf.length; a++){
 						if(transf[a].constructor.name == "Rotation"){

@@ -72,7 +72,7 @@ MyObject.prototype.displayRoot = function (rootNode, transf){
 								object2.display();
 								this.scene.popMatrix();
 							}else if(this.leaves[a].type == "sphere"){
-								var object3 = new Sphere(this.scene, 25, 20);
+								var object3 = new MySphere(this.scene, this.leaves[a].args);
 								
 								this.scene.pushMatrix();
 								for(var a = 0; a < transf.length; a++){

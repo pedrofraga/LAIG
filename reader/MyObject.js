@@ -45,7 +45,7 @@ MyObject.prototype.displayRoot = function (rootNode, transf){
 						if(this.leaves[a].id == returnValue){
 							if(this.leaves[a].type == "rectangle"){
 								this.scene.pushMatrix();
-								var object = new Square(this.scene, this.leaves[a].args[0], this.leaves[a].args[1], this.leaves[a].args[2], this.leaves[a].args[3]);
+								var object = new Square(this.scene, parseFloat(this.leaves[a].args[0]), parseFloat(this.leaves[a].args[1]), parseFloat(this.leaves[a].args[2]), parseFloat(this.leaves[a].args[3]));
 								for(var a = 0; a < transf.length; a++){
 									if(transf[a].constructor.name == "Rotation"){
 										this.rotate(transf[a]);
@@ -58,7 +58,7 @@ MyObject.prototype.displayRoot = function (rootNode, transf){
 								object.display();
 								this.scene.popMatrix();
 							}else if(this.leaves[a].type == "cylinder"){
-								var object2 = new Cylinder(this.scene, 25, 1);
+								var object2 = new Cylinder(this.scene, parseFloat(this.leaves[a].args[0]), parseFloat(this.leaves[a].args[1]), parseFloat(this.leaves[a].args[2]), parseFloat(this.leaves[a].args[3]), parseFloat(this.leaves[a].args[4]));
 								this.scene.pushMatrix();
 								for(var a = 0; a < transf.length; a++){
 									if(transf[a].constructor.name == "Rotation"){
@@ -71,8 +71,29 @@ MyObject.prototype.displayRoot = function (rootNode, transf){
 								}
 								object2.display();
 								this.scene.popMatrix();
+							}else if(this.leaves[a].type == "sphere"){
+								var object3 = new Sphere(this.scene, 25, 20);
+								
+								for (var j = 0; j < object3.indices.length; j++)
+								{
+										if (object3.indices[j] > (object3.vertices.length - 1))
+											console.error(object3.indices[j]);
+								}
+								
+								this.scene.pushMatrix();
+								for(var a = 0; a < transf.length; a++){
+									if(transf[a].constructor.name == "Rotation"){
+										this.rotate(transf[a]);
+									}else if(transf[a].constructor.name == "Translation"){
+										this.translate(transf[a]);
+									}else if(transf[a].constructor.name == "Scale"){
+										this.scale(transf[a]);
+									}
+								}
+								object3.display();
+								this.scene.popMatrix();
 							}
-
+							
 						}
 					}
 					

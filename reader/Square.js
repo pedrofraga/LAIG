@@ -3,13 +3,18 @@
  * @param gl {WebGLRenderingContext}
  * @constructor
  */
-function Square(scene, minS, maxS, minT, maxT) {
+function Square(scene, minX, maxX, minY, maxY) {
 	CGFobject.call(this,scene);
 	
-	this.minS = minS;
-	this.maxS = maxS;
-	this.minT = minT;
-	this.maxT = maxT;
+	this.minS = 0;
+	this.maxS = 1;
+	this.minT = 1;
+	this.maxT = 0;
+
+	this.minX = minX;
+	this.maxX = maxX;
+	this.minY = minY;
+	this.maxY = maxY;
 
 	this.initBuffers();
 };
@@ -20,10 +25,10 @@ Square.prototype.constructor=Square;
 Square.prototype.initBuffers = function () {
 
 	this.vertices = [
-            0, 0, 0,
-            1, 0, 0,
-            0, 1, 0,
-            1, 1, 0
+            this.minX, this.minY, 0,
+            this.maxX, this.minY, 0,
+            this.minX, this.maxY, 0,
+            this.maxX, this.maxY, 0
 			];
 
 	this.indices = [

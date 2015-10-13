@@ -545,7 +545,7 @@ function constructTree(lsxNodesArray, leavesArray, root){
 		}
 		
 		if(i == lsxNodesArray.length - 1){
-			if(checkLeafs(leavesArray, root.id) == -1){
+			if(checkLeafs(leavesArray, root) == -1){
 				console.error("there's not a node with this id \"" + root.id + "\", geometry was not loaded");
 				return -1;
 			}
@@ -554,9 +554,9 @@ function constructTree(lsxNodesArray, leavesArray, root){
 	return 0;
 }
 
-function checkLeafs(leavesArray, id){
+function checkLeafs(leavesArray, root){
 	for(var i = 0; i < leavesArray.length; i++){
-		if(leavesArray[i].id == id){
+		if(leavesArray[i].id == root.id){
 			return 0;
 		}
 	}

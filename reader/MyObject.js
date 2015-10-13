@@ -3,10 +3,11 @@
  * @param gl {WebGLRenderingContext}
  * @constructor
  */
-function MyObject(scene, rootNode) {
+function MyObject(scene, rootNode, leaves) {
 	CGFobject.call(this,scene);
 
 	this.rootNode = rootNode;
+	this.leaves = leaves;
 
 };
 
@@ -22,10 +23,10 @@ MyObject.prototype.displayRoot = function (rootNode, transf){
 	
 	if(rootNode != null){
 
-		if(rootNode.id == "square" || 
-			rootNode.id == "sphere" || 
-			rootNode.id == "cylinder")
-				return rootNode.id;
+		for(var a = 0; a < this.leaves.length; a++){
+			if(rootNode.id == this.leaves[a].id)
+					return rootNode.id;
+		}
 
 		for(var i = 0; i < rootNode.transforms.length; i++){
 			transf.push(rootNode.transforms[i]);
@@ -39,46 +40,42 @@ MyObject.prototype.displayRoot = function (rootNode, transf){
 			
 			var returnValue = this.displayRoot(rootNode.descendants[i], transfClone);
 			
-
-			switch(returnValue){
-				case "square":
-
-					this.scene.pushMatrix();
-					var object = new Square(this.scene, 0, 1, 1, 0);
 					
-					for(var a = 0; a < transf.length; a++){
-						if(transf[a].constructor.name == "Rotation"){
-							this.rotate(transf[a]);
-						}else if(transf[a].constructor.name == "Translation"){
-							this.translate(transf[a]);
-						}else if(transf[a].constructor.name == "Scale"){
-							this.scale(transf[a]);
+					for(var a = 0; a < this.leaves.length; a++){
+						if(this.leaves[a].id == returnValue){
+							if(this.leaves[a].type == "rectangle"){
+								this.scene.pushMatrix();
+								var object = new Square(this.scene, this.leaves[a].args[0], this.leaves[a].args[1], this.leaves[a].args[2], this.leaves[a].args[3]);
+								for(var a = 0; a < transf.length; a++){
+									if(transf[a].constructor.name == "Rotation"){
+										this.rotate(transf[a]);
+									}else if(transf[a].constructor.name == "Translation"){
+										this.translate(transf[a]);
+									}else if(transf[a].constructor.name == "Scale"){
+										this.scale(transf[a]);
+									}
+								}
+								object.display();
+								this.scene.popMatrix();
+							}else if(this.leaves[a].type == "cylinder"){
+								var object2 = new Cylinder(this.scene, 25, 1);
+								this.scene.pushMatrix();
+								for(var a = 0; a < transf.length; a++){
+									if(transf[a].constructor.name == "Rotation"){
+										this.rotate(transf[a]);
+									}else if(transf[a].constructor.name == "Translation"){
+										this.translate(transf[a]);
+									}else if(transf[a].constructor.name == "Scale"){
+										this.scale(transf[a]);
+									}
+								}
+								object2.display();
+								this.scene.popMatrix();
+							}
+
 						}
 					}
 					
-
-					object.display();
-					this.scene.popMatrix();
-
-					break;
-				case "sphere":
-					break;
-				case "cylinder":
-					var object2 = new Cylinder(this.scene, 25, 1);
-					this.scene.pushMatrix();
-					for(var a = 0; a < transf.length; a++){
-						if(transf[a].constructor.name == "Rotation"){
-							this.rotate(transf[a]);
-						}else if(transf[a].constructor.name == "Translation"){
-							this.translate(transf[a]);
-						}else if(transf[a].constructor.name == "Scale"){
-							this.scale(transf[a]);
-						}
-					}
-					object2.display();
-					this.scene.popMatrix();
-					break;
-			}
 			
 		}
 	}

@@ -3,40 +3,28 @@
  * @param gl {WebGLRenderingContext}
  * @constructor
  */
-function MyObject(scene, rootNode, leaves) {
+function MyObject(scene, rootNode, leaves, textures) {
 	CGFobject.call(this,scene);
 
 	this.rootNode = rootNode;
 	this.leaves = leaves;
+	this.textures = textures;
 	this.childObjects = [];
-	this.getTree(this.rootNode, []);
-	
-
+	this.getObjectsFromLeaves();
+	this.getTextureAppearance();
+	console.log(textures);
+	return;
 };
 
 MyObject.prototype = Object.create(CGFobject.prototype);
 MyObject.prototype.constructor= MyObject;
 
 MyObject.prototype.display = function () {
-	for(var i = 0; i < this.childObjects.length; i++){
-		this.scene.pushMatrix();
-		for(var a = 0; a < this.childObjects[i].transf.length; a++){
-			if(this.childObjects[i].transf[a].constructor.name == "Rotation"){
-				this.rotate(this.childObjects[i].transf[a]);
-			}else if(this.childObjects[i].transf[a].constructor.name == "Translation"){
-				this.translate(this.childObjects[i].transf[a]);
-			}else if(this.childObjects[i].transf[a].constructor.name == "Scale"){
-				this.scale(this.childObjects[i].transf[a]);
-			}
-		}
-		this.childObjects[i].object.display();
-		this.scene.popMatrix();
-	}
-	
+	this.displayTree(this.rootNode, [], []);
 };
 
 
-MyObject.prototype.getTree = function (rootNode, transf){
+MyObject.prototype.displayTree = function (rootNode, transf, textur){
 	
 	if(rootNode != null){
 
@@ -48,6 +36,10 @@ MyObject.prototype.getTree = function (rootNode, transf){
 		for(var i = 0; i < rootNode.transforms.length; i++){
 			transf.push(rootNode.transforms[i]);
 		}
+		
+		if(rootNode.texture != null){
+			textur.push(rootNode.texture);
+		}
 
 		for(var i = 0; i < rootNode.descendants.length; i++){
 
@@ -55,25 +47,31 @@ MyObject.prototype.getTree = function (rootNode, transf){
 			
 			transfClone = transf.slice(0);
 			
-			var returnValue = this.getTree(rootNode.descendants[i], transfClone);
+			var texturClone = [];
+			
+			texturClone = textur.slice(0);
+			
+			var returnValue = this.displayTree(rootNode.descendants[i], transfClone, texturClone);
 			
 					
-					for(var a = 0; a < this.leaves.length; a++){
-						if(this.leaves[a].id == returnValue){
-							if(this.leaves[a].type == "rectangle"){
-								var object = new Square(this.scene, parseFloat(this.leaves[a].args[0]), parseFloat(this.leaves[a].args[1]), parseFloat(this.leaves[a].args[2]), parseFloat(this.leaves[a].args[3]));
-								var geometry = new Geometry(object, transf);
-								this.childObjects.push(geometry);
-							}else if(this.leaves[a].type == "cylinder"){
-								var object = new Cylinder(this.scene, parseFloat(this.leaves[a].args[0]), parseFloat(this.leaves[a].args[1]), parseFloat(this.leaves[a].args[2]), parseFloat(this.leaves[a].args[3]), parseFloat(this.leaves[a].args[4]));								
-								var geometry = new Geometry(object, transf);
-								this.childObjects.push(geometry);
-							}else if(this.leaves[a].type == "sphere"){
-								var object = new MySphere(this.scene, this.leaves[a].args);
-								var geometry = new Geometry(object, transf);
-								this.childObjects.push(geometry);
+					for(var j = 0; j < this.childObjects.length; j++){
+						if(this.childObjects[j].id == returnValue){
+							this.scene.pushMatrix();
+							for(var a = 0; a < transf.length; a++){
+									if(transf[a].constructor.name == "Rotation"){
+											this.rotate(transf[a]);
+									}else if(transf[a].constructor.name == "Translation"){
+											this.translate(transf[a]);
+									}else if(transf[a].constructor.name == "Scale"){
+											this.scale(transf[a]);
+									}
 							}
-							
+							for(var k = 0; k < this.textures.length; k++){
+								if(this.textures[k].id == textur[textur.length - 1])
+									this.textures[k].cgfAppearance.apply();
+							}
+							this.childObjects[j].object.display();
+							this.scene.popMatrix();
 						}
 					}
 					
@@ -84,6 +82,41 @@ MyObject.prototype.getTree = function (rootNode, transf){
 	return 0;
 }
 
+MyObject.prototype.getTextureAppearance = function (){
+	for(var a = 0; a < this.textures.length; a++){
+		var texture = new CGFappearance(this.scene);
+		texture.setTextureWrap('CLAMP_TO_EDGE', 'CLAMP_TO_EDGE');
+		texture.setShininess(120);
+		texture.setAmbient(0.3,0.3,0.3,1);
+		texture.setDiffuse(0.9,0.9,0.9,1);
+		texture.setSpecular(0.1,0.1,0.1,1);	
+		texture.loadTexture(this.textures[a].path);
+		this.textures[a].cgfAppearance = texture;
+	}
+}
+
+MyObject.prototype.getObjectsFromLeaves = function(){
+	for(var a = 0; a < this.leaves.length; a++){
+			if(this.leaves[a].type == "rectangle"){
+								var object = new Square(this.scene, parseFloat(this.leaves[a].args[0]), parseFloat(this.leaves[a].args[1]), 
+parseFloat(this.leaves[a].args[2]), parseFloat(this.leaves[a].args[3]));
+								var geometry = new Geometry(object, this.leaves[a].id);
+								this.childObjects.push(geometry);
+							}else if(this.leaves[a].type == "cylinder"){
+								var object = new Cylinder(this.scene, parseFloat(this.leaves[a].args[0]), parseFloat(this.leaves[a].args[1]), 
+parseFloat(this.leaves[a].args[2]), parseFloat(this.leaves[a].args[3]), 
+parseFloat(this.leaves[a].args[4]));								
+								var geometry = new Geometry(object, this.leaves[a].id);
+								this.childObjects.push(geometry);
+							}else if(this.leaves[a].type == "sphere"){
+								var object = new MySphere(this.scene, this.leaves[a].args);
+								var geometry = new Geometry(object, this.leaves[a].id);
+								this.childObjects.push(geometry);
+							}
+			
+				
+		}
+}
 
 MyObject.prototype.rotate = function (rotation){
 	switch (rotation.axis){
@@ -116,7 +149,7 @@ MyObject.prototype.toRadian = function (degrees){
 }
 
 
-function Geometry(object, transf){
+function Geometry(object, id){
 	this.object = object;
-	this.transf = transf;
+	this.id = id;
 }

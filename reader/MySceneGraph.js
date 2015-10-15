@@ -584,6 +584,10 @@ function getNodeInfo(lsxNode, node){
 				childrenArray[i].attributes.getNamedItem("y").value,
 				childrenArray[i].attributes.getNamedItem("z").value));
 		}
+		
+		if(childrenArray[i].localName == "TEXTURE"){
+			node.texture = childrenArray[i].attributes.getNamedItem("id").value;
+		}
 	}
 	
 	return 0;
@@ -598,6 +602,7 @@ function Texture(id, path, amplif_factor){
 	this.id = id;
 	this.path = path;
 	this.amplif_factor = amplif_factor;
+	this.cgfAppearance = null;
 }
 
 function Amplif(s, t){
@@ -651,6 +656,7 @@ function Material(id, shininess, specular, diffuse, ambient, emission){
  	this.id = id;
  	this.type = type;
  	this.args = args;
+	this.object = null;
  }
 
 

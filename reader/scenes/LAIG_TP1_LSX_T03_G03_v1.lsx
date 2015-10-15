@@ -59,18 +59,18 @@
 
         <TEXTURES>
             <TEXTURE id="wood">
-                <file path="./res/wood.jpg" />                 <!-- path to file -->
+                <file path="./scenes/res/wood.jpg" />                 <!-- path to file -->
                 <amplif_factor s="0" t="0" />                <!-- x/s, y/t -->
             </TEXTURE>
 
 
             <TEXTURE id="metal">
-                <file path="./res/metal.jpg" />                 <!-- path to file -->
+                <file path="./scenes/res/metal.jpg" />                 <!-- path to file -->
                 <amplif_factor s="0" t="0" />                <!-- x/s, y/t -->
             </TEXTURE>
 
             <TEXTURE id="map">
-                <file path="./res/globe.jpg" />                 <!-- path to file -->
+                <file path="./scenes/res/globe.jpg" />                 <!-- path to file -->
                 <amplif_factor s="0" t="0" />                <!-- x/s, y/t -->
             </TEXTURE>
             

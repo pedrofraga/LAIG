@@ -60,18 +60,18 @@
         <TEXTURES>
             <TEXTURE id="wood">
                 <file path="./scenes/res/wood.jpg" />                 <!-- path to file -->
-                <amplif_factor s="0" t="0" />                <!-- x/s, y/t -->
+                <amplif_factor s="1" t="1" />                <!-- x/s, y/t -->
             </TEXTURE>
 
 
             <TEXTURE id="metal">
                 <file path="./scenes/res/metal.jpg" />                 <!-- path to file -->
-                <amplif_factor s="0" t="0" />                <!-- x/s, y/t -->
+                <amplif_factor s="0.1" t="0.1" />                <!-- x/s, y/t -->
             </TEXTURE>
 
             <TEXTURE id="map">
                 <file path="./scenes/res/globe.jpg" />                 <!-- path to file -->
-                <amplif_factor s="0" t="0" />                <!-- x/s, y/t -->
+                <amplif_factor s="1" t="1" />                <!-- x/s, y/t -->
             </TEXTURE>
             
         </TEXTURES>
@@ -80,17 +80,17 @@
         <MATERIALS>
             <MATERIAL id="tableAppearance">                                  
                 <shininess value="3" />
-                <specular r="25" g="25" b="25" a="1" />        <!-- specular reflection -->
-                <diffuse r="204" g="204" b="204" a="1" />         <!-- diffuse reflection -->
-                <ambient r="76" g="76" b="76" a="1" />         <!-- ambient reflection -->
+                <specular r="0.1" g="0.1" b="0.1" a="1" />        <!-- specular reflection -->
+                <diffuse r="0.8" g="0.8" b="0.8" a="1" />         <!-- diffuse reflection -->
+                <ambient r="0.3" g="0.3" b="0.3" a="1" />         <!-- ambient reflection -->
                 <emission r="0" g="0" b="0" a="0" />        <!-- emission component -->
             </MATERIAL>
 
             <MATERIAL id="metalAppearance">                                  
                 <shininess value="120" />
-                <specular r="25" g="25" b="25" a="1" />        <!-- specular reflection -->
-                <diffuse r="180" g="180" b="180" a="1" />         <!-- diffuse reflection -->
-                <ambient r="204" g="204" b="204" a="1" />         <!-- ambient reflection -->
+                <specular r="0.1" g="0.1" b="0.1" a="1" />        <!-- specular reflection -->
+                <diffuse r="0.7" g="0.7" b="0.7" a="1" />         <!-- diffuse reflection -->
+                <ambient r="0.8" g="0.8" b="0.8" a="1" />         <!-- ambient reflection -->
                 <emission r="0" g="0" b="0" a="0" />        <!-- emission component -->
             </MATERIAL>
 

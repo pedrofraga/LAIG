@@ -588,6 +588,10 @@ function getNodeInfo(lsxNode, node){
 		if(childrenArray[i].localName == "TEXTURE"){
 			node.texture = childrenArray[i].attributes.getNamedItem("id").value;
 		}
+		
+		if(childrenArray[i].localName == "MATERIAL"){
+			node.material = childrenArray[i].attributes.getNamedItem("id").value;
+		}
 	}
 	
 	return 0;

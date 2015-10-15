@@ -58,7 +58,7 @@ XMLscene.prototype.onGraphLoaded = function ()
 
 	this.getLSXLights();
 
-	this.object = new MyObject(this, this.graph.rootNode, this.graph.leavesArray, this.graph.texturesArray);
+	this.object = new MyObject(this, this.graph.rootNode, this.graph.leavesArray, this.graph.texturesArray, this.graph.materialsArray);
 	
 	this.enableTextures(true);
 

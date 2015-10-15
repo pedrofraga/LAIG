@@ -3,16 +3,19 @@
  * @param gl {WebGLRenderingContext}
  * @constructor
  */
-function MyObject(scene, rootNode, leaves, textures) {
+function MyObject(scene, rootNode, leaves, textures, materials) {
 	CGFobject.call(this,scene);
 
 	this.rootNode = rootNode;
 	this.leaves = leaves;
 	this.textures = textures;
+	this.materials = materials;
+	
 	this.childObjects = [];
+	
 	this.getObjectsFromLeaves();
 	this.getTextureAppearance();
-	console.log(textures);
+	
 	return;
 };
 
@@ -20,11 +23,11 @@ MyObject.prototype = Object.create(CGFobject.prototype);
 MyObject.prototype.constructor= MyObject;
 
 MyObject.prototype.display = function () {
-	this.displayTree(this.rootNode, [], []);
+	this.displayTree(this.rootNode, [], [], []);
 };
 
 
-MyObject.prototype.displayTree = function (rootNode, transf, textur){
+MyObject.prototype.displayTree = function (rootNode, transf, textur, mater){
 	
 	if(rootNode != null){
 
@@ -40,6 +43,10 @@ MyObject.prototype.displayTree = function (rootNode, transf, textur){
 		if(rootNode.texture != null){
 			textur.push(rootNode.texture);
 		}
+		
+		if(rootNode.material != null){
+			mater.push(rootNode.material);
+		}
 
 		for(var i = 0; i < rootNode.descendants.length; i++){
 
@@ -51,7 +58,11 @@ MyObject.prototype.displayTree = function (rootNode, transf, textur){
 			
 			texturClone = textur.slice(0);
 			
-			var returnValue = this.displayTree(rootNode.descendants[i], transfClone, texturClone);
+			var materClone = [];
+			
+			materClone = mater.slice(0);
+			
+			var returnValue = this.displayTree(rootNode.descendants[i], transfClone, texturClone, materClone);
 			
 					
 					for(var j = 0; j < this.childObjects.length; j++){
@@ -66,10 +77,21 @@ MyObject.prototype.displayTree = function (rootNode, transf, textur){
 											this.scale(transf[a]);
 									}
 							}
+							
 							for(var k = 0; k < this.textures.length; k++){
-								if(this.textures[k].id == textur[textur.length - 1])
-									this.textures[k].cgfAppearance.apply();
+								if(this.textures[k].id == textur[textur.length - 1]){
+									var cgfClone =  this.textures[k].cgfAppearance.slice(0);
+									for(var z = 0; z < this.materials.length; z++){
+										if(this.materials[z].id == mater[mater.length -1]){
+											this.materialApply(cgfClone, this.materials[z]);
+											break;
+										}
+									}
+									cgfAppearance.apply();
+								}
 							}
+							
+							
 							this.childObjects[j].object.display();
 							this.scene.popMatrix();
 						}
@@ -85,11 +107,7 @@ MyObject.prototype.displayTree = function (rootNode, transf, textur){
 MyObject.prototype.getTextureAppearance = function (){
 	for(var a = 0; a < this.textures.length; a++){
 		var texture = new CGFappearance(this.scene);
-		texture.setTextureWrap('CLAMP_TO_EDGE', 'CLAMP_TO_EDGE');
-		texture.setShininess(120);
-		texture.setAmbient(0.3,0.3,0.3,1);
-		texture.setDiffuse(0.9,0.9,0.9,1);
-		texture.setSpecular(0.1,0.1,0.1,1);	
+		texture.setTextureWrap(this.textures[a].amplif_factor.s, this.textures[a].amplif_factor.t);
 		texture.loadTexture(this.textures[a].path);
 		this.textures[a].cgfAppearance = texture;
 	}
@@ -109,13 +127,17 @@ parseFloat(this.leaves[a].args[4]));
 								var geometry = new Geometry(object, this.leaves[a].id);
 								this.childObjects.push(geometry);
 							}else if(this.leaves[a].type == "sphere"){
-								var object = new MySphere(this.scene, this.leaves[a].args);
+								var object = new MySphere(this.scene, parseFloat(this.leaves[a].args[0]), parseFloat(this.leaves[a].args[1]), parseFloat(this.leaves[a].args[2]));
 								var geometry = new Geometry(object, this.leaves[a].id);
 								this.childObjects.push(geometry);
 							}
 			
 				
 		}
+}
+
+MyObject.prototype.materialApply = function (cgfAppearance, material){
+	
 }
 
 MyObject.prototype.rotate = function (rotation){

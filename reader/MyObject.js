@@ -80,14 +80,13 @@ MyObject.prototype.displayTree = function (rootNode, transf, textur, mater){
 							
 							for(var k = 0; k < this.textures.length; k++){
 								if(this.textures[k].id == textur[textur.length - 1]){
-									var cgfClone =  this.textures[k].cgfAppearance.slice(0);
+									var cgfClone =  this.textures[k].cgfAppearance;
 									for(var z = 0; z < this.materials.length; z++){
 										if(this.materials[z].id == mater[mater.length -1]){
 											this.materialApply(cgfClone, this.materials[z]);
-											break;
 										}
 									}
-									cgfAppearance.apply();
+									cgfClone.apply();
 								}
 							}
 							
@@ -112,6 +111,37 @@ MyObject.prototype.getTextureAppearance = function (){
 		this.textures[a].cgfAppearance = texture;
 	}
 }
+
+
+MyObject.prototype.materialApply = function (cgfClone, material){
+	
+	if(material.ambient != null){
+		cgfClone.setAmbient(parseFloat(material.ambient.r), 
+								parseFloat(material.ambient.g),
+								parseFloat(material.ambient.b), 
+								parseFloat(material.ambient.a));
+	}
+
+	if(material.specular != null){
+		cgfClone.setSpecular(parseFloat(material.specular.r), 
+								parseFloat(material.specular.g),
+								parseFloat(material.specular.b), 
+								parseFloat(material.specular.a));
+	}
+
+	if(material.diffuse != null){
+		cgfClone.setDiffuse(parseFloat(material.diffuse.r), 
+								parseFloat(material.diffuse.g),
+								parseFloat(material.diffuse.b), 
+								parseFloat(material.diffuse.a));
+	}
+
+	if(material.shininess != null){
+		cgfClone.setShininess(parseFloat(material.shininess));
+	}
+
+}
+
 
 MyObject.prototype.getObjectsFromLeaves = function(){
 	for(var a = 0; a < this.leaves.length; a++){

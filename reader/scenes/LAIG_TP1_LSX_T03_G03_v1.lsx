@@ -73,6 +73,17 @@
                 <file path="./scenes/res/globe.jpg" />                 <!-- path to file -->
                 <amplif_factor s="1" t="1" />                <!-- x/s, y/t -->
             </TEXTURE>
+
+            <TEXTURE id="sea">
+                <file path="./scenes/res/sea.jpg" />                 <!-- path to file -->
+                <amplif_factor s="1" t="1" />                <!-- x/s, y/t -->
+            </TEXTURE>
+
+
+            <TEXTURE id="sky">
+                <file path="./scenes/res/sky.jpg" />                 <!-- path to file -->
+                <amplif_factor s="0" t="0" />                <!-- x/s, y/t -->
+            </TEXTURE>
             
         </TEXTURES>
 
@@ -116,18 +127,35 @@
 
        <NODES>
 
-        <ROOT id="table" />     <!-- identifier of root node of the scene graph; this node     -->
+        <ROOT id="scene" />     <!-- identifier of root node of the scene graph; this node     -->
         
+        <NODE id="scene">
+            <MATERIAL id="null" />      
+            <TEXTURE id="null" /> 
+            <DESCENDANTS>
+                <DESCENDANT id="table" />     
+                <DESCENDANT id="cover" />
+               <!-- <DESCENDANT id="backrightleg" /> 
+                <DESCENDANT id="backleftleg" />   
+                <DESCENDANT id="frontrightleg" />   
+                <DESCENDANT id="frontleftleg" />   
+                <DESCENDANT id="globe" />       -->  
+                <DESCENDANT id="sea" />  
+                <DESCENDANT id="skyright" /> 
+                <DESCENDANT id="skyleft" /> 
+            </DESCENDANTS>
+        </NODE>
+
+
         <NODE id="table">     
 			<MATERIAL id="null" />      
             <TEXTURE id="null" /> 
             <DESCENDANTS>
                 <DESCENDANT id="cover" />
-                <DESCENDANT id="backrightleg" /> 
+                <!--<DESCENDANT id="backrightleg" /> 
                 <DESCENDANT id="backleftleg" />   
                 <DESCENDANT id="frontrightleg" />   
-                <DESCENDANT id="frontleftleg" />   
-                <DESCENDANT id="globe" />
+                <DESCENDANT id="frontleftleg" />  -->
             </DESCENDANTS>
 
         </NODE>
@@ -214,8 +242,8 @@
             <MATERIAL id="tableAppearance" />      
 
             <TEXTURE id="wood" />    
-            <TRANSLATION x="0" y="10" z="0" />  
-            <SCALE sx="15" sy="1" sz="30" />        
+            <TRANSLATION x="15" y="0" z="15" />  
+            <SCALE sx="15" sy="10" sz="30" />        
 
             <DESCENDANTS>
                 <DESCENDANT id="front_square" />    
@@ -300,6 +328,52 @@
             </DESCENDANTS>
 
         </NODE>
+
+        <NODE id="sea">
+            <MATERIAL id="tableAppearance" />
+
+            <TEXTURE id="sea" />
+
+            <TRANSLATION x="0" y="0" z="100"/>
+            <ROTATION axis="x" angle="-90" />
+            <SCALE sx="100" sy="100" sz="1" />
+
+             <DESCENDANTS>
+                <DESCENDANT id="square" />                               
+            </DESCENDANTS>
+
+        </NODE>
+
+
+        <NODE id="skyright">
+            <MATERIAL id="tableAppearance" />
+
+            <TEXTURE id="sky" />
+
+            <SCALE sx="100" sy="60" sz="1" />
+
+             <DESCENDANTS>
+                <DESCENDANT id="square" />                               
+            </DESCENDANTS>
+
+        </NODE>
+
+
+        <NODE id="skyleft">
+            <MATERIAL id="tableAppearance" />
+
+            <TEXTURE id="sky" />
+
+            <TRANSLATION x="0" y="0" z="100"/>
+            <ROTATION axis="y" angle="90"/>
+            <SCALE sx="100" sy="60" sz="1" />
+
+             <DESCENDANTS>
+                <DESCENDANT id="square" />                               
+            </DESCENDANTS>
+
+        </NODE>
+
 
     </NODES>
 

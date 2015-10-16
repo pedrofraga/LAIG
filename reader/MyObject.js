@@ -87,6 +87,17 @@ MyObject.prototype.displayTree = function (rootNode, transf, textur, mater){
 										}
 									}
 									cgfClone.apply();
+									break;
+								}
+
+								if(k == this.textures.length - 1){
+									var cgfAppearance = new cgfAppearance(this.scene);
+									for(var z = 0; z < this.materials.length; z++){
+										if(this.materials[z].id == mater[mater.length -1]){
+											this.materialApply(cgfAppearance, this.materials[z]);
+										}
+									}
+									cgfAppearance.apply();
 								}
 							}
 							

@@ -80,7 +80,7 @@ MyObject.prototype.displayTree = function (rootNode, transf, textur, mater){
 							
 							for(var k = 0; k < this.textures.length; k++){
 								if(this.textures[k].id == textur[textur.length - 1]){
-									var cgfClone =  this.textures[k].cgfAppearance;
+									var cgfClone = clone(this.textures[k].cgfAppearance);
 									for(var z = 0; z < this.materials.length; z++){
 										if(this.materials[z].id == mater[mater.length -1]){
 											this.materialApply(cgfClone, this.materials[z]);
@@ -166,8 +166,31 @@ parseFloat(this.leaves[a].args[4]));
 		}
 }
 
-MyObject.prototype.materialApply = function (cgfAppearance, material){
-	
+MyObject.prototype.materialApply = function (cgfClone, material){
+	if(material.ambient != null){
+		cgfClone.setAmbient(parseFloat(material.ambient.r), 
+								parseFloat(material.ambient.g),
+								parseFloat(material.ambient.b), 
+								parseFloat(material.ambient.a));
+	}
+
+	if(material.specular != null){
+		cgfClone.setSpecular(parseFloat(material.specular.r), 
+								parseFloat(material.specular.g),
+								parseFloat(material.specular.b), 
+								parseFloat(material.specular.a));
+	}
+
+	if(material.diffuse != null){
+		cgfClone.setDiffuse(parseFloat(material.diffuse.r), 
+								parseFloat(material.diffuse.g),
+								parseFloat(material.diffuse.b), 
+								parseFloat(material.diffuse.a));
+	}
+
+	if(material.shininess != null){
+		cgfClone.setShininess(parseFloat(material.shininess));
+	}
 }
 
 MyObject.prototype.rotate = function (rotation){
@@ -198,6 +221,25 @@ MyObject.prototype.translate = function (translation){
 
 MyObject.prototype.toRadian = function (degrees){
 	return parseFloat(degrees) * Math.PI / 180;
+}
+
+function clone( original )  
+{
+    // First create an empty object with
+    // same prototype of our original source
+    var clone = Object.create( Object.getPrototypeOf( original ) ) ;
+
+    var i , keys = Object.getOwnPropertyNames( original ) ;
+
+    for ( i = 0 ; i < keys.length ; i ++ )
+    {
+        // copy each property into the clone
+        Object.defineProperty( clone , keys[ i ] ,
+            Object.getOwnPropertyDescriptor( original , keys[ i ] )
+        ) ;
+    }
+
+    return clone ;
 }
 
 

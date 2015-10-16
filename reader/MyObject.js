@@ -77,6 +77,7 @@ MyObject.prototype.displayTree = function (rootNode, transf, textur, mater){
 											this.scale(transf[a]);
 									}
 							}
+
 							
 							for(var k = 0; k < this.textures.length; k++){
 								if(this.textures[k].id == textur[textur.length - 1]){
@@ -87,20 +88,8 @@ MyObject.prototype.displayTree = function (rootNode, transf, textur, mater){
 										}
 									}
 									cgfClone.apply();
-									break;
-								}
-
-								if(k == this.textures.length - 1){
-									var cgfAppearance = new cgfAppearance(this.scene);
-									for(var z = 0; z < this.materials.length; z++){
-										if(this.materials[z].id == mater[mater.length -1]){
-											this.materialApply(cgfAppearance, this.materials[z]);
-										}
-									}
-									cgfAppearance.apply();
 								}
 							}
-							
 							
 							this.childObjects[j].object.display();
 							this.scene.popMatrix();
@@ -176,6 +165,25 @@ parseFloat(this.leaves[a].args[4]));
 				
 		}
 }
+
+
+MyObject.prototype.applyTextureAndMaterial = function (textur, mater){
+	var textureApplied = false;
+	for(var k = 0; k < this.textures.length; k++){
+		if(this.textures[k].id == textur[textur.length - 1]){
+			var cgfClone = clone(this.textures[k].cgfAppearance);
+			for(var z = 0; z < this.materials.length; z++){
+				if(this.materials[z].id == mater[mater.length -1]){
+					this.materialApply(cgfClone, this.materials[z]);
+				}
+			}
+			textureApplied = true;
+			cgfClone.apply();
+		}
+	}
+	return textureApplied;
+}
+
 
 MyObject.prototype.materialApply = function (cgfClone, material){
 	if(material.ambient != null){

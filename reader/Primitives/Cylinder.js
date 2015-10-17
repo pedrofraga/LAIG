@@ -95,3 +95,8 @@
 	 this.primitiveType = this.scene.gl.TRIANGLES;
 	 this.initGLBuffers();
  };
+
+
+Cylinder.prototype.scaleTexCoords = function(ampS, ampT) {
+	this.updateTexCoordsGLBuffers();
+}

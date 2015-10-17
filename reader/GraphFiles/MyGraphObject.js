@@ -131,7 +131,6 @@ MyGraphObject.prototype.displayTree = function (rootNode, transf, textur, mater)
 MyGraphObject.prototype.getTextureAppearance = function (){
 	for(var a = 0; a < this.textures.length; a++){
 		var texture = new CGFappearance(this.scene);
-		//texture.setTextureWrap(this.textures[a].amplif_factor.s, this.textures[a].amplif_factor.t);
 		texture.loadTexture(this.textures[a].path);
 		this.textures[a].cgfAppearance = texture;
 	}

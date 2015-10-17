@@ -57,3 +57,14 @@ Square.prototype.initBuffers = function () {
 
 };
 
+
+
+Square.prototype.scaleTexCoords = function(ampS, ampT) {
+	for (var i = 0; i < this.texCoords.length; i += 2) {
+		this.texCoords[i] = this.texCoords[i] / ampS;
+		this.texCoords[i + 1] = this.texCoords[i+1] / ampT;
+	}
+
+	this.updateTexCoordsGLBuffers();
+}
+

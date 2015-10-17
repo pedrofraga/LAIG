@@ -94,12 +94,12 @@
 
         <TEXTURE id="metal">
             <file path="./scenes/res/metal.jpg" />                 <!-- path to file -->
-            <amplif_factor s="0.1" t="0.1" />                <!-- x/s, y/t -->
+            <amplif_factor s="1" t="1" />                <!-- x/s, y/t -->
         </TEXTURE>
 
         <TEXTURE id="darkmetal">
             <file path="./scenes/res/darkmetal.jpg" />                 <!-- path to file -->
-            <amplif_factor s="0.1" t="0.1" />                <!-- x/s, y/t -->
+            <amplif_factor s="1" t="1" />                <!-- x/s, y/t -->
         </TEXTURE>
 
         <TEXTURE id="map">
@@ -109,7 +109,7 @@
 
         <TEXTURE id="sea">
             <file path="./scenes/res/sea.jpg" />                 <!-- path to file -->
-            <amplif_factor s="100" t="100" />                <!-- x/s, y/t -->
+            <amplif_factor s="1" t="1" />                <!-- x/s, y/t -->
         </TEXTURE>
 
 
@@ -120,17 +120,17 @@
 
         <TEXTURE id="sky2">
             <file path="./scenes/res/sky2.jpg" />                 <!-- path to file -->
-            <amplif_factor s="0" t="0" />                <!-- x/s, y/t -->
+            <amplif_factor s="1" t="1" />                <!-- x/s, y/t -->
         </TEXTURE>
 
         <TEXTURE id="symbol">
             <file path="./scenes/res/symbol.jpg" />                 <!-- path to file -->
-            <amplif_factor s="0" t="0" />                <!-- x/s, y/t -->
+            <amplif_factor s="1" t="1" />                <!-- x/s, y/t -->
         </TEXTURE>
 
         <TEXTURE id="darkwood">
             <file path="./scenes/res/darkwood.png" />                 <!-- path to file -->
-            <amplif_factor s="0" t="0" />                <!-- x/s, y/t -->
+            <amplif_factor s="1" t="1" />                <!-- x/s, y/t -->
         </TEXTURE>
 
 
@@ -141,22 +141,22 @@
 
         <TEXTURE id="land">
             <file path="./scenes/res/land.jpg" />                 <!-- path to file -->
-            <amplif_factor s="0" t="0" />                <!-- x/s, y/t -->
+            <amplif_factor s="1" t="1" />                <!-- x/s, y/t -->
         </TEXTURE>
 
         <TEXTURE id="lighthouse">
             <file path="./scenes/res/lighthouse.png" />                 <!-- path to file -->
-            <amplif_factor s="0" t="0" />                <!-- x/s, y/t -->
+            <amplif_factor s="1" t="1" />                <!-- x/s, y/t -->
         </TEXTURE>
 
         <TEXTURE id="glass">
             <file path="./scenes/res/glass.jpg" />                 <!-- path to file -->
-            <amplif_factor s="0" t="0" />                <!-- x/s, y/t -->
+            <amplif_factor s="1" t="1" />                <!-- x/s, y/t -->
         </TEXTURE>
 
         <TEXTURE id="door">
             <file path="./scenes/res/door.png" />                 <!-- path to file -->
-            <amplif_factor s="0" t="0" />                <!-- x/s, y/t -->
+            <amplif_factor s="1" t="1" />                <!-- x/s, y/t -->
         </TEXTURE>
 
     </TEXTURES>

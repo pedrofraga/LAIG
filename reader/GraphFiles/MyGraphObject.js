@@ -1,9 +1,9 @@
 /**
- * MyObject
+ * MyGraphObject
  * @param gl {WebGLRenderingContext}
  * @constructor
  */
-function MyObject(scene, rootNode, leaves, textures, materials, transf) {
+function MyGraphObject(scene, rootNode, leaves, textures, materials, transf) {
 	CGFobject.call(this,scene);
 
 	this.rootNode = rootNode;
@@ -20,15 +20,15 @@ function MyObject(scene, rootNode, leaves, textures, materials, transf) {
 	return;
 };
 
-MyObject.prototype = Object.create(CGFobject.prototype);
-MyObject.prototype.constructor= MyObject;
+MyGraphObject.prototype = Object.create(CGFobject.prototype);
+MyGraphObject.prototype.constructor= MyGraphObject;
 
-MyObject.prototype.display = function () {
+MyGraphObject.prototype.display = function () {
 	this.displayTree(this.rootNode, this.transf, [], []);
 };
 
 
-MyObject.prototype.displayTree = function (rootNode, transf, textur, mater){
+MyGraphObject.prototype.displayTree = function (rootNode, transf, textur, mater){
 	
 	if(rootNode != null){
 
@@ -104,7 +104,7 @@ MyObject.prototype.displayTree = function (rootNode, transf, textur, mater){
 	return 0;
 }
 
-MyObject.prototype.getTextureAppearance = function (){
+MyGraphObject.prototype.getTextureAppearance = function (){
 	for(var a = 0; a < this.textures.length; a++){
 		var texture = new CGFappearance(this.scene);
 		texture.setTextureWrap(this.textures[a].amplif_factor.s, this.textures[a].amplif_factor.t);
@@ -114,7 +114,7 @@ MyObject.prototype.getTextureAppearance = function (){
 }
 
 
-MyObject.prototype.materialApply = function (cgfClone, material){
+MyGraphObject.prototype.materialApply = function (cgfClone, material){
 	
 	if(material.ambient != null){
 		cgfClone.setAmbient(parseFloat(material.ambient.r), 
@@ -144,7 +144,7 @@ MyObject.prototype.materialApply = function (cgfClone, material){
 }
 
 
-MyObject.prototype.getObjectsFromLeaves = function(){
+MyGraphObject.prototype.getObjectsFromLeaves = function(){
 	for(var a = 0; a < this.leaves.length; a++){
 			if(this.leaves[a].type == "rectangle"){
 								var object = new Square(this.scene, parseFloat(this.leaves[a].args[0]), parseFloat(this.leaves[a].args[1]), 
@@ -174,7 +174,7 @@ parseFloat(this.leaves[a].args[4]));
 }
 
 
-MyObject.prototype.applyTextureAndMaterial = function (textur, mater){
+MyGraphObject.prototype.applyTextureAndMaterial = function (textur, mater){
 	var textureApplied = false;
 	for(var k = 0; k < this.textures.length; k++){
 		if(this.textures[k].id == textur[textur.length - 1]){
@@ -192,7 +192,7 @@ MyObject.prototype.applyTextureAndMaterial = function (textur, mater){
 }
 
 
-MyObject.prototype.materialApply = function (cgfClone, material){
+MyGraphObject.prototype.materialApply = function (cgfClone, material){
 	if(material.ambient != null){
 		cgfClone.setAmbient(parseFloat(material.ambient.r), 
 								parseFloat(material.ambient.g),
@@ -219,7 +219,7 @@ MyObject.prototype.materialApply = function (cgfClone, material){
 	}
 }
 
-MyObject.prototype.rotate = function (rotation){
+MyGraphObject.prototype.rotate = function (rotation){
 	switch (rotation.axis){
 		case "x":
 			this.scene.rotate(this.toRadian(rotation.angle),1,0,0);
@@ -236,16 +236,16 @@ MyObject.prototype.rotate = function (rotation){
 	}
 }
 
-MyObject.prototype.scale = function (scale){
+MyGraphObject.prototype.scale = function (scale){
 	this.scene.scale(parseFloat(scale.sx), parseFloat(scale.sy), parseFloat(scale.sz));
 }
 
 
-MyObject.prototype.translate = function (translation){
+MyGraphObject.prototype.translate = function (translation){
 	this.scene.translate(parseFloat(translation.x), parseFloat(translation.y), parseFloat(translation.z));
 }
 
-MyObject.prototype.toRadian = function (degrees){
+MyGraphObject.prototype.toRadian = function (degrees){
 	return parseFloat(degrees) * Math.PI / 180;
 }
 

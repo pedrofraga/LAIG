@@ -13,8 +13,6 @@ XMLscene.prototype.init = function (application) {
 
     this.lightsEnabled = [];
 
-    this.app = application;
-
     this.initCameras();
 
     this.initLights();
@@ -28,7 +26,7 @@ XMLscene.prototype.init = function (application) {
 
 	this.axis=new CGFaxis(this);
 
-	this.object;
+	this.graphObject;
 
 };
 
@@ -88,7 +86,7 @@ XMLscene.prototype.onGraphLoaded = function ()
 		transf.push(this.graph.scale[i]);
 
 
-	this.object = new MyObject(this, this.graph.rootNode, this.graph.leavesArray, this.graph.texturesArray, this.graph.materialsArray, transf);
+	this.graphObject = new MyGraphObject(this, this.graph.rootNode, this.graph.leavesArray, this.graph.texturesArray, this.graph.materialsArray, transf);
 	
 	
 	this.enableTextures(true);
@@ -128,7 +126,7 @@ XMLscene.prototype.display = function () {
 			this.lights[i].update();
 		}
 		
-		this.object.display();
+		this.graphObject.display();
 	};	
 
     this.shader.unbind();

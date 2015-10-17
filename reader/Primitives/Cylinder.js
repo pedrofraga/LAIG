@@ -98,5 +98,5 @@
 
 
 Cylinder.prototype.scaleTexCoords = function(ampS, ampT) {
-	this.updateTexCoordsGLBuffers();
+	//this.updateTexCoordsGLBuffers();
 }

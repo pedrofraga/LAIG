@@ -3,6 +3,7 @@
  * @param gl {WebGLRenderingContext}
  * @constructor
  */
+
 function MyGraphObject(scene, rootNode, leaves, textures, materials, transf) {
 	CGFobject.call(this,scene);
 
@@ -13,6 +14,8 @@ function MyGraphObject(scene, rootNode, leaves, textures, materials, transf) {
 	this.transf = transf;
 	
 	this.childObjects = [];
+
+	console.log(textures);
 	
 	this.getObjectsFromLeaves();
 	this.getTextureAppearance();
@@ -81,11 +84,17 @@ MyGraphObject.prototype.displayTree = function (rootNode, transf, textur, mater)
 
 							var textureApplied = false;
 
+							var texture = this.getTextureId(textur);
+							textur.reverse();
+							var material = this.getMaterialId(mater);
+							mater.reverse();
+
+
 							for(var k = 0; k < this.textures.length; k++){
-								if(this.textures[k].id == textur[textur.length - 1]){
+								if(this.textures[k].id == texture){
 									var cgfClone = clone(this.textures[k].cgfAppearance);
 									for(var z = 0; z < this.materials.length; z++){
-										if(this.materials[z].id == mater[mater.length -1]){
+										if(this.materials[z].id == material){
 											this.materialApply(cgfClone, this.materials[z]);
 											textureApplied = true;
 										}
@@ -93,17 +102,7 @@ MyGraphObject.prototype.displayTree = function (rootNode, transf, textur, mater)
 									cgfClone.apply();
 								}
 							}
-
-							/*if(!textureApplied){
-								var cgfA = new CGFappearance(this.scene);
-								for(var z = 0; z < this.materials.length; z++){
-									if(this.materials[z].id == mater[mater.length -1]){
-										this.materialApply(cgfA, this.materials[z]);
-									}
-								}
-								cgfA.apply();
-							}*/
-							
+													
 							this.childObjects[j].object.display();
 							this.scene.popMatrix();
 						}
@@ -122,6 +121,26 @@ MyGraphObject.prototype.getTextureAppearance = function (){
 		texture.setTextureWrap(this.textures[a].amplif_factor.s, this.textures[a].amplif_factor.t);
 		texture.loadTexture(this.textures[a].path);
 		this.textures[a].cgfAppearance = texture;
+	}
+}
+
+MyGraphObject.prototype.getTextureId= function (textures){
+
+	textures.reverse();
+	for(var a = 0; a < textures.length; a++){
+		if(textures[a] != "null"){
+			return textures[a];
+		}
+	}
+}
+
+MyGraphObject.prototype.getMaterialId= function (materials){
+
+	materials.reverse();
+	for(var a = 0; a < materials.length; a++){
+		if(materials[a] != "null"){
+			return materials[a];
+		}
 	}
 }
 

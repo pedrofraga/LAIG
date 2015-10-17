@@ -9,6 +9,12 @@ XMLscene.prototype.constructor = XMLscene;
 XMLscene.prototype.init = function (application) {
     CGFscene.prototype.init.call(this, application);
 
+    this.interface = null;
+
+    this.lightsEnabled = [];
+
+    this.app = application;
+
     this.initCameras();
 
     this.initLights();
@@ -37,6 +43,10 @@ XMLscene.prototype.initLights = function () {
     this.shader.unbind();
 };
 
+XMLscene.prototype.setInterface = function (interface) {
+	this.interface = interface;
+}
+
 XMLscene.prototype.initCameras = function () {
     this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(15, 15, 15), vec3.fromValues(0, 0, 0));
 };
@@ -61,7 +71,7 @@ XMLscene.prototype.onGraphLoaded = function ()
 
 	if (parseFloat(this.graph.reference) > 0)
 	   this.axis = new CGFaxis(this, parseFloat(this.graph.referenceLength));
-	
+
 	this.getLSXIllumination();
 
 	this.getLSXLights();
@@ -80,10 +90,10 @@ XMLscene.prototype.onGraphLoaded = function ()
 
 	this.object = new MyObject(this, this.graph.rootNode, this.graph.leavesArray, this.graph.texturesArray, this.graph.materialsArray, transf);
 	
+	
 	this.enableTextures(true);
 
-
-	console.log(this.graph.rootNode);
+	this.interface.onGraphLoaded();
 
 };
 
@@ -138,8 +148,13 @@ XMLscene.prototype.getLSXLights = function (){
 	for(var i = 0; i < this.graph.lightsArray.length; i++){
 		
 		if(this.graph.lightsArray[i].enabled != null){
-			if(this.graph.lightsArray[i].enabled == 1)	this.lights[i].enable();
-			else this.lights[i].disable();
+			if(this.graph.lightsArray[i].enabled == 1){	
+				this.lights[i].enable();
+				this.lightsEnabled[this.graph.lightsArray[i].id] = true;
+			}else{ 
+				this.lights[i].disable();
+				this.lightsEnabled[this.graph.lightsArray[i].id] = false;
+			}
 		}
 		
 		this.lights[i].setVisible(true);
@@ -183,6 +198,16 @@ XMLscene.prototype.getLSXIllumination = function (){
 
 }
 
+
+XMLscene.prototype.updateLight = function(lightId, enable) {
+	for (var i = 0; i < this.graph.lightsArray.length; ++i) {
+		if (this.graph.lightsArray[i].id == lightId) {
+			var light = this.lights[i];
+			enable ? light.enable() : light.disable();
+			return;
+		}
+	}
+}
 
 
 

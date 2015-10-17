@@ -161,6 +161,12 @@ parseFloat(this.leaves[a].args[4]));
 								var object = new MySphere(this.scene, parseFloat(this.leaves[a].args[0]), parseFloat(this.leaves[a].args[1]), parseFloat(this.leaves[a].args[2]));
 								var geometry = new Geometry(object, this.leaves[a].id);
 								this.childObjects.push(geometry);
+							}else if(this.leaves[a].type == "triangle"){
+								var object = new MyTriangle(this.scene, parseFloat(this.leaves[a].args[0]), parseFloat(this.leaves[a].args[1]), parseFloat(this.leaves[a].args[2])
+																		, parseFloat(this.leaves[a].args[3]), parseFloat(this.leaves[a].args[4]), parseFloat(this.leaves[a].args[5])
+																		, parseFloat(this.leaves[a].args[6]), parseFloat(this.leaves[a].args[7]), parseFloat(this.leaves[a].args[8]));
+								var geometry = new Geometry(object, this.leaves[a].id);
+								this.childObjects.push(geometry);
 							}
 			
 				

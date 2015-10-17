@@ -84,11 +84,26 @@
                 <file path="./scenes/res/sky.jpg" />                 <!-- path to file -->
                 <amplif_factor s="0" t="0" />                <!-- x/s, y/t -->
             </TEXTURE>
+
+            <TEXTURE id="symbol">
+                <file path="./scenes/res/symbol.jpg" />                 <!-- path to file -->
+                <amplif_factor s="0" t="0" />                <!-- x/s, y/t -->
+            </TEXTURE>
             
         </TEXTURES>
 
 
         <MATERIALS>
+
+            <MATERIAL id="normalAppearance">                                  
+                <shininess value="5" />
+                <specular r="0.2" g="0.1" b="0.1" a="1" />        <!-- specular reflection -->
+                <diffuse r="0.8" g="0.4" b="0.8" a="1" />         <!-- diffuse reflection -->
+                <ambient r="0.3" g="0.3" b="0.3" a="1" />         <!-- ambient reflection -->
+                <emission r="0" g="0" b="0" a="0" />        <!-- emission component -->
+            </MATERIAL>
+
+
             <MATERIAL id="tableAppearance">                                  
                 <shininess value="3" />
                 <specular r="0.1" g="0.1" b="0.1" a="1" />        <!-- specular reflection -->
@@ -132,39 +147,78 @@
         <NODE id="scene">
             <MATERIAL id="null" />      
             <TEXTURE id="null" /> 
-            <DESCENDANTS>
-                <DESCENDANT id="table" />     
-                <DESCENDANT id="cover" />
-               <!-- <DESCENDANT id="backrightleg" /> 
-                <DESCENDANT id="backleftleg" />   
-                <DESCENDANT id="frontrightleg" />   
-                <DESCENDANT id="frontleftleg" />   
-                <DESCENDANT id="globe" />       -->  
+            <DESCENDANTS>   
+                <DESCENDANT id="boat" />
+                <DESCENDANT id="flag"/> 
                 <DESCENDANT id="sea" />  
                 <DESCENDANT id="skyright" /> 
-                <DESCENDANT id="skyleft" /> 
+                <DESCENDANT id="skyleft" />
             </DESCENDANTS>
         </NODE>
 
 
-        <NODE id="table">     
-			<MATERIAL id="null" />      
-            <TEXTURE id="null" /> 
+        <NODE id="flag">
+            <MATERIAL id="null"/>
+            <TEXTURE id="null"/>
+
+            <TRANSLATION x="3" y="0" z="3"/>
+
             <DESCENDANTS>
-                <DESCENDANT id="cover" />
-                <!--<DESCENDANT id="backrightleg" /> 
-                <DESCENDANT id="backleftleg" />   
-                <DESCENDANT id="frontrightleg" />   
-                <DESCENDANT id="frontleftleg" />  -->
+                <DESCENDANT id="pole"/>
+                <DESCENDANT id="symbol"/>
             </DESCENDANTS>
 
         </NODE>
+
+        <NODE id="pole">
+            <MATERIAL id="metalAppearance"/>
+            <TEXTURE id="metal"/>
+
+            <TRANSLATION x="15" y="20" z="15"/>
+            <ROTATION axis="x" angle="90"/>
+            <SCALE sx="1" sy="1" sz="20"/>
+
+            <DESCENDANTS>
+                <DESCENDANT id="cylinder"/>
+            </DESCENDANTS>
+        </NODE>
+
+
+        <NODE id="symbol">
+            <MATERIAL id="normalAppearance"/>
+            <TEXTURE id="symbol"/>
+
+            <TRANSLATION x="15.5" y="15" z="15"/>
+            <SCALE sx="6" sy="4" sz="1"/>
+
+            <DESCENDANTS>
+                <DESCENDANT id="square"/>
+            </DESCENDANTS>
+        </NODE>
+
+
+
+
 
         <NODE id="bottom_square">       
             <MATERIAL id="tableAppearance" />      
+            <TEXTURE id="wood" /> 
+
+            <ROTATION axis="x" angle="90" />            
+
+            <DESCENDANTS>
+                <DESCENDANT id="square" />                               
+            </DESCENDANTS>
+
+        </NODE>
+
+        <NODE id="bottom_square2">       
+            <MATERIAL id="tableAppearance" />      
 
             <TEXTURE id="wood" />      
-            <ROTATION axis="x" angle="90" />            
+
+            <TRANSLATION x="0" y="0.1" z="1" />
+            <ROTATION axis="x" angle="-90" />            
 
             <DESCENDANTS>
                 <DESCENDANT id="square" />                               
@@ -192,6 +246,22 @@
             <MATERIAL id="tableAppearance" />      
             <TEXTURE id="wood" />  
                 
+
+            <TRANSLATION x="0" y="0" z="1"/>
+            <ROTATION axis="y" angle="90" />         
+
+            <DESCENDANTS>
+                <DESCENDANT id="square" />                               
+            </DESCENDANTS>
+
+        </NODE>
+
+
+        <NODE id="left_square2">       
+            <MATERIAL id="tableAppearance" />      
+
+            <TEXTURE id="wood" />    
+             
             <ROTATION axis="y" angle="-90" />         
 
             <DESCENDANTS>
@@ -200,10 +270,13 @@
 
         </NODE>
 
+       
+
         <NODE id="right_square">       
             <MATERIAL id="tableAppearance" />      
 
             <TEXTURE id="wood" />    
+
             <TRANSLATION x="1" y="0" z="1" />  
             <ROTATION axis="y" angle="90" />         
 
@@ -213,12 +286,44 @@
 
         </NODE>
 
+
+        <NODE id="right_square2">       
+            <MATERIAL id="tableAppearance" />      
+
+            <TEXTURE id="wood" />  
+
+            <TRANSLATION x="1" y="0" z="0"/>
+            <ROTATION axis="y" angle="-90" />         
+
+            <DESCENDANTS>
+                <DESCENDANT id="square" />                               
+            </DESCENDANTS>
+
+        </NODE>
+
+
         <NODE id="back_square">       
             <MATERIAL id="tableAppearance" />      
 
             <TEXTURE id="wood" />    
+
             <TRANSLATION x="1" y="0" z="0" />  
             <ROTATION axis="y" angle="180" />         
+
+            <DESCENDANTS>
+                <DESCENDANT id="square" />                               
+            </DESCENDANTS>
+
+        </NODE>
+
+
+        <NODE id="back_square2">       
+            <MATERIAL id="tableAppearance" />      
+
+            <TEXTURE id="wood" />   
+
+            <TRANSLATION x="0" y="0" z="0" />  
+                    
 
             <DESCENDANTS>
                 <DESCENDANT id="square" />                               
@@ -229,7 +334,8 @@
         <NODE id="front_square">       
             <MATERIAL id="tableAppearance" />      
 
-            <TEXTURE id="wood" />    
+            <TEXTURE id="wood" />  
+
             <TRANSLATION x="0" y="0" z="1" />          
 
             <DESCENDANTS>
@@ -238,7 +344,21 @@
 
         </NODE>
 
-        <NODE id="cover">       
+        <NODE id="front_square2">       
+            <MATERIAL id="tableAppearance" />      
+
+            <TEXTURE id="wood" />    
+
+            <TRANSLATION x="1" y="0" z="1" />   
+            <ROTATION axis="y" angle="180" />     
+
+            <DESCENDANTS>
+                <DESCENDANT id="square" />                               
+            </DESCENDANTS>
+
+        </NODE>
+
+        <NODE id="boat">       
             <MATERIAL id="tableAppearance" />      
 
             <TEXTURE id="wood" />    
@@ -247,70 +367,16 @@
 
             <DESCENDANTS>
                 <DESCENDANT id="front_square" />    
-                <DESCENDANT id="back_square" />      
+                <DESCENDANT id="front_square2" /> 
+                <DESCENDANT id="back_square" />    
+                <DESCENDANT id="back_square2" />  
                 <DESCENDANT id="right_square" /> 
+                <DESCENDANT id="right_square2" /> 
+                <DESCENDANT id="left_square2" /> 
                 <DESCENDANT id="left_square" />  
-                <DESCENDANT id="top_square" />   
-                <DESCENDANT id="bottom_square" />               
-            </DESCENDANTS>
-
-        </NODE>
-
-
-        <NODE id="backleftleg">       
-            <MATERIAL id="metalAppearance" />     
-
-            <TEXTURE id="metal" />   
-            <ROTATION axis="x" angle="-90" />   
-            <SCALE sx="1" sy="1" sz="10" />          
-
-            <DESCENDANTS>
-                <DESCENDANT id="cylinder" />                               
-            </DESCENDANTS>
-
-        </NODE>
-
-        <NODE id="backrightleg">       
-            <MATERIAL id="metalAppearance" />      
-
-            <TEXTURE id="metal" /> 
-            <ROTATION axis="x" angle="-90" />   
-            <TRANSLATION x="15" y="0" z="0" />  
-            <SCALE sx="1" sy="1" sz="10" />         
-
-            <DESCENDANTS>
-                <DESCENDANT id="cylinder" />                               
-            </DESCENDANTS>
-
-        </NODE>
-
-
-        <NODE id="frontleftleg">       
-            <MATERIAL id="metalAppearance" />      
-
-            <TEXTURE id="metal" />  
-              
-            <TRANSLATION x="15" y="0" z="30" />
-            <ROTATION axis="x" angle="-90" />  
-            <SCALE sx="1" sy="1" sz="10" />            
-
-            <DESCENDANTS>
-                <DESCENDANT id="cylinder" />                               
-            </DESCENDANTS>
-
-        </NODE>
-
-        <NODE id="frontrightleg">       
-            <MATERIAL id="metalAppearance" />      
-
-            <TEXTURE id="metal" />  
-           
-            <TRANSLATION x="0" y="0" z="30" />
-            <ROTATION axis="x" angle="-90" />  
-            <SCALE sx="1" sy="1" sz="10" />            
-
-            <DESCENDANTS>
-                <DESCENDANT id="cylinder" />                               
+                <!--<DESCENDANT id="top_square" />   -->
+                <DESCENDANT id="bottom_square" />          
+                <DESCENDANT id="bottom_square2" />     
             </DESCENDANTS>
 
         </NODE>

@@ -115,12 +115,12 @@
 
         <TEXTURE id="sky">
             <file path="./scenes/res/sky.jpg" />                 <!-- path to file -->
-            <amplif_factor s="1000" t="1000" />                <!-- x/s, y/t -->
+            <amplif_factor s="1" t="1" />                <!-- x/s, y/t -->
         </TEXTURE>
 
         <TEXTURE id="sky2">
             <file path="./scenes/res/sky2.jpg" />                 <!-- path to file -->
-            <amplif_factor s="1000" t="1000" />                <!-- x/s, y/t -->
+            <amplif_factor s="1" t="1" />                <!-- x/s, y/t -->
         </TEXTURE>
 
         <TEXTURE id="symbol">

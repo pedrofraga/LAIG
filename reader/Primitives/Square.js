@@ -65,6 +65,6 @@ Square.prototype.scaleTexCoords = function(ampS, ampT) {
 		this.texCoords[i + 1] = this.texCoords[i+1] / ampT;
 	}
 
-	//this.updateTexCoordsGLBuffers();
+	this.updateTexCoordsGLBuffers();
 }
 

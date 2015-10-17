@@ -72,8 +72,7 @@ MyGraphObject.prototype.displayTree = function (rootNode, transf, textur, mater)
 					for(var j = 0; j < this.childObjects.length; j++){
 						if(this.childObjects[j].id == returnValue){
 
-							var object = clone(this.childObjects[j].object);
-
+							var object = clone(this.childObjects[j]);
 
 							this.scene.pushMatrix();
 							for(var a = 0; a < transf.length; a++){
@@ -98,7 +97,7 @@ MyGraphObject.prototype.displayTree = function (rootNode, transf, textur, mater)
 								if(this.textures[k].id == texture){
 									var cgfClone = clone(this.textures[k].cgfAppearance);
 									if(!(this.textures[k].amplif_factor.s == 1 && this.textures[k].amplif_factor.t == 1))
-										object.scaleTexCoords(this.textures[k].amplif_factor.s, this.textures[k].amplif_factor.t);
+										object.object.scaleTexCoords(this.textures[k].amplif_factor.s, this.textures[k].amplif_factor.t);
 
 									for(var z = 0; z < this.materials.length; z++){
 										if(this.materials[z].id == material){
@@ -122,7 +121,7 @@ MyGraphObject.prototype.displayTree = function (rootNode, transf, textur, mater)
 								}
 								cgfApp.apply();
 							} 
-							object.display();
+							object.object.display();
 							this.scene.popMatrix();
 						}
 					}

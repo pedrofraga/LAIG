@@ -53,12 +53,32 @@ XMLscene.prototype.setDefaultAppearance = function () {
 // As loading is asynchronous, this may be called already after the application has started the run loop
 XMLscene.prototype.onGraphLoaded = function () 
 {
+	if(this.graph.frustum['near'] != null)
+		this.camera.near = parseFloat(this.graph.frustum['near']);
 
+	if(this.graph.frustum['far'] != null)
+		this.camera.far = parseFloat(this.graph.frustum['far']);
+
+	if (parseFloat(this.graph.reference) > 0)
+	   this.axis = new CGFaxis(this, parseFloat(this.graph.referenceLength));
+	
 	this.getLSXIllumination();
 
 	this.getLSXLights();
 
-	this.object = new MyObject(this, this.graph.rootNode, this.graph.leavesArray, this.graph.texturesArray, this.graph.materialsArray);
+	var transf = [];
+
+	for(var i = 0; i < this.graph.rotation.length; i++)
+		transf.push(this.graph.rotation[i]);
+
+	for(var i = 0; i < this.graph.translation.length; i++)
+		transf.push(this.graph.translation[i]);
+
+	for(var i = 0; i < this.graph.scale.length; i++)
+		transf.push(this.graph.scale[i]);
+
+
+	this.object = new MyObject(this, this.graph.rootNode, this.graph.leavesArray, this.graph.texturesArray, this.graph.materialsArray, transf);
 	
 	this.enableTextures(true);
 

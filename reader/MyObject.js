@@ -3,13 +3,14 @@
  * @param gl {WebGLRenderingContext}
  * @constructor
  */
-function MyObject(scene, rootNode, leaves, textures, materials) {
+function MyObject(scene, rootNode, leaves, textures, materials, transf) {
 	CGFobject.call(this,scene);
 
 	this.rootNode = rootNode;
 	this.leaves = leaves;
 	this.textures = textures;
 	this.materials = materials;
+	this.transf = transf;
 	
 	this.childObjects = [];
 	
@@ -23,7 +24,7 @@ MyObject.prototype = Object.create(CGFobject.prototype);
 MyObject.prototype.constructor= MyObject;
 
 MyObject.prototype.display = function () {
-	this.displayTree(this.rootNode, [], [], []);
+	this.displayTree(this.rootNode, this.transf, [], []);
 };
 
 

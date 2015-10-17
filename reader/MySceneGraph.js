@@ -58,8 +58,8 @@ MySceneGraph.prototype.parser= function(rootElement) {
 	}
 
 	this.frustum = [];
-	this.translation = [];
 	this.rotation = [];
+	this.translation = [];
 	this.scale = [];
 	this.reference;
 
@@ -132,32 +132,32 @@ function getInitials(initials, frustum, translation, rotation, scale, reference)
 	}
 
 	if(initials[0].getElementsByTagName('translation')[0] != null){
-		var initialsTransl = initials[0].getElementsByTagName('translation')[0];
-		translation['x'] = initialsTransl.attributes.getNamedItem("x").value;
-		translation['y'] = initialsTransl.attributes.getNamedItem("y").value;
-		translation['z'] = initialsTransl.attributes.getNamedItem("z").value;
+		for(var i = 0; i < initials[0].getElementsByTagName('translation').length; i++){
+			var initialsTransl = initials[0].getElementsByTagName('translation')[i];
+			var t = new Translation(parseFloat(initialsTransl.attributes.getNamedItem("x").value),
+									parseFloat(initialsTransl.attributes.getNamedItem("y").value),
+									parseFloat(initialsTransl.attributes.getNamedItem("z").value));
+			translation[i] = t;
+		}
 	}
 
 	if(initials[0].getElementsByTagName('rotation')[0] != null){
-		var initialsRot = initials[0].getElementsByTagName('rotation')[0];
-		rotation[0] = new Rotation(initialsRot.attributes.getNamedItem("axis").value, initialsRot.attributes.getNamedItem("angle").value);
-	}
-
-	if(initials[0].getElementsByTagName('rotation')[1] != null){
-		var initialsRot = initials[0].getElementsByTagName('rotation')[1];
-		rotation[1] = new Rotation(initialsRot.attributes.getNamedItem("axis").value, initialsRot.attributes.getNamedItem("angle").value);
-	}
-
-	if(initials[0].getElementsByTagName('rotation')[2] != null){
-		var initialsRot = initials[0].getElementsByTagName('rotation')[2];
-		rotation[2] = new Rotation(initialsRot.attributes.getNamedItem("axis").value, initialsRot.attributes.getNamedItem("angle").value);
+		for(var i = 0; i < initials[0].getElementsByTagName('rotation').length; i++){
+			var initialsRot = initials[0].getElementsByTagName('rotation')[i];
+			var r = new Rotation(initialsRot.attributes.getNamedItem("axis").value,
+									parseFloat(initialsRot.attributes.getNamedItem("angle").value));
+			rotation[i] = r;
+		}
 	}
 
 	if(initials[0].getElementsByTagName('scale')[0] != null){
-		var initialsScale = initials[0].getElementsByTagName('scale')[0];
-		scale['sx'] = initialsScale.attributes.getNamedItem("sx").value;
-		scale['sy'] = initialsScale.attributes.getNamedItem("sy").value;
-		scale['sz'] = initialsScale.attributes.getNamedItem("sz").value;
+		for(var i = 0; i < initials[0].getElementsByTagName('scale').length; i++){
+			var initialsScale = initials[0].getElementsByTagName('scale')[i];
+			var s = new Scale(parseFloat(initialsScale.attributes.getNamedItem("sx").value),
+									parseFloat(initialsScale.attributes.getNamedItem("sy").value),
+									parseFloat(initialsScale.attributes.getNamedItem("sz").value));
+			scale[i] = s;
+		}
 	}
 
 	if(initials[0].getElementsByTagName('reference')[0] != null){

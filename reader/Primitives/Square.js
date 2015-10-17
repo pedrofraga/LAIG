@@ -8,8 +8,8 @@ function Square(scene, minX, minY, maxX, maxY) {
 	
 	this.minS = 0;
 	this.maxS = 1;
-	this.minT = 1;
-	this.maxT = 0;
+	this.minT = 0;
+	this.maxT = 1;
 
 	this.minX = minX;
 	this.maxX = maxX;

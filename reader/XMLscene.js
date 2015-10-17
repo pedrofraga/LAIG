@@ -88,7 +88,6 @@ XMLscene.prototype.onGraphLoaded = function ()
 
 	this.graphObject = new MyGraphObject(this, this.graph.rootNode, this.graph.leavesArray, this.graph.texturesArray, this.graph.materialsArray, transf);
 	
-	
 	this.enableTextures(true);
 
 	this.interface.onGraphLoaded();
@@ -99,27 +98,20 @@ XMLscene.prototype.display = function () {
 	// ---- BEGIN Background, camera and axis setup
     this.shader.bind();
 	
-	// Clear image and depth buffer everytime we update the scene
+
     this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);
     this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
 
-	// Initialize Model-View matrix as identity (no transformation
 	this.updateProjectionMatrix();
+
     this.loadIdentity();
 
-	// Apply transformations corresponding to the camera position relative to the origin
 	this.applyViewMatrix();
 
-	// Draw axis
 	this.axis.display();
 
 	this.setDefaultAppearance();
-	
-	// ---- END Background, camera and axis setup
 
-	// it is important that things depending on the proper loading of the graph
-	// only get executed after the graph has loaded correctly.
-	// This is one possible way to do it
 	if (this.graph.loadedOk)
 	{
 		for(var i = 0; i < this.graph.lightsArray.length; i++){

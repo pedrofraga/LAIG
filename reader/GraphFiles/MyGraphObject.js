@@ -89,20 +89,33 @@ MyGraphObject.prototype.displayTree = function (rootNode, transf, textur, mater)
 							var material = this.getMaterialId(mater);
 							mater.reverse();
 
-
+							var materialApplied = false;
 							for(var k = 0; k < this.textures.length; k++){
 								if(this.textures[k].id == texture){
 									var cgfClone = clone(this.textures[k].cgfAppearance);
 									for(var z = 0; z < this.materials.length; z++){
 										if(this.materials[z].id == material){
 											this.materialApply(cgfClone, this.materials[z]);
-											textureApplied = true;
+											break;
 										}
 									}
+									materialApplied = true;
 									cgfClone.apply();
+									break;
 								}
 							}
-													
+
+							if(!materialApplied){
+								var cgfApp = new CGFappearance(this.scene);
+								for(var z = 0; z < this.materials.length; z++){
+									if(this.materials[z].id == material){
+										this.materialApply(cgfApp, this.materials[z]);
+										break;
+									}
+								}
+								cgfApp.apply();
+							}
+
 							this.childObjects[j].object.display();
 							this.scene.popMatrix();
 						}
@@ -118,7 +131,7 @@ MyGraphObject.prototype.displayTree = function (rootNode, transf, textur, mater)
 MyGraphObject.prototype.getTextureAppearance = function (){
 	for(var a = 0; a < this.textures.length; a++){
 		var texture = new CGFappearance(this.scene);
-		texture.setTextureWrap(this.textures[a].amplif_factor.s, this.textures[a].amplif_factor.t);
+		//texture.setTextureWrap(this.textures[a].amplif_factor.s, this.textures[a].amplif_factor.t);
 		texture.loadTexture(this.textures[a].path);
 		this.textures[a].cgfAppearance = texture;
 	}

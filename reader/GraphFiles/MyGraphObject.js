@@ -79,18 +79,30 @@ MyGraphObject.prototype.displayTree = function (rootNode, transf, textur, mater)
 									}
 							}
 
-							
+							var textureApplied = false;
+
 							for(var k = 0; k < this.textures.length; k++){
 								if(this.textures[k].id == textur[textur.length - 1]){
 									var cgfClone = clone(this.textures[k].cgfAppearance);
 									for(var z = 0; z < this.materials.length; z++){
 										if(this.materials[z].id == mater[mater.length -1]){
 											this.materialApply(cgfClone, this.materials[z]);
+											textureApplied = true;
 										}
 									}
 									cgfClone.apply();
 								}
 							}
+
+							/*if(!textureApplied){
+								var cgfA = new CGFappearance(this.scene);
+								for(var z = 0; z < this.materials.length; z++){
+									if(this.materials[z].id == mater[mater.length -1]){
+										this.materialApply(cgfA, this.materials[z]);
+									}
+								}
+								cgfA.apply();
+							}*/
 							
 							this.childObjects[j].object.display();
 							this.scene.popMatrix();
@@ -173,51 +185,6 @@ parseFloat(this.leaves[a].args[4]));
 		}
 }
 
-
-MyGraphObject.prototype.applyTextureAndMaterial = function (textur, mater){
-	var textureApplied = false;
-	for(var k = 0; k < this.textures.length; k++){
-		if(this.textures[k].id == textur[textur.length - 1]){
-			var cgfClone = clone(this.textures[k].cgfAppearance);
-			for(var z = 0; z < this.materials.length; z++){
-				if(this.materials[z].id == mater[mater.length -1]){
-					this.materialApply(cgfClone, this.materials[z]);
-				}
-			}
-			textureApplied = true;
-			cgfClone.apply();
-		}
-	}
-	return textureApplied;
-}
-
-
-MyGraphObject.prototype.materialApply = function (cgfClone, material){
-	if(material.ambient != null){
-		cgfClone.setAmbient(parseFloat(material.ambient.r), 
-								parseFloat(material.ambient.g),
-								parseFloat(material.ambient.b), 
-								parseFloat(material.ambient.a));
-	}
-
-	if(material.specular != null){
-		cgfClone.setSpecular(parseFloat(material.specular.r), 
-								parseFloat(material.specular.g),
-								parseFloat(material.specular.b), 
-								parseFloat(material.specular.a));
-	}
-
-	if(material.diffuse != null){
-		cgfClone.setDiffuse(parseFloat(material.diffuse.r), 
-								parseFloat(material.diffuse.g),
-								parseFloat(material.diffuse.b), 
-								parseFloat(material.diffuse.a));
-	}
-
-	if(material.shininess != null){
-		cgfClone.setShininess(parseFloat(material.shininess));
-	}
-}
 
 MyGraphObject.prototype.rotate = function (rotation){
 	switch (rotation.axis){

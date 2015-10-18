@@ -93,12 +93,12 @@
 
          <TEXTURE id="darkmetal">
             <file path="./scenes/res/darkmetal.jpg" />                 <!-- path to file -->
-            <amplif_factor s="0.1" t="0.1" />                <!-- x/s, y/t -->
+            <amplif_factor s="1" t="1" />                <!-- x/s, y/t -->
         </TEXTURE>
 
         <TEXTURE id="metalfloor">
             <file path="./scenes/res/metalfloor.jpg" />                 <!-- path to file -->
-            <amplif_factor s="0.1" t="0.1" />                <!-- x/s, y/t -->
+            <amplif_factor s="1" t="1" />                <!-- x/s, y/t -->
         </TEXTURE>
 
         <TEXTURE id="map">
@@ -108,7 +108,7 @@
 
         <TEXTURE id="sea">
             <file path="./scenes/res/sea.jpg" />                 <!-- path to file -->
-            <amplif_factor s="100" t="100" />                <!-- x/s, y/t -->
+            <amplif_factor s="1" t="1" />                <!-- x/s, y/t -->
         </TEXTURE>
 
 
@@ -155,22 +155,22 @@
 
         <TEXTURE id="red">
             <file path="./scenes/res/red.jpg" />                 <!-- path to file -->
-            <amplif_factor s="100" t="100" />                <!-- x/s, y/t -->
+            <amplif_factor s="1" t="1" />                <!-- x/s, y/t -->
         </TEXTURE>
 
          <TEXTURE id="redc">
             <file path="./scenes/res/red1.jpg" />                 <!-- path to file -->
-            <amplif_factor s="100" t="100" />                <!-- x/s, y/t -->
+            <amplif_factor s="1" t="1" />                <!-- x/s, y/t -->
         </TEXTURE>
 
         <TEXTURE id="roof">
             <file path="./scenes/res/roof.jpg" />                 <!-- path to file -->
-            <amplif_factor s="100" t="100" />                <!-- x/s, y/t -->
+            <amplif_factor s="1" t="1" />                <!-- x/s, y/t -->
         </TEXTURE>
 
         <TEXTURE id="wood_door">
             <file path="./scenes/res/wooddoor.jpg" />                 <!-- path to file -->
-            <amplif_factor s="100" t="100" />                <!-- x/s, y/t -->
+            <amplif_factor s="1" t="1" />                <!-- x/s, y/t -->
         </TEXTURE>
 
 
@@ -226,7 +226,7 @@
     <LEAVES>
 
         <!-- next lines define nodes of type leaf; they may be repeated, in any order, as necessary -->
-        <LEAF id="square" type="rectangle" args="0 1 1 0" />
+        <LEAF id="square" type="rectangle" args="1 0 0 1" />
         <LEAF id="cylinder" type="cylinder" args="1 0.5 0.5 25 20" /> 
         <LEAF id="big_cylinder" type="cylinder" args="1 13 13 25 20" />
         <LEAF id="big_cylinder2" type="cylinder" args="1 1 13 25 20" />  

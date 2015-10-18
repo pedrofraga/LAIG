@@ -45,13 +45,13 @@ MyTriangle.prototype.initBuffers = function() {
 
     var tC = (vec3.sqrLen(AB) + vec3.sqrLen(AC) - vec3.sqrLen(BC))/ (2 * vec3.length(AB));
 	var sC = Math.sqrt(vec3.sqrLen(AC) - tC * tC);
-	this.nonScaledTexCoords = [
+	this.originalTexCoords = [
 		0,0,
 		vec3.length(AB),0,
 		sC, tC
 	];
 
-	this.texCoords = this.nonScaledTexCoords.slice(0);
+	this.texCoords = this.originalTexCoords.slice(0);
 
     this.primitiveType=this.scene.gl.TRIANGLES;
 
@@ -61,8 +61,8 @@ MyTriangle.prototype.initBuffers = function() {
 
 MyTriangle.prototype.scaleTexCoords = function(ampS, ampT) {
 	for (var i = 0; i < this.texCoords.length; i += 2) {
-		this.texCoords[i] = this.nonScaledTexCoords[i] / ampS;
-		this.texCoords[i + 1] = this.nonScaledTexCoords[i+1] / ampT;
+		this.texCoords[i] = this.originalTexCoords[i] / ampS;
+		this.texCoords[i + 1] = this.originalTexCoords[i+1] / ampT;
 	}
 
 	this.updateTexCoordsGLBuffers();

@@ -28,7 +28,7 @@
 	 this.vertices = [];
 	 this.indices = [];
 	 this.normals = [];
-	 this.texCoords = [];
+	 this.originalTexCoords = [];
 
 	 var r = this.bottomRad;
 	 var delta_r = (this.topRad-this.bottomRad) / this.stacks;
@@ -69,7 +69,7 @@
 		this.topRad/Math.sqrt(Math.pow(this.topRad, 2) + Math.pow(maxheight, 2))
 		);
 	   }
-	   this.texCoords.push(j/this.slices, i/this.stacks);
+	   this.originalTexCoords.push(j/this.slices, i/this.stacks);
 	   
 	  }
 	  r = (i+1) * delta_r + this.bottomRad;
@@ -92,11 +92,17 @@
 	  }
 	 }
 
+	 this.texCoords = this.originalTexCoords.slice();
+
 	 this.primitiveType = this.scene.gl.TRIANGLES;
 	 this.initGLBuffers();
  };
 
 
 Cylinder.prototype.scaleTexCoords = function(ampS, ampT) {
-	//this.updateTexCoordsGLBuffers();
+	for (var i = 0; i < this.texCoords.length; i += 2) {
+			this.texCoords[i] = this.originalTexCoords[i] / ampS;
+			this.texCoords[i + 1] = this.originalTexCoords[i+1] / ampT;
+	}
+	this.updateTexCoordsGLBuffers();
 }

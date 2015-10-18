@@ -84,24 +84,32 @@ MySceneGraph.prototype.parser= function(rootElement) {
 	
 	this.lightsArray = [];
 
-	getLights(rootElement, this.lightsArray);
+	if(	getLights(rootElement, this.lightsArray ) == -1){
+		return ".lsx file has at least 2 lights with the same id";
+	}
 
 	this.leavesArray = [];
 
 	this.texturesArray = [];
 
-	getTextures(rootElement, this.texturesArray);
+	if(getTextures(rootElement, this.texturesArray) == -1){
+		return ".lsx file has at least 2 textures with the same id";
+	}
 
 	this.materialsArray = [];
 
-	getMaterials(rootElement, this.materialsArray);
+	if(getMaterials(rootElement, this.materialsArray) == -1){
+		return ".lsx file has at least 2 materials with the same id";
+	}
 
-	getLeaves(rootElement, this.leavesArray);
+	if(getLeaves(rootElement, this.leavesArray) == -1){
+		return ".lsx file has at least 2 leaves with the same id";
+	}
 
 	this.rootNode = getGeometryNodes(rootElement, this.leavesArray);
 	
 	if(this.rootNode == null){
-		return ".lsx file it's not well formed";
+		return ".lsx file nodes are not well formed";
 	}
 
 };
@@ -233,6 +241,17 @@ function getTextures(rootElement, texturesArray){
 		var texture = new Texture(id, path, amplif_factor);
 		texturesArray[i] = texture;
 	}
+
+	for(var i = 0; i < texturesArray.length; i++){
+		for(var j = 0; j < texturesArray.length; j++){
+			if(i != j){
+				if(texturesArray[i].id == texturesArray[j].id)
+					return -1;
+			}
+		}
+	}
+
+	return 0;
 	
 }
 
@@ -306,6 +325,17 @@ function getMaterials(rootElement, materialsArray){
 		var material = new Material(id, shininess, specular, diffuse, ambient, emission);
 		materialsArray[i] = material;
 	}
+
+	for(var i = 0; i < materialsArray.length; i++){
+		for(var j = 0; j < materialsArray.length; j++){
+			if(i != j){
+				if(materialsArray[i].id == materialsArray[j].id)
+					return -1; 
+			}
+		}
+	}
+
+	return 0;
 	
 }
 
@@ -398,10 +428,20 @@ function getLights(rootElement, lightsArray){
 		
 		
 		
-		
 		var light = new Light(id, enabled, position, ambient, diffuse, specular, shininess);
 		lightsArray[i] = light;
 	}
+
+	for(var i = 0; i < lightsArray.length; i++){
+		for(var j = 0; j < lightsArray.length; j++){
+			if(i != j){
+				if(lightsArray[i].id == lightsArray[j].id)
+					return -1; 
+			}
+		}
+	}
+
+	return 0;
 }
 
 
@@ -439,6 +479,16 @@ function getLeaves(rootElement, leavesArray) {
 		var object = new Leaf(id, type, args);
 		leavesArray[i] = object;
 	}
+
+	for(var i = 0; i < leavesArray.length; i++){
+		for(var j = 0; j < leavesArray.length; j++){
+			if(i != j){
+				if(leavesArray[i].id == leavesArray[j].id)
+					return -1; 
+			}
+		}
+	}
+	return 0;
 }
 
 

@@ -74,9 +74,6 @@ MyGraphObject.prototype.displayTree = function (rootNode, transf, textur, mater)
 					
 					for(var j = 0; j < this.primitives.length; j++){
 						if(this.primitives[j].id == returnValue){
-
-							var texCoordsClone = this.primitives[j].object.texCoords.slice(0);
-
 							this.scene.pushMatrix();
 							for(var a = 0; a < transf.length; a++){
 									if(transf[a].constructor.name == "Rotation"){
@@ -127,7 +124,11 @@ MyGraphObject.prototype.displayTree = function (rootNode, transf, textur, mater)
 							} 
 							this.primitives[j].object.display();
 							this.scene.popMatrix();
-							this.primitives[j].texCoords = texCoordsClone;
+
+							if(texCoordsChanged){
+								this.primitives[j].object.texCoords = this.primitives[j].object.originalTexCoords.slice();
+								this.primitives[j].object.updateTexCoordsGLBuffers();
+							}
 
 						}
 					}

@@ -16,6 +16,8 @@ function Square(scene, minX, minY, maxX, maxY) {
 	this.minY = minY;
 	this.maxY = maxY;
 
+	this.amplifApplied = false;
+
 	this.initBuffers();
 };
 
@@ -45,13 +47,14 @@ Square.prototype.initBuffers = function () {
              0,0,1		
         ];
 
-	this.texCoords = [
+	this.originalTexCoords = [
 			this.minS, this.maxT,
 			this.maxS, this.maxT,
 			this.minS, this.minT,
 			this.maxS, this.minT,
 		];
 
+	this.texCoords = this.originalTexCoords.slice();
 	
 	this.initGLBuffers();
 
@@ -60,9 +63,10 @@ Square.prototype.initBuffers = function () {
 
 
 Square.prototype.scaleTexCoords = function(ampS, ampT) {
+	
 	for (var i = 0; i < this.texCoords.length; i += 2) {
-		this.texCoords[i] = this.texCoords[i] / ampS;
-		this.texCoords[i + 1] = this.texCoords[i+1] / ampT;
+			this.texCoords[i] = this.originalTexCoords[i] / ampS;
+			this.texCoords[i + 1] = this.originalTexCoords[i+1] / ampT;
 	}
 
 	this.updateTexCoordsGLBuffers();

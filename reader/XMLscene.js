@@ -28,7 +28,6 @@ XMLscene.prototype.init = function (application) {
 
 	this.graphObject;
 
-	this.geometryObjects = [];
 
 };
 

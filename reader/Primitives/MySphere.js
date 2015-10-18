@@ -20,7 +20,7 @@
 	this.indices = [];
  	this.vertices = [];
  	this.normals = [];
- 	this.texCoords = [];
+ 	this.originalTexCoords = [];
 
  	var dTheta = Math.PI / this.stacks;
  	var dPhi = 2 * Math.PI / this.slices;
@@ -29,7 +29,7 @@
 		for (var slice = 0; slice <= this.slices; ++slice) {
 			this.vertices.push(this.radius * Math.sin(stack * dTheta) * Math.cos(slice * dPhi), this.radius * Math.sin(stack * dTheta) * Math.sin(slice * dPhi), this.radius * Math.cos(stack * dTheta));
 			this.normals.push(Math.sin(stack * dTheta) * Math.cos(slice * dPhi), Math.sin(stack * dTheta) * Math.sin(slice * dPhi), Math.cos(stack * dTheta));
-			this.texCoords.push(slice/this.slices, 1-stack/this.stacks);
+			this.originalTexCoords.push(slice/this.slices, 1-stack/this.stacks);
 		}
 	}
 
@@ -40,11 +40,19 @@
 		}
 	}
 
+	this.texCoords = this.originalTexCoords.slice();
+
  	this.primitiveType = this.scene.gl.TRIANGLES;
  	this.initGLBuffers();
  };
 
  
-MySphere.prototype.scaleTexCoords = function(ampS, ampT) {
+Square.prototype.scaleTexCoords = function(ampS, ampT) {
+	
+	for (var i = 0; i < this.texCoords.length; i += 2) {
+			this.texCoords[i] = this.originalTexCoords[i] / ampS;
+			this.texCoords[i + 1] = this.originalTexCoords[i+1] / ampT;
+	}
+
 	this.updateTexCoordsGLBuffers();
 }

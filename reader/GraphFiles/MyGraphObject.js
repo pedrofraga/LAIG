@@ -13,9 +13,8 @@ function MyGraphObject(scene, rootNode, leaves, textures, materials, transf) {
 	this.materials = materials;
 	this.transf = transf;
 	
-	this.childObjects = [];
+	this.primitives = [];
 
-	console.log(textures);
 	
 	this.getObjectsFromLeaves();
 	this.getTextureAppearance();
@@ -73,10 +72,10 @@ MyGraphObject.prototype.displayTree = function (rootNode, transf, textur, mater)
 			var returnValue = this.displayTree(rootNode.descendants[i], transfClone, texturClone, materClone);
 			
 					
-					for(var j = 0; j < this.childObjects.length; j++){
-						if(this.childObjects[j].id == returnValue){
+					for(var j = 0; j < this.primitives.length; j++){
+						if(this.primitives[j].id == returnValue){
 
-							var object = clone(this.childObjects[j]);
+							var texCoordsClone = this.primitives[j].object.texCoords.slice(0);
 
 							this.scene.pushMatrix();
 							for(var a = 0; a < transf.length; a++){
@@ -89,19 +88,20 @@ MyGraphObject.prototype.displayTree = function (rootNode, transf, textur, mater)
 									}
 							}
 
-							var textureApplied = false;
-
 							var texture = this.getTextureId(textur);
 							textur.reverse();
 							var material = this.getMaterialId(mater);
 							mater.reverse();
 
-							var materialApplied = false;
+							var textureApplied = false;
+							var texCoordsChanged = false;
 							for(var k = 0; k < this.textures.length; k++){
 								if(this.textures[k].id == texture){
 									var cgfClone = clone(this.textures[k].cgfAppearance);
-									if(!(this.textures[k].amplif_factor.s == 1 && this.textures[k].amplif_factor.t == 1))
-										object.object.scaleTexCoords(this.textures[k].amplif_factor.s, this.textures[k].amplif_factor.t);
+									if(this.textures[k].amplif_factor.s != 1 || this.textures[k].amplif_factor.t != 1){
+										this.primitives[j].object.scaleTexCoords(this.textures[k].amplif_factor.s, this.textures[k].amplif_factor.t);
+										texCoordsChanged = true;
+									}
 
 									for(var z = 0; z < this.materials.length; z++){
 										if(this.materials[z].id == material){
@@ -109,13 +109,13 @@ MyGraphObject.prototype.displayTree = function (rootNode, transf, textur, mater)
 											break;
 										}
 									}
-									materialApplied = true;
+									textureApplied = true;
 									cgfClone.apply();
 									break;
 								}
 							}
 
-							if(!materialApplied){
+							if(!textureApplied){
 								var cgfApp = new CGFappearance(this.scene);
 								for(var z = 0; z < this.materials.length; z++){
 									if(this.materials[z].id == material){
@@ -125,8 +125,10 @@ MyGraphObject.prototype.displayTree = function (rootNode, transf, textur, mater)
 								}
 								cgfApp.apply();
 							} 
-							object.object.display();
+							this.primitives[j].object.display();
 							this.scene.popMatrix();
+							this.primitives[j].texCoords = texCoordsClone;
+
 						}
 					}
 					
@@ -140,6 +142,7 @@ MyGraphObject.prototype.displayTree = function (rootNode, transf, textur, mater)
 MyGraphObject.prototype.getTextureAppearance = function (){
 	for(var a = 0; a < this.textures.length; a++){
 		var texture = new CGFappearance(this.scene);
+		texture.setTextureWrap('CLAMP_TO_EDGE', 'CLAMP_TO_EDGE');
 		texture.loadTexture(this.textures[a].path);
 		this.textures[a].cgfAppearance = texture;
 	}
@@ -202,23 +205,23 @@ MyGraphObject.prototype.getObjectsFromLeaves = function(){
 								var object = new Square(this.scene, parseFloat(this.leaves[a].args[0]), parseFloat(this.leaves[a].args[1]), 
 parseFloat(this.leaves[a].args[2]), parseFloat(this.leaves[a].args[3]));
 								var geometry = new Geometry(object, this.leaves[a].id);
-								this.childObjects.push(geometry);
+								this.primitives.push(geometry);
 							}else if(this.leaves[a].type == "cylinder"){
 								var object = new Cylinder(this.scene, parseFloat(this.leaves[a].args[0]), parseFloat(this.leaves[a].args[1]), 
 parseFloat(this.leaves[a].args[2]), parseFloat(this.leaves[a].args[3]), 
 parseFloat(this.leaves[a].args[4]));								
 								var geometry = new Geometry(object, this.leaves[a].id);
-								this.childObjects.push(geometry);
+								this.primitives.push(geometry);
 							}else if(this.leaves[a].type == "sphere"){
 								var object = new MySphere(this.scene, parseFloat(this.leaves[a].args[0]), parseFloat(this.leaves[a].args[1]), parseFloat(this.leaves[a].args[2]));
 								var geometry = new Geometry(object, this.leaves[a].id);
-								this.childObjects.push(geometry);
+								this.primitives.push(geometry);
 							}else if(this.leaves[a].type == "triangle"){
 								var object = new MyTriangle(this.scene, parseFloat(this.leaves[a].args[0]), parseFloat(this.leaves[a].args[1]), parseFloat(this.leaves[a].args[2])
 																		, parseFloat(this.leaves[a].args[3]), parseFloat(this.leaves[a].args[4]), parseFloat(this.leaves[a].args[5])
 																		, parseFloat(this.leaves[a].args[6]), parseFloat(this.leaves[a].args[7]), parseFloat(this.leaves[a].args[8]));
 								var geometry = new Geometry(object, this.leaves[a].id);
-								this.childObjects.push(geometry);
+								this.primitives.push(geometry);
 							}
 			
 				

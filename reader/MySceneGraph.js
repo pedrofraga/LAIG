@@ -98,6 +98,8 @@ MySceneGraph.prototype.parser= function(rootElement) {
 
 	getLeaves(rootElement, this.leavesArray);
 
+	this.geometryObjects = [];
+
 	this.rootNode = getGeometryNodes(rootElement, this.leavesArray);
 	
 	if(this.rootNode == null){
@@ -135,8 +137,8 @@ function getInitials(initials, frustum, translation, rotation, scale, reference)
 		for(var i = 0; i < initials[0].getElementsByTagName('translation').length; i++){
 			var initialsTransl = initials[0].getElementsByTagName('translation')[i];
 			var t = new Translation(parseFloat(initialsTransl.attributes.getNamedItem("x").value),
-									parseFloat(initialsTransl.attributes.getNamedItem("y").value),
-									parseFloat(initialsTransl.attributes.getNamedItem("z").value));
+				parseFloat(initialsTransl.attributes.getNamedItem("y").value),
+				parseFloat(initialsTransl.attributes.getNamedItem("z").value));
 			translation[i] = t;
 		}
 	}
@@ -145,7 +147,7 @@ function getInitials(initials, frustum, translation, rotation, scale, reference)
 		for(var i = 0; i < initials[0].getElementsByTagName('rotation').length; i++){
 			var initialsRot = initials[0].getElementsByTagName('rotation')[i];
 			var r = new Rotation(initialsRot.attributes.getNamedItem("axis").value,
-									parseFloat(initialsRot.attributes.getNamedItem("angle").value));
+				parseFloat(initialsRot.attributes.getNamedItem("angle").value));
 			rotation[i] = r;
 		}
 	}
@@ -154,8 +156,8 @@ function getInitials(initials, frustum, translation, rotation, scale, reference)
 		for(var i = 0; i < initials[0].getElementsByTagName('scale').length; i++){
 			var initialsScale = initials[0].getElementsByTagName('scale')[i];
 			var s = new Scale(parseFloat(initialsScale.attributes.getNamedItem("sx").value),
-									parseFloat(initialsScale.attributes.getNamedItem("sy").value),
-									parseFloat(initialsScale.attributes.getNamedItem("sz").value));
+				parseFloat(initialsScale.attributes.getNamedItem("sy").value),
+				parseFloat(initialsScale.attributes.getNamedItem("sz").value));
 			scale[i] = s;
 		}
 	}
@@ -496,6 +498,14 @@ function getGeometryNodes(rootElement, leavesArray){
 	return returnRootNode;
 }
 
+MySceneGraph.prototype.nodeExistInGeometrical = function(id) {
+	for(var i = 0; i < this.geometryObjects.length; i++){
+		if(this.geometryObjects[i].id == id)
+			return this.geometryObjects[i];
+	}
+	return null;
+}
+
 
 function getGeometry(lsxNodesArray, leavesArray, root, i){
 	var descendants = lsxNodesArray[i].getElementsByTagName("DESCENDANTS");
@@ -515,20 +525,26 @@ function getGeometry(lsxNodesArray, leavesArray, root, i){
 	for(var i = 0; i < lsxDescendantsArray.length; i++){
 		if(lsxDescendantsArray[i].attributes.getNamedItem("id") != null){
 			var id = lsxDescendantsArray[i].attributes.getNamedItem("id").value;
-			var node = new Node(id);
-			root.descendants[i] = node;
-			
-			for(var a = 0; a < lsxNodesArray.length; a++){
-				if(lsxNodesArray[a].attributes.getNamedItem("id").value == id){
-					if(getNodeInfo(lsxNodesArray[a], root.descendants[i]) == -1) return -1;
-					break;
+			var result = this.nodeExistInGeometrical(id);
+			if(result == null){
+				root.descendants[i] = result;
+			}else{
+				var node = new Node(id);
+				root.descendants[i] = node;
+
+				for(var a = 0; a < lsxNodesArray.length; a++){
+					if(lsxNodesArray[a].attributes.getNamedItem("id").value == id){
+						if(getNodeInfo(lsxNodesArray[a], root.descendants[i]) == -1) return -1;
+						break;
+					}
+				}
+				var isGeometrical = constructTree(lsxNodesArray, leavesArray, root.descendants[i]);
+				if(isGeometrical == -1){
+					return -1;
+				}else if(isGeometrical == 0){
+					this.geometryObjects.push(node);
 				}
 			}
-			
-			if(constructTree(lsxNodesArray, leavesArray, root.descendants[i]) == -1){
-				return -1;
-			}
-			
 		} else{
 			console.error("node with id " + root.id + " has a descendant with no id");
 			return -1;
@@ -540,18 +556,21 @@ function getGeometry(lsxNodesArray, leavesArray, root, i){
 function constructTree(lsxNodesArray, leavesArray, root){
 	for(var i = 0; i < lsxNodesArray.length; i++){
 		if(lsxNodesArray[i].attributes.getNamedItem("id").value == root.id){
-			
+
 			if(getGeometry(lsxNodesArray, leavesArray, root, i) == -1){
 				return -1;
 			}
-			
+
 			break;
 		}
-		
+
 		if(i == lsxNodesArray.length - 1){
-			if(checkLeafs(leavesArray, root) == -1){
+			var exist = checkLeafs(leavesArray, root);
+			if(exist == -1){
 				console.error("there's not a node with this id \"" + root.id + "\", geometry was not loaded");
 				return -1;
+			}else if(exist == 1){
+				return 1;
 			}
 		}
 	}
@@ -562,42 +581,43 @@ function checkLeafs(leavesArray, root){
 	for(var i = 0; i < leavesArray.length; i++){
 		if(leavesArray[i].id == root.id){
 			root = leavesArray[i];
+			return 1;
 		}
 	}
 	return -1;
 }
 
 function getNodeInfo(lsxNode, node){
-	
+
 	var childrenArray = lsxNode.children;
-	
+
 	for(var i = 0; i < childrenArray.length; i++){
 		if(childrenArray[i].localName == "ROTATION"){
 			node.transforms.push(new Rotation(childrenArray[i].attributes.getNamedItem("axis").value,
 				childrenArray[i].attributes.getNamedItem("angle").value));
 		}
-		
+
 		if(childrenArray[i].localName == "SCALE"){
 			node.transforms.push(new Scale(childrenArray[i].attributes.getNamedItem("sx").value,
 				childrenArray[i].attributes.getNamedItem("sy").value,
 				childrenArray[i].attributes.getNamedItem("sz").value));
 		}
-		
+
 		if(childrenArray[i].localName == "TRANSLATION"){
 			node.transforms.push(new Translation(childrenArray[i].attributes.getNamedItem("x").value,
 				childrenArray[i].attributes.getNamedItem("y").value,
 				childrenArray[i].attributes.getNamedItem("z").value));
 		}
-		
+
 		if(childrenArray[i].localName == "TEXTURE"){
 			node.texture = childrenArray[i].attributes.getNamedItem("id").value;
 		}
-		
+
 		if(childrenArray[i].localName == "MATERIAL"){
 			node.material = childrenArray[i].attributes.getNamedItem("id").value;
 		}
 	}
-	
+
 	return 0;
 }
 
@@ -664,7 +684,7 @@ function Material(id, shininess, specular, diffuse, ambient, emission){
  	this.id = id;
  	this.type = type;
  	this.args = args;
-	this.object = null;
+ 	this.object = null;
  }
 
 

@@ -28,6 +28,8 @@ XMLscene.prototype.init = function (application) {
 
 	this.graphObject;
 
+	this.geometryObjects = [];
+
 };
 
 XMLscene.prototype.initLights = function () {

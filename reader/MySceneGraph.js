@@ -561,7 +561,7 @@ function constructTree(lsxNodesArray, leavesArray, root){
 function checkLeafs(leavesArray, root){
 	for(var i = 0; i < leavesArray.length; i++){
 		if(leavesArray[i].id == root.id){
-			return 0;
+			root = leavesArray[i];
 		}
 	}
 	return -1;

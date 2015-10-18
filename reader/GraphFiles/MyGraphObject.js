@@ -52,6 +52,10 @@ MyGraphObject.prototype.displayTree = function (rootNode, transf, textur, mater)
 			mater.push(rootNode.material);
 		}
 
+		if(textur.length > 0)
+			if(textur[textur.length - 1] == "clear")
+				textur = [];
+
 		for(var i = 0; i < rootNode.descendants.length; i++){
 
 			var transfClone = [];

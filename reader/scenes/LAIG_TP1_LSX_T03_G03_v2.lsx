@@ -2,7 +2,7 @@
 <SCENE>
 
     <INITIALS>
-        <frustum near="0.1" far="500"/>                      <!-- frustum planes-->
+        <frustum near="1" far="500"/>                      <!-- frustum planes-->
         <translation x="0" y="0" z="0" />                 <!-- initial translate -->
         <rotation axis="x" angle="0" />                  <!-- initial rotation 3 -->
         <rotation axis="y" angle="0" />                  <!-- initial rotation 2 -->
@@ -12,75 +12,95 @@
     </INITIALS>
 
 
+
+
     <ILLUMINATION>
         <ambient r="0.5" g="0.5" b="0.5" a="1" />            <!-- global ambient -->
         <background r="0" g="0" b="0" a="1" />         <!-- background color -->
     </ILLUMINATION>
 
 
+
+
     <LIGHTS>
-        <LIGHT id="lightone">                                    <!-- light identifier -->
+        <LIGHT id="sun">                                    <!-- light identifier -->
             <enable value ="1" />                         <!-- enable/disable -->
-            <position x="1" y="20" z="1" w="1" />       <!-- light position -->
-            <ambient r="0" g="0" b="0" a="1" />        <!-- ambient component -->
+            <position x="1" y="13.5" z="9.5" w="1" />       <!-- light position -->
+            <ambient r="1" g="1" b="1" a="1" />        <!-- ambient component -->
             <diffuse r="1" g="1" b="1" a="1" />        <!-- diffuse component -->
-            <specular r="1" g="1" b="0" a="1" />       <!-- specular component -->
+            <specular r="0" g="0" b="0" a="0" />       <!-- specular component -->
+        </LIGHT>
+
+         <LIGHT id="lighthouse">                                    <!-- light identifier -->
+            <enable value ="0" />                         <!-- enable/disable -->
+            <position x="36.5" y="6" z="27.3" w="1" />       <!-- light position -->
+            <ambient r="1" g="0" b="0" a="1" />        <!-- ambient component -->
+            <diffuse r="1" g="0" b="0" a="1" />        <!-- diffuse component -->
+            <specular r="1" g="0" b="0" a="1" />       <!-- specular component -->
         </LIGHT>
 
 
-        <LIGHT id="lightwo">                                    <!-- light identifier -->
+        <LIGHT id="lightone">                                    <!-- light identifier -->
             <enable value ="1" />                         <!-- enable/disable -->
-            <position x="300" y="200" z="130" w="1" />       <!-- light position -->
+            <position x="50" y="50" z="50" w="1" />       <!-- light position -->
             <ambient r="0" g="0" b="0" a="1" />        <!-- ambient component -->
             <diffuse r="1" g="1" b="1" a="1" />        <!-- diffuse component -->
             <specular r="0" g="0" b="0" a="0" />       <!-- specular component -->
         </LIGHT>
 
-        <LIGHT id="lighthree">                                    <!-- light identifier -->
+         <LIGHT id="lighttwo">                                    <!-- light identifier -->
             <enable value ="1" />                         <!-- enable/disable -->
-            <position x="1" y="0" z="1" w="1" />       <!-- light position -->
+            <position x="30" y="0" z="0" w="1" />       <!-- light position -->
             <ambient r="0" g="0" b="0" a="1" />        <!-- ambient component -->
             <diffuse r="1" g="1" b="1" a="1" />        <!-- diffuse component -->
-            <specular r="1" g="1" b="1" a="0" />       <!-- specular component -->
+            <specular r="0" g="0" b="0" a="0" />       <!-- specular component -->
         </LIGHT>
 
-
-        <LIGHT id="lightfour">                                    <!-- light identifier -->
+        <LIGHT id="lightthree">                                    <!-- light identifier -->
             <enable value ="1" />                         <!-- enable/disable -->
-            <position x="0" y="0" z="0" w="0" />       <!-- light position -->
+            <position x="0" y="0" z="30" w="1" />       <!-- light position -->
             <ambient r="0" g="0" b="0" a="1" />        <!-- ambient component -->
             <diffuse r="1" g="1" b="1" a="1" />        <!-- diffuse component -->
-            <specular r="1" g="1" b="1" a="0" />       <!-- specular component -->
-        </LIGHT>
-
-        <LIGHT id="lightfive">                                    <!-- light identifier -->
-            <enable value="1" />                         <!-- enable/disable -->
-            <position x="15" y="15" z="15" w="0" />       <!-- light position -->
-            <ambient r="0" g="0" b="0" a="1" />        <!-- ambient component -->
-            <diffuse r="1" g="1" b="1" a="1" />        <!-- diffuse component -->
-            <specular r="1" g="1" b="1" a="0" />       <!-- specular component -->
-        </LIGHT>
-
-        <LIGHT id="lightsix">                                    <!-- light identifier -->
-            <enable value ="1" />                         <!-- enable/disable -->
-            <position x="10" y="5" z="15" w="0" />       <!-- light position -->
-            <ambient r="0" g="0" b="0" a="1" />        <!-- ambient component -->
-            <diffuse r="1" g="1" b="1" a="1" />        <!-- diffuse component -->
-            <specular r="1" g="1" b="1" a="0" />       <!-- specular component -->
-        </LIGHT>
-
-        <LIGHT id="lightseven">                                    <!-- light identifier -->
-            <enable value ="1" />                         <!-- enable/disable -->
-            <position x="3" y="5" z="45" w="0" />       <!-- light position -->
-            <ambient r="0" g="0" b="0" a="1" />        <!-- ambient component -->
-            <diffuse r="1" g="1" b="1" a="1" />        <!-- diffuse component -->
-            <specular r="1" g="1" b="1" a="0" />       <!-- specular component -->
+            <specular r="0" g="0" b="0" a="0" />       <!-- specular component -->
         </LIGHT>
 
     </LIGHTS>
 
 
+
+
     <TEXTURES>
+
+         <TEXTURE id="boat_window">
+            <file path="./scenes/res/boatwindow.jpg" />                 <!-- path to file -->
+            <amplif_factor s="1" t="1" />                <!-- x/s, y/t -->
+        </TEXTURE>
+
+         <TEXTURE id="wflag">
+            <file path="./scenes/res/whiteflag.png" />                 <!-- path to file -->
+            <amplif_factor s="1" t="1" />                <!-- x/s, y/t -->
+        </TEXTURE>
+
+        <TEXTURE id="metalfloor">
+            <file path="./scenes/res/metalfloor.jpg" />                 <!-- path to file -->
+            <amplif_factor s="1" t="1" />                <!-- x/s, y/t -->
+        </TEXTURE>
+
+         <TEXTURE id="darkmetal">
+            <file path="./scenes/res/darkmetal.jpg" />                 <!-- path to file -->
+            <amplif_factor s="1" t="1" />                <!-- x/s, y/t -->
+        </TEXTURE>
+
+        <TEXTURE id="darkwood">
+            <file path="./scenes/res/darkwood.jpg" />                 <!-- path to file -->
+            <amplif_factor s="1" t="1" />                <!-- x/s, y/t -->
+        </TEXTURE>
+
+        <TEXTURE id="map">
+            <file path="./scenes/res/globe.jpg" />                 <!-- path to file -->
+            <amplif_factor s="1" t="1" />                <!-- x/s, y/t -->
+        </TEXTURE>
+
         <TEXTURE id="wall">
             <file path="./scenes/res/wall.jpg" />                 <!-- path to file -->
             <amplif_factor s="1" t="1" />                <!-- x/s, y/t -->
@@ -90,27 +110,11 @@
             <file path="./scenes/res/window.jpg" />                 <!-- path to file -->
             <amplif_factor s="1" t="1" />                <!-- x/s, y/t -->
         </TEXTURE>
-
-         <TEXTURE id="darkmetal">
-            <file path="./scenes/res/darkmetal.jpg" />                 <!-- path to file -->
-            <amplif_factor s="1" t="1" />                <!-- x/s, y/t -->
-        </TEXTURE>
-
-        <TEXTURE id="metalfloor">
-            <file path="./scenes/res/metalfloor.jpg" />                 <!-- path to file -->
-            <amplif_factor s="1" t="1" />                <!-- x/s, y/t -->
-        </TEXTURE>
-
-        <TEXTURE id="map">
-            <file path="./scenes/res/globe.jpg" />                 <!-- path to file -->
-            <amplif_factor s="1" t="1" />                <!-- x/s, y/t -->
-        </TEXTURE>
-
+  
         <TEXTURE id="sea">
             <file path="./scenes/res/sea.jpg" />                 <!-- path to file -->
             <amplif_factor s="1" t="1" />                <!-- x/s, y/t -->
         </TEXTURE>
-
 
         <TEXTURE id="sky">
             <file path="./scenes/res/sky.jpg" />                 <!-- path to file -->
@@ -119,17 +123,6 @@
 
         <TEXTURE id="sky2">
             <file path="./scenes/res/sky2.jpg" />                 <!-- path to file -->
-            <amplif_factor s="1" t="1" />                <!-- x/s, y/t -->
-        </TEXTURE>
-
-        <TEXTURE id="darkwood">
-            <file path="./scenes/res/darkwood.png" />                 <!-- path to file -->
-            <amplif_factor s="1" t="1" />                <!-- x/s, y/t -->
-        </TEXTURE>
-
-
-        <TEXTURE id="wflag">
-            <file path="./scenes/res/whiteflag.png" />                 <!-- path to file -->
             <amplif_factor s="1" t="1" />                <!-- x/s, y/t -->
         </TEXTURE>
 
@@ -173,9 +166,19 @@
             <amplif_factor s="1" t="1" />                <!-- x/s, y/t -->
         </TEXTURE>
 
+       <TEXTURE id="treetop">
+            <file path="./scenes/res/treetop.jpg" />                 <!-- path to file -->
+            <amplif_factor s="1" t="1" />                <!-- x/s, y/t -->
+        </TEXTURE>
 
+        <TEXTURE id="treetrunk">
+            <file path="./scenes/res/treetrunk.jpg" />                 <!-- path to file -->
+            <amplif_factor s="1" t="1" />                <!-- x/s, y/t -->
+        </TEXTURE>
 
     </TEXTURES>
+
+
 
 
     <MATERIALS>
@@ -189,11 +192,11 @@
         </MATERIAL>
 
         <MATERIAL id="tableAppearance">                                  
-            <shininess value="10" />
-            <specular r="0.5" g="0.1" b="0.3" a="1" />        <!-- specular reflection -->
-            <diffuse r="0.1" g="0.4" b="0.8" a="1" />         <!-- diffuse reflection -->
-            <ambient r="0.4" g="0.2" b="0.3" a="1" />         <!-- ambient reflection -->
-            <emission r="0" g="0" b="0" a="0" />        <!-- emission component -->
+            <shininess value="125" />
+            <specular r="0" g="0" b="0" a="1" />        <!-- specular reflection -->
+            <diffuse r="0.7" g="0.7" b="0.7" a="1" />         <!-- diffuse reflection -->
+            <ambient r="0.8" g="0.8" b="0.8" a="1" />         <!-- ambient reflection -->
+            <emission r="0" g="0" b="0" a="0" />          <!-- emission component -->
         </MATERIAL>
 
         <MATERIAL id="boatAppearance">                                  
@@ -201,7 +204,7 @@
             <specular r="0.1" g="0.1" b="0.1" a="1" />        <!-- specular reflection -->
             <diffuse r="0.8" g="0.8" b="0.8" a="1" />         <!-- diffuse reflection -->
             <ambient r="0.3" g="0.3" b="0.3" a="1" />         <!-- ambient reflection -->
-            <emission r="0" g="0" b="0" a="0" />        <!-- emission component -->
+            <emission r="0.2" g="0.2" b="0.2" a="0" />        <!-- emission component -->
         </MATERIAL>
 
         <MATERIAL id="metalAppearance">                                  
@@ -209,15 +212,15 @@
             <specular r="0.1" g="0.1" b="0.1" a="1" />        <!-- specular reflection -->
             <diffuse r="0.7" g="0.7" b="0.7" a="1" />         <!-- diffuse reflection -->
             <ambient r="0.8" g="0.8" b="0.8" a="1" />         <!-- ambient reflection -->
-            <emission r="0" g="0" b="0" a="0" />        <!-- emission component -->
+            <emission r="0.3" g="0.3" b="0.3" a="0" />        <!-- emission component -->
         </MATERIAL>
 
         <MATERIAL id="glassAppearance">                                  
             <shininess value="200" />
-            <specular r="0.1" g="0.1" b="0.1" a="0.3" />        <!-- specular reflection -->
-            <diffuse r="0.7" g="0.7" b="0.7" a="0.3" />         <!-- diffuse reflection -->
-            <ambient r="0.8" g="0.8" b="0.8" a="0.4" />         <!-- ambient reflection -->
-            <emission r="0.3" g="0.3" b="0.3" a="0.3" />        <!-- emission component -->
+            <specular r="0.1" g="0.1" b="0.1" a="0" />        <!-- specular reflection -->
+            <diffuse r="0.7" g="0.7" b="0.7" a="0" />         <!-- diffuse reflection -->
+            <ambient r="0.8" g="0.8" b="0.8" a="0" />         <!-- ambient reflection -->
+            <emission r="1" g="1" b="1" a="0" />        <!-- emission component -->
         </MATERIAL>
 
     </MATERIALS>
@@ -225,17 +228,17 @@
 
     <LEAVES>
 
-        <!-- next lines define nodes of type leaf; they may be repeated, in any order, as necessary -->
         <LEAF id="square" type="rectangle" args="0 1 1 0" />
         <LEAF id="cylinder" type="cylinder" args="1 0.5 0.5 25 20" /> 
         <LEAF id="big_cylinder" type="cylinder" args="1 13 13 25 20" />
         <LEAF id="big_cylinder2" type="cylinder" args="1 1 13 25 20" />  
         <LEAF id="big_cylinder3" type="cylinder" args="1 6 6 25 20" />
         <LEAF id="sphere" type="sphere" args="1 25 20" />
+        <LEAF id="triangle" type="triangle" args="-0.5 -0.5 0  0.5 -0.5 0  0 0.5 0"/>
         <LEAF id="triangle1" type="triangle" args="0 0 0  1 1 0  1 0 0" />
         <LEAF id="triangle2" type="triangle" args="1 0 0  0 1 0  0 0 0" />
         <LEAF id="triangle2b" type="triangle" args="0 0 0  0 1 0  1 0 0" />
-        <LEAF id="triangle" type="triangle" args="-0.5 -0.5 0  0.5 -0.5 0  0 0.5 0"/>
+        
 
         <!-- Parameters of the above primitives:                                                         -->
         <!--rectangle: 2D coordinates for left-top and right-bottom vertices.                        -->
@@ -255,17 +258,15 @@
             <TEXTURE id="null" /> 
             <DESCENDANTS>   
                 <DESCENDANT id="boat" />
-                <DESCENDANT id="poles" />
                 <DESCENDANT id="sea" />  
                 <DESCENDANT id="skyright" /> 
                 <DESCENDANT id="skyleft" />
                 <DESCENDANT id="table" />
-                <DESCENDANT id="island" />
-                
-
+                <DESCENDANT id="island" />     
             </DESCENDANTS>
         </NODE>
 
+        <!--########### BOAT ############-->
 
         <NODE id="boat">       
             <MATERIAL id="boatAppearance" />      
@@ -276,9 +277,12 @@
                 <DESCENDANT id="toppart"/>  
                 <DESCENDANT id="bottompart"/> 
                 <DESCENDANT id="chimney"/>
+                <DESCENDANT id="flagpole" />
             </DESCENDANTS>
 
         </NODE>
+
+        <!-- ### TOP PART OF THE BOAT ### -->
 
         <NODE id="toppart">       
             <MATERIAL id="boatAppearance" />      
@@ -295,6 +299,45 @@
 
         </NODE>
 
+
+        <NODE id="frontpart_top">
+            <MATERIAL id="boatAppearance" />      
+
+            <TEXTURE id="darkmetal" />            
+
+
+            <DESCENDANTS>
+                <DESCENDANT id="front_left" />        
+                <DESCENDANT id="front_leftback" /> 
+                <DESCENDANT id="front_right" /> 
+                <DESCENDANT id="front_rightback" />                   
+                <DESCENDANT id="front_center" />
+                <DESCENDANT id="front_centerback" />     
+                <DESCENDANT id="boatwindows" />    
+            </DESCENDANTS>
+
+        </NODE>
+
+
+        <NODE id="backpart_top">       
+         <MATERIAL id="boatAppearance" />      
+
+         <TEXTURE id="darkmetal" />        
+
+         <DESCENDANTS>
+            <DESCENDANT id="back" />    
+            <DESCENDANT id="back2" />  
+            <DESCENDANT id="right" /> 
+            <DESCENDANT id="right2" /> 
+            <DESCENDANT id="left2" /> 
+            <DESCENDANT id="left" />  
+            <DESCENDANT id="fbottom_square" />  
+            </DESCENDANTS>
+
+        </NODE>
+
+
+        <!-- ### BOTTOM PART OF THE BOAT ### -->
         <NODE id="bottompart">       
             <MATERIAL id="boatAppearance" />      
 
@@ -310,18 +353,803 @@
 
         </NODE>
 
+
+
+        <NODE id="frontpart_bottom">
+            <MATERIAL id="boatAppearance" />      
+
+            <TEXTURE id="red" />            
+
+            <DESCENDANTS>
+                <DESCENDANT id="front_left" />        
+                <DESCENDANT id="front_leftback" /> 
+                <DESCENDANT id="front_right" /> 
+                <DESCENDANT id="front_rightback" />  
+                <DESCENDANT id="front_center" />
+                <DESCENDANT id="front_centerback" />   
+                <DESCENDANT id="front_bottomr" />
+                <DESCENDANT id="front_bottomrback" /> 
+                <DESCENDANT id="front_bottomlback" />  
+                <DESCENDANT id="front_bottoml" />     
+                <DESCENDANT id="front_bottomcenter" />  
+                <DESCENDANT id="front_bottomcenterback" />                                  
+            </DESCENDANTS>
+
+        </NODE>
+
+
+        <NODE id="backpart_bottom">       
+            <MATERIAL id="boatAppearance" />      
+
+            <TEXTURE id="red" />        
+
+            <DESCENDANTS>
+                <DESCENDANT id="back" />    
+                <DESCENDANT id="back2" />  
+                <DESCENDANT id="right" /> 
+                <DESCENDANT id="right2" /> 
+                <DESCENDANT id="left2" /> 
+                <DESCENDANT id="left" />  
+                <DESCENDANT id="bottom" />          
+                <DESCENDANT id="bottom2" />     
+            </DESCENDANTS>
+
+        </NODE>
+
+    
+        <!-- # PIECES FOR THE BACK PART ## -->
+
+        <NODE id="fbottom_square">       
+            <MATERIAL id="boatAppearance" />      
+
+            <TEXTURE id="null" />      
+
+            <TRANSLATION x="0" y="0.5" z="1" />
+            <ROTATION axis="x" angle="-90" />            
+
+            <DESCENDANTS>
+                <DESCENDANT id="square" />                               
+            </DESCENDANTS>
+
+        </NODE>
+
+        <!-- inside the boat -->
+
+
+        <NODE id="bottom">          <!--floor-->
+            <MATERIAL id="boatAppearance" />      
+            <TEXTURE id="null" />
+
+            <ROTATION axis="x" angle="90" />            
+
+            <DESCENDANTS>
+                <DESCENDANT id="square" />                               
+            </DESCENDANTS>
+
+        </NODE>
+
+        <NODE id="left">        <!-- wall -->
+            <MATERIAL id="boatAppearance" />      
+            <TEXTURE id="null" />  
+
+
+            <TRANSLATION x="0" y="0" z="1"/>
+            <ROTATION axis="y" angle="90" />         
+
+            <DESCENDANTS>
+                <DESCENDANT id="square" />                               
+            </DESCENDANTS>
+
+        </NODE>
+
+        <NODE id="right2">       <!--wall-->
+            <MATERIAL id="boatAppearance" />      
+
+            <TEXTURE id="null" />  
+
+            <TRANSLATION x="1" y="0" z="0"/>
+            <ROTATION axis="y" angle="-90" />         
+
+            <DESCENDANTS>
+                <DESCENDANT id="square" />                               
+            </DESCENDANTS>
+
+        </NODE>
+
+        <NODE id="back2">       <!--wall-->
+            <MATERIAL id="boatAppearance" />      
+
+            <TEXTURE id="null" />  
+
+            <TRANSLATION x="0" y="0" z="0" />  
+
+
+            <DESCENDANTS>
+                <DESCENDANT id="square" />                               
+            </DESCENDANTS>
+
+        </NODE>
+
+        <!-- outside the boat -->
+
+        <NODE id="bottom2">         <!--floor-->
+            <MATERIAL id="boatAppearance" />      
+
+            <TEXTURE id="metalfloor" />      
+
+            <TRANSLATION x="0" y="0.01" z="1" />
+            <ROTATION axis="x" angle="-90" />            
+
+            <DESCENDANTS>
+                <DESCENDANT id="square" />                               
+            </DESCENDANTS>
+
+        </NODE>    
+
+
+        <NODE id="left2">       <!--wall-->
+            <MATERIAL id="boatAppearance" />      
+
+           <TEXTURE id="null" />    
+
+            <ROTATION axis="y" angle="-90" />         
+
+            <DESCENDANTS>
+                <DESCENDANT id="square" />                               
+            </DESCENDANTS>
+
+        </NODE>
+
+
+
+        <NODE id="right">       <!--wall-->
+            <MATERIAL id="boatAppearance" />      
+
+            <TEXTURE id="null" />   
+
+            <TRANSLATION x="1" y="0" z="1" />  
+            <ROTATION axis="y" angle="90" />         
+
+            <DESCENDANTS>
+                <DESCENDANT id="square" />                               
+            </DESCENDANTS>
+
+        </NODE>      
+
+
+        <NODE id="back">       <!--wall-->
+            <MATERIAL id="boatAppearance" />      
+
+            <TEXTURE id="null" />   
+
+            <TRANSLATION x="1" y="0" z="0" />  
+            <ROTATION axis="y" angle="180" />         
+
+            <DESCENDANTS>
+                <DESCENDANT id="square" />                               
+            </DESCENDANTS>
+
+        </NODE>
+
+        <!-- # PIECES FOR THE FRONT PART ## -->
+
+        <!-- inside of the boat -->
+
+        <NODE id="front_rightback">       <!--wall-->
+            <MATERIAL id="boatAppearance" />      
+
+             <TEXTURE id="null" /> 
+
+            <TRANSLATION x="1" y="0" z="0.999" />  
+            <ROTATION axis="y" angle="-136"  /> 
+            <SCALE sx="0.5" sy="1" sz="1" />       
+
+            <DESCENDANTS>
+                <DESCENDANT id="square" />                               
+            </DESCENDANTS>
+
+        </NODE>
+
+        <NODE id="front_back">          <!--wall-->
+            <MATERIAL id="boatAppearance" />      
+
+             <TEXTURE id="null" />     
+
+            <TRANSLATION x="1" y="0" z="1" />   
+            <ROTATION axis="y" angle="180" />     
+
+            <DESCENDANTS>
+                <DESCENDANT id="square" />                               
+            </DESCENDANTS>
+
+        </NODE>
+
+        <NODE id="front_leftback">       <!--wall-->
+            <MATERIAL id="boatAppearance" />      
+
+             <TEXTURE id="null" /> 
+
+            <TRANSLATION x="0.35" y="0" z="1.35" /> 
+            <ROTATION axis="y" angle="135"  />
+            <SCALE sx="0.5" sy="1" sz="1" />           
+
+            <DESCENDANTS>
+                <DESCENDANT id="square" />                               
+            </DESCENDANTS>
+
+        </NODE>
+
+        <NODE id="front_bottomr">       <!--floor-->
+            <MATERIAL id="boatAppearance" />      
+            <TEXTURE id="metalfloor" /> 
+
+            <TRANSLATION x="0" y="0.01" z="1"/>
+            <ROTATION axis="x" angle="90" />
+            <SCALE sx="0.35" sy="0.35" sz="0.25"/>            
+
+            <DESCENDANTS>
+                <DESCENDANT id="triangle1" />                               
+            </DESCENDANTS>
+
+        </NODE>
+
+        <NODE id="front_bottoml">         <!--floor-->
+            <MATERIAL id="boatAppearance" />      
+            <TEXTURE id="metalfloor" /> 
+
+            <TRANSLATION x="0.65" y="0.01" z="1" />
+            <ROTATION axis="z" angle="-90" />
+            <ROTATION axis="y" angle="-90" />
+            <SCALE sx="0.35" sy="0.35" sz="0.25"/>            
+
+            <DESCENDANTS>
+                <DESCENDANT id="triangle2" />                               
+            </DESCENDANTS>
+
+        </NODE>
+
+        <NODE id="front_bottomcenterback">  <!--floor-->
+            <MATERIAL id="boatAppearance" />      
+
+            <TEXTURE id="null" />    
+
+            <TRANSLATION x="0.35" y="0" z="1" />
+            <ROTATION axis="x" angle="90"/>
+            <SCALE sx="0.3" sy="0.35" sz="0.5"/>    
+
+            <DESCENDANTS>
+                <DESCENDANT id="square" />                               
+            </DESCENDANTS>
+
+        </NODE>
+
+        <NODE id="front_bottomcenter">    <!--floor-->
+            <MATERIAL id="boatAppearance" />      
+
+             <TEXTURE id="metalfloor" />    
+
+            <TRANSLATION x="0.35" y="0.01" z="1.35" />
+            <ROTATION axis="x" angle="-90"/>   
+            <SCALE sx="0.3" sy="0.35" sz="0.5"/> 
+
+            <DESCENDANTS>
+                <DESCENDANT id="square" />                               
+            </DESCENDANTS>
+
+        </NODE>
+
+
+         <!-- outside of the boat -->
+
+        <NODE id="front_center">            <!--wall--> 
+            <MATERIAL id="boatAppearance" />         
+
+             <TEXTURE id="null" />     
+
+            <TRANSLATION x="0.35" y="0" z="1.35" />   
+            <SCALE sx="0.30" sy="1" sz="1"/>    
+
+            <DESCENDANTS>
+                <DESCENDANT id="square" />                               
+            </DESCENDANTS>
+
+        </NODE>
+
+        <NODE id="front_left">       <!--wall-->
+            <MATERIAL id="boatAppearance" />      
+
+            <TEXTURE id="null" />  
+
+            <TRANSLATION x="0" y="0" z="1" /> 
+            <ROTATION axis="y" angle="-45"  />
+            <SCALE sx="0.5" sy="1" sz="1" />           
+
+            <DESCENDANTS>
+                <DESCENDANT id="square" />                               
+            </DESCENDANTS>
+
+        </NODE>
+
+        <NODE id="front_right">       <!--wall-->
+            <MATERIAL id="boatAppearance" />      
+
+             <TEXTURE id="null" />  
+
+            <TRANSLATION x="0.65" y="0" z="1.35" />  
+            <ROTATION axis="y" angle="45"  /> 
+            <SCALE sx="0.5" sy="1" sz="1" />       
+
+            <DESCENDANTS>
+                <DESCENDANT id="square" />                               
+            </DESCENDANTS>
+
+        </NODE> 
+
+    
+        <NODE id="front_centerback">        <!--floor-->
+           <MATERIAL id="boatAppearance" />      
+
+             <TEXTURE id="null" />     
+
+            <TRANSLATION x="0.65" y="0" z="1.35" />
+            <ROTATION axis="y" angle="180"/>   
+            <SCALE sx="0.30" sy="1" sz="1"/>    
+
+            <DESCENDANTS>
+                <DESCENDANT id="square" />                               
+            </DESCENDANTS>
+
+        </NODE>
+
+        
+        <NODE id="front_bottomrback">       <!--floor-->
+            <MATERIAL id="boatAppearance" />      
+             <TEXTURE id="null" />  
+
+            <TRANSLATION x="0.35" y="0" z="1.35"/>
+            <ROTATION axis="z" angle="90" />
+            <ROTATION axis="y" angle="90" />
+            <SCALE sx="0.35" sy="0.35" sz="0.25"/> 
+            
+
+
+            <DESCENDANTS>
+                <DESCENDANT id="triangle1" />                               
+            </DESCENDANTS>
+
+        </NODE>
+
+        <NODE id="front_bottomlback">       <!--floor-->
+            <MATERIAL id="boatAppearance" />      
+
+             <TEXTURE id="null" />      
+
+            <TRANSLATION x="0.65" y="0" z="1" />
+            <ROTATION axis="x" angle="90" />            
+            <SCALE sx="0.35" sy="0.35" sz="0.25"/>  
+
+            <DESCENDANTS>
+                <DESCENDANT id="triangle2" />                               
+            </DESCENDANTS>
+
+        </NODE>
+
+
+        <!-- ######## BOAT CHIMNEYS #########-->
+
+        <NODE id="chimney">
+            <MATERIAL id="null"/>
+            <TEXTURE id="null"/>
+
+            <TRANSLATION x="70" y="25" z="45"/>
+
+            <DESCENDANTS>
+                <DESCENDANT id="top_chimneys"/>
+                <DESCENDANT id="bottom_chimneys"/>
+            </DESCENDANTS>
+        </NODE>
+
+        <NODE id="top_chimneys">
+            <MATERIAL id="normalAppearance"/>
+            <TEXTURE id="darkmetal"/>
+
+            <TRANSLATION x="0" y="30" z="0"/>
+            <SCALE sx="1" sy="0.3" sz="1" /> 
+
+            <DESCENDANTS>
+                <DESCENDANT id="chimney1"/>
+                <DESCENDANT id="chimney2"/>
+                <DESCENDANT id="chimney3"/>
+            </DESCENDANTS>
+        </NODE>
+
+        <NODE id="bottom_chimneys">
+            <MATERIAL id="normalAppearance"/>
+            <TEXTURE id="redc"/>
+
+            <DESCENDANTS>
+                <DESCENDANT id="chimney1"/>
+                <DESCENDANT id="chimney2"/>
+                <DESCENDANT id="chimney3"/>
+            </DESCENDANTS>
+        </NODE>
+
+        <NODE id="chimney1">
+            <MATERIAL id="null"/>
+            <TEXTURE id="null"/>
+
+            <TRANSLATION x="0" y="0" z="78"/>
+            <ROTATION axis="x" angle="-90" />   
+            <SCALE sx="1" sy="1" sz="30" /> 
+
+            <DESCENDANTS>
+                <DESCENDANT id="big_cylinder3"/>
+            </DESCENDANTS>
+        </NODE>
+
+        <NODE id="chimney2">
+            <MATERIAL id="null"/>
+            <TEXTURE id="null"/>
+
+            <TRANSLATION x="0" y="0" z="50"/>
+            <ROTATION axis="x" angle="-90" />   
+            <SCALE sx="1" sy="1" sz="30" /> 
+
+            <DESCENDANTS>
+                <DESCENDANT id="big_cylinder3"/>
+            </DESCENDANTS>
+        </NODE>
+
+        <NODE id="chimney3">
+            <MATERIAL id="null"/>
+            <TEXTURE id="null"/>
+
+            <TRANSLATION x="0" y="0" z="20"/>
+            <ROTATION axis="x" angle="-90" />   
+            <SCALE sx="1" sy="1" sz="30" /> 
+
+            <DESCENDANTS>
+                <DESCENDANT id="big_cylinder3"/>
+            </DESCENDANTS>
+        </NODE>
+
+
+        <!-- ## FLAG OF THE BOAT ## -->
+
+        <NODE id="flagpole">
+            <MATERIAL id="null"/>
+            <TEXTURE id="null"/>
+
+
+            <TRANSLATION x="35" y="44" z="90" />
+            <SCALE sx="0.5" sy="0.5" sz="0.5"/>
+
+            <DESCENDANTS>
+                <DESCENDANT id="f_pole0"/>
+                <DESCENDANT id="flag_p0"/>
+                <DESCENDANT id="flag_p0b"/>
+            </DESCENDANTS>
+
+        </NODE>
+
+        <NODE id="f_pole0">
+            <MATERIAL id="metalAppearance"/>
+            <TEXTURE id="darkwood"/>
+
+            <TRANSLATION x="70" y="10.5" z="190"/>
+            <ROTATION axis="x" angle="60"/>
+            <ROTATION axis="x" angle="90"/>
+            <SCALE sx="1" sy="1" sz="35"/>
+
+            <DESCENDANTS>
+                <DESCENDANT id="cylinder"/>
+            </DESCENDANTS>
+        </NODE>
+
+        <NODE id="flag_p0b">
+           <MATERIAL id="metalAppearance"/>
+           <TEXTURE id="wflag"/>
+
+           <TRANSLATION x="69.5" y="-8" z="200"/>
+           <ROTATION axis="y" angle="-90"/>
+           <ROTATION axis="z" angle="75"/>
+           <SCALE sx="30" sy="30" sz="30"/>
+
+           <DESCENDANTS>
+            <DESCENDANT id="triangle2"/>
+        </DESCENDANTS>
+        </NODE>
+
+        <NODE id="flag_p0">
+           <MATERIAL id="metalAppearance"/>
+           <TEXTURE id="wflag"/>
+
+           <TRANSLATION x="70.5" y="-8" z="200"/>
+           <ROTATION axis="y" angle="-90"/>
+           <ROTATION axis="z" angle="75"/>
+           <SCALE sx="30" sy="30" sz="30"/>
+
+           <DESCENDANTS>
+            <DESCENDANT id="triangle2b"/>
+        </DESCENDANTS>
+        </NODE>
+    
+        <!-- ## BOAT WINDOWS (back part top only) ## -->
+
+        <NODE id="boatwindows">
+
+            <MATERIAL id="null"/>
+            <TEXTURE id="boat_window"/>
+
+            <DESCENDANTS>
+                <DESCENDANT id="boatwindow1_right"/>
+                <DESCENDANT id="boatwindow2_right"/>
+                <DESCENDANT id="boatwindow3_right"/>
+                <DESCENDANT id="boatwindow4_right"/>
+                <DESCENDANT id="boatwindow1_left"/>
+                <DESCENDANT id="boatwindow2_left"/>
+                <DESCENDANT id="boatwindow3_left"/>
+                <DESCENDANT id="boatwindow4_left"/>
+                <DESCENDANT id="boatwindow1_insidel"/>
+                <DESCENDANT id="boatwindow2_insidel"/>
+                <DESCENDANT id="boatwindow3_insidel"/>
+                <DESCENDANT id="boatwindow4_insidel"/>
+                <DESCENDANT id="boatwindow1_insider"/>
+                <DESCENDANT id="boatwindow2_insider"/>
+                <DESCENDANT id="boatwindow3_insider"/>
+                <DESCENDANT id="boatwindow4_insider"/>
+            </DESCENDANTS>
+        </NODE>
+
+        <NODE id="boatwindow1_right">
+
+            <MATERIAL id="null"/>
+            <TEXTURE id="null"/>
+
+            <TRANSLATION x="1.01" y="0.1" z="0.85"/>
+            <ROTATION axis="y" angle="90"/>
+            <SCALE sx="0.08" sy="0.26" sz="1"/>
+
+            <DESCENDANTS>
+                <DESCENDANT id="square"/>
+            </DESCENDANTS>
+        </NODE>
+
+        <NODE id="boatwindow2_right">
+
+            <MATERIAL id="null"/>
+            <TEXTURE id="null"/>
+
+            <TRANSLATION x="1.01" y="0.1" z="0.65"/>
+            <ROTATION axis="y" angle="90"/>
+            <SCALE sx="0.08" sy="0.26" sz="1"/>
+
+            <DESCENDANTS>
+                <DESCENDANT id="square"/>
+            </DESCENDANTS>
+        </NODE>
+
+        <NODE id="boatwindow3_right">
+
+            <MATERIAL id="null"/>
+            <TEXTURE id="null"/>
+
+            <TRANSLATION x="1.01" y="0.1" z="0.45"/>
+            <ROTATION axis="y" angle="90"/>
+            <SCALE sx="0.08" sy="0.26" sz="1"/>
+
+            <DESCENDANTS>
+                <DESCENDANT id="square"/>
+            </DESCENDANTS>
+        </NODE>
+
+        <NODE id="boatwindow4_right">
+
+            <MATERIAL id="null"/>
+            <TEXTURE id="null"/>
+
+            <TRANSLATION x="1.01" y="0.1" z="0.25"/>
+            <ROTATION axis="y" angle="90"/>
+            <SCALE sx="0.08" sy="0.26" sz="1"/>
+
+            <DESCENDANTS>
+                <DESCENDANT id="square"/>
+            </DESCENDANTS>
+        </NODE>
+
+
+        <NODE id="boatwindow1_insidel">
+
+            <MATERIAL id="null"/>
+            <TEXTURE id="null"/>
+
+            <TRANSLATION x="0.01" y="0.1" z="0.85"/>
+            <ROTATION axis="y" angle="90"/>
+            <SCALE sx="0.08" sy="0.26" sz="1"/>
+
+            <DESCENDANTS>
+                <DESCENDANT id="square"/>
+            </DESCENDANTS>
+        </NODE>
+
+        <NODE id="boatwindow2_insidel">
+
+            <MATERIAL id="null"/>
+            <TEXTURE id="null"/>
+
+            <TRANSLATION x="0.01" y="0.1" z="0.65"/>
+            <ROTATION axis="y" angle="90"/>
+            <SCALE sx="0.08" sy="0.26" sz="1"/>
+
+            <DESCENDANTS>
+                <DESCENDANT id="square"/>
+            </DESCENDANTS>
+        </NODE>
+
+        <NODE id="boatwindow3_insidel">
+
+            <MATERIAL id="null"/>
+            <TEXTURE id="null"/>
+
+            <TRANSLATION x="0.01" y="0.1" z="0.45"/>
+            <ROTATION axis="y" angle="90"/>
+            <SCALE sx="0.08" sy="0.26" sz="1"/>
+
+            <DESCENDANTS>
+                <DESCENDANT id="square"/>
+            </DESCENDANTS>
+        </NODE>
+
+        <NODE id="boatwindow4_insidel">
+
+            <MATERIAL id="null"/>
+            <TEXTURE id="null"/>
+
+            <TRANSLATION x="0.01" y="0.1" z="0.25"/>
+            <ROTATION axis="y" angle="90"/>
+            <SCALE sx="0.08" sy="0.26" sz="1"/>
+
+            <DESCENDANTS>
+                <DESCENDANT id="square"/>
+            </DESCENDANTS>
+        </NODE>
+
+
+        <NODE id="boatwindow1_left">
+
+            <MATERIAL id="null"/>
+            <TEXTURE id="null"/>
+
+            <TRANSLATION x="-0.02" y="0.1" z="0.80"/>
+            <ROTATION axis="y" angle="-90"/>
+            <SCALE sx="0.08" sy="0.26" sz="1"/>
+
+            <DESCENDANTS>
+                <DESCENDANT id="square"/>
+            </DESCENDANTS>
+        </NODE>
+
+        <NODE id="boatwindow2_left">
+
+            <MATERIAL id="null"/>
+            <TEXTURE id="null"/>
+
+            <TRANSLATION x="-0.02" y="0.1" z="0.60"/>
+            <ROTATION axis="y" angle="-90"/>
+            <SCALE sx="0.08" sy="0.26" sz="1"/>
+
+            <DESCENDANTS>
+                <DESCENDANT id="square"/>
+            </DESCENDANTS>
+        </NODE>
+
+        <NODE id="boatwindow3_left">
+
+            <MATERIAL id="null"/>
+            <TEXTURE id="null"/>
+
+            <TRANSLATION x="-0.01" y="0.1" z="0.40"/>
+            <ROTATION axis="y" angle="-90"/>
+            <SCALE sx="0.08" sy="0.26" sz="1"/>
+
+            <DESCENDANTS>
+                <DESCENDANT id="square"/>
+            </DESCENDANTS>
+        </NODE>
+
+        <NODE id="boatwindow4_left">
+
+            <MATERIAL id="null"/>
+            <TEXTURE id="null"/>
+
+            <TRANSLATION x="-0.01" y="0.1" z="0.20"/>
+            <ROTATION axis="y" angle="-90"/>
+            <SCALE sx="0.08" sy="0.26" sz="1"/>
+
+            <DESCENDANTS>
+                <DESCENDANT id="square"/>
+            </DESCENDANTS>
+        </NODE>
+
+        <NODE id="boatwindow1_insider">
+
+            <MATERIAL id="null"/>
+            <TEXTURE id="null"/>
+
+            <TRANSLATION x="0.99" y="0.1" z="0.80"/>
+            <ROTATION axis="y" angle="-90"/>
+            <SCALE sx="0.08" sy="0.26" sz="1"/>
+
+            <DESCENDANTS>
+                <DESCENDANT id="square"/>
+            </DESCENDANTS>
+        </NODE>
+
+        <NODE id="boatwindow2_insider">
+
+            <MATERIAL id="null"/>
+            <TEXTURE id="null"/>
+
+            <TRANSLATION x="0.99" y="0.1" z="0.60"/>
+            <ROTATION axis="y" angle="-90"/>
+            <SCALE sx="0.08" sy="0.26" sz="1"/>
+
+            <DESCENDANTS>
+                <DESCENDANT id="square"/>
+            </DESCENDANTS>
+        </NODE>
+
+        <NODE id="boatwindow3_insider">
+
+            <MATERIAL id="null"/>
+            <TEXTURE id="null"/>
+
+            <TRANSLATION x="0.99" y="0.1" z="0.40"/>
+            <ROTATION axis="y" angle="-90"/>
+            <SCALE sx="0.08" sy="0.26" sz="1"/>
+
+            <DESCENDANTS>
+                <DESCENDANT id="square"/>
+            </DESCENDANTS>
+        </NODE>
+
+        <NODE id="boatwindow4_insider">
+
+            <MATERIAL id="null"/>
+            <TEXTURE id="null"/>
+
+            <TRANSLATION x="0.99" y="0.1" z="0.20"/>
+            <ROTATION axis="y" angle="-90"/>
+            <SCALE sx="0.08" sy="0.26" sz="1"/>
+
+            <DESCENDANTS>
+                <DESCENDANT id="square"/>
+            </DESCENDANTS>
+        </NODE>
+
+
+        <!-- ############################## -->
+       
+
+       <!-- ####### ISLAND ####### -->
+
         <NODE id="island">
             <MATERIAL id="normalAppearance"/>
             <TEXTURE id="null"/>
 
+            <TRANSLATION x="200" y="0" z="200"/>
+            <SCALE sx="0.55" sy="0.55" sz="0.55"/>
 
             <DESCENDANTS>
                 <DESCENDANT id="land"/>
                 <DESCENDANT id="lighthouse"/>
                 <DESCENDANT id="house"/>
+                <DESCENDANT id="tree"/>
+                
             </DESCENDANTS>
         </NODE>
 
+        <!-- ## LAND ## -->
 
         <NODE id="land">
             <MATERIAL id="normalAppearance"/>
@@ -334,6 +1162,8 @@
                 <DESCENDANT id="sphere"/>
             </DESCENDANTS>
         </NODE>
+
+        <!-- ## LIGHTHOUSE ## -->
 
         <NODE id="lighthouse">
             <MATERIAL id="normalAppearance"/>
@@ -401,6 +1231,7 @@
             </DESCENDANTS>
         </NODE>
 
+        <!-- ## HOUSE ## -->
 
         <NODE id="house">
             <MATERIAL id="null"/>
@@ -460,6 +1291,8 @@
                 <DESCENDANT id="square"/>
             </DESCENDANTS>
         </NODE>
+
+        <!-- house roof -->
 
         <NODE id="house_roof">      
         
@@ -551,584 +1384,57 @@
         </NODE>
 
 
+        <!-- TREE-->
 
-        <!-- BOAT CHIMNEYS-->
-
-        <NODE id="chimney">
-            <MATERIAL id="null"/>
-            <TEXTURE id="null"/>
-
-            <TRANSLATION x="70" y="25" z="45"/>
-
-            <DESCENDANTS>
-                <DESCENDANT id="top_chimneys"/>
-                <DESCENDANT id="bottom_chimneys"/>
-            </DESCENDANTS>
-        </NODE>
-
-        <NODE id="top_chimneys">
+        <NODE id="tree">
             <MATERIAL id="normalAppearance"/>
-            <TEXTURE id="darkmetal"/>
-
-            <TRANSLATION x="0" y="30" z="0"/>
-            <SCALE sx="1" sy="0.3" sz="1" /> 
-
-            <DESCENDANTS>
-                <DESCENDANT id="chimney1"/>
-                <DESCENDANT id="chimney2"/>
-                <DESCENDANT id="chimney3"/>
-            </DESCENDANTS>
-        </NODE>
-
-        <NODE id="bottom_chimneys">
-            <MATERIAL id="normalAppearance"/>
-            <TEXTURE id="redc"/>
-
-            <DESCENDANTS>
-                <DESCENDANT id="chimney1"/>
-                <DESCENDANT id="chimney2"/>
-                <DESCENDANT id="chimney3"/>
-            </DESCENDANTS>
-        </NODE>
-
-        <NODE id="chimney1">
-            <MATERIAL id="null"/>
             <TEXTURE id="null"/>
 
-            <TRANSLATION x="0" y="0" z="78"/>
-            <ROTATION axis="x" angle="-90" />   
-            <SCALE sx="1" sy="1" sz="30" /> 
+            <TRANSLATION x="320" y="0" z="200"/>
+            <SCALE sx="0.85" sy="0.85" sz="0.85"/>
+
+            <DESCENDANTS>
+                <DESCENDANT id="treetop"/>
+                <DESCENDANT id="treetrunk"/>
+            </DESCENDANTS>
+        </NODE>
+
+        <NODE id="treetop">
+            <MATERIAL id="null"/>
+            <TEXTURE id="treetop"/>
+
+            <TRANSLATION x="0" y="50" z="0"/>
+            <ROTATION axis="x" angle="-90"/>
+            <SCALE sx="20" sy="20" sz="20"/>
+
+            <DESCENDANTS>
+                <DESCENDANT id="sphere"/>
+            </DESCENDANTS>
+        </NODE>
+
+        <NODE id="treetrunk">
+            <MATERIAL id="null"/>
+            <TEXTURE id="treetrunk"/>
+
+            <TRANSLATION x="0" y="0" z="0"/>
+            <ROTATION axis="x" angle="-90"/>
+            <SCALE sx="1" sy="1" sz="40"/>
 
             <DESCENDANTS>
                 <DESCENDANT id="big_cylinder3"/>
             </DESCENDANTS>
         </NODE>
+       
+        <!--############################## -->
 
-         <NODE id="chimney2">
-            <MATERIAL id="null"/>
-            <TEXTURE id="null"/>
 
-            <TRANSLATION x="0" y="0" z="50"/>
-            <ROTATION axis="x" angle="-90" />   
-            <SCALE sx="1" sy="1" sz="30" /> 
-
-            <DESCENDANTS>
-                <DESCENDANT id="big_cylinder3"/>
-            </DESCENDANTS>
-        </NODE>
-
-        <NODE id="chimney3">
-            <MATERIAL id="null"/>
-            <TEXTURE id="null"/>
-
-            <TRANSLATION x="0" y="0" z="20"/>
-            <ROTATION axis="x" angle="-90" />   
-            <SCALE sx="1" sy="1" sz="30" /> 
-
-            <DESCENDANTS>
-                <DESCENDANT id="big_cylinder3"/>
-            </DESCENDANTS>
-        </NODE>
-
-        <!-- POLES OF THE BOAT -->
-
-         <NODE id="poles">
-            <MATERIAL id="null"/>
-            <TEXTURE id="null"/>
-
-            <TRANSLATION x="0" y="42" z="0" />  
-
-            <DESCENDANTS>
-                <DESCENDANT id="pole0"/>
-            </DESCENDANTS>
-
-        </NODE>
-
-        <NODE id="pole0">
-            <MATERIAL id="null"/>
-            <TEXTURE id="null"/>
-
-
-            <DESCENDANTS>
-                <DESCENDANT id="f_pole0"/>
-                <DESCENDANT id="flag_p0"/>
-                <DESCENDANT id="flag_p0b"/>
-            </DESCENDANTS>
-
-        </NODE>
-
-        <NODE id="f_pole0">
-            <MATERIAL id="metalAppearance"/>
-            <TEXTURE id="darkwood"/>
-
-            <TRANSLATION x="70" y="10.5" z="190"/>
-            <ROTATION axis="x" angle="60"/>
-            <ROTATION axis="x" angle="90"/>
-            <SCALE sx="1" sy="1" sz="25"/>
-
-            <DESCENDANTS>
-                <DESCENDANT id="cylinder"/>
-            </DESCENDANTS>
-        </NODE>
-
-        <NODE id="flag_p0b">
-           <MATERIAL id="metalAppearance"/>
-           <TEXTURE id="wflag"/>
-
-           <TRANSLATION x="69.5" y="-8" z="200"/>
-           <ROTATION axis="y" angle="-90"/>
-           <ROTATION axis="z" angle="75"/>
-           <SCALE sx="30" sy="30" sz="30"/>
-
-           <DESCENDANTS>
-            <DESCENDANT id="triangle2"/>
-        </DESCENDANTS>
-        </NODE>
-
-        <NODE id="flag_p0">
-           <MATERIAL id="metalAppearance"/>
-           <TEXTURE id="wflag"/>
-
-           <TRANSLATION x="70.5" y="-8" z="200"/>
-           <ROTATION axis="y" angle="-90"/>
-           <ROTATION axis="z" angle="75"/>
-           <SCALE sx="30" sy="30" sz="30"/>
-
-           <DESCENDANTS>
-            <DESCENDANT id="triangle2b"/>
-        </DESCENDANTS>
-        </NODE>
-
-
-
-        <!--BACK OF THE BOAT-->
-
-        <NODE id="backpart_top">       
-         <MATERIAL id="boatAppearance" />      
-
-         <TEXTURE id="darkmetal" />        
-
-         <DESCENDANTS>
-            <DESCENDANT id="back" />    
-            <DESCENDANT id="back2" />  
-            <DESCENDANT id="right" /> 
-            <DESCENDANT id="right2" /> 
-            <DESCENDANT id="left2" /> 
-            <DESCENDANT id="left" />  
-            <DESCENDANT id="fbottom_square" /> 
-                <!--<DESCENDANT id="top_square" />   
-                <DESCENDANT id="bottom_square" />          
-                <DESCENDANT id="bottom_square2" /> -->    
-            </DESCENDANTS>
-
-        </NODE>
-
-
-        <NODE id="fbottom_square">       
-            <MATERIAL id="boatAppearance" />      
-
-            <TEXTURE id="null" />      
-
-            <TRANSLATION x="0" y="0.5" z="1" />
-            <ROTATION axis="x" angle="-90" />            
-
-            <DESCENDANTS>
-                <DESCENDANT id="square" />                               
-            </DESCENDANTS>
-
-        </NODE>
-
-        <NODE id="backpart_bottom">       
-            <MATERIAL id="boatAppearance" />      
-
-            <TEXTURE id="red" />        
-
-            <DESCENDANTS>
-                <DESCENDANT id="back" />    
-                <DESCENDANT id="back2" />  
-                <DESCENDANT id="right" /> 
-                <DESCENDANT id="right2" /> 
-                <DESCENDANT id="left2" /> 
-                <DESCENDANT id="left" />  
-                <DESCENDANT id="bottom" />          
-                <DESCENDANT id="bottom2" />     
-            </DESCENDANTS>
-
-        </NODE>
-
-
-        <NODE id="bottom">          <!--inside floor-->
-            <MATERIAL id="boatAppearance" />      
-            <TEXTURE id="null" />
-
-            <ROTATION axis="x" angle="90" />            
-
-            <DESCENDANTS>
-                <DESCENDANT id="square" />                               
-            </DESCENDANTS>
-
-        </NODE>
-
-        <NODE id="bottom2">       
-            <MATERIAL id="boatAppearance" />      <!--outside floor-->
-
-            <TEXTURE id="metalfloor" />      
-
-            <TRANSLATION x="0" y="0.01" z="1" />
-            <ROTATION axis="x" angle="-90" />            
-
-            <DESCENDANTS>
-                <DESCENDANT id="square" />                               
-            </DESCENDANTS>
-
-        </NODE>
-
-
-
-        <NODE id="left">       
-            <MATERIAL id="boatAppearance" />      
-            <TEXTURE id="null" />  
-
-
-            <TRANSLATION x="0" y="0" z="1"/>
-            <ROTATION axis="y" angle="90" />         
-
-            <DESCENDANTS>
-                <DESCENDANT id="square" />                               
-            </DESCENDANTS>
-
-        </NODE>
-
-
-        <NODE id="left2">       <!--outside wall-->
-            <MATERIAL id="boatAppearance" />      
-
-           <TEXTURE id="null" />    
-
-            <ROTATION axis="y" angle="-90" />         
-
-            <DESCENDANTS>
-                <DESCENDANT id="square" />                               
-            </DESCENDANTS>
-
-        </NODE>
-
-
-
-        <NODE id="right">       <!--outside wall-->
-            <MATERIAL id="boatAppearance" />      
-
-            <TEXTURE id="null" />   
-
-            <TRANSLATION x="1" y="0" z="1" />  
-            <ROTATION axis="y" angle="90" />         
-
-            <DESCENDANTS>
-                <DESCENDANT id="square" />                               
-            </DESCENDANTS>
-
-        </NODE>
-
-
-
-
-        <NODE id="right2">       <!--inside wall-->
-            <MATERIAL id="boatAppearance" />      
-
-            <TEXTURE id="null" />  
-
-            <TRANSLATION x="1" y="0" z="0"/>
-            <ROTATION axis="y" angle="-90" />         
-
-            <DESCENDANTS>
-                <DESCENDANT id="square" />                               
-            </DESCENDANTS>
-
-        </NODE>
-
-
-        <NODE id="back">       <!--outside wall-->
-            <MATERIAL id="boatAppearance" />      
-
-            <TEXTURE id="null" />   
-
-            <TRANSLATION x="1" y="0" z="0" />  
-            <ROTATION axis="y" angle="180" />         
-
-            <DESCENDANTS>
-                <DESCENDANT id="square" />                               
-            </DESCENDANTS>
-
-        </NODE>
-
-
-        <NODE id="back2">       <!--inside wall-->
-            <MATERIAL id="boatAppearance" />      
-
-            <TEXTURE id="null" />  
-
-            <TRANSLATION x="0" y="0" z="0" />  
-
-
-            <DESCENDANTS>
-                <DESCENDANT id="square" />                               
-            </DESCENDANTS>
-
-        </NODE>
-
-
-        <!-- FRONT PART OF THE BOAT -->
-
-        <NODE id="frontpart_top">
-            <MATERIAL id="boatAppearance" />      
-
-            <TEXTURE id="darkmetal" />            
-
-
-            <DESCENDANTS>
-                <DESCENDANT id="front_left" />        
-                <DESCENDANT id="front_leftback" /> 
-                <DESCENDANT id="front_right" /> 
-                <DESCENDANT id="front_rightback" />                   
-                <DESCENDANT id="front_center" />
-                <DESCENDANT id="front_centerback" />      
-            </DESCENDANTS>
-
-        </NODE>
-
-
-
-
-        <NODE id="frontpart_bottom">
-            <MATERIAL id="boatAppearance" />      
-
-            <TEXTURE id="red" />            
-
-            <DESCENDANTS>
-                <DESCENDANT id="front_left" />        
-                <DESCENDANT id="front_leftback" /> 
-                <DESCENDANT id="front_right" /> 
-                <DESCENDANT id="front_rightback" />  
-                <DESCENDANT id="front_center" />
-                <DESCENDANT id="front_centerback" />   
-                <DESCENDANT id="front_bottomr" />
-                <DESCENDANT id="front_bottomrback" /> 
-                <DESCENDANT id="front_bottomlback" />  
-                <DESCENDANT id="front_bottoml" />     
-                <DESCENDANT id="front_bottomcenter" />  
-                <DESCENDANT id="front_bottomcenterback" />                                  
-            </DESCENDANTS>
-
-        </NODE>
-
-
-
-        
-
-        <NODE id="front_left">       <!--outside wall-->
-            <MATERIAL id="boatAppearance" />      
-
-            <TEXTURE id="null" />  
-
-            <TRANSLATION x="0" y="0" z="1" /> 
-            <ROTATION axis="y" angle="-45"  />
-            <SCALE sx="0.5" sy="1" sz="1" />           
-
-            <DESCENDANTS>
-                <DESCENDANT id="square" />                               
-            </DESCENDANTS>
-
-        </NODE>
-
-        <NODE id="front_right">       <!--outside wall-->
-            <MATERIAL id="boatAppearance" />      
-
-             <TEXTURE id="null" />  
-
-            <TRANSLATION x="0.65" y="0" z="1.35" />  
-            <ROTATION axis="y" angle="45"  /> 
-            <SCALE sx="0.5" sy="1" sz="1" />       
-
-            <DESCENDANTS>
-                <DESCENDANT id="square" />                               
-            </DESCENDANTS>
-
-        </NODE>
-
-        <NODE id="front_rightback">       <!--inside wall-->
-            <MATERIAL id="boatAppearance" />      
-
-             <TEXTURE id="null" /> 
-
-            <TRANSLATION x="1" y="0" z="0.999" />  
-            <ROTATION axis="y" angle="-136"  /> 
-            <SCALE sx="0.5" sy="1" sz="1" />       
-
-            <DESCENDANTS>
-                <DESCENDANT id="square" />                               
-            </DESCENDANTS>
-
-        </NODE>
-
-        <NODE id="front_back">          <!--inside wall-->
-            <MATERIAL id="boatAppearance" />      
-
-             <TEXTURE id="null" />     
-
-            <TRANSLATION x="1" y="0" z="1" />   
-            <ROTATION axis="y" angle="180" />     
-
-            <DESCENDANTS>
-                <DESCENDANT id="square" />                               
-            </DESCENDANTS>
-
-        </NODE>
-
-        <NODE id="front_leftback">       <!--inside wall-->
-            <MATERIAL id="boatAppearance" />      
-
-             <TEXTURE id="null" /> 
-
-            <TRANSLATION x="0.35" y="0" z="1.35" /> 
-            <ROTATION axis="y" angle="135"  />
-            <SCALE sx="0.5" sy="1" sz="1" />           
-
-            <DESCENDANTS>
-                <DESCENDANT id="square" />                               
-            </DESCENDANTS>
-
-        </NODE>
-
-        <NODE id="front_center">
-            <MATERIAL id="boatAppearance" />      <!--outside wall-->
-
-             <TEXTURE id="null" />     
-
-            <TRANSLATION x="0.35" y="0" z="1.35" />   
-            <SCALE sx="0.30" sy="1" sz="1"/>    
-
-            <DESCENDANTS>
-                <DESCENDANT id="square" />                               
-            </DESCENDANTS>
-
-        </NODE>
-
-        <NODE id="front_centerback">        <!--outsidefloor-->
-           <MATERIAL id="boatAppearance" />      
-
-             <TEXTURE id="null" />     
-
-            <TRANSLATION x="0.65" y="0" z="1.35" />
-            <ROTATION axis="y" angle="180"/>   
-            <SCALE sx="0.30" sy="1" sz="1"/>    
-
-            <DESCENDANTS>
-                <DESCENDANT id="square" />                               
-            </DESCENDANTS>
-
-        </NODE>
-
-        <NODE id="front_bottomr">       <!--insidefloor-->
-            <MATERIAL id="boatAppearance" />      
-            <TEXTURE id="metalfloor" /> 
-
-            <TRANSLATION x="0" y="0.01" z="1"/>
-            <ROTATION axis="x" angle="90" />
-            <SCALE sx="0.35" sy="0.35" sz="0.25"/>            
-
-            <DESCENDANTS>
-                <DESCENDANT id="triangle1" />                               
-            </DESCENDANTS>
-
-        </NODE>
-
-        <NODE id="front_bottomrback">       <!--outsidefloor-->
-            <MATERIAL id="boatAppearance" />      
-             <TEXTURE id="null" />  
-
-            <TRANSLATION x="0.35" y="0" z="1.35"/>
-            <ROTATION axis="z" angle="90" />
-            <ROTATION axis="y" angle="90" />
-            <SCALE sx="0.35" sy="0.35" sz="0.25"/> 
-            
-
-
-            <DESCENDANTS>
-                <DESCENDANT id="triangle1" />                               
-            </DESCENDANTS>
-
-        </NODE>
-
-
-        <NODE id="front_bottoml">         <!--insidefloor-->
-            <MATERIAL id="boatAppearance" />      
-            <TEXTURE id="metalfloor" /> 
-
-            <TRANSLATION x="0.65" y="0.01" z="1" />
-            <ROTATION axis="z" angle="-90" />
-            <ROTATION axis="y" angle="-90" />
-            <SCALE sx="0.35" sy="0.35" sz="0.25"/>            
-
-            <DESCENDANTS>
-                <DESCENDANT id="triangle2" />                               
-            </DESCENDANTS>
-
-        </NODE>
-
-        <NODE id="front_bottomlback">       <!--outsidefloor-->
-            <MATERIAL id="boatAppearance" />      
-
-             <TEXTURE id="null" />      
-
-            <TRANSLATION x="0.65" y="0" z="1" />
-            <ROTATION axis="x" angle="90" />            
-            <SCALE sx="0.35" sy="0.35" sz="0.25"/>  
-
-            <DESCENDANTS>
-                <DESCENDANT id="triangle2" />                               
-            </DESCENDANTS>
-
-        </NODE>
-
-        <NODE id="front_bottomcenterback">  <!--insidefloor-->
-            <MATERIAL id="boatAppearance" />      
-
-            <TEXTURE id="null" />    
-
-            <TRANSLATION x="0.35" y="0" z="1" />
-            <ROTATION axis="x" angle="90"/>
-            <SCALE sx="0.3" sy="0.35" sz="0.5"/>    
-
-            <DESCENDANTS>
-                <DESCENDANT id="square" />                               
-            </DESCENDANTS>
-
-        </NODE>
-
-        <NODE id="front_bottomcenter">    <!--insidefloor-->
-            <MATERIAL id="boatAppearance" />      
-
-             <TEXTURE id="metalfloor" />    
-
-            <TRANSLATION x="0.35" y="0.01" z="1.35" />
-            <ROTATION axis="x" angle="-90"/>   
-            <SCALE sx="0.3" sy="0.35" sz="0.5"/> 
-
-            <DESCENDANTS>
-                <DESCENDANT id="square" />                               
-            </DESCENDANTS>
-
-        </NODE>
-
-
-        
-        <!--#############################-->
         <!--TABLE-->
         <NODE id="table">     
             <MATERIAL id="tableAppearance" />      
             <TEXTURE id="darkwood" /> 
 
-            <TRANSLATION x="50" y="0" z="50" /> 
+            <TRANSLATION x="50" y="0" z="50" />
+
 
 
             <DESCENDANTS>
@@ -1254,7 +1560,7 @@
 
 
         <NODE id="backleftleg">       
-            <MATERIAL id="metalAppearance" />     
+            <MATERIAL id="null" />     
 
             <TEXTURE id="darkwood" />   
             <ROTATION axis="x" angle="-90" />   
@@ -1267,7 +1573,7 @@
         </NODE>
 
         <NODE id="backrightleg">       
-            <MATERIAL id="metalAppearance" />      
+            <MATERIAL id="null" />     
 
             <TEXTURE id="darkwood" /> 
             <ROTATION axis="x" angle="-90" />   
@@ -1282,7 +1588,7 @@
 
 
         <NODE id="frontleftleg">       
-            <MATERIAL id="metalAppearance" />      
+            <MATERIAL id="null" />      
 
             <TEXTURE id="darkwood" />  
 
@@ -1297,7 +1603,7 @@
         </NODE>
 
         <NODE id="frontrightleg">       
-            <MATERIAL id="metalAppearance" />      
+            <MATERIAL id="null" />      
 
             <TEXTURE id="darkwood" />  
 
@@ -1311,28 +1617,25 @@
 
         </NODE>
 
-
-
-
-        
-        <!--s-->
-
-
-        
-
         <NODE id="globe">       
             <MATERIAL id="normalAppearance" />      
 
             <TEXTURE id="map" />  
 
             <TRANSLATION x="7" y="13" z="15" /> 
-            <SCALE sx="1" sy="1" sz="1" />            
+            <SCALE sx="2" sy="2" sz="2" />            
 
             <DESCENDANTS>
                 <DESCENDANT id="sphere" />                               
             </DESCENDANTS>
 
         </NODE>
+
+
+        
+        <!--##########################-->
+
+        <!--  ## Background ## -->
 
         <NODE id="sea">
             <MATERIAL id="boatAppearance" />

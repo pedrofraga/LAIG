@@ -1,11 +1,10 @@
 /**
  * MyObject
- * @param gl {WebGLRenderingContext}
  * @constructor
  */
 function Square(scene, minX, minY, maxX, maxY) {
 	CGFobject.call(this,scene);
-	
+
 	this.minS = 0;
 	this.maxS = 1;
 	this.minT = 0;
@@ -34,17 +33,17 @@ Square.prototype.initBuffers = function () {
 			];
 
 	this.indices = [
-            0, 1, 2, 
+            0, 1, 2,
 			3, 2, 1
         ];
-	
+
 	this.primitiveType=this.scene.gl.TRIANGLES;
-	
+
 	this.normals = [
              0,0,1,
              0,0,1,
              0,0,1,
-             0,0,1		
+             0,0,1
         ];
 
 	this.originalTexCoords = [
@@ -55,7 +54,7 @@ Square.prototype.initBuffers = function () {
 		];
 
 	this.texCoords = this.originalTexCoords.slice();
-	
+
 	this.initGLBuffers();
 
 };
@@ -63,7 +62,7 @@ Square.prototype.initBuffers = function () {
 
 
 Square.prototype.scaleTexCoords = function(ampS, ampT) {
-	
+
 	for (var i = 0; i < this.texCoords.length; i += 2) {
 			this.texCoords[i] = this.originalTexCoords[i] / ampS;
 			this.texCoords[i + 1] = this.originalTexCoords[i+1] / ampT;
@@ -71,4 +70,3 @@ Square.prototype.scaleTexCoords = function(ampS, ampT) {
 
 	this.updateTexCoordsGLBuffers();
 }
-

@@ -1,9 +1,14 @@
-/**
- * MyGraphObject
- * @param gl {WebGLRenderingContext}
- * @constructor
- */
 
+/**
+ * Object to contain all graph info and to display it
+ * @constructor MyGraphObject
+ * @param  {scene}      scene     scene to display
+ * @param  {Node}      rootNode  root node
+ * @param  {array}      leaves    primitives array
+ * @param  {array}      textures  textures array
+ * @param  {array}      materials textures array
+ * @param  {array}      transf    array with intial transformations
+ */
 function MyGraphObject(scene, rootNode, leaves, textures, materials, transf) {
 	CGFobject.call(this,scene);
 
@@ -12,26 +17,38 @@ function MyGraphObject(scene, rootNode, leaves, textures, materials, transf) {
 	this.textures = textures;
 	this.materials = materials;
 	this.transf = transf;
-	
+
 	this.primitives = [];
 
-	
+
 	this.getObjectsFromLeaves();
 	this.getTextureAppearance();
-	
+
 	return;
 };
 
 MyGraphObject.prototype = Object.create(CGFobject.prototype);
 MyGraphObject.prototype.constructor= MyGraphObject;
 
+/**
+ * Method to display graph
+ * @method display
+ */
 MyGraphObject.prototype.display = function () {
 	this.displayTree(this.rootNode, this.transf, [], []);
 };
 
-
+/**
+ * Recursive function to display tree
+ * @method displayTree
+ * @param  {Node}    rootNode Node to be displayed
+ * @param  {array}    transf   array with transforms
+ * @param  {array}    textur   array of textures
+ * @param  {array}    mater    array of materials
+ * @return {string/int}            return id of leaf (string), or 0 if okay
+ */
 MyGraphObject.prototype.displayTree = function (rootNode, transf, textur, mater){
-	
+
 	if(rootNode != null){
 
 		for(var a = 0; a < this.leaves.length; a++){
@@ -42,11 +59,11 @@ MyGraphObject.prototype.displayTree = function (rootNode, transf, textur, mater)
 		for(var i = 0; i < rootNode.transforms.length; i++){
 			transf.push(rootNode.transforms[i]);
 		}
-		
+
 		if(rootNode.texture != null){
 			textur.push(rootNode.texture);
 		}
-		
+
 		if(rootNode.material != null){
 			mater.push(rootNode.material);
 		}
@@ -58,20 +75,20 @@ MyGraphObject.prototype.displayTree = function (rootNode, transf, textur, mater)
 		for(var i = 0; i < rootNode.descendants.length; i++){
 
 			var transfClone = [];
-			
+
 			transfClone = transf.slice(0);
-			
+
 			var texturClone = [];
-			
+
 			texturClone = textur.slice(0);
-			
+
 			var materClone = [];
-			
+
 			materClone = mater.slice(0);
-			
+
 			var returnValue = this.displayTree(rootNode.descendants[i], transfClone, texturClone, materClone);
-			
-					
+
+
 					for(var j = 0; j < this.primitives.length; j++){
 						if(this.primitives[j].id == returnValue){
 							this.scene.pushMatrix();
@@ -121,7 +138,7 @@ MyGraphObject.prototype.displayTree = function (rootNode, transf, textur, mater)
 									}
 								}
 								cgfApp.apply();
-							} 
+							}
 							this.primitives[j].object.display();
 							this.scene.popMatrix();
 
@@ -132,14 +149,14 @@ MyGraphObject.prototype.displayTree = function (rootNode, transf, textur, mater)
 
 						}
 					}
-					
-			
+
+
 		}
 	}
 
 	return 0;
 }
-
+/**load textures to appearance */
 MyGraphObject.prototype.getTextureAppearance = function (){
 	for(var a = 0; a < this.textures.length; a++){
 		var texture = new CGFappearance(this.scene);
@@ -148,7 +165,12 @@ MyGraphObject.prototype.getTextureAppearance = function (){
 		this.textures[a].cgfAppearance = texture;
 	}
 }
-
+/**
+ * get last texture valid id
+ * @method getTextureId
+ * @param  {array}     textures 	array with textures id
+ * @return {string}              string with texture id to be used
+ */
 MyGraphObject.prototype.getTextureId= function (textures){
 
 	textures.reverse();
@@ -159,6 +181,12 @@ MyGraphObject.prototype.getTextureId= function (textures){
 	}
 }
 
+/**
+ * get last material valid id
+ * @method getMaterialId
+ * @param  {array}     materials 	array with materials id
+ * @return {string}              string with materials id to be used
+ */
 MyGraphObject.prototype.getMaterialId= function (materials){
 
 	materials.reverse();
@@ -169,27 +197,32 @@ MyGraphObject.prototype.getMaterialId= function (materials){
 	}
 }
 
-
+/**
+ * method to apply a material
+ * @method materialApply
+ * @param  {CGFappearance}      cgfClone 	clone of CGFappearance to apply material
+ * @param  {Material}      material 	material to be applied
+ */
 MyGraphObject.prototype.materialApply = function (cgfClone, material){
-	
+
 	if(material.ambient != null){
-		cgfClone.setAmbient(parseFloat(material.ambient.r), 
+		cgfClone.setAmbient(parseFloat(material.ambient.r),
 								parseFloat(material.ambient.g),
-								parseFloat(material.ambient.b), 
+								parseFloat(material.ambient.b),
 								parseFloat(material.ambient.a));
 	}
 
 	if(material.specular != null){
-		cgfClone.setSpecular(parseFloat(material.specular.r), 
+		cgfClone.setSpecular(parseFloat(material.specular.r),
 								parseFloat(material.specular.g),
-								parseFloat(material.specular.b), 
+								parseFloat(material.specular.b),
 								parseFloat(material.specular.a));
 	}
 
 	if(material.diffuse != null){
-		cgfClone.setDiffuse(parseFloat(material.diffuse.r), 
+		cgfClone.setDiffuse(parseFloat(material.diffuse.r),
 								parseFloat(material.diffuse.g),
-								parseFloat(material.diffuse.b), 
+								parseFloat(material.diffuse.b),
 								parseFloat(material.diffuse.a));
 	}
 
@@ -199,18 +232,21 @@ MyGraphObject.prototype.materialApply = function (cgfClone, material){
 
 }
 
-
+/**
+ * function to build primitives
+ * @method getObjectsFromLeaves
+ */
 MyGraphObject.prototype.getObjectsFromLeaves = function(){
 	for(var a = 0; a < this.leaves.length; a++){
 			if(this.leaves[a].type == "rectangle"){
-								var object = new Square(this.scene, parseFloat(this.leaves[a].args[0]), parseFloat(this.leaves[a].args[1]), 
+								var object = new Square(this.scene, parseFloat(this.leaves[a].args[0]), parseFloat(this.leaves[a].args[1]),
 parseFloat(this.leaves[a].args[2]), parseFloat(this.leaves[a].args[3]));
 								var geometry = new Geometry(object, this.leaves[a].id);
 								this.primitives.push(geometry);
 							}else if(this.leaves[a].type == "cylinder"){
-								var object = new Cylinder(this.scene, parseFloat(this.leaves[a].args[0]), parseFloat(this.leaves[a].args[1]), 
-parseFloat(this.leaves[a].args[2]), parseFloat(this.leaves[a].args[3]), 
-parseFloat(this.leaves[a].args[4]));								
+								var object = new Cylinder(this.scene, parseFloat(this.leaves[a].args[0]), parseFloat(this.leaves[a].args[1]),
+parseFloat(this.leaves[a].args[2]), parseFloat(this.leaves[a].args[3]),
+parseFloat(this.leaves[a].args[4]));
 								var geometry = new Geometry(object, this.leaves[a].id);
 								this.primitives.push(geometry);
 							}else if(this.leaves[a].type == "sphere"){
@@ -224,12 +260,16 @@ parseFloat(this.leaves[a].args[4]));
 								var geometry = new Geometry(object, this.leaves[a].id);
 								this.primitives.push(geometry);
 							}
-			
-				
+
+
 		}
 }
 
-
+/**
+ * function to apply rotations
+ * @method rotate
+ * @param  {Rotation} rotation Rotation info
+ */
 MyGraphObject.prototype.rotate = function (rotation){
 	switch (rotation.axis){
 		case "x":
@@ -246,21 +286,38 @@ MyGraphObject.prototype.rotate = function (rotation){
 			break;
 	}
 }
-
+/**
+ * function to scale
+ * @method scale
+ * @param  {Scale} scale scale info
+ */
 MyGraphObject.prototype.scale = function (scale){
 	this.scene.scale(parseFloat(scale.sx), parseFloat(scale.sy), parseFloat(scale.sz));
 }
 
-
+/**
+ * function to apply translations
+ * @method translate
+ * @param  {Translation}  translation translation info
+ */
 MyGraphObject.prototype.translate = function (translation){
 	this.scene.translate(parseFloat(translation.x), parseFloat(translation.y), parseFloat(translation.z));
 }
 
+/**
+ * function to convert degrees in radian
+ * @method toRadian
+ * @param  {string} degrees
+ * @return {int}         converted radians
+ */
 MyGraphObject.prototype.toRadian = function (degrees){
 	return parseFloat(degrees) * Math.PI / 180;
 }
-
-function clone( original )  
+/**
+ * function to clone a object
+ * @method clone
+ */
+function clone( original )
 {
     // First create an empty object with
     // same prototype of our original source
@@ -279,7 +336,12 @@ function clone( original )
     return clone ;
 }
 
-
+/**
+ * constructor of geometry object
+ * @constructor Geometry
+ * @param  {CGFobject} object object to be displayed
+ * @param  {string} id     string of id
+ */
 function Geometry(object, id){
 	this.object = object;
 	this.id = id;

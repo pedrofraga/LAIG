@@ -1,12 +1,17 @@
-
+/**
+ * Load from lsx file
+ * @constructor
+ * @param {string} filename - name of .lsx file
+ * @param {XMLScene} scene - webGL scene
+ */
 function MySceneGraph(filename, scene) {
 	this.loadedOk = null;
-	
+
 	// Establish bidirectional references between scene and graph
 	this.scene = scene;
 	scene.graph = this;
-	
-	// File reading 
+
+	// File reading
 	this.reader = new CGFXMLreader();
 
 	/*
@@ -14,37 +19,40 @@ function MySceneGraph(filename, scene) {
 	 * After the file is read, the reader calls onXMLReady on this object.
 	 * If any error occurs, the reader calls onXMLError on this object, with an error message
 	 */
-	 
-	 this.reader.open('scenes/'+filename, this);  
+
+	 this.reader.open('scenes/'+filename, this);
 	}
 
 /*
  * Callback to be executed after successful reading
  */
- MySceneGraph.prototype.onXMLReady=function() 
+ MySceneGraph.prototype.onXMLReady=function()
  {
  	console.log("XML Loading finished.");
  	var rootElement = this.reader.xmlDoc.documentElement;
- 	
+
 	// Here should go the calls for different functions to parse the various blocks
 	var error = this.parser(rootElement);
 
 	if (error != null) {
 		this.onXMLError(error);
 		return;
-	}	
+	}
 
 	this.loadedOk=true;
-	
+
 	// As the graph loaded ok, signal the scene so that any additional initialization depending on the graph can take place
 	this.scene.onGraphLoaded();
 };
 
 
 
-
+/**
+ * Parser function
+ * @param {documentElement} rootElement - .lsx file to read
+ */
 MySceneGraph.prototype.parser= function(rootElement) {
-	
+
 	//getting initials node
 
 	var initials = rootElement.getElementsByTagName('INITIALS');
@@ -78,10 +86,10 @@ MySceneGraph.prototype.parser= function(rootElement) {
 
 	this.ambient = [];
 	this.background = [];
-	
-	
+
+
 	getIllumination(illumination, this.ambient, this.background);
-	
+
 	this.lightsArray = [];
 
 	if(	getLights(rootElement, this.lightsArray ) == -1){
@@ -107,7 +115,7 @@ MySceneGraph.prototype.parser= function(rootElement) {
 	}
 
 	this.rootNode = getGeometryNodes(rootElement, this.leavesArray);
-	
+
 	if(this.rootNode == null){
 		return ".lsx file nodes are not well formed";
 	}
@@ -117,20 +125,26 @@ MySceneGraph.prototype.parser= function(rootElement) {
 /*
  * Callback to be executed on any read error
  */
- 
- 
+
+
  MySceneGraph.prototype.onXMLError=function (message) {
- 	console.error("XML Loading Error: "+message);	
+ 	console.error("XML Loading Error: "+message);
  	this.loadedOk=false;
  };
 
 
-/*
-*	Some more needed
-*	functions
-*
-*/
 
+/**
+ * Method to get elements from INITIALS tag
+ * @method getInitials
+ * @param  {array}    initials    array with .lsx info
+ * @param  {array}    frustum     array with frustum info
+ * @param  {array}    translation array to get intial translation
+ * @param  {array}    rotation    array with initial rotation
+ * @param  {array}    scale       array with initial scale
+ * @param  {int}    reference   	value of reference
+ * @return {int}     							-1 if error, 0 if okay
+ */
 function getInitials(initials, frustum, translation, rotation, scale, reference){
 
 	if(initials[0].getElementsByTagName('frustum')[0] != null){
@@ -175,7 +189,14 @@ function getInitials(initials, frustum, translation, rotation, scale, reference)
 
 }
 
-
+/**
+ * method to get illumination values
+ * @method getIllumination
+ * @param  {array}        illumination array with .lsx info
+ * @param  {array}        ambient      array with ambient info
+ * @param  {array}        background   array with background info
+ * @return {int}                    -1 if error, 0 if okay
+ */
 function getIllumination(illumination, ambient, background){
 
 
@@ -196,10 +217,18 @@ function getIllumination(illumination, ambient, background){
 	}
 }
 
+
+/**
+ * method to get textures info from .lsx file
+ * @method getTextures
+ * @param  {documentElement}    rootElement   tree of arrays with .lsx info
+ * @param  {array}    texturesArray array to get textures
+ * @return {int}                  0 if is okay, -1 if error
+ */
 function getTextures(rootElement, texturesArray){
 
 	var textures =  rootElement.getElementsByTagName('TEXTURES');
-	
+
 	if (textures == null) {
 		console.log("textures element is missing.");
 		return;
@@ -211,7 +240,7 @@ function getTextures(rootElement, texturesArray){
 	}
 
 	var lsxTexturesArray = textures[0].getElementsByTagName('TEXTURE');
-	
+
 	if (lsxTexturesArray == null) {
 		console.log("texturesArray element is missing.");
 		return;
@@ -221,11 +250,11 @@ function getTextures(rootElement, texturesArray){
 		console.error("zero 'texturesArray' elements found.");
 		return;
 	}
-	
+
 	for(var i = 0; i < lsxTexturesArray.length; i++){
-		
+
 		var id = lsxTexturesArray[i].attributes.getNamedItem("id").value;
-		
+
 		if(lsxTexturesArray[i].getElementsByTagName('file')[0] != null){
 			var fileTexture = lsxTexturesArray[i].getElementsByTagName('file')[0];
 			var path = fileTexture.attributes.getNamedItem("path").value;
@@ -235,7 +264,7 @@ function getTextures(rootElement, texturesArray){
 		if(lsxTexturesArray[i].getElementsByTagName('amplif_factor')[0] != null){
 			var amplif_factorTexture = lsxTexturesArray[i].getElementsByTagName('amplif_factor')[0];
 			var amplif_factor = new Amplif(amplif_factorTexture.attributes.getNamedItem("s").value
-				,amplif_factorTexture.attributes.getNamedItem("t").value)		
+				,amplif_factorTexture.attributes.getNamedItem("t").value)
 		}
 
 		var texture = new Texture(id, path, amplif_factor);
@@ -252,13 +281,21 @@ function getTextures(rootElement, texturesArray){
 	}
 
 	return 0;
-	
+
 }
 
+
+/**
+ * method to get materials from .lsx file
+ * @method getMaterials
+ * @param  {documentElement}     rootElement    var with .lsx info
+ * @param  {array}     materialsArray array to get materials form .lsx
+ * @return {int}                    0 if is okay, -1 if error
+ */
 function getMaterials(rootElement, materialsArray){
 
 	var materials =  rootElement.getElementsByTagName('MATERIALS');
-	
+
 	if (materials == null) {
 		console.log("materials element is missing.");
 		return;
@@ -270,7 +307,7 @@ function getMaterials(rootElement, materialsArray){
 	}
 
 	var lsxMaterialsArray = materials[0].getElementsByTagName('MATERIAL');
-	
+
 	if (lsxMaterialsArray == null) {
 		console.log("materialsArray element is missing.");
 		return;
@@ -281,11 +318,11 @@ function getMaterials(rootElement, materialsArray){
 		return;
 	}
 
-	
+
 	for(var i = 0; i < lsxMaterialsArray.length; i++){
-		
+
 		var id = lsxMaterialsArray[i].attributes.getNamedItem("id").value;
-		
+
 		if(lsxMaterialsArray[i].getElementsByTagName('shininess')[0] != null){
 			var shininessMaterial = lsxMaterialsArray[i].getElementsByTagName('shininess')[0];
 			var shininess = shininessMaterial.attributes.getNamedItem("value").value;
@@ -320,7 +357,7 @@ function getMaterials(rootElement, materialsArray){
 				,emissionMaterial.attributes.getNamedItem("b").value
 				,emissionMaterial.attributes.getNamedItem("a").value);
 		}
-		
+
 
 		var material = new Material(id, shininess, specular, diffuse, ambient, emission);
 		materialsArray[i] = material;
@@ -330,21 +367,27 @@ function getMaterials(rootElement, materialsArray){
 		for(var j = 0; j < materialsArray.length; j++){
 			if(i != j){
 				if(materialsArray[i].id == materialsArray[j].id)
-					return -1; 
+					return -1;
 			}
 		}
 	}
 
 	return 0;
-	
+
 }
 
 
-
+/**
+ * method to get lights from .lsx file
+ * @method getLights
+ * @param  {documentElement}  rootElement 	var with .lsx info
+ * @param  {array}  lightsArray array to get lights from .lsx
+ * @return {int}              0 if is okay, -1 if error
+ */
 function getLights(rootElement, lightsArray){
 
 	var lights =  rootElement.getElementsByTagName('LIGHTS');
-	
+
 	if (lights == null) {
 		console.log("lights element is missing.");
 		return;
@@ -356,7 +399,7 @@ function getLights(rootElement, lightsArray){
 	}
 
 	var lsxLightsArray = lights[0].getElementsByTagName('LIGHT');
-	
+
 	if (lsxLightsArray == null) {
 		console.log("lightsArray element is missing.");
 		return;
@@ -368,8 +411,8 @@ function getLights(rootElement, lightsArray){
 	}
 
 	for(var i = 0; i < lsxLightsArray.length; i++){
-		
-		var id = lsxLightsArray[i].attributes.getNamedItem("id").value; 
+
+		var id = lsxLightsArray[i].attributes.getNamedItem("id").value;
 
 		if(lsxLightsArray[i].getElementsByTagName('enable')[0] != null){
 			var lightEnabled = lsxLightsArray[i].getElementsByTagName('enable')[0];
@@ -387,7 +430,7 @@ function getLights(rootElement, lightsArray){
 		}else{
 			var position = null;
 		}
-		
+
 		if(lsxLightsArray[i].getElementsByTagName('ambient')[0] != null){
 			var lightAmbient = lsxLightsArray[i].getElementsByTagName('ambient')[0];
 			var ambient = new RGBA(lightAmbient.attributes.getNamedItem("r").value
@@ -425,9 +468,9 @@ function getLights(rootElement, lightsArray){
 		}else{
 			var shininess = null;
 		}
-		
-		
-		
+
+
+
 		var light = new Light(id, enabled, position, ambient, diffuse, specular, shininess);
 		lightsArray[i] = light;
 	}
@@ -436,7 +479,7 @@ function getLights(rootElement, lightsArray){
 		for(var j = 0; j < lightsArray.length; j++){
 			if(i != j){
 				if(lightsArray[i].id == lightsArray[j].id)
-					return -1; 
+					return -1;
 			}
 		}
 	}
@@ -444,7 +487,13 @@ function getLights(rootElement, lightsArray){
 	return 0;
 }
 
-
+/**
+ * method to get leaves from .lsx file
+ * @method getLeaves
+ * @param  {documentElement}  rootElement 	var with .lsx info
+ * @param  {array}  lavesArray array to get leaves from .lsx
+ * @return {int}              0 if is okay, -1 if error
+ */
 function getLeaves(rootElement, leavesArray) {
 	var leaves = rootElement.getElementsByTagName('LEAVES');
 
@@ -484,97 +533,110 @@ function getLeaves(rootElement, leavesArray) {
 		for(var j = 0; j < leavesArray.length; j++){
 			if(i != j){
 				if(leavesArray[i].id == leavesArray[j].id)
-					return -1; 
+					return -1;
 			}
 		}
 	}
 	return 0;
 }
 
-
+/**
+ * method to get nodes from .lsx file
+ * @method getGeometryNodes
+ * @param  {documentElement}  rootElement 	var with .lsx info
+ * @param  {array}  leavesArray			for error checking purposes
+ * @return {int}              rootNode if is okay, -1 if error
+ */
 function getGeometryNodes(rootElement, leavesArray){
 	var nodes = rootElement.getElementsByTagName("NODES");
-	
+
 	if(nodes == null){
 		console.log("There's not a \"nodes\" tag");
 		return;
 	}
-	
+
 	if(nodes.length != 1){
 		console.error("There's more than 1 \"nodes\" tag, geometry nodes were not loaded");
 		return;
 	}
-	
+
 	var rootNode = nodes[0].getElementsByTagName('ROOT');
-	
+
 	if(rootNode == null){
 		console.error("Couldn't read \"ROOT\" element from .lsx file");
 		return;
 	}
-	
+
 	if(rootNode.length != 1){
 		console.error("either there is 0 or more than 1 \"ROOT\" node, couldn't build a geometry");
 		return;
 	}
-	
+
 	var rootID = rootNode[0].attributes.getNamedItem("id").value;
-	
+
 	var lsxNodesArray = nodes[0].getElementsByTagName('NODE');
-	
+
 	if(lsxNodesArray == null){
 		console.log("Couldn't read a single \"node\" element from .lsx file");
 		return;
 	}
-	
+
 	if(lsxNodesArray.length == 0){
 		console.error("there's not \"node\" elements");
 		return;
 	}
-	
+
 	returnRootNode = new Node(rootID);
-	
+
 	if(constructTree(lsxNodesArray, leavesArray, returnRootNode) == -1){
 		console.error("please reconstruct your .lsx file");
 		returnRootNode = null;
 	}
-	
-	
+
+
 	return returnRootNode;
 }
 
-
-function getGeometry(lsxNodesArray, leavesArray, root, i){
+/**
+ * function to get descendeants from a node
+ * @method getGeometry
+ * @param  {array}    lsxNodesArray  array with lsx node info
+ * @param  {array}    leavesArray   array with leaves
+ * @param  {Node}    root          Node to be constructed
+ * @return {int}                  -1 if error, 0 if okay
+ */
+function getGeometry(lsxNodesArray, leavesArray, root){
 	var descendants = lsxNodesArray[i].getElementsByTagName("DESCENDANTS");
-	
+
 	if(descendants == null){
 		console.error("node with id " + root.id + " has no descendants, geometry scene was not loaded");
 		return -1;
 	}
-	
+
 	if(descendants.length != 1){
 		console.error("node with id " + root.id + " either has 0 or more than 1 \"DESCENDANTS\" tags, scene was not loaded");
 		return -1;
 	}
-	
+
 	var lsxDescendantsArray = descendants[0].getElementsByTagName("DESCENDANT");
-	
+
 	for(var i = 0; i < lsxDescendantsArray.length; i++){
 		if(lsxDescendantsArray[i].attributes.getNamedItem("id") != null){
 			var id = lsxDescendantsArray[i].attributes.getNamedItem("id").value;
 			var node = new Node(id);
 			root.descendants[i] = node;
-			
+
 			for(var a = 0; a < lsxNodesArray.length; a++){
 				if(lsxNodesArray[a].attributes.getNamedItem("id").value == id){
 					if(getNodeInfo(lsxNodesArray[a], root.descendants[i]) == -1) return -1;
 					break;
 				}
 			}
-			
+
 			if(constructTree(lsxNodesArray, leavesArray, root.descendants[i]) == -1){
 				return -1;
 			}
-			
+
 		} else{
 			console.error("node with id " + root.id + " has a descendant with no id");
 			return -1;
@@ -582,18 +644,25 @@ function getGeometry(lsxNodesArray, leavesArray, root, i){
 	}
 	return 0;
 }
-
+/**
+ * main function to construct tree
+ * @method constructTree
+ * @param  {array}      lsxNodesArray array with .lsx node info
+ * @param  {array}      leavesArray   array with primitives
+ * @param  {Node}      root          Node to be constructed
+ * @return {int}                    -1 if error, 0 if okay
+ */
 function constructTree(lsxNodesArray, leavesArray, root){
 	for(var i = 0; i < lsxNodesArray.length; i++){
 		if(lsxNodesArray[i].attributes.getNamedItem("id").value == root.id){
-			
-			if(getGeometry(lsxNodesArray, leavesArray, root, i) == -1){
+
+			if(getGeometry(lsxNodesArray, leavesArray, root) == -1){
 				return -1;
 			}
-			
+
 			break;
 		}
-		
+
 		if(i == lsxNodesArray.length - 1){
 			if(checkLeafs(leavesArray, root) == -1){
 				console.error("there's not a node with this id \"" + root.id + "\", geometry was not loaded");
@@ -613,43 +682,50 @@ function checkLeafs(leavesArray, root){
 	return -1;
 }
 
+
+/**
+ * get transforms, textures and materials from lsxNode
+ * @method getNodeInfo
+ * @param  {lsxNode}    lsxNode Node from lsx
+ * @param  {Node}    node    node to give info
+ */
 function getNodeInfo(lsxNode, node){
-	
+
 	var childrenArray = lsxNode.children;
-	
+
 	for(var i = 0; i < childrenArray.length; i++){
 		if(childrenArray[i].localName == "ROTATION"){
 			node.transforms.push(new Rotation(childrenArray[i].attributes.getNamedItem("axis").value,
 				childrenArray[i].attributes.getNamedItem("angle").value));
 		}
-		
+
 		if(childrenArray[i].localName == "SCALE"){
 			node.transforms.push(new Scale(childrenArray[i].attributes.getNamedItem("sx").value,
 				childrenArray[i].attributes.getNamedItem("sy").value,
 				childrenArray[i].attributes.getNamedItem("sz").value));
 		}
-		
+
 		if(childrenArray[i].localName == "TRANSLATION"){
 			node.transforms.push(new Translation(childrenArray[i].attributes.getNamedItem("x").value,
 				childrenArray[i].attributes.getNamedItem("y").value,
 				childrenArray[i].attributes.getNamedItem("z").value));
 		}
-		
+
 		if(childrenArray[i].localName == "TEXTURE"){
 			node.texture = childrenArray[i].attributes.getNamedItem("id").value;
 		}
-		
+
 		if(childrenArray[i].localName == "MATERIAL"){
 			node.material = childrenArray[i].attributes.getNamedItem("id").value;
 		}
 	}
-	
+
 	return 0;
 }
 
 
 /*
-* Texture Classes
+* Texture Class
 */
 
 function Texture(id, path, amplif_factor){
@@ -665,7 +741,7 @@ function Amplif(s, t){
 }
 
 /*
-* Material Classes
+* Material Class
 */
 function Material(id, shininess, specular, diffuse, ambient, emission){
 	this.id = id;
@@ -677,9 +753,9 @@ function Material(id, shininess, specular, diffuse, ambient, emission){
 }
 
 /*
- *	Light Classes
+ *	Light Class
  */
- 
+
  function Light(id, enable, position, ambient, diffuse, specular, shininess){
  	this.id = id;
  	this.enabled = enable;
@@ -689,15 +765,18 @@ function Material(id, shininess, specular, diffuse, ambient, emission){
  	this.specular = specular;
  	this.shininess = shininess;
  }
-
-
+ /*
+  *	Position Class
+  */
  function Position(x, y, z, w){
  	this.x = x;
  	this.y = y;
  	this.z = z;
  	this.w = w;
  }
-
+ /*
+  *	RGBA Class
+  */
  function RGBA(r, g, b, a){
  	this.r = r;
  	this.g = g;
@@ -705,7 +784,9 @@ function Material(id, shininess, specular, diffuse, ambient, emission){
  	this.a = a;
  }
 
-
+ /*
+  *	Leaf Class
+  */
  function Leaf(id, type, args){
  	this.id = id;
  	this.type = type;
@@ -713,6 +794,10 @@ function Material(id, shininess, specular, diffuse, ambient, emission){
 	this.object = null;
  }
 
+
+ /*
+  *	Node Class
+  */
 
  function Node(id){
  	this.id = id;
@@ -725,27 +810,28 @@ function Material(id, shininess, specular, diffuse, ambient, emission){
  	this.descendants = [];
  }
 
-
+ /*
+  *	Rotation Class
+  */
  function Rotation(axis, angle){
  	this.axis = axis;
  	this.angle = angle;
  }
 
-
+ /*
+  *	Translation Class
+  */
  function Translation(x, y, z){
  	this.x = x;
  	this.y = y;
  	this.z = z;
  }
 
-
+ /*
+  *	Scale Class
+  */
  function Scale(sx, sy, sz){
  	this.sx = sx;
  	this.sy = sy;
  	this.sz = sz;
  }
-
-
-
-
-

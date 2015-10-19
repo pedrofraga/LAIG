@@ -783,6 +783,13 @@ function Material(id, shininess, specular, diffuse, ambient, emission){
  	this.g = g;
  	this.b = b;
  	this.a = a;
+	
+	if(parseFloat(r) > 1 || parseFloat(r) < 0 ||
+		parseFloat(g) > 1 || parseFloat(g) < 0 ||
+		parseFloat(b) > 1 || parseFloat(b) < 0 ||
+		parseFloat(a) > 1 || parseFloat(a) < 0){
+		throw new Error("RGBA with values > 1 or < 0");
+	}
  }
 
  /*

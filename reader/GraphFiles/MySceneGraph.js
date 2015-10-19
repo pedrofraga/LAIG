@@ -603,10 +603,11 @@ function getGeometryNodes(rootElement, leavesArray){
  * @param  {array}    lsxNodesArray  array with lsx node info
  * @param  {array}    leavesArray   array with leaves
  * @param  {Node}    root          Node to be constructed
+ * @param  {int}    	a         lsxNodeArray indice
  * @return {int}                  -1 if error, 0 if okay
  */
-function getGeometry(lsxNodesArray, leavesArray, root){
-	var descendants = lsxNodesArray[i].getElementsByTagName("DESCENDANTS");
+function getGeometry(lsxNodesArray, leavesArray, root, a){
+	var descendants = lsxNodesArray[a].getElementsByTagName("DESCENDANTS");
 
 	if(descendants == null){
 		console.error("node with id " + root.id + " has no descendants, geometry scene was not loaded");
@@ -656,7 +657,7 @@ function constructTree(lsxNodesArray, leavesArray, root){
 	for(var i = 0; i < lsxNodesArray.length; i++){
 		if(lsxNodesArray[i].attributes.getNamedItem("id").value == root.id){
 
-			if(getGeometry(lsxNodesArray, leavesArray, root) == -1){
+			if(getGeometry(lsxNodesArray, leavesArray, root, i) == -1){
 				return -1;
 			}
 

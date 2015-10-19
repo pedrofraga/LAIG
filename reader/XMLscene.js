@@ -75,7 +75,7 @@ XMLscene.prototype.onGraphLoaded = function ()
 
 	this.getLSXLights();
 
-	var transf = [];
+	var transf = []; //get transformations to array
 
 	for(var i = 0; i < this.graph.rotation.length; i++)
 		transf.push(this.graph.rotation[i]);
@@ -87,7 +87,7 @@ XMLscene.prototype.onGraphLoaded = function ()
 		transf.push(this.graph.scale[i]);
 
 
-	this.graphObject = new MyGraphObject(this, this.graph.rootNode, this.graph.leavesArray, this.graph.texturesArray, this.graph.materialsArray, transf);
+	this.graphObject = new MyGraphObject(this, this.graph.rootNode, this.graph.leavesArray, this.graph.texturesArray, this.graph.materialsArray, transf); 
 	
 	this.enableTextures(true);
 
@@ -132,6 +132,10 @@ XMLscene.prototype.display = function () {
 *
 */
 
+
+/*
+*	Apply Lights info
+*/
 XMLscene.prototype.getLSXLights = function (){
 
 	this.shader.bind();
@@ -179,6 +183,9 @@ XMLscene.prototype.getLSXLights = function (){
 	this.shader.unbind();
 }
 
+/*
+*	Apply Illumination 
+*/
 XMLscene.prototype.getLSXIllumination = function (){
 
 	if(this.graph.background != null)
@@ -189,7 +196,12 @@ XMLscene.prototype.getLSXIllumination = function (){
 
 }
 
-
+/*
+*	function to update any of the lights
+*	@method
+*	@param {string}	lightId  string containing light id
+*	@param {boolean}	enable 	enable or disable light
+*/
 XMLscene.prototype.updateLight = function(lightId, enable) {
 	for (var i = 0; i < this.graph.lightsArray.length; ++i) {
 		if (this.graph.lightsArray[i].id == lightId) {

@@ -26,7 +26,7 @@
         <LIGHT id="sun">                                    <!-- light identifier -->
             <enable value ="1" />                         <!-- enable/disable -->
             <position x="1" y="13.5" z="9.5" w="1" />       <!-- light position -->
-            <ambient r="2" g="1" b="1" a="1" />        <!-- ambient component -->
+            <ambient r="1" g="1" b="1" a="1" />        <!-- ambient component -->
             <diffuse r="1" g="1" b="1" a="1" />        <!-- diffuse component -->
             <specular r="0" g="0" b="0" a="0" />       <!-- specular component -->
         </LIGHT>

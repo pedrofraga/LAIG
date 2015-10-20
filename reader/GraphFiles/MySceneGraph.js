@@ -588,6 +588,13 @@ function getGeometryNodes(rootElement, leavesArray){
 
 	returnRootNode = new Node(rootID);
 
+	for(var a = 0; a < lsxNodesArray.length; a++){
+		if(lsxNodesArray[a].attributes.getNamedItem("id").value == rootID){
+			if(getNodeInfo(lsxNodesArray[a], returnRootNode) == -1) return -1;
+			break;
+		}
+	}
+
 	if(constructTree(lsxNodesArray, leavesArray, returnRootNode) == -1){
 		console.error("please reconstruct your .lsx file");
 		returnRootNode = null;

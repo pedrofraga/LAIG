@@ -255,16 +255,6 @@ parseFloat(this.leaves[a].args[4]));
 
 		}
 }
-
-/**
- * function to convert degrees in radian
- * @method toRadian
- * @param  {string} degrees
- * @return {int}         converted radians
- */
-MyGraphObject.prototype.toRadian = function (degrees){
-	return parseFloat(degrees) * Math.PI / 180;
-}
 /**
  * function to clone a object
  * @method clone

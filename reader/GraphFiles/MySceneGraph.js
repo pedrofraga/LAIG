@@ -170,7 +170,7 @@ function getInitials(initials, frustum, transforms, reference){
 			
 			var initialsRot = initials[0].getElementsByTagName('rotation')[i];
 
-			var angle = parseFloat(initialsRot.attributes.getNamedItem("angle").value);
+			var angle = toRadian(parseFloat(initialsRot.attributes.getNamedItem("angle").value));
 			switch(initialsRot.attributes.getNamedItem("axis").value) {
 				case 'y':
 					mat4.rotate(transforms, transforms, angle, [0,1,0]);
@@ -720,7 +720,8 @@ function getNodeInfo(lsxNode, node){
 
 	for(var i = 0; i < childrenArray.length; i++){
 		if(childrenArray[i].localName == "ROTATION"){
-			var angle = parseFloat(childrenArray[i].attributes.getNamedItem("angle").value);
+
+			var angle = toRadian(parseFloat(childrenArray[i].attributes.getNamedItem("angle").value));
 			switch(childrenArray[i].attributes.getNamedItem("axis").value) {
 				case 'y':
 					mat4.rotate(node.transforms, node.transforms, angle, [0,1,0]);
@@ -735,7 +736,6 @@ function getNodeInfo(lsxNode, node){
 					throw new Error('There is no axis ' + childrenArray[i].attributes.getNamedItem("axis").value + ' .lsx not well formed');
 					break;
 			}
-			console.log(node.transforms);
 		}
 	
 
@@ -886,3 +886,6 @@ function Material(id, shininess, specular, diffuse, ambient, emission){
  	this.sy = sy;
  	this.sz = sz;
  }
+ function toRadian(degrees){
+	return parseFloat(degrees) * Math.PI / 180;
+}

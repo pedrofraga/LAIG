@@ -56,9 +56,7 @@ MyGraphObject.prototype.displayTree = function (rootNode, transf, textur, mater)
 					return rootNode.id;
 		}
 
-		for(var i = 0; i < rootNode.transforms.length; i++){
-			transf.push(rootNode.transforms[i]);
-		}
+		mat4.multiply(transf, transf, rootNode.transforms);
 
 		if(rootNode.texture != null){
 			textur.push(rootNode.texture);
@@ -74,9 +72,9 @@ MyGraphObject.prototype.displayTree = function (rootNode, transf, textur, mater)
 
 		for(var i = 0; i < rootNode.descendants.length; i++){
 
-			var transfClone = [];
+			var transfClone = mat4.create();
 
-			transfClone = transf.slice(0);
+			mat4.copy(transfClone, transf);
 
 			var texturClone = [];
 
@@ -92,15 +90,8 @@ MyGraphObject.prototype.displayTree = function (rootNode, transf, textur, mater)
 					for(var j = 0; j < this.primitives.length; j++){
 						if(this.primitives[j].id == returnValue){
 							this.scene.pushMatrix();
-							for(var a = 0; a < transf.length; a++){
-									if(transf[a].constructor.name == "Rotation"){
-											this.rotate(transf[a]);
-									}else if(transf[a].constructor.name == "Translation"){
-											this.translate(transf[a]);
-									}else if(transf[a].constructor.name == "Scale"){
-											this.scale(transf[a]);
-									}
-							}
+							
+							this.scene.multMatrix(transf);
 
 							var texture = this.getTextureId(textur);
 							textur.reverse();
@@ -263,45 +254,6 @@ parseFloat(this.leaves[a].args[4]));
 
 
 		}
-}
-
-/**
- * function to apply rotations
- * @method rotate
- * @param  {Rotation} rotation Rotation info
- */
-MyGraphObject.prototype.rotate = function (rotation){
-	switch (rotation.axis){
-		case "x":
-			this.scene.rotate(this.toRadian(rotation.angle),1,0,0);
-			break;
-		case "y":
-			this.scene.rotate(this.toRadian(rotation.angle),0,1,0);
-			break;
-		case "z":
-			this.scene.rotate(this.toRadian(rotation.angle),0,0,1);
-			break;
-		default:
-			console.error("there is no " + rotation.axis + " axis");
-			break;
-	}
-}
-/**
- * function to scale
- * @method scale
- * @param  {Scale} scale scale info
- */
-MyGraphObject.prototype.scale = function (scale){
-	this.scene.scale(parseFloat(scale.sx), parseFloat(scale.sy), parseFloat(scale.sz));
-}
-
-/**
- * function to apply translations
- * @method translate
- * @param  {Translation}  translation translation info
- */
-MyGraphObject.prototype.translate = function (translation){
-	this.scene.translate(parseFloat(translation.x), parseFloat(translation.y), parseFloat(translation.z));
 }
 
 /**

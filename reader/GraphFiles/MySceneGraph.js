@@ -66,12 +66,11 @@ MySceneGraph.prototype.parser= function(rootElement) {
 	}
 
 	this.frustum = [];
-	this.rotation = [];
-	this.translation = [];
-	this.scale = [];
+	this.initialTransforms = mat4.create();
+	mat4.identity(this.initialTransforms);
 	this.reference;
 
-	getInitials(initials, this.frustum, this.translation, this.rotation, this.scale, this.reference);
+	getInitials(initials, this.frustum, this.initialTransforms, this.reference);
 
 	// getting illumination node
 	var illumination =  rootElement.getElementsByTagName('ILLUMINATION');
@@ -145,7 +144,7 @@ MySceneGraph.prototype.parser= function(rootElement) {
  * @param  {int}    reference   	value of reference
  * @return {int}     							-1 if error, 0 if okay
  */
-function getInitials(initials, frustum, translation, rotation, scale, reference){
+function getInitials(initials, frustum, transforms, reference){
 
 	if(initials[0].getElementsByTagName('frustum')[0] != null){
 		var initialsFrustum = initials[0].getElementsByTagName('frustum')[0];
@@ -155,30 +154,48 @@ function getInitials(initials, frustum, translation, rotation, scale, reference)
 
 	if(initials[0].getElementsByTagName('translation')[0] != null){
 		for(var i = 0; i < initials[0].getElementsByTagName('translation').length; i++){
+			
 			var initialsTransl = initials[0].getElementsByTagName('translation')[i];
-			var t = new Translation(parseFloat(initialsTransl.attributes.getNamedItem("x").value),
-									parseFloat(initialsTransl.attributes.getNamedItem("y").value),
-									parseFloat(initialsTransl.attributes.getNamedItem("z").value));
-			translation[i] = t;
+			
+			var x = parseFloat(initialsTransl.attributes.getNamedItem("x").value);
+			var y = parseFloat(initialsTransl.attributes.getNamedItem("y").value);
+			var z = parseFloat(initialsTransl.attributes.getNamedItem("z").value);
+			
+			mat4.translate(transforms, transforms, [x, y, z]);
 		}
 	}
 
 	if(initials[0].getElementsByTagName('rotation')[0] != null){
 		for(var i = 0; i < initials[0].getElementsByTagName('rotation').length; i++){
+			
 			var initialsRot = initials[0].getElementsByTagName('rotation')[i];
-			var r = new Rotation(initialsRot.attributes.getNamedItem("axis").value,
-									parseFloat(initialsRot.attributes.getNamedItem("angle").value));
-			rotation[i] = r;
+
+			var angle = parseFloat(initialsRot.attributes.getNamedItem("angle").value);
+			switch(initialsRot.attributes.getNamedItem("axis").value) {
+				case 'y':
+					mat4.rotate(transforms, transforms, angle, [0,1,0]);
+					break;
+				case 'x':
+					mat4.rotate(transforms, transforms, angle, [1,0,0]);
+					break;
+				case 'z':
+					mat4.rotate(transforms, transforms, angle, [0,0,1]);
+					break;
+				default:
+					throw new Error('There is no axis ' + childrenArray[i].attributes.getNamedItem("axis").value + ' .lsx not well formed');
+					break;
+			}
 		}
 	}
 
 	if(initials[0].getElementsByTagName('scale')[0] != null){
 		for(var i = 0; i < initials[0].getElementsByTagName('scale').length; i++){
 			var initialsScale = initials[0].getElementsByTagName('scale')[i];
-			var s = new Scale(parseFloat(initialsScale.attributes.getNamedItem("sx").value),
-									parseFloat(initialsScale.attributes.getNamedItem("sy").value),
-									parseFloat(initialsScale.attributes.getNamedItem("sz").value));
-			scale[i] = s;
+
+			var sx = parseFloat(initialsScale.attributes.getNamedItem("sx").value);
+			var sy = parseFloat(initialsScale.attributes.getNamedItem("sy").value);
+			var sz = parseFloat(initialsScale.attributes.getNamedItem("sz").value);
+			mat4.scale(transforms, transforms, [sx, sy, sz]);
 		}
 	}
 
@@ -703,20 +720,37 @@ function getNodeInfo(lsxNode, node){
 
 	for(var i = 0; i < childrenArray.length; i++){
 		if(childrenArray[i].localName == "ROTATION"){
-			node.transforms.push(new Rotation(childrenArray[i].attributes.getNamedItem("axis").value,
-				childrenArray[i].attributes.getNamedItem("angle").value));
+			var angle = parseFloat(childrenArray[i].attributes.getNamedItem("angle").value);
+			switch(childrenArray[i].attributes.getNamedItem("axis").value) {
+				case 'y':
+					mat4.rotate(node.transforms, node.transforms, angle, [0,1,0]);
+					break;
+				case 'x':
+					mat4.rotate(node.transforms, node.transforms, angle, [1,0,0]);
+					break;
+				case 'z':
+					mat4.rotate(node.transforms, node.transforms, angle, [0,0,1]);
+					break;
+				default:
+					throw new Error('There is no axis ' + childrenArray[i].attributes.getNamedItem("axis").value + ' .lsx not well formed');
+					break;
+			}
+			console.log(node.transforms);
 		}
+	
 
 		if(childrenArray[i].localName == "SCALE"){
-			node.transforms.push(new Scale(childrenArray[i].attributes.getNamedItem("sx").value,
-				childrenArray[i].attributes.getNamedItem("sy").value,
-				childrenArray[i].attributes.getNamedItem("sz").value));
+			var sx = parseFloat(childrenArray[i].attributes.getNamedItem("sx").value);
+			var sy = parseFloat(childrenArray[i].attributes.getNamedItem("sy").value);
+			var sz = parseFloat(childrenArray[i].attributes.getNamedItem("sz").value);
+			mat4.scale(node.transforms, node.transforms, [sx, sy, sz]);
 		}
 
 		if(childrenArray[i].localName == "TRANSLATION"){
-			node.transforms.push(new Translation(childrenArray[i].attributes.getNamedItem("x").value,
-				childrenArray[i].attributes.getNamedItem("y").value,
-				childrenArray[i].attributes.getNamedItem("z").value));
+			var x = parseFloat(childrenArray[i].attributes.getNamedItem("x").value);
+			var y = parseFloat(childrenArray[i].attributes.getNamedItem("y").value);
+			var z = parseFloat(childrenArray[i].attributes.getNamedItem("z").value);
+			mat4.translate(node.transforms, node.transforms, [x, y, z]);
 		}
 
 		if(childrenArray[i].localName == "TEXTURE"){
@@ -729,6 +763,7 @@ function getNodeInfo(lsxNode, node){
 	}
 
 	return 0;
+
 }
 
 
@@ -820,7 +855,8 @@ function Material(id, shininess, specular, diffuse, ambient, emission){
  	this.texture = null;
  	this.material = null;
 
- 	this.transforms = [];
+ 	this.transforms = mat4.create();
+ 	mat4.identity(this.transforms);
 
  	this.descendants = [];
  }

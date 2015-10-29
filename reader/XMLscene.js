@@ -75,19 +75,8 @@ XMLscene.prototype.onGraphLoaded = function ()
 
 	this.getLSXLights();
 
-	var transf = []; //get transformations to array
 
-	for(var i = 0; i < this.graph.rotation.length; i++)
-		transf.push(this.graph.rotation[i]);
-
-	for(var i = 0; i < this.graph.translation.length; i++)
-		transf.push(this.graph.translation[i]);
-
-	for(var i = 0; i < this.graph.scale.length; i++)
-		transf.push(this.graph.scale[i]);
-
-
-	this.graphObject = new MyGraphObject(this, this.graph.rootNode, this.graph.leavesArray, this.graph.texturesArray, this.graph.materialsArray, transf); 
+	this.graphObject = new MyGraphObject(this, this.graph.rootNode, this.graph.leavesArray, this.graph.texturesArray, this.graph.materialsArray, matrix); 
 	
 	this.enableTextures(true);
 

@@ -73,14 +73,14 @@
     <!­­ span é o tempo, em segundos, que a animação deve demorar *
     <!­­ nesta versão do formato LSX, type pode ter o valor “linear” ou
     "circular" ­­>
-    ​       <animation id="linear" span=”ff” type=”linear”>
-                <controlpoint xx=”ff” yy=”ff” zz=”ff />
+    ​       <animation id="linear" span="5" type="linear">
+                <controlpoint xx="2" yy="12" zz="1"/>
 
-             </animation>
+            </animation>
     ​  
-         <animation id="circular" span="5" type="circular" center="20 20 20"
-                    radius="10" startang="30" rotang="360" />
-         </animation>
+        <animation id="circular" span="5" type="circular" center="20 20 20"
+                radius="10" startang="30" rotang="360" />
+        </animation>
     </animations>
 
 

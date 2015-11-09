@@ -24,22 +24,23 @@ XMLscene.prototype.init = function (application) {
 	this.gl.enable(this.gl.CULL_FACE);
     this.gl.depthFunc(this.gl.LEQUAL);
 
-	this.axis=new CGFaxis(this);
+	this.axis = new CGFaxis(this);
 
 	this.graphObject;
 
+	this.setUpdatePeriod(100);
 
 };
 
 XMLscene.prototype.initLights = function () {
 
-    this.shader.bind();
+  
 
 	this.lights[0].setPosition(2, 3, 3, 1);
     this.lights[0].setDiffuse(1.0,1.0,1.0,1.0);
     this.lights[0].update();
  
-    this.shader.unbind();
+
 };
 
 XMLscene.prototype.setInterface = function (interface) {
@@ -86,7 +87,7 @@ XMLscene.prototype.onGraphLoaded = function ()
 
 XMLscene.prototype.display = function () {
 	// ---- BEGIN Background, camera and axis setup
-    this.shader.bind();
+
 	
 
     this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);
@@ -111,7 +112,6 @@ XMLscene.prototype.display = function () {
 		this.graphObject.display();
 	};	
 
-    this.shader.unbind();
 };
 
 
@@ -127,7 +127,6 @@ XMLscene.prototype.display = function () {
 */
 XMLscene.prototype.getLSXLights = function (){
 
-	this.shader.bind();
 
 	for(var i = 0; i < this.graph.lightsArray.length; i++){
 		
@@ -169,7 +168,6 @@ XMLscene.prototype.getLSXLights = function (){
 
 	}
 
-	this.shader.unbind();
 }
 
 /*
@@ -201,5 +199,14 @@ XMLscene.prototype.updateLight = function(lightId, enable) {
 	}
 }
 
+
+
+
+XMLscene.prototype.update = function(currTime) {
+	
+	if (this.graph.loadedOk)
+ 		this.graphObject.update(currTime);
+
+};
 
 

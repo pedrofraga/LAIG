@@ -760,6 +760,7 @@ function getNodeInfo(lsxNode, node){
 		if(childrenArray[i].localName == "MATERIAL"){
 			node.material = childrenArray[i].attributes.getNamedItem("id").value;
 		}
+
 	}
 
 	return 0;
@@ -857,6 +858,8 @@ function Material(id, shininess, specular, diffuse, ambient, emission){
 
  	this.transforms = mat4.create();
  	mat4.identity(this.transforms);
+
+ 	this.animation = null;
 
  	this.descendants = [];
  }

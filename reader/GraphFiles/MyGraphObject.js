@@ -221,6 +221,14 @@ MyGraphObject.prototype.materialApply = function (cgfClone, material){
 		cgfClone.setShininess(parseFloat(material.shininess));
 	}
 
+	if(material.emission != null){
+		cgfClone.setEmission(parseFloat(material.emission.r),
+								parseFloat(material.emission.g),
+								parseFloat(material.emission.b),
+								parseFloat(material.emission.a));
+	}
+
+
 }
 
 /**
@@ -287,4 +295,10 @@ function clone( original )
 function Geometry(object, id){
 	this.object = object;
 	this.id = id;
+}
+
+
+
+MyGraphObject.prototype.update = function(currTime) {
+	//animations here!
 }

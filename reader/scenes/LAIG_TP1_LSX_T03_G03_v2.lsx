@@ -176,6 +176,11 @@
             <amplif_factor s="1" t="1" />                <!-- x/s, y/t -->
         </TEXTURE>
 
+         <TEXTURE id="ball">
+            <file path="./scenes/res/ball.png" />                 <!-- path to file -->
+            <amplif_factor s="1" t="1" />                <!-- x/s, y/t -->
+        </TEXTURE>
+
     </TEXTURES>
 
 
@@ -262,9 +267,11 @@
                 <DESCENDANT id="skyright" /> 
                 <DESCENDANT id="skyleft" />
                 <DESCENDANT id="table" />
-                <DESCENDANT id="island" />     
+                <DESCENDANT id="island" /> 
+                <DESCENDANT id="ball" />    
             </DESCENDANTS>
         </NODE>
+
 
         <!--########### BOAT ############-->
 
@@ -1149,14 +1156,26 @@
             </DESCENDANTS>
         </NODE>
 
+        <NODE id="ball">
+            <MATERIAL id="normalAppearance"/>
+            <TEXTURE id="ball"/>
+
+            <TRANSLATION x="350" y="1.9" z="310"/>
+            <SCALE sx="2" sy="2" sz="2" />
+
+            <DESCENDANTS>
+                <DESCENDANT id="sphere"/>
+            </DESCENDANTS>
+        </NODE>
+
         <!-- ## LAND ## -->
 
         <NODE id="land">
             <MATERIAL id="normalAppearance"/>
             <TEXTURE id="land"/>
 
-            <TRANSLATION x="270" y="0.001" z="150"/>
-            <SCALE sx="100" sy="10" sz="100"/>
+            <TRANSLATION x="270" y="0.01" z="150"/>
+            <SCALE sx="100" sy="0" sz="100"/>
 
             <DESCENDANTS>
                 <DESCENDANT id="sphere"/>
@@ -1237,7 +1256,7 @@
             <MATERIAL id="null"/>
             <TEXTURE id="wall"/>
 
-            <TRANSLATION x="210" y="9" z="140"/> 
+            <TRANSLATION x="210" y="0.1" z="140"/> 
             <SCALE sx="0.7" sy="0.7" sz="0.7"/>
 
             <DESCENDANTS>

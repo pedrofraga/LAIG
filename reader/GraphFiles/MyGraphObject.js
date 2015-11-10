@@ -325,16 +325,8 @@ MyGraphObject.prototype.update = function(currTime) {
 
 	for(var i = 0; i < this.animatedObjects.length; i++) {
 
-		if(this.animatedObjects[i].animation.type == 'circular') {
+		this.animatedObjects[i].animate(currTime);
 
-			if(this.animatedObjects[i].transforms.length > 0)
-				for(var j = 0; j < this.animatedObjects[i].transforms.length; j++) 
-				if(this.animatedObjects[i].transforms[j].constructor == Translation) {
-					this.animatedObjects[i].transforms[j].x += 1;
-					this.animatedObjects[i].setMatrix();
-				}
-
-		}
 	}
 
 }

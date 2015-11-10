@@ -28,7 +28,7 @@ XMLscene.prototype.init = function (application) {
 
 	this.graphObject;
 
-	this.setUpdatePeriod(100);
+	this.setUpdatePeriod(50);
 
 };
 

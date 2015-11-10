@@ -168,7 +168,7 @@ function getAnimations(rootElement, animationsArray) {
 	for(var i = 0; i < animations.length; i++){
 		
 		var id = animations[i].attributes.getNamedItem("id").value;
-		var span = parseFloat(animations[i].attributes.getNamedItem("span").value);
+		var span = parseFloat(animations[i].attributes.getNamedItem("span").value) * 1000;
 		var type = animations[i].attributes.getNamedItem("type").value;
 
 		if(type == 'circular') {
@@ -187,6 +187,33 @@ function getAnimations(rootElement, animationsArray) {
 			animationsArray.push(new CircularAnimation(id, span, center, startAngle, rotationAngle));
 
 		} else if (type == 'linear'){
+			var controlPointsXML = animations[i].getElementsByTagName('controlpoint');
+
+			var controlPointToBeSaved = [];
+
+			for(var j = 0; j < controlPointsXML.length; j++) {
+				var x = parseFloat(controlPointsXML[j].attributes.getNamedItem("xx").value);
+				var y = parseFloat(controlPointsXML[j].attributes.getNamedItem("yy").value);
+				var z = parseFloat(controlPointsXML[j].attributes.getNamedItem("zz").value);
+
+				controlPointToBeSaved.push(vec3.fromValues(x, y, z));
+			}
+
+			var distance = 0;
+
+			var distanceEachPhase = [];
+
+			for(var j = 0; j < controlPointToBeSaved.length; j++) {
+				distance += Math.sqrt(Math.pow(controlPointToBeSaved[j][0], 2) + Math.pow(controlPointToBeSaved[j][1], 2) + Math.pow(controlPointToBeSaved[j][2], 2));
+				distanceEachPhase[j] = Math.sqrt(Math.pow(controlPointToBeSaved[j][0], 2) + Math.pow(controlPointToBeSaved[j][1], 2) + Math.pow(controlPointToBeSaved[j][2], 2));
+			}
+
+			var velocity = distance / span;
+
+			if(controlPointsXML.length == 0)
+				return 'There\'s no control points on linear animation with id: ' + id;
+			else
+				animationsArray.push(new LinearAnimation(id, span, controlPointToBeSaved, velocity, distanceEachPhase));
 
 		} else {
 			return 'Animation with type \"' + type + '\" it\'s not recognized by this parser, reconstruct your .lsx';

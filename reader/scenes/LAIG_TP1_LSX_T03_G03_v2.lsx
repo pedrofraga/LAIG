@@ -68,8 +68,35 @@
 
 
     <animations>
-    ​    <animation id="linear" span="5" type="linear">
-            <controlpoint xx="2" yy="12" zz="1"/>
+    ​    <animation id="linear" span="30" type="linear">
+            <controlpoint xx="0" yy="4" zz="0"/>
+            <controlpoint xx="0" yy="-4" zz="0"/>
+            <controlpoint xx="0" yy="4" zz="0"/>
+            <controlpoint xx="0" yy="-4" zz="0"/>
+            <controlpoint xx="0" yy="4" zz="0"/>
+            <controlpoint xx="0" yy="-4" zz="0"/>
+            <controlpoint xx="0" yy="4" zz="0"/>
+            <controlpoint xx="0" yy="-4" zz="0"/>
+            <controlpoint xx="0" yy="4" zz="0"/>
+            <controlpoint xx="0" yy="-4" zz="0"/>
+            <controlpoint xx="0" yy="4" zz="0"/>
+            <controlpoint xx="0" yy="-4" zz="0"/>
+            <controlpoint xx="0" yy="4" zz="0"/>
+            <controlpoint xx="0" yy="-4" zz="0"/>
+            <controlpoint xx="0" yy="4" zz="0"/>
+            <controlpoint xx="0" yy="-4" zz="0"/>
+            <controlpoint xx="0" yy="4" zz="0"/>
+            <controlpoint xx="0" yy="-4" zz="0"/>
+            <controlpoint xx="0" yy="4" zz="0"/>
+            <controlpoint xx="0" yy="-4" zz="0"/>
+            <controlpoint xx="0" yy="4" zz="0"/>
+            <controlpoint xx="0" yy="-4" zz="0"/>
+            <controlpoint xx="0" yy="4" zz="0"/>
+            <controlpoint xx="0" yy="-4" zz="0"/>
+            <controlpoint xx="0" yy="4" zz="0"/>
+            <controlpoint xx="0" yy="-4" zz="0"/>
+            <controlpoint xx="0" yy="4" zz="0"/>
+            <controlpoint xx="0" yy="-4" zz="0"/>
         </animation>
     ​  
         <animation id="circular" span="5" type="circular" center="20 20 20"
@@ -1170,6 +1197,8 @@
 
             <TRANSLATION x="350" y="1.9" z="310"/>
             <SCALE sx="2" sy="2" sz="2" />
+
+            <animationref id="linear"/>
 
             <DESCENDANTS>
                 <DESCENDANT id="sphere"/>

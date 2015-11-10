@@ -20,6 +20,8 @@ function MyGraphObject(scene, rootNode, leaves, textures, materials, transf) {
 
 	this.primitives = [];
 
+	this.animatedObjects = [];
+
 
 	this.getObjectsFromLeaves();
 	this.getTextureAppearance();
@@ -56,13 +58,21 @@ MyGraphObject.prototype.displayTree = function (rootNode, transf, textur, mater)
 					return rootNode.id;
 		}
 
-		mat4.multiply(transf, transf, rootNode.transforms);
+		mat4.multiply(transf, transf, rootNode.transformMatrix);
 
-		if(rootNode.texture != null){
+
+		if(rootNode.animation != null) {
+
+			if(!containsObject(rootNode, this.animatedObjects)) {
+				this.animatedObjects.push(rootNode);
+			}
+		}
+
+		if(rootNode.texture != null) {
 			textur.push(rootNode.texture);
 		}
 
-		if(rootNode.material != null){
+		if(rootNode.material != null) {
 			mater.push(rootNode.material);
 		}
 
@@ -70,7 +80,7 @@ MyGraphObject.prototype.displayTree = function (rootNode, transf, textur, mater)
 			if(textur[textur.length - 1] == "clear")
 				textur = [];
 
-		for(var i = 0; i < rootNode.descendants.length; i++){
+		for(var i = 0; i < rootNode.descendants.length; i++) {
 
 			var transfClone = mat4.create();
 
@@ -298,7 +308,33 @@ function Geometry(object, id){
 }
 
 
+function containsObject(obj, list) {
+
+    for (var i = 0; i < list.length; i++) {
+        if (list[i] === obj) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+
 
 MyGraphObject.prototype.update = function(currTime) {
-	//animations here!
+
+	for(var i = 0; i < this.animatedObjects.length; i++) {
+
+		if(this.animatedObjects[i].animation.type == 'circular') {
+
+			if(this.animatedObjects[i].transforms.length > 0)
+				for(var j = 0; j < this.animatedObjects[i].transforms.length; j++) 
+				if(this.animatedObjects[i].transforms[j].constructor == Translation) {
+					this.animatedObjects[i].transforms[j].x += 1;
+					this.animatedObjects[i].setMatrix();
+				}
+
+		}
+	}
+
 }

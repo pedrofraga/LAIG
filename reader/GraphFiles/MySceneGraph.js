@@ -14,6 +14,22 @@ function MySceneGraph(filename, scene) {
 	// File reading
 	this.reader = new CGFXMLreader();
 
+
+	this.animations = [];
+	this.ambient = [];
+	this.background = [];
+	this.frustum = [];
+	this.lightsArray = [];
+	this.leavesArray = [];
+	this.texturesArray = [];
+	this.materialsArray = [];
+	this.rootNode;
+
+	this.initialTransforms = mat4.create();
+	mat4.identity(this.initialTransforms);
+
+	this.reference;
+
 	/*
 	 * Read the contents of the xml file, and refer to this class for loading and error handlers.
 	 * After the file is read, the reader calls onXMLReady on this object.
@@ -55,6 +71,8 @@ MySceneGraph.prototype.parser= function(rootElement) {
 
 	//getting initials node
 
+	console.log('Loading elements from .lsx file...');
+
 	var initials = rootElement.getElementsByTagName('INITIALS');
 
 	if(initials == null){
@@ -65,12 +83,9 @@ MySceneGraph.prototype.parser= function(rootElement) {
 		return "either zero or more than one initials element found.";
 	}
 
-	this.frustum = [];
-	this.initialTransforms = mat4.create();
-	mat4.identity(this.initialTransforms);
-	this.reference;
 
 	getInitials(initials, this.frustum, this.initialTransforms, this.reference);
+
 
 	// getting illumination node
 	var illumination =  rootElement.getElementsByTagName('ILLUMINATION');
@@ -83,28 +98,27 @@ MySceneGraph.prototype.parser= function(rootElement) {
 		return "either zero or more than one 'illumi' element found.";
 	}
 
-	this.ambient = [];
-	this.background = [];
-
 
 	getIllumination(illumination, this.ambient, this.background);
 
-	this.lightsArray = [];
+	var result = getAnimations(rootElement, this.animations);
+	
+	if(result != 0) {
+		return result;
+	}
+
+	
 
 	if(	getLights(rootElement, this.lightsArray ) == -1){
 		return ".lsx file has at least 2 lights with the same id";
 	}
 
-	this.leavesArray = [];
-
-	this.texturesArray = [];
-
+	
 	if(getTextures(rootElement, this.texturesArray) == -1){
 		return ".lsx file has at least 2 textures with the same id";
 	}
 
-	this.materialsArray = [];
-
+	
 	if(getMaterials(rootElement, this.materialsArray) == -1){
 		return ".lsx file has at least 2 materials with the same id";
 	}
@@ -113,11 +127,13 @@ MySceneGraph.prototype.parser= function(rootElement) {
 		return ".lsx file has at least 2 leaves with the same id";
 	}
 
-	this.rootNode = getGeometryNodes(rootElement, this.leavesArray);
+	this.rootNode = getGeometryNodes(rootElement, this.leavesArray, this.animations);
 
 	if(this.rootNode == null){
 		return ".lsx file nodes are not well formed";
 	}
+
+	console.log('Loading is complete!');
 
 };
 
@@ -131,6 +147,57 @@ MySceneGraph.prototype.parser= function(rootElement) {
  	this.loadedOk=false;
  };
 
+
+
+function getAnimations(rootElement, animationsArray) {
+
+ 	var animationsElement =  rootElement.getElementsByTagName('animations');
+
+	if (animationsElement == null) {
+		return "animations element is missing.";
+	}
+
+	if (animationsElement.length != 1) {
+		return "either zero or more than one 'animations' element found.";
+	}
+
+
+	animations = animationsElement[0].getElementsByTagName('animation');
+
+
+	for(var i = 0; i < animations.length; i++){
+		
+		var id = animations[i].attributes.getNamedItem("id").value;
+		var span = parseFloat(animations[i].attributes.getNamedItem("span").value);
+		var type = animations[i].attributes.getNamedItem("type").value;
+
+		if(type == 'circular') {
+			var centerString = animations[i].attributes.getNamedItem("center").value.match(/[^ ]+/g);
+
+			var center = [];
+
+			center.push(parseFloat(centerString[1]));
+			center.push(parseFloat(centerString[2]));
+			center.push(parseFloat(centerString[3]));
+
+			var startAngle = toRadian(parseFloat(animations[i].attributes.getNamedItem("startang").value));
+
+			var rotationAngle = toRadian(parseFloat(animations[i].attributes.getNamedItem("rotang").value));
+
+			animationsArray.push(new CircularAnimation(id, span, center, startAngle, rotationAngle));
+
+		} else if (type == 'linear'){
+
+		} else {
+			return 'Animation with type \"' + type + '\" it\'s not recognized by this parser, reconstruct your .lsx';
+		}
+
+
+	}
+
+	return 0;
+	
+ };
 
 
 /**
@@ -564,7 +631,7 @@ function getLeaves(rootElement, leavesArray) {
  * @param  {array}  leavesArray			for error checking purposes
  * @return {int}              rootNode if is okay, -1 if error
  */
-function getGeometryNodes(rootElement, leavesArray){
+function getGeometryNodes(rootElement, leavesArray, animationsArray){
 	var nodes = rootElement.getElementsByTagName("NODES");
 
 	if(nodes == null){
@@ -612,7 +679,7 @@ function getGeometryNodes(rootElement, leavesArray){
 		}
 	}
 
-	if(constructTree(lsxNodesArray, leavesArray, returnRootNode) == -1){
+	if(constructTree(lsxNodesArray, leavesArray, returnRootNode, animationsArray) == -1){
 		console.error("please reconstruct your .lsx file");
 		returnRootNode = null;
 	}
@@ -630,7 +697,7 @@ function getGeometryNodes(rootElement, leavesArray){
  * @param  {int}    	a         lsxNodeArray indice
  * @return {int}                  -1 if error, 0 if okay
  */
-function getGeometry(lsxNodesArray, leavesArray, root, a){
+function getGeometry(lsxNodesArray, leavesArray, root, a, animationsArray){
 	var descendants = lsxNodesArray[a].getElementsByTagName("DESCENDANTS");
 
 	if(descendants == null){
@@ -646,16 +713,23 @@ function getGeometry(lsxNodesArray, leavesArray, root, a){
 	var lsxDescendantsArray = descendants[0].getElementsByTagName("DESCENDANT");
 
 	for(var i = 0; i < lsxDescendantsArray.length; i++){
+
 		if(lsxDescendantsArray[i].attributes.getNamedItem("id") != null){
+
 			var id = lsxDescendantsArray[i].attributes.getNamedItem("id").value;
 			var node = new Node(id);
 			root.descendants[i] = node;
 
 			for(var a = 0; a < lsxNodesArray.length; a++){
+
 				if(lsxNodesArray[a].attributes.getNamedItem("id").value == id){
-					if(getNodeInfo(lsxNodesArray[a], root.descendants[i]) == -1) return -1;
+					
+					if(getNodeInfo(lsxNodesArray[a], root.descendants[i], animationsArray) == -1) return -1;
+					else root.descendants[i].setMatrix();
+
 					break;
 				}
+
 			}
 
 			if(constructTree(lsxNodesArray, leavesArray, root.descendants[i]) == -1){
@@ -677,11 +751,11 @@ function getGeometry(lsxNodesArray, leavesArray, root, a){
  * @param  {Node}      root          Node to be constructed
  * @return {int}                    -1 if error, 0 if okay
  */
-function constructTree(lsxNodesArray, leavesArray, root){
+function constructTree(lsxNodesArray, leavesArray, root, animationsArray){
 	for(var i = 0; i < lsxNodesArray.length; i++){
 		if(lsxNodesArray[i].attributes.getNamedItem("id").value == root.id){
 
-			if(getGeometry(lsxNodesArray, leavesArray, root, i) == -1){
+			if(getGeometry(lsxNodesArray, leavesArray, root, i, animationsArray) == -1){
 				return -1;
 			}
 
@@ -714,7 +788,7 @@ function checkLeafs(leavesArray, root){
  * @param  {lsxNode}    lsxNode Node from lsx
  * @param  {Node}    node    node to give info
  */
-function getNodeInfo(lsxNode, node){
+function getNodeInfo(lsxNode, node, animationsArray){
 
 	var childrenArray = lsxNode.children;
 
@@ -722,20 +796,10 @@ function getNodeInfo(lsxNode, node){
 		if(childrenArray[i].localName == "ROTATION"){
 
 			var angle = toRadian(parseFloat(childrenArray[i].attributes.getNamedItem("angle").value));
-			switch(childrenArray[i].attributes.getNamedItem("axis").value) {
-				case 'y':
-					mat4.rotate(node.transforms, node.transforms, angle, [0,1,0]);
-					break;
-				case 'x':
-					mat4.rotate(node.transforms, node.transforms, angle, [1,0,0]);
-					break;
-				case 'z':
-					mat4.rotate(node.transforms, node.transforms, angle, [0,0,1]);
-					break;
-				default:
-					throw new Error('There is no axis ' + childrenArray[i].attributes.getNamedItem("axis").value + ' .lsx not well formed');
-					break;
-			}
+			var axis = childrenArray[i].attributes.getNamedItem("axis").value;
+
+			node.transforms.push(new Rotation(axis, angle));
+
 		}
 	
 
@@ -743,14 +807,18 @@ function getNodeInfo(lsxNode, node){
 			var sx = parseFloat(childrenArray[i].attributes.getNamedItem("sx").value);
 			var sy = parseFloat(childrenArray[i].attributes.getNamedItem("sy").value);
 			var sz = parseFloat(childrenArray[i].attributes.getNamedItem("sz").value);
-			mat4.scale(node.transforms, node.transforms, [sx, sy, sz]);
+
+			node.transforms.push(new Scale(sx, sy, sz));
+
 		}
 
 		if(childrenArray[i].localName == "TRANSLATION"){
 			var x = parseFloat(childrenArray[i].attributes.getNamedItem("x").value);
 			var y = parseFloat(childrenArray[i].attributes.getNamedItem("y").value);
 			var z = parseFloat(childrenArray[i].attributes.getNamedItem("z").value);
-			mat4.translate(node.transforms, node.transforms, [x, y, z]);
+
+			node.transforms.push(new Translation(x, y, z));
+
 		}
 
 		if(childrenArray[i].localName == "TEXTURE"){
@@ -761,6 +829,14 @@ function getNodeInfo(lsxNode, node){
 			node.material = childrenArray[i].attributes.getNamedItem("id").value;
 		}
 
+		if(childrenArray[i].localName == "animationref"){
+			var id = childrenArray[i].attributes.getNamedItem("id").value;
+
+			for(var j = 0; j < animationsArray.length; j++)
+				if(animationsArray[j].id == id) {
+					node.animation = animationsArray[j];
+				}
+		}
 	}
 
 	return 0;
@@ -847,24 +923,6 @@ function Material(id, shininess, specular, diffuse, ambient, emission){
 
 
  /*
-  *	Node Class
-  */
-
- function Node(id){
- 	this.id = id;
-
- 	this.texture = null;
- 	this.material = null;
-
- 	this.transforms = mat4.create();
- 	mat4.identity(this.transforms);
-
- 	this.animation = null;
-
- 	this.descendants = [];
- }
-
- /*
   *	Rotation Class
   */
  function Rotation(axis, angle){
@@ -889,6 +947,10 @@ function Material(id, shininess, specular, diffuse, ambient, emission){
  	this.sy = sy;
  	this.sz = sz;
  }
- function toRadian(degrees){
+
+
+
+
+function toRadian(degrees){
 	return parseFloat(degrees) * Math.PI / 180;
 }

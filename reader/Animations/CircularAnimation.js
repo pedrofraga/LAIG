@@ -5,9 +5,14 @@
 */
 
 
-function CircularAnimation (time, centerPoint, intialAngle, rotationAngle) {
-	this.time = time;
-	this.centerPoint = centerPoint;
+function CircularAnimation (id, span, centerPoint, initialAngle, rotationAngle) {
+
+	this.type = 'circular';
+
+	this.id = id;
+	this.span = span;
+	this.center = centerPoint;
 	this.initialAngle = initialAngle;
 	this.rotationAngle = rotationAngle;
+
 }

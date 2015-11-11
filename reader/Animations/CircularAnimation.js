@@ -13,4 +13,6 @@ function CircularAnimation (id, span, centerPoint, initialAngle, rotationAngle) 
 	this.initialAngle = initialAngle;
 	this.rotationAngle = rotationAngle;
 
+	this.rotated = false;
+
 }

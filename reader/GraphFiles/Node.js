@@ -81,13 +81,10 @@ Node.prototype.animate = function (currTime, expectedUpdatePeriod) {
 
 		if(!updatePeriodDiffers(deltaTime, expectedUpdatePeriod))
 			if(this.animation.constructor == CircularAnimation) {
-			/*if(this.animatedObjects[i].transforms.length > 0)
-				for(var j = 0; j < this.animatedObjects[i].transforms.length; j++) 
-				if(this.animatedObjects[i].transforms[j].constructor == Translation) {
-					this.animatedObjects[i].transforms[j].x += 1;
-					this.animatedObjects[i].setMatrix();
-				}
-				*/
+			  
+			  if(!this.animation.rotated) ;
+
+				
 			} else if (this.animation.constructor == LinearAnimation) {
 
 				for (var i = 0; i < this.animation.controlPoints.length; i++) {
@@ -99,7 +96,7 @@ Node.prototype.animate = function (currTime, expectedUpdatePeriod) {
 
 						if(this.animation.initialControlPoint[i] == 0) {
 
-							if(this.animation.controlPoints[i][2] != 0 &&  this.animation.controlPoints[i][0] != 0) {
+							if(this.animation.controlPoints[i][2] != 0 && this.animation.controlPoints[i][0] != 0) {
 								
 								if(this.animation.rotated)
 									this.transforms.shift();
@@ -108,15 +105,28 @@ Node.prototype.animate = function (currTime, expectedUpdatePeriod) {
 
 								this.transforms.unshift(new Rotation('y', this.initialRotation));
 								this.animation.rotated = true;
-							} else if(this.animation.controlPoints[i][2] == 0 && this.animation.controlPoints[i][0] != 0) {
 
-								this.initialRotation = toRadian(90);
+							} else if(this.animation.controlPoints[i][2] == 0 && this.animation.controlPoints[i][0] != 0) {
+								var sign = this.animation.controlPoints[i][0] && this.animation.controlPoints[i][0] / Math.abs(this.animation.controlPoints[i][0]);
+
+								this.initialRotation = sign * toRadian(90);
+
 								this.transforms.unshift(new Rotation('y', this.initialRotation));
 								this.animation.rotated = true;
 								
-							} else {
+							} else if (this.animation.controlPoints[i][2] != 0 && this.animation.controlPoints[i][0] == 0){
+
 								if(this.animation.rotated)
 									this.transforms.shift();
+
+								if (this.animation.controlPoints[i][2] > 0)
+									this.initialRotation = 0;
+								else
+									this.initialRotation = toRadian(180);
+
+								this.transforms.unshift(new Rotation('y', this.initialRotation));
+								this.animation.rotated = true;
+
 							}
 						}
 						
@@ -150,10 +160,8 @@ Node.prototype.animate = function (currTime, expectedUpdatePeriod) {
 						this.transforms[this.transforms.length - 1].z += z;
 
 						this.setMatrix();
-						console.log(this.transforms);
 
 						i = this.animation.controlPoints.length;
-					
 					} 
 				}
 			}

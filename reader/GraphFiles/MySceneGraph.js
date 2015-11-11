@@ -182,11 +182,13 @@ function getAnimations(rootElement, animationsArray) {
 			center.push(parseFloat(centerString[2]));
 			center.push(parseFloat(centerString[3]));
 
+			var radius = parseFloat(animations[i].attributes.getNamedItem("radius").value);
+
 			var startAngle = toRadian(parseFloat(animations[i].attributes.getNamedItem("startang").value));
 
 			var rotationAngle = toRadian(parseFloat(animations[i].attributes.getNamedItem("rotang").value));
 
-			animationsArray.push(new CircularAnimation(id, span, center, startAngle, rotationAngle));
+			animationsArray.push(new CircularAnimation(id, span, center, radius, startAngle, rotationAngle));
 
 		} else if (type == 'linear'){
 			var controlPointsXML = animations[i].getElementsByTagName('controlpoint');

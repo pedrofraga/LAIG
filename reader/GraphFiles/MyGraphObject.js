@@ -22,6 +22,7 @@ function MyGraphObject(scene, rootNode, leaves, textures, materials, transf) {
 
 	this.animatedObjects = [];
 
+	this.texturesLoaded = false;
 
 	this.getObjectsFromLeaves();
 	this.getTextureAppearance();
@@ -161,10 +162,11 @@ MyGraphObject.prototype.displayTree = function (rootNode, transf, textur, mater)
 MyGraphObject.prototype.getTextureAppearance = function (){
 	for(var a = 0; a < this.textures.length; a++){
 		var texture = new CGFappearance(this.scene);
-		texture.setTextureWrap('CLAMP_TO_EDGE', 'CLAMP_TO_EDGE');
 		texture.loadTexture(this.textures[a].path);
 		this.textures[a].cgfAppearance = texture;
 	}
+
+	this.texturesLoaded = true;
 }
 /**
  * get last texture valid id
@@ -321,11 +323,11 @@ function containsObject(obj, list) {
 
 
 
-MyGraphObject.prototype.update = function(currTime) {
+MyGraphObject.prototype.update = function(currTime, expectedUpdatePeriod) {
 
 	for(var i = 0; i < this.animatedObjects.length; i++) {
 
-		this.animatedObjects[i].animate(currTime);
+		this.animatedObjects[i].animate(currTime, expectedUpdatePeriod);
 
 	}
 

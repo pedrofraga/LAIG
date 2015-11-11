@@ -19,6 +19,9 @@
  	this.descendants = [];
 
  	this.lastTime = 0;
+
+ 	this.inititalRotation = 0;
+
  }
 
 
@@ -65,15 +68,19 @@ Node.prototype.setMatrix = function () {
  		}
  	}
 
+
 };
 
 
-Node.prototype.animate = function (currTime) {
+Node.prototype.animate = function (currTime, expectedUpdatePeriod) {
 
 	if(this.lastTime > 0) {
+		
 		var deltaTime = currTime - this.lastTime;
 
-		if(this.animation.constructor == CircularAnimation) {
+
+		if(!updatePeriodDiffers(deltaTime, expectedUpdatePeriod))
+			if(this.animation.constructor == CircularAnimation) {
 			/*if(this.animatedObjects[i].transforms.length > 0)
 				for(var j = 0; j < this.animatedObjects[i].transforms.length; j++) 
 				if(this.animatedObjects[i].transforms[j].constructor == Translation) {
@@ -81,38 +88,82 @@ Node.prototype.animate = function (currTime) {
 					this.animatedObjects[i].setMatrix();
 				}
 				*/
-		} else if (this.animation.constructor == LinearAnimation) {
+			} else if (this.animation.constructor == LinearAnimation) {
 
-			if(this.animation.elapsedSpan < this.animation.span) {
-				this.animation.elapsedSpan += deltaTime;
 				for (var i = 0; i < this.animation.controlPoints.length; i++) {
 					if ( this.animation.initialControlPoint[i] < this.animation.controlPointDistance[i]) {
+
+						if(this.animation.initialControlPoint[0] == 0) {
+							this.transforms[this.transforms.length] = new Translation(0 , 0 , 0);
+						}
+
+						if(this.animation.initialControlPoint[i] == 0) {
+
+							if(this.animation.controlPoints[i][2] != 0 &&  this.animation.controlPoints[i][0] != 0) {
+								
+								if(this.animation.rotated)
+									this.transforms.shift();
+
+								this.initialRotation = Math.asin(this.animation.controlPoints[i][0] / this.animation.controlPoints[i][2]);
+
+								this.transforms.unshift(new Rotation('y', this.initialRotation));
+								this.animation.rotated = true;
+							} else if(this.animation.controlPoints[i][2] == 0 && this.animation.controlPoints[i][0] != 0) {
+
+								this.initialRotation = toRadian(90);
+								this.transforms.unshift(new Rotation('y', this.initialRotation));
+								this.animation.rotated = true;
+								
+							} else {
+								if(this.animation.rotated)
+									this.transforms.shift();
+							}
+						}
 						
 						var distance = this.animation.velocity * deltaTime;
 
+						this.animation.initialControlPoint[i] += distance;
+
+
+						var distance2 = 0;
+
+						if(this.animation.initialControlPoint[i] > this.animation.controlPointDistance[i]) {
+							distance2 = (this.animation.initialControlPoint[i] - this.animation.controlPointDistance[i]);
+						}
+
+						distance -= distance2;
+						this.animation.initialControlPoint[i] -= distance2;
+
+
+
 						var var1 = Math.sqrt(distance / (Math.pow(this.animation.controlPoints[i][0], 2) +  
-															Math.pow(this.animation.controlPoints[i][1], 2) +
-																Math.pow(this.animation.controlPoints[i][2], 2)));
+							Math.pow(this.animation.controlPoints[i][1], 2) +
+							Math.pow(this.animation.controlPoints[i][2], 2)));
 
 						var x = this.animation.controlPoints[i][0] * var1;
 						var y = this.animation.controlPoints[i][1] * var1;
 						var z = this.animation.controlPoints[i][2] * var1;
 
-						mat4.translate(this.transformMatrix, this.transformMatrix, [x, y, z]);
 
-						this.animation.initialControlPoint[i] += distance;
+						this.transforms[this.transforms.length - 1].x += x;
+						this.transforms[this.transforms.length - 1].y += y;
+						this.transforms[this.transforms.length - 1].z += z;
 
-						if(this.animation.initialControlPoint[i] > this.animation.controlPointDistance[i])
-							this.animation.initialControlPoint[i + 1] += (Math.abs(this.animation.initialControlPoint[i] - this.animation.controlPointDistance[i]));
+						this.setMatrix();
+						console.log(this.transforms);
 
 						i = this.animation.controlPoints.length;
+					
 					} 
 				}
-
 			}
 		}
-	}
 
-	this.lastTime = currTime;
+		this.lastTime = currTime;
+}
 
+
+
+function updatePeriodDiffers(currTime, expectedUpdatePeriod) {
+    return currTime > (expectedUpdatePeriod + 50);
 }

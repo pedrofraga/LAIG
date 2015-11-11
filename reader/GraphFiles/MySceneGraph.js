@@ -28,6 +28,8 @@ function MySceneGraph(filename, scene) {
 	this.initialTransforms = mat4.create();
 	mat4.identity(this.initialTransforms);
 
+
+
 	this.reference;
 
 	/*

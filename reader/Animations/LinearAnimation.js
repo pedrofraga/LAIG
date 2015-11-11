@@ -22,6 +22,8 @@ function LinearAnimation(id, time, controlPoints, velocity, controlPointDistance
 
 	this.initialControlPoint = [];
 
+	this.rotated = false;
+
 	for (var i = 0; i < this.controlPointDistance.length; i++)
 			this.initialControlPoint[i] = 0;
 	

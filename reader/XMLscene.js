@@ -28,7 +28,9 @@ XMLscene.prototype.init = function (application) {
 
 	this.graphObject;
 
-	this.setUpdatePeriod(50);
+	this.expectedUpdatePeriod = 50;
+
+	this.setUpdatePeriod(this.expectedUpdatePeriod);
 
 };
 
@@ -77,7 +79,7 @@ XMLscene.prototype.onGraphLoaded = function ()
 	this.getLSXLights();
 
 
-	this.graphObject = new MyGraphObject(this, this.graph.rootNode, this.graph.leavesArray, this.graph.texturesArray, this.graph.materialsArray, this.graph.initialTransforms); 
+	this.graphObject = new MyGraphObject(this, this.graph.rootNode, this.graph.leavesArray, this.graph.texturesArray, this.graph.materialsArray, this.graph.initialTransforms, this.expectedUpdatePeriod); 
 	
 	this.enableTextures(true);
 
@@ -204,8 +206,9 @@ XMLscene.prototype.updateLight = function(lightId, enable) {
 
 XMLscene.prototype.update = function(currTime) {
 	
-	if (this.graph.loadedOk)
- 		this.graphObject.update(currTime);
+	if (this.graph.loadedOk && this.graphObject.texturesLoaded) {
+ 		this.graphObject.update(currTime, this.expectedUpdatePeriod);
+	}
 
 };
 

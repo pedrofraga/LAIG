@@ -98,6 +98,13 @@
             <controlpoint xx="0" yy="4" zz="0"/>
             <controlpoint xx="0" yy="-4" zz="0"/>
         </animation>
+
+        <animation id="boatAnimation" span="15" type="linear">
+            <controlpoint xx="300" yy="0" zz="0"/>
+            <controlpoint xx="0" yy="0" zz="300"/>
+            <controlpoint xx="-300" yy="0" zz="0"/>
+            <controlpoint xx="0" yy="0" zz="-300"/>
+        </animation>
     ​  
         <animation id="circular" span="5" type="circular" center="20 20 20"
                 radius="10" startang="30" rotang="360" />
@@ -313,7 +320,9 @@
 
         <NODE id="boat">       
             <MATERIAL id="boatAppearance" />      
-            <TEXTURE id="null" />    
+            <TEXTURE id="null" /> 
+
+            <animationref id="boatAnimation" /> 
 
              <DESCENDANTS>
                 <DESCENDANT id="toppart"/>  

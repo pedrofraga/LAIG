@@ -7,7 +7,7 @@
         <rotation axis="x" angle="0" />                  <!-- initial rotation 3 -->
         <rotation axis="y" angle="0" />                  <!-- initial rotation 2 -->
         <rotation axis="z" angle="0" />                  <!-- initial rotation 1 -->
-        <scale sx="0.1" sy="0.1" sz="0.1" />                  <!-- initial scaling -->
+        <scale sx="1" sy="1" sz="1" />                  <!-- initial scaling -->
         <reference length="1" />                          <!-- axis length; "0" means no axis-->
     </INITIALS>
 
@@ -309,7 +309,6 @@
                 <DESCENDANT id="sea" />  
                 <DESCENDANT id="skyright" /> 
                 <DESCENDANT id="skyleft" />
-                <DESCENDANT id="table" />
                 <DESCENDANT id="island" /> 
                 <DESCENDANT id="ball" />    
             </DESCENDANTS>
@@ -322,13 +321,13 @@
             <MATERIAL id="boatAppearance" />      
             <TEXTURE id="null" /> 
 
-            <animationref id="boatAnimation" /> 
+           <!-- <animationref id="boatAnimation" /> -->
 
              <DESCENDANTS>
                 <DESCENDANT id="toppart"/>  
                 <DESCENDANT id="bottompart"/> 
                 <DESCENDANT id="chimney"/>
-                <DESCENDANT id="flagpole" />
+                <DESCENDANT id="table" />
             </DESCENDANTS>
 
         </NODE>
@@ -340,8 +339,8 @@
 
             <TEXTURE id="null" />    
 
-            <TRANSLATION x="45" y="10" z="45"/>
-            <SCALE sx="50" sy="30" sz="90" />
+            <TRANSLATION x="-2.5" y="1.0" z="0"/>
+            <SCALE sx="5" sy="3" sz="9" />
 
             <DESCENDANTS>
                 <DESCENDANT id="frontpart_top"/>
@@ -375,6 +374,8 @@
 
          <TEXTURE id="darkmetal" />        
 
+         
+
          <DESCENDANTS>
             <DESCENDANT id="back" />    
             <DESCENDANT id="back2" />  
@@ -394,8 +395,8 @@
 
             <TEXTURE id="null" />
             
-            <TRANSLATION x="45" y="0" z="45"/>
-            <SCALE sx="50" sy="10" sz="90" />
+            <TRANSLATION x="-2.5" y="0" z="0"/>
+            <SCALE sx="5" sy="1" sz="9" />
 
             <DESCENDANTS>
                 <DESCENDANT id="backpart_bottom"/>  
@@ -698,7 +699,7 @@
              <TEXTURE id="null" />     
 
             <TRANSLATION x="0.35" y="0" z="1.35" />   
-            <SCALE sx="0.30" sy="1" sz="1"/>    
+            <SCALE sx="0.3" sy="1" sz="1"/>    
 
             <DESCENDANTS>
                 <DESCENDANT id="square" />                               
@@ -792,7 +793,7 @@
             <MATERIAL id="null"/>
             <TEXTURE id="null"/>
 
-            <TRANSLATION x="70" y="25" z="45"/>
+            <TRANSLATION x="0" y="0" z="0"/>
 
             <DESCENDANTS>
                 <DESCENDANT id="top_chimneys"/>
@@ -804,8 +805,8 @@
             <MATERIAL id="normalAppearance"/>
             <TEXTURE id="darkmetal"/>
 
-            <TRANSLATION x="0" y="30" z="0"/>
-            <SCALE sx="1" sy="0.3" sz="1" /> 
+            <TRANSLATION x="0" y="5.2" z="0"/>
+            <SCALE sx="1" sy="2" sz="1" /> 
 
             <DESCENDANTS>
                 <DESCENDANT id="chimney1"/>
@@ -818,6 +819,9 @@
             <MATERIAL id="normalAppearance"/>
             <TEXTURE id="redc"/>
 
+            <TRANSLATION x="0" y="2.5" z="0"/>
+            <SCALE sx="1" sy="9" sz="1" /> 
+
             <DESCENDANTS>
                 <DESCENDANT id="chimney1"/>
                 <DESCENDANT id="chimney2"/>
@@ -829,9 +833,9 @@
             <MATERIAL id="null"/>
             <TEXTURE id="null"/>
 
-            <TRANSLATION x="0" y="0" z="78"/>
+            <TRANSLATION x="0" y="0" z="7.8"/>
             <ROTATION axis="x" angle="-90" />   
-            <SCALE sx="1" sy="1" sz="30" /> 
+            <SCALE sx="0.1" sy="0.1" sz="0.30" /> 
 
             <DESCENDANTS>
                 <DESCENDANT id="big_cylinder3"/>
@@ -842,9 +846,9 @@
             <MATERIAL id="null"/>
             <TEXTURE id="null"/>
 
-            <TRANSLATION x="0" y="0" z="50"/>
+            <TRANSLATION x="0" y="0" z="5.0"/>
             <ROTATION axis="x" angle="-90" />   
-            <SCALE sx="1" sy="1" sz="30" /> 
+            <SCALE sx="0.1" sy="0.1" sz="0.30" /> 
 
             <DESCENDANTS>
                 <DESCENDANT id="big_cylinder3"/>
@@ -855,75 +859,15 @@
             <MATERIAL id="null"/>
             <TEXTURE id="null"/>
 
-            <TRANSLATION x="0" y="0" z="20"/>
+            <TRANSLATION x="0" y="0" z="2.0"/>
             <ROTATION axis="x" angle="-90" />   
-            <SCALE sx="1" sy="1" sz="30" /> 
+            <SCALE sx="0.1" sy="0.1" sz="0.30" /> 
 
             <DESCENDANTS>
                 <DESCENDANT id="big_cylinder3"/>
             </DESCENDANTS>
         </NODE>
 
-
-        <!-- ## FLAG OF THE BOAT ## -->
-
-        <NODE id="flagpole">
-            <MATERIAL id="null"/>
-            <TEXTURE id="null"/>
-
-
-            <TRANSLATION x="35" y="44" z="90" />
-            <SCALE sx="0.5" sy="0.5" sz="0.5"/>
-
-            <DESCENDANTS>
-                <DESCENDANT id="f_pole0"/>
-                <DESCENDANT id="flag_p0"/>
-                <DESCENDANT id="flag_p0b"/>
-            </DESCENDANTS>
-
-        </NODE>
-
-        <NODE id="f_pole0">
-            <MATERIAL id="metalAppearance"/>
-            <TEXTURE id="darkwood"/>
-
-            <TRANSLATION x="70" y="10.5" z="190"/>
-            <ROTATION axis="x" angle="60"/>
-            <ROTATION axis="x" angle="90"/>
-            <SCALE sx="1" sy="1" sz="35"/>
-
-            <DESCENDANTS>
-                <DESCENDANT id="cylinder"/>
-            </DESCENDANTS>
-        </NODE>
-
-        <NODE id="flag_p0b">
-           <MATERIAL id="metalAppearance"/>
-           <TEXTURE id="wflag"/>
-
-           <TRANSLATION x="69.5" y="-8" z="200"/>
-           <ROTATION axis="y" angle="-90"/>
-           <ROTATION axis="z" angle="75"/>
-           <SCALE sx="30" sy="30" sz="30"/>
-
-           <DESCENDANTS>
-            <DESCENDANT id="triangle2"/>
-        </DESCENDANTS>
-        </NODE>
-
-        <NODE id="flag_p0">
-           <MATERIAL id="metalAppearance"/>
-           <TEXTURE id="wflag"/>
-
-           <TRANSLATION x="70.5" y="-8" z="200"/>
-           <ROTATION axis="y" angle="-90"/>
-           <ROTATION axis="z" angle="75"/>
-           <SCALE sx="30" sy="30" sz="30"/>
-
-           <DESCENDANTS>
-            <DESCENDANT id="triangle2b"/>
-        </DESCENDANTS>
-        </NODE>
     
         <!-- ## BOAT WINDOWS (back part top only) ## -->
 
@@ -1155,7 +1099,7 @@
             <MATERIAL id="null"/>
             <TEXTURE id="null"/>
 
-            <TRANSLATION x="0.99" y="0.1" z="0.40"/>
+            <TRANSLATION x="0.09" y="0.1" z="0.40"/>
             <ROTATION axis="y" angle="-90"/>
             <SCALE sx="0.08" sy="0.26" sz="1"/>
 
@@ -1188,7 +1132,7 @@
             <MATERIAL id="normalAppearance"/>
             <TEXTURE id="null"/>
 
-            <TRANSLATION x="200" y="0" z="200"/>
+            <TRANSLATION x="20.0" y="0" z="10.0"/>
             <SCALE sx="0.55" sy="0.55" sz="0.55"/>
 
             <DESCENDANTS>
@@ -1204,8 +1148,8 @@
             <MATERIAL id="normalAppearance"/>
             <TEXTURE id="ball"/>
 
-            <TRANSLATION x="350" y="1.9" z="310"/>
-            <SCALE sx="2" sy="2" sz="2" />
+            <TRANSLATION x="35.0" y="0.19" z="21.0"/>
+            <SCALE sx="0.2" sy="0.2" sz="0.2" />
 
             <animationref id="linear"/>
 
@@ -1220,8 +1164,8 @@
             <MATERIAL id="normalAppearance"/>
             <TEXTURE id="land"/>
 
-            <TRANSLATION x="270" y="0.01" z="150"/>
-            <SCALE sx="100" sy="0" sz="100"/>
+            <TRANSLATION x="27.0" y="0.001" z="15.0"/>
+            <SCALE sx="10" sy="0" sz="10"/>
 
             <DESCENDANTS>
                 <DESCENDANT id="sphere"/>
@@ -1234,7 +1178,7 @@
             <MATERIAL id="normalAppearance"/>
             <TEXTURE id="lighthouse"/>
 
-            <TRANSLATION x="300" y="100" z="130"/>
+            <TRANSLATION x="30.0" y="10.0" z="13.0"/>
 
             <DESCENDANTS>
                 <DESCENDANT id="lh_bottom"/>
@@ -1251,7 +1195,7 @@
 
             
             <ROTATION axis="x" angle="90"/>
-            <SCALE sx="1" sy="1" sz="100"/>
+            <SCALE sx="0.1" sy="0.1" sz="10"/>
 
             <DESCENDANTS>
                 <DESCENDANT id="big_cylinder"/>
@@ -1262,8 +1206,8 @@
             <MATERIAL id="normalAppearance"/>
             <TEXTURE id="door"/>
 
-            <TRANSLATION x="-5" y="-95" z="12.999"/>
-            <SCALE sx="13" sy="30" sz="1"/>
+            <TRANSLATION x="-0.5" y="-9.5" z="1.2999"/>
+            <SCALE sx="1.3" sy="3.0" sz="0.1"/>
 
             <DESCENDANTS>
                 <DESCENDANT id="square"/>
@@ -1274,9 +1218,9 @@
             <MATERIAL id="glassAppearance"/>
             <TEXTURE id="glass"/>
 
-            <TRANSLATION x="0" y="25" z="0"/>
+            <TRANSLATION x="0" y="2.5" z="0"/>
             <ROTATION axis="x" angle="90"/>
-            <SCALE sx="1" sy="1" sz="25"/>
+            <SCALE sx="0.1" sy="0.1" sz="2.5"/>
 
             <DESCENDANTS>
                 <DESCENDANT id="big_cylinder"/>
@@ -1287,9 +1231,9 @@
             <MATERIAL id="normalAppearance"/>
             <TEXTURE id="lighthouse"/>
 
-            <TRANSLATION x="0" y="50" z="0"/>
+            <TRANSLATION x="0" y="5.0" z="0"/>
             <ROTATION axis="x" angle="90"/>
-            <SCALE sx="1" sy="1" sz="25"/>
+            <SCALE sx="0.1" sy="0.1" sz="2.5"/>
 
             <DESCENDANTS>
                 <DESCENDANT id="big_cylinder2"/>
@@ -1302,7 +1246,7 @@
             <MATERIAL id="null"/>
             <TEXTURE id="wall"/>
 
-            <TRANSLATION x="210" y="0.1" z="140"/> 
+            <TRANSLATION x="21.0" y="0.01" z="14.0"/> 
             <SCALE sx="0.7" sy="0.7" sz="0.7"/>
 
             <DESCENDANTS>
@@ -1316,7 +1260,7 @@
             <TEXTURE id="wall"/>
 
             
-            <SCALE sx="50" sy="40" sz="50"/>
+            <SCALE sx="5.0" sy="4.0" sz="5.0"/>
 
             <DESCENDANTS>
                 <DESCENDANT id="front_square" /> 
@@ -1365,8 +1309,8 @@
             <TEXTURE id="roof" />      
                                       <!-- id="clear" clears texture declaration received from parent node      -->
                        
-            <TRANSLATION x="25" y="57" z="24" /> 
-            <SCALE sx="55" sy="30" sz="55" />  
+            <TRANSLATION x="2.5" y="5.7" z="2.4" /> 
+            <SCALE sx="5.5" sy="3.0" sz="5.5" />  
             
 
             <DESCENDANTS> 
@@ -1455,7 +1399,7 @@
             <MATERIAL id="normalAppearance"/>
             <TEXTURE id="null"/>
 
-            <TRANSLATION x="320" y="0" z="200"/>
+            <TRANSLATION x="32.0" y="0" z="20.0"/>
             <SCALE sx="0.85" sy="0.85" sz="0.85"/>
 
             <DESCENDANTS>
@@ -1468,9 +1412,9 @@
             <MATERIAL id="null"/>
             <TEXTURE id="treetop"/>
 
-            <TRANSLATION x="0" y="50" z="0"/>
+            <TRANSLATION x="0" y="5.0" z="0"/>
             <ROTATION axis="x" angle="-90"/>
-            <SCALE sx="20" sy="20" sz="20"/>
+            <SCALE sx="2.0" sy="2.0" sz="2.0"/>
 
             <DESCENDANTS>
                 <DESCENDANT id="sphere"/>
@@ -1483,7 +1427,7 @@
 
             <TRANSLATION x="0" y="0" z="0"/>
             <ROTATION axis="x" angle="-90"/>
-            <SCALE sx="1" sy="1" sz="40"/>
+            <SCALE sx="0.1" sy="0.1" sz="4.0"/>
 
             <DESCENDANTS>
                 <DESCENDANT id="big_cylinder3"/>
@@ -1498,9 +1442,8 @@
             <MATERIAL id="tableAppearance" />      
             <TEXTURE id="darkwood" /> 
             
-            <animationref id="circular"/>
 
-            <TRANSLATION x="50" y="0" z="50" />
+            <TRANSLATION x="0" y="0" z="1.0" />
 
 
 
@@ -1611,8 +1554,8 @@
             <MATERIAL id="tableAppearance" />      
             <TEXTURE id="darkwood" />    
 
-            <TRANSLATION x="0" y="10" z="0" />  
-            <SCALE sx="15" sy="1" sz="30" />        
+            <TRANSLATION x="0" y="1.0" z="0" />  
+            <SCALE sx="1.5" sy="0.1" sz="3.0" />        
 
             <DESCENDANTS>
                 <DESCENDANT id="front_square" />    
@@ -1631,7 +1574,7 @@
 
             <TEXTURE id="darkwood" />   
             <ROTATION axis="x" angle="-90" />   
-            <SCALE sx="1" sy="1" sz="10" />          
+            <SCALE sx="0.1" sy="0.1" sz="1.0" />          
 
             <DESCENDANTS>
                 <DESCENDANT id="cylinder" />                               
@@ -1644,8 +1587,8 @@
 
             <TEXTURE id="darkwood" /> 
             <ROTATION axis="x" angle="-90" />   
-            <TRANSLATION x="13" y="0" z="0" />  
-            <SCALE sx="1" sy="1" sz="10" />         
+            <TRANSLATION x="1.3" y="0" z="0" />  
+            <SCALE sx="0.1" sy="0.1" sz="1.0" />         
 
             <DESCENDANTS>
                 <DESCENDANT id="cylinder" />                               
@@ -1659,9 +1602,9 @@
 
             <TEXTURE id="darkwood" />  
 
-            <TRANSLATION x="13" y="0" z="28" />
+            <TRANSLATION x="1.3" y="0" z="2.8" />
             <ROTATION axis="x" angle="-90" />  
-            <SCALE sx="1" sy="1" sz="10" />            
+            <SCALE sx="0.1" sy="0.1" sz="1.0" />            
 
             <DESCENDANTS>
                 <DESCENDANT id="cylinder" />                               
@@ -1674,9 +1617,9 @@
 
             <TEXTURE id="darkwood" />  
 
-            <TRANSLATION x="2" y="0" z="28" />
+            <TRANSLATION x="0.2" y="0" z="2.8" />
             <ROTATION axis="x" angle="-90" />  
-            <SCALE sx="1" sy="1" sz="10" />            
+            <SCALE sx="0.1" sy="0.1" sz="1.0" />            
 
             <DESCENDANTS>
                 <DESCENDANT id="cylinder" />                               
@@ -1689,8 +1632,8 @@
 
             <TEXTURE id="map" />  
 
-            <TRANSLATION x="7" y="13" z="15" /> 
-            <SCALE sx="2" sy="2" sz="2" />            
+            <TRANSLATION x="0.7" y="1.3" z="1.5" /> 
+            <SCALE sx="0.2" sy="0.2" sz="0.2" />            
 
             <DESCENDANTS>
                 <DESCENDANT id="sphere" />                               
@@ -1709,9 +1652,9 @@
 
             <TEXTURE id="sea" />
 
-            <TRANSLATION x="0" y="0" z="500"/>
+            <TRANSLATION x="0" y="0" z="50.0"/>
             <ROTATION axis="x" angle="-90" />
-            <SCALE sx="500" sy="500" sz="500" />
+            <SCALE sx="50.0" sy="50.0" sz="50.0" />
 
             <DESCENDANTS>
                 <DESCENDANT id="square" />                               
@@ -1725,7 +1668,7 @@
 
             <TEXTURE id="sky2" />
 
-            <SCALE sx="500" sy="200" sz="1" />
+            <SCALE sx="50.0" sy="20.0" sz="0.1" />
 
             <DESCENDANTS>
                 <DESCENDANT id="square" />                               
@@ -1739,9 +1682,9 @@
 
             <TEXTURE id="sky" />
 
-            <TRANSLATION x="0" y="0" z="500"/>
+            <TRANSLATION x="0" y="0" z="50.0"/>
             <ROTATION axis="y" angle="90"/>
-            <SCALE sx="500" sy="200" sz="1" />
+            <SCALE sx="50.0" sy="20.0" sz="0.1" />
 
             <DESCENDANTS>
                 <DESCENDANT id="square" />                               

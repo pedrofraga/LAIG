@@ -82,7 +82,14 @@ Node.prototype.animate = function (currTime, expectedUpdatePeriod) {
 		if(!updatePeriodDiffers(deltaTime, expectedUpdatePeriod))
 			if(this.animation.constructor == CircularAnimation) {
 			  
-			  if(!this.animation.rotated) ;
+			  if(!this.animation.rotated) {
+			  	this.animation.rotated = true;
+			  	this.transforms.unshift(new Rotation('y', 0));
+			  	this.transforms.unshift(new Translation(this.animation.center[0], this.animation.center[1], this.animation.center[2]));
+			  	this.transforms.unshift(new Rotation('y', this.animation.initialAngle));
+			  }
+
+			  
 
 				
 			} else if (this.animation.constructor == LinearAnimation) {

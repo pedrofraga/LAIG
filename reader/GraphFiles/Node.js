@@ -11,6 +11,8 @@
 
  	this.transformMatrix = mat4.create();
  	mat4.identity(this.transformMatrix);
+	
+	this.originalTransformMatrix = mat4.create();
 
  	this.transforms = [];
 
@@ -19,8 +21,8 @@
  	this.descendants = [];
 
  	this.lastTime = 0;
+	
 
- 	this.inititalRotation = 0;
 
  }
 
@@ -68,7 +70,7 @@ Node.prototype.setMatrix = function () {
  		}
  	}
 
-
+	mat4.copy(this.originalTransformMatrix, this.transformMatrix);
 };
 
 
@@ -83,28 +85,25 @@ Node.prototype.animate = function (currTime, expectedUpdatePeriod) {
 		if(!updatePeriodDiffers(deltaTime, expectedUpdatePeriod))
 			if(this.animation.constructor == CircularAnimation) {
 			  if( this.animation.initialRotAngle < this.animation.rotationAngle) {
+				  
+				mat4.copy(this.transformMatrix, this.originalTransformMatrix);
 
-			  	console.log(this.id);
-			  	if(!this.animation.rotated) {
-			  		this.animation.rotated = true;
-			  		this.transforms.push(new Translation(0, 0, 0));
-			  		this.transforms.push(new Translation(this.animation.center[0], this.animation.center[1], this.animation.center[2]));
-			  		this.transforms.push(new Rotation('y', this.animation.initialAngle));
-			  	}
-
-
-			 	 var angleToBeRotated = deltaTime * this.animation.rotationAngle / this.animation.span;
+				mat4.translate(this.transformMatrix, this.transformMatrix, [this.animation.center[0], this.animation.center[1], this.animation.center[2]]);
+			 	
+				var angleToBeRotated = deltaTime * this.animation.rotationAngle / this.animation.span;
+				
+				this.animation.initialAngle += angleToBeRotated;
 
 			  	this.animation.initialRotAngle += angleToBeRotated;
 				
 				this.transforms[this.transforms.length - 1].angle += angleToBeRotated;
 
-			  	this.transforms[this.transforms.length - 3].x = this.animation.radius * Math.sin(this.animation.initialRotAngle);
-			  	this.transforms[this.transforms.length - 3].z = this.animation.radius * Math.cos(this.animation.initialRotAngle);
+			  	var x = this.animation.radius * Math.sin(this.animation.initialRotAngle);
+			  	var z = this.animation.radius * Math.cos(this.animation.initialRotAngle);
 				
-				console.log(this.transforms);
-
-			  	this.setMatrix();
+				mat4.translate(this.transformMatrix, this.transformMatrix, [x, 0, z]);
+				
+				mat4.rotate(this.transformMatrix, this.transformMatrix, this.animation.initialAngle, [0, 1, 0]);
 			  }
 				
 			} else if (this.animation.constructor == LinearAnimation) {
@@ -114,62 +113,57 @@ Node.prototype.animate = function (currTime, expectedUpdatePeriod) {
 
 					if ( this.animation.initialControlPoint[i] < this.animation.controlPointDistance[i]) {
 						
+						console.log(this.id);
+						console.log(this.transforms);
 						
-						if(this.animation.initialControlPoint[0] == 0) {
-							this.transforms[this.transforms.length] = new Translation(0 , 0 , 0);
-						}
-
+						mat4.copy(this.transformMatrix, this.originalTransformMatrix);
+						
+						
 						if(this.animation.initialControlPoint[i] == 0) {
 
 							if(this.animation.controlPoints[i][2] != 0 && this.animation.controlPoints[i][0] != 0) {
 								
-								if(this.animation.rotated)
-									this.transforms.splice(-1,1);
+								mat4.identity(this.animation.rotationMatrix);
 
 								this.initialRotation = Math.asin(this.animation.controlPoints[i][0] / this.animation.controlPoints[i][2]);
 
-								this.transforms[this.transforms.length] = new Rotation('y', this.initialRotation);
-								this.animation.rotated = true;
+								mat4.rotate(this.animation.rotationMatrix, this.animation.rotationMatrix, this.initialRotation, [0,1,0]);
 
 							} else if(this.animation.controlPoints[i][2] == 0 && this.animation.controlPoints[i][0] != 0) {
 
-								if(this.animation.rotated)
-									this.transforms.splice(-1,1);
+								mat4.identity(this.animation.rotationMatrix);
 
 								var sign = this.animation.controlPoints[i][0] && this.animation.controlPoints[i][0] / Math.abs(this.animation.controlPoints[i][0]);
 
 								this.initialRotation = sign * toRadian(90);
 
-								this.transforms[this.transforms.length] = new Rotation('y', this.initialRotation);
-								this.animation.rotated = true;
+								mat4.rotate(this.animation.rotationMatrix, this.animation.rotationMatrix, this.initialRotation, [0,1,0]);
 								
 							} else if (this.animation.controlPoints[i][2] != 0 && this.animation.controlPoints[i][0] == 0){
 
-								if(this.animation.rotated)
-									this.transforms.splice(-1,1);
+								mat4.identity(this.animation.rotationMatrix);
 
 								if (this.animation.controlPoints[i][2] > 0)
 									this.initialRotation = 0;
 								else
 									this.initialRotation = toRadian(180);
 
-								this.transforms[this.transforms.length] = new Rotation('y', this.initialRotation);
-								this.animation.rotated = true;
+								mat4.rotate(this.animation.rotationMatrix, this.animation.rotationMatrix, this.initialRotation, [0,1,0]);
 
 							} else {
-								if(this.animation.rotated)
-									this.transforms.splice(-1,1);
+								mat4.identity(this.animation.rotationMatrix);
 								
-								this.transforms[this.transforms.length] = new Rotation('y', 0);
-								this.animation.rotated = true;
+								this.initialRotation = 0;
+								
+								mat4.rotate(this.animation.rotationMatrix, this.animation.rotationMatrix, this.initialRotation, [0,1,0]);
 							}
 						}
 						
+								
 						var distance = this.animation.velocity * deltaTime;
 
 						this.animation.initialControlPoint[i] += distance;
-
-
+						
 						var distance2 = 0;
 
 						if(this.animation.initialControlPoint[i] > this.animation.controlPointDistance[i]) {
@@ -181,24 +175,24 @@ Node.prototype.animate = function (currTime, expectedUpdatePeriod) {
 
 
 
-						var var1 = Math.sqrt(distance / (Math.pow(this.animation.controlPoints[i][0], 2) +  
+						var distanceVar = Math.sqrt(distance / (Math.pow(this.animation.controlPoints[i][0], 2) +  
 							Math.pow(this.animation.controlPoints[i][1], 2) +
 							Math.pow(this.animation.controlPoints[i][2], 2)));
 
 
-						var x = this.animation.controlPoints[i][0] * var1;
-						var y = this.animation.controlPoints[i][1] * var1;
-						var z = this.animation.controlPoints[i][2] * var1;
+						var x = this.animation.controlPoints[i][0] * distanceVar;
+						var y = this.animation.controlPoints[i][1] * distanceVar;
+						var z = this.animation.controlPoints[i][2] * distanceVar;
+						
 					
 							
-						this.transforms[this.transforms.length - 2].x += x;
+						mat4.translate(this.animation.translationMatrix, this.animation.translationMatrix, [x, y, z]);
 						
-						this.transforms[this.transforms.length - 2].y += y;
 						
-						this.transforms[this.transforms.length - 2].z += z;
-
-						this.setMatrix();
-
+						mat4.multiply(this.transformMatrix, this.transformMatrix, this.animation.translationMatrix);
+						
+						mat4.multiply(this.transformMatrix, this.transformMatrix, this.animation.rotationMatrix);
+						
 						i = this.animation.controlPoints.length;
 					} 
 				}

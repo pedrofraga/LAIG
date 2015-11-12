@@ -106,8 +106,8 @@
             <controlpoint xx="0" yy="0" zz="-5"/>
         </animation>
     ​  
-        <animation id="circular" span="10" type="circular" center="0 0 0"
-                radius="10" startang="90" rotang="360" />
+        <animation id="circular" span="180" type="circular" center="0 0 0"
+                radius="20" startang="110" rotang="3600" />
 				
 				
 		<animation id="ball_tornado" span="30" type="circular" center="0 0 0"
@@ -325,7 +325,7 @@
             <MATERIAL id="boatAppearance" />      
             <TEXTURE id="null" /> 
 
-            <TRANSLATION x="5" y="0" z="10"/>
+            <TRANSLATION x="25" y="0" z="25"/>
 			
 			<animationref id="circular" />
 			
@@ -1138,7 +1138,7 @@
             <MATERIAL id="normalAppearance"/>
             <TEXTURE id="null"/>
 
-            <TRANSLATION x="20.0" y="0" z="10.0"/>
+            <TRANSLATION x="10.0" y="0" z="13.0"/>
             <SCALE sx="0.55" sy="0.55" sz="0.55"/>
 
             <DESCENDANTS>
@@ -1154,11 +1154,10 @@
             <MATERIAL id="normalAppearance"/>
             <TEXTURE id="ball"/>
 
-            <TRANSLATION x="35.0" y="0.19" z="21.0"/>
+            <TRANSLATION x="25.0" y="0.19" z="25.0"/>
             <SCALE sx="0.2" sy="0.2" sz="0.2" />
 
             <animationref id="jumping_ball"/>
-			<animationref id="ball_tornado"/>
 
             <DESCENDANTS>
                 <DESCENDANT id="sphere"/>

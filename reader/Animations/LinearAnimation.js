@@ -21,6 +21,14 @@ function LinearAnimation(id, time, controlPoints, velocity, controlPointDistance
 	this.controlPointDistance = controlPointDistance;
 
 	this.initialControlPoint = [];
+	
+	
+	this.translationMatrix = mat4.create();
+	mat4.identity(this.translationMatrix);
+	
+	this.rotationMatrix = mat4.create();
+	mat4.identity(this.rotationMatrix);
+	
 
 	this.rotated = false;
 

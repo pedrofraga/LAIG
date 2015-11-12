@@ -76,27 +76,45 @@ Node.prototype.animate = function (currTime, expectedUpdatePeriod) {
 
 	if(this.lastTime > 0) {
 		
+		
 		var deltaTime = currTime - this.lastTime;
 
 
 		if(!updatePeriodDiffers(deltaTime, expectedUpdatePeriod))
 			if(this.animation.constructor == CircularAnimation) {
-			  
-			  if(!this.animation.rotated) {
-			  	this.animation.rotated = true;
-			  	this.transforms.unshift(new Rotation('y', 0));
-			  	this.transforms.unshift(new Translation(this.animation.center[0], this.animation.center[1], this.animation.center[2]));
-			  	this.transforms.unshift(new Rotation('y', this.animation.initialAngle));
+			  if( this.animation.initialRotAngle < this.animation.rotationAngle) {
+
+			  	console.log(this.id);
+			  	if(!this.animation.rotated) {
+			  		this.animation.rotated = true;
+			  		this.transforms.push(new Translation(0, 0, 0));
+			  		this.transforms.push(new Translation(this.animation.center[0], this.animation.center[1], this.animation.center[2]));
+			  		this.transforms.push(new Rotation('y', this.animation.initialAngle));
+			  	}
+
+
+			 	 var angleToBeRotated = deltaTime * this.animation.rotationAngle / this.animation.span;
+
+			  	this.animation.initialRotAngle += angleToBeRotated;
+				
+				this.transforms[this.transforms.length - 1].angle += angleToBeRotated;
+
+			  	this.transforms[this.transforms.length - 3].x = this.animation.radius * Math.sin(this.animation.initialRotAngle);
+			  	this.transforms[this.transforms.length - 3].z = this.animation.radius * Math.cos(this.animation.initialRotAngle);
+				
+				console.log(this.transforms);
+
+			  	this.setMatrix();
 			  }
-
-			  
-
 				
 			} else if (this.animation.constructor == LinearAnimation) {
+				
 
 				for (var i = 0; i < this.animation.controlPoints.length; i++) {
-					if ( this.animation.initialControlPoint[i] < this.animation.controlPointDistance[i]) {
 
+					if ( this.animation.initialControlPoint[i] < this.animation.controlPointDistance[i]) {
+						
+						
 						if(this.animation.initialControlPoint[0] == 0) {
 							this.transforms[this.transforms.length] = new Translation(0 , 0 , 0);
 						}
@@ -106,34 +124,44 @@ Node.prototype.animate = function (currTime, expectedUpdatePeriod) {
 							if(this.animation.controlPoints[i][2] != 0 && this.animation.controlPoints[i][0] != 0) {
 								
 								if(this.animation.rotated)
-									this.transforms.shift();
+									this.transforms.splice(-1,1);
 
 								this.initialRotation = Math.asin(this.animation.controlPoints[i][0] / this.animation.controlPoints[i][2]);
 
-								this.transforms.unshift(new Rotation('y', this.initialRotation));
+								this.transforms[this.transforms.length] = new Rotation('y', this.initialRotation);
 								this.animation.rotated = true;
 
 							} else if(this.animation.controlPoints[i][2] == 0 && this.animation.controlPoints[i][0] != 0) {
+
+								if(this.animation.rotated)
+									this.transforms.splice(-1,1);
+
 								var sign = this.animation.controlPoints[i][0] && this.animation.controlPoints[i][0] / Math.abs(this.animation.controlPoints[i][0]);
 
 								this.initialRotation = sign * toRadian(90);
 
-								this.transforms.unshift(new Rotation('y', this.initialRotation));
+								this.transforms[this.transforms.length] = new Rotation('y', this.initialRotation);
 								this.animation.rotated = true;
 								
 							} else if (this.animation.controlPoints[i][2] != 0 && this.animation.controlPoints[i][0] == 0){
 
 								if(this.animation.rotated)
-									this.transforms.shift();
+									this.transforms.splice(-1,1);
 
 								if (this.animation.controlPoints[i][2] > 0)
 									this.initialRotation = 0;
 								else
 									this.initialRotation = toRadian(180);
 
-								this.transforms.unshift(new Rotation('y', this.initialRotation));
+								this.transforms[this.transforms.length] = new Rotation('y', this.initialRotation);
 								this.animation.rotated = true;
 
+							} else {
+								if(this.animation.rotated)
+									this.transforms.splice(-1,1);
+								
+								this.transforms[this.transforms.length] = new Rotation('y', 0);
+								this.animation.rotated = true;
 							}
 						}
 						
@@ -157,14 +185,17 @@ Node.prototype.animate = function (currTime, expectedUpdatePeriod) {
 							Math.pow(this.animation.controlPoints[i][1], 2) +
 							Math.pow(this.animation.controlPoints[i][2], 2)));
 
+
 						var x = this.animation.controlPoints[i][0] * var1;
 						var y = this.animation.controlPoints[i][1] * var1;
 						var z = this.animation.controlPoints[i][2] * var1;
-
-
-						this.transforms[this.transforms.length - 1].x += x;
-						this.transforms[this.transforms.length - 1].y += y;
-						this.transforms[this.transforms.length - 1].z += z;
+					
+							
+						this.transforms[this.transforms.length - 2].x += x;
+						
+						this.transforms[this.transforms.length - 2].y += y;
+						
+						this.transforms[this.transforms.length - 2].z += z;
 
 						this.setMatrix();
 

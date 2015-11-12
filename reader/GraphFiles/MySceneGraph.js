@@ -178,9 +178,9 @@ function getAnimations(rootElement, animationsArray) {
 
 			var center = [];
 
+			center.push(parseFloat(centerString[0]));
 			center.push(parseFloat(centerString[1]));
 			center.push(parseFloat(centerString[2]));
-			center.push(parseFloat(centerString[3]));
 
 			var radius = parseFloat(animations[i].attributes.getNamedItem("radius").value);
 

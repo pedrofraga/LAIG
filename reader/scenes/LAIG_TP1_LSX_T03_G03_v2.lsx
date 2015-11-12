@@ -68,7 +68,7 @@
 
 
     <animations>
-    ​    <animation id="linear" span="30" type="linear">
+    ​    <animation id="jumping_ball" span="30" type="linear">
             <controlpoint xx="0" yy="4" zz="0"/>
             <controlpoint xx="0" yy="-4" zz="0"/>
             <controlpoint xx="0" yy="4" zz="0"/>
@@ -100,14 +100,18 @@
         </animation>
 
         <animation id="boatAnimation" span="15" type="linear">
-            <controlpoint xx="300" yy="0" zz="0"/>
-            <controlpoint xx="0" yy="0" zz="300"/>
-            <controlpoint xx="-300" yy="0" zz="0"/>
-            <controlpoint xx="0" yy="0" zz="-300"/>
+            <controlpoint xx="2" yy="0" zz="0"/>
+            <controlpoint xx="0" yy="0" zz="5"/>
+            <controlpoint xx="-2" yy="0" zz="0"/>
+            <controlpoint xx="0" yy="0" zz="-5"/>
         </animation>
     ​  
-        <animation id="circular" span="5" type="circular" center="20 20 20"
-                radius="10" startang="30" rotang="360" />
+        <animation id="circular" span="10" type="circular" center="0 0 0"
+                radius="10" startang="90" rotang="360" />
+				
+				
+		<animation id="ball_tornado" span="30" type="circular" center="0 0 0"
+                radius="3" startang="0" rotang="3000" />
 
     </animations>
 
@@ -321,8 +325,10 @@
             <MATERIAL id="boatAppearance" />      
             <TEXTURE id="null" /> 
 
-           <!-- <animationref id="boatAnimation" /> -->
-
+            <TRANSLATION x="5" y="0" z="10"/>
+			
+			<animationref id="circular" />
+			
              <DESCENDANTS>
                 <DESCENDANT id="toppart"/>  
                 <DESCENDANT id="bottompart"/> 
@@ -1151,7 +1157,8 @@
             <TRANSLATION x="35.0" y="0.19" z="21.0"/>
             <SCALE sx="0.2" sy="0.2" sz="0.2" />
 
-            <animationref id="linear"/>
+            <animationref id="jumping_ball"/>
+			<animationref id="ball_tornado"/>
 
             <DESCENDANTS>
                 <DESCENDANT id="sphere"/>

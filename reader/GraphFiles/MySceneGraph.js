@@ -638,10 +638,36 @@ function getLeaves(rootElement, leavesArray) {
 
 		var type = lsxLeavesArray[i].attributes.getNamedItem("type").value;
 		var id = lsxLeavesArray[i].attributes.getNamedItem("id").value;
-		var args = lsxLeavesArray[i].attributes.getNamedItem("args").value.match(/[^ ]+/g);
+		if(type != 'patch') {
+			var args = lsxLeavesArray[i].attributes.getNamedItem("args").value.match(/[^ ]+/g);
+			var object = new Leaf(id, type, args);
+			leavesArray[i] = object;
+		} else {
+			var order = parseFloat(lsxLeavesArray[i].attributes.getNamedItem("order").value);
+			var partsU = parseFloat(lsxLeavesArray[i].attributes.getNamedItem("partsU").value);
+			var partsV = parseFloat(lsxLeavesArray[i].attributes.getNamedItem("partsV").value);
 
-		var object = new Leaf(id, type, args);
-		leavesArray[i] = object;
+			var controlPointsXML = lsxLeavesArray[i].getElementsByTagName('controlpoint');
+
+			var controlPointsArray = [];
+
+			if((partsU + 1) * (partsV + 1) != controlPointsXML.length) {
+				console.error('There\'s a patch primitive with a number of control points which differs from it\'s order');
+				return -1;
+			}
+
+			for(var j = 0; j < controlPointsXML.length; j++) {
+				var x = parseFloat(controlPointsXML[j].attributes.getNamedItem("x").value);
+				var y = parseFloat(controlPointsXML[j].attributes.getNamedItem("y").value);
+				var z = parseFloat(controlPointsXML[j].attributes.getNamedItem("z").value);
+				var w = parseFloat(controlPointsXML[j].attributes.getNamedItem("w").value);
+				controlPointsArray.push(vec4.fromValues(x, y, z, w));
+			}
+
+			var object = new Nurb(id, type, order, partsU, partsV, controlPointsArray);
+
+			leavesArray[i] = object;
+		}
 	}
 
 	for(var i = 0; i < leavesArray.length; i++){
@@ -920,6 +946,8 @@ function Material(id, shininess, specular, diffuse, ambient, emission){
   *	Position Class
   */
  function Position(x, y, z, w){
+ 	w = typeof w !== 'undefined' ? w : false;
+
  	this.x = x;
  	this.y = y;
  	this.z = z;
@@ -979,6 +1007,15 @@ function Material(id, shininess, specular, diffuse, ambient, emission){
  	this.sz = sz;
  }
 
+
+function Nurb(id, type, order, partsU, partsV, controlPoints){
+ 	this.id = id;
+ 	this.type = type;
+ 	this.order = order;
+ 	this.partsU = partsU;
+ 	this.partsV = partsV;
+ 	this.controlPoints = controlPoints;
+ }
 
 
 

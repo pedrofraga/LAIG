@@ -206,7 +206,7 @@ XMLscene.prototype.updateLight = function(lightId, enable) {
 
 XMLscene.prototype.update = function(currTime) {
 	
-	if (this.graph.loadedOk && this.graphObject.texturesLoaded) {
+	if (this.graph.loadedOk) {
  		this.graphObject.update(currTime, this.expectedUpdatePeriod);
 	}
 

@@ -97,6 +97,18 @@
             <controlpoint xx="0" yy="-4" zz="0"/>
             <controlpoint xx="0" yy="4" zz="0"/>
             <controlpoint xx="0" yy="-4" zz="0"/>
+            <controlpoint xx="0" yy="4" zz="0"/>
+            <controlpoint xx="0" yy="-4" zz="0"/>
+            <controlpoint xx="0" yy="4" zz="0"/>
+            <controlpoint xx="0" yy="-4" zz="0"/>
+            <controlpoint xx="0" yy="4" zz="0"/>
+            <controlpoint xx="0" yy="-4" zz="0"/>
+            <controlpoint xx="0" yy="4" zz="0"/>
+            <controlpoint xx="0" yy="-4" zz="0"/>
+            <controlpoint xx="0" yy="4" zz="0"/>
+            <controlpoint xx="0" yy="-4" zz="0"/>
+            <controlpoint xx="0" yy="4" zz="0"/>
+            <controlpoint xx="0" yy="-4" zz="0"/>
         </animation>
 
         <animation id="boatAnimation" span="15" type="linear">
@@ -280,6 +292,32 @@
 
     <LEAVES>
 
+        <LEAF id="nurb" type="patch" order="1" partsU="1" partsV="1">
+            <controlpoint x="-2" y="0" z="-2" w="1"/>
+            <controlpoint x="-2" y="0" z="2" w="1"/>
+            <controlpoint x="2" y="0" z="-2" w="1"/>
+            <controlpoint x="2" y="0" z="2" w="1"/>
+        </LEAF>
+
+        <LEAF id="wickedNurb" type="patch" order="2" partsU="2" partsV="3">
+            <controlpoint x="-2" y="-2" z="1" w="1"/>
+            <controlpoint x="-2" y="-1" z="-2" w="1"/>
+            <controlpoint x="-2" y="1" z="5" w="1"/>
+            <controlpoint x="-2" y="2" z="-1" w="1"/>
+
+            <controlpoint x="0" y="-2" z="0" w="1"/>
+            <controlpoint x="0" y="-1" z="-1" w="5"/>
+            <controlpoint x="0" y="1" z="1.5" w="5"/>
+            <controlpoint x="0" y="2" z="0" w="1"/>
+
+            <controlpoint x="2" y="-2" z="-1" w="1"/>
+            <controlpoint x="2" y="-1" z="2" w="1"/>
+            <controlpoint x="2" y="1" z="-5" w="1"/>
+            <controlpoint x="2" y="2" z="1" w="1"/>
+        </LEAF>
+
+
+
         <LEAF id="square" type="rectangle" args="0 1 1 0" />
         <LEAF id="cylinder" type="cylinder" args="1 0.5 0.5 25 20" /> 
         <LEAF id="big_cylinder" type="cylinder" args="1 13 13 25 20" />
@@ -314,7 +352,8 @@
                 <DESCENDANT id="skyright" /> 
                 <DESCENDANT id="skyleft" />
                 <DESCENDANT id="island" /> 
-                <DESCENDANT id="ball" />    
+                <DESCENDANT id="ball" />  
+                <DESCENDANT id="wickedNurb" />
             </DESCENDANTS>
         </NODE>
 

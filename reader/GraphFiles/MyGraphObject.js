@@ -270,6 +270,12 @@ parseFloat(this.leaves[a].args[4]));
 																		, parseFloat(this.leaves[a].args[6]), parseFloat(this.leaves[a].args[7]), parseFloat(this.leaves[a].args[8]));
 								var geometry = new Geometry(object, this.leaves[a].id);
 								this.primitives.push(geometry);
+							}else if(this.leaves[a].type == "patch") {
+
+								var object = new Plane(this.scene, this.leaves[a]);
+								var geometry = new Geometry(object, this.leaves[a].id);
+								this.primitives.push(geometry);
+								
 							}
 
 

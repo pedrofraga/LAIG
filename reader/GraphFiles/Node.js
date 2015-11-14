@@ -87,7 +87,6 @@ Node.prototype.animate = function (currTime, expectedUpdatePeriod) {
 			  if( this.animation.initialRotAngle < this.animation.rotationAngle) {
 				  
 				mat4.copy(this.transformMatrix, this.originalTransformMatrix);
-
 				mat4.translate(this.transformMatrix, this.transformMatrix, [this.animation.center[0], this.animation.center[1], this.animation.center[2]]);
 			 	
 				var angleToBeRotated = deltaTime * this.animation.rotationAngle / this.animation.span;
@@ -102,8 +101,8 @@ Node.prototype.animate = function (currTime, expectedUpdatePeriod) {
 			  	var z = this.animation.radius * Math.cos(this.animation.initialRotAngle);
 				
 				mat4.translate(this.transformMatrix, this.transformMatrix, [x, 0, z]);
-				
 				mat4.rotate(this.transformMatrix, this.transformMatrix, this.animation.initialAngle, [0, 1, 0]);
+				
 			  }
 				
 			} else if (this.animation.constructor == LinearAnimation) {
@@ -113,8 +112,6 @@ Node.prototype.animate = function (currTime, expectedUpdatePeriod) {
 
 					if ( this.animation.initialControlPoint[i] < this.animation.controlPointDistance[i]) {
 						
-						console.log(this.id);
-						console.log(this.transforms);
 						
 						mat4.copy(this.transformMatrix, this.originalTransformMatrix);
 						

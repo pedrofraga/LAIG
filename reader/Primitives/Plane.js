@@ -26,6 +26,7 @@ Plane.prototype.getSurfacePoint = function (u, v) {
 Plane.prototype.display = function() {
 	this.scene.pushMatrix();
 		this.scene.translate(-5, 0, -5);
+		this.scene.rotate(Math.PI / 4, 1, 0, 1);
 		CGFnurbsObject.prototype.display.call(this);
 	this.scene.popMatrix();
 }

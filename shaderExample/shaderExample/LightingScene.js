@@ -29,7 +29,7 @@ LightingScene.prototype.init = function (application) {
 	this.axis=new CGFaxis(this);
 	this.enableTextures(true);
    
-    this.setUpdatePeriod(500);
+    //this.setUpdatePeriod(500);
 	
 	this.appearance = new CGFappearance(this);
 	this.appearance.setAmbient(0.3, 0.3, 0.3, 1);

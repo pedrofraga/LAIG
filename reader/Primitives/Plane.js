@@ -1,6 +1,8 @@
 
 function Plane(scene, nurb) {
 
+	this.scene = scene;
+
 	this.knotsU = getKnots(nurb.partsU);
 
 	this.knotsV = getKnots(nurb.partsV);
@@ -9,20 +11,24 @@ function Plane(scene, nurb) {
 		
 	this.nurbsSurface = new CGFnurbsSurface(nurb.partsU, nurb.partsV, this.knotsU, this.knotsV, this.vertexes);
 
-	CGFnurbsObject.call(this, scene, this.getSurfacePoint, 20, 20);
+	CGFnurbsObject.call(this, this.scene, this.getSurfacePoint, 20, 20);
 }
 
 
-Plane.prototype = Object.create(CGFobject.prototype);
+Plane.prototype = Object.create(CGFnurbsObject.prototype);
 Plane.prototype.constructor=Plane;
 
 
-Plane.prototype.getSurfacePoint = function () {
+Plane.prototype.getSurfacePoint = function (u, v) {
 	return this.nurbsSurface.getPoint(u, v);
 };
 
-
-
+Plane.prototype.display = function() {
+	this.scene.pushMatrix();
+		this.scene.translate(-5, 0, -5);
+		CGFnurbsObject.prototype.display.call(this);
+	this.scene.popMatrix();
+}
 
 
 getKnots = function(parts) {

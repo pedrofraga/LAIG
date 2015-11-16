@@ -109,6 +109,9 @@ MySceneGraph.prototype.parser= function(rootElement) {
 		return result;
 	}
 
+
+	console.log(this.animations);
+
 	
 
 	if(	getLights(rootElement, this.lightsArray ) == -1){
@@ -638,11 +641,11 @@ function getLeaves(rootElement, leavesArray) {
 
 		var type = lsxLeavesArray[i].attributes.getNamedItem("type").value;
 		var id = lsxLeavesArray[i].attributes.getNamedItem("id").value;
-		if(type != 'patch') {
+		if(type != 'patch' && type != 'terrain') {
 			var args = lsxLeavesArray[i].attributes.getNamedItem("args").value.match(/[^ ]+/g);
 			var object = new Leaf(id, type, args);
 			leavesArray[i] = object;
-		} else {
+		} else if(type == 'patch') {
 			var order = parseFloat(lsxLeavesArray[i].attributes.getNamedItem("order").value);
 			var partsU = parseFloat(lsxLeavesArray[i].attributes.getNamedItem("partsU").value);
 			var partsV = parseFloat(lsxLeavesArray[i].attributes.getNamedItem("partsV").value);
@@ -651,7 +654,7 @@ function getLeaves(rootElement, leavesArray) {
 
 			var controlPointsArray = [];
 
-			if((partsU + 1) * (partsV + 1) != controlPointsXML.length) {
+			if(Math.pow((order + 1), 2) != controlPointsXML.length) {
 				console.error('There\'s a patch primitive with a number of control points which differs from it\'s order');
 				return -1;
 			}
@@ -664,7 +667,15 @@ function getLeaves(rootElement, leavesArray) {
 				controlPointsArray.push(vec4.fromValues(x, y, z, w));
 			}
 
-			var object = new Nurb(id, type, order, partsU, partsV, controlPointsArray);
+			var object = new Nurbs(id, type, order, partsU, partsV, controlPointsArray);
+
+			leavesArray[i] = object;
+		}else if(type == 'terrain') {
+			
+			var texture = lsxLeavesArray[i].attributes.getNamedItem("texture").value;
+			var heightmap = lsxLeavesArray[i].attributes.getNamedItem("heightmap").value;
+
+			var object = new TerrainLSX(id, type, texture, heightmap);
 
 			leavesArray[i] = object;
 		}
@@ -680,6 +691,7 @@ function getLeaves(rootElement, leavesArray) {
 	}
 	return 0;
 }
+
 
 /**
  * method to get nodes from .lsx file
@@ -731,7 +743,7 @@ function getGeometryNodes(rootElement, leavesArray, animationsArray){
 
 	for(var a = 0; a < lsxNodesArray.length; a++){
 		if(lsxNodesArray[a].attributes.getNamedItem("id").value == rootID){
-			if(getNodeInfo(lsxNodesArray[a], returnRootNode) == -1) return -1;
+			if(getNodeInfo(lsxNodesArray[a], returnRootNode, animationsArray) == -1) return -1;
 			break;
 		}
 	}
@@ -744,6 +756,7 @@ function getGeometryNodes(rootElement, leavesArray, animationsArray){
 
 	return returnRootNode;
 }
+
 
 /**
  * function to get descendeants from a node
@@ -780,6 +793,9 @@ function getGeometry(lsxNodesArray, leavesArray, root, a, animationsArray){
 			for(var a = 0; a < lsxNodesArray.length; a++){
 
 				if(lsxNodesArray[a].attributes.getNamedItem("id").value == id){
+
+					if(root.descendants[i].id == 'seabird')
+						console.log(animationsArray);
 					
 					if(getNodeInfo(lsxNodesArray[a], root.descendants[i], animationsArray) == -1) return -1;
 					else root.descendants[i].setMatrix();
@@ -789,7 +805,7 @@ function getGeometry(lsxNodesArray, leavesArray, root, a, animationsArray){
 
 			}
 
-			if(constructTree(lsxNodesArray, leavesArray, root.descendants[i]) == -1){
+			if(constructTree(lsxNodesArray, leavesArray, root.descendants[i], animationsArray) == -1){
 				return -1;
 			}
 
@@ -846,6 +862,7 @@ function checkLeafs(leavesArray, root){
  * @param  {Node}    node    node to give info
  */
 function getNodeInfo(lsxNode, node, animationsArray){
+
 
 	var childrenArray = lsxNode.children;
 
@@ -1008,13 +1025,21 @@ function Material(id, shininess, specular, diffuse, ambient, emission){
  }
 
 
-function Nurb(id, type, order, partsU, partsV, controlPoints){
+function Nurbs(id, type, order, partsU, partsV, controlPoints){
  	this.id = id;
  	this.type = type;
  	this.order = order;
  	this.partsU = partsU;
  	this.partsV = partsV;
  	this.controlPoints = controlPoints;
+ }
+
+
+ function TerrainLSX(id, type, texture, heightmap){
+ 	this.id = id;
+ 	this.type = type;
+ 	this.texture = texture;
+ 	this.heightmap = heightmap;
  }
 
 

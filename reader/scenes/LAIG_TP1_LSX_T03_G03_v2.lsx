@@ -117,14 +117,13 @@
             <controlpoint xx="-2" yy="0" zz="0"/>
             <controlpoint xx="0" yy="0" zz="-5"/>
         </animation>
+
+        <animation id="seaCircular" span="180" type="circular" center="0 0 0"
+                radius="30" startang="110" rotang="14400" />
     ​  
         <animation id="circular" span="180" type="circular" center="0 0 0"
                 radius="20" startang="110" rotang="3600" />
 				
-				
-		<animation id="ball_tornado" span="30" type="circular" center="0 0 0"
-                radius="3" startang="0" rotang="3000" />
-
     </animations>
 
 
@@ -240,6 +239,22 @@
             <amplif_factor s="1" t="1" />                <!-- x/s, y/t -->
         </TEXTURE>
 
+        <TEXTURE id="eye">
+            <file path="./scenes/res/blue_eye.jpg" />                 <!-- path to file -->
+            <amplif_factor s="1" t="1" />                <!-- x/s, y/t -->
+        </TEXTURE>
+
+
+        <TEXTURE id="beak">
+            <file path="./scenes/res/yellow_beak.jpg" />                 <!-- path to file -->
+            <amplif_factor s="1" t="1" />                <!-- x/s, y/t -->
+        </TEXTURE>
+
+        <TEXTURE id="feathers">
+            <file path="./scenes/res/feathers.jpg" />                 <!-- path to file -->
+            <amplif_factor s="1" t="1" />                <!-- x/s, y/t -->
+        </TEXTURE>
+
     </TEXTURES>
 
 
@@ -292,34 +307,57 @@
 
     <LEAVES>
 
-        <LEAF id="nurb" type="patch" order="1" partsU="1" partsV="1">
-            <controlpoint x="-2" y="0" z="-2" w="1"/>
-            <controlpoint x="-2" y="0" z="2" w="1"/>
-            <controlpoint x="2" y="0" z="-2" w="1"/>
-            <controlpoint x="2" y="0" z="2" w="1"/>
+        <LEAF id="wingNurb" type="patch" order="3" partsU="20" partsV="20">
+            <controlpoint x="-1.5" y="0" z="-1.5" w="1"/>
+            <controlpoint x="-2" y="2" z="-2" w="1"/>
+            <controlpoint x="2" y="2" z="-2" w="1"/>
+            <controlpoint x="1.5" y="0" z="-1.5" w="1"/>
+
+            <controlpoint x="0" y="3" z="0" w="1"/>
+            <controlpoint x="-2" y="3" z="0" w="5"/>
+            <controlpoint x="2" y="3" z="0" w="5"/>
+            <controlpoint x="0" y="3" z="0" w="1"/>
+
+            <controlpoint x="0" y="3" z="0" w="1"/>
+            <controlpoint x="-2" y="3" z="0" w="5"/>
+            <controlpoint x="2" y="3" z="0" w="5"/>
+            <controlpoint x="0" y="3" z="0" w="1"/>
+
+            <controlpoint x="-1.5" y="0" z="1.5" w="1"/>
+            <controlpoint x="-2" y="2" z="2" w="1"/>
+            <controlpoint x="2" y="2" z="2" w="1"/>
+            <controlpoint x="1.5" y="0" z="1.5" w="1"/>
         </LEAF>
 
-        <LEAF id="wickedNurb" type="patch" order="2" partsU="2" partsV="3">
-            <controlpoint x="-2" y="-2" z="1" w="1"/>
-            <controlpoint x="-2" y="-1" z="-2" w="1"/>
-            <controlpoint x="-2" y="1" z="5" w="1"/>
-            <controlpoint x="-2" y="2" z="-1" w="1"/>
+         <LEAF id="beakNurb" type="patch" order="3" partsU="20" partsV="20">
+            <controlpoint x="0" y="2" z="-1.5" w="1"/>
+            <controlpoint x="-2" y="3" z="-2" w="1"/>
+            <controlpoint x="2" y="3" z="-2" w="1"/>
+            <controlpoint x="0" y="2" z="-1.5" w="1"/>
 
-            <controlpoint x="0" y="-2" z="0" w="1"/>
-            <controlpoint x="0" y="-1" z="-1" w="5"/>
-            <controlpoint x="0" y="1" z="1.5" w="5"/>
+            <controlpoint x="0" y="2" z="0" w="1"/>
+            <controlpoint x="-2" y="3" z="0" w="5"/>
+            <controlpoint x="2" y="3" z="0" w="5"/>
             <controlpoint x="0" y="2" z="0" w="1"/>
 
-            <controlpoint x="2" y="-2" z="-1" w="1"/>
-            <controlpoint x="2" y="-1" z="2" w="1"/>
-            <controlpoint x="2" y="1" z="-5" w="1"/>
-            <controlpoint x="2" y="2" z="1" w="1"/>
+            <controlpoint x="0" y="2" z="0" w="1"/>
+            <controlpoint x="-2" y="3" z="0" w="5"/>
+            <controlpoint x="2" y="3" z="0" w="5"/>
+            <controlpoint x="0" y="2" z="0" w="1"/>
+
+            <controlpoint x="0" y="0.5" z="1.5" w="1"/>
+            <controlpoint x="0" y="1" z="2" w="1"/>
+            <controlpoint x="0" y="1" z="2" w="1"/>
+            <controlpoint x="0" y="0.5" z="1.5" w="1"/>
         </LEAF>
 
 
+        <LEAF id="terrain" type="terrain" texture="scenes/shaders/terrain.vert" heightmap="scenes/shaders/terrain.frag"/>
 
         <LEAF id="square" type="rectangle" args="0 1 1 0" />
         <LEAF id="cylinder" type="cylinder" args="1 0.5 0.5 25 20" /> 
+        <LEAF id="cylinder_body_back" type="cylinder" args="5 0 1.5 25 20" />
+        <LEAF id="cylinder_body_front" type="cylinder" args="5 1.5 0.8 25 20" /> 
         <LEAF id="big_cylinder" type="cylinder" args="1 13 13 25 20" />
         <LEAF id="big_cylinder2" type="cylinder" args="1 1 13 25 20" />  
         <LEAF id="big_cylinder3" type="cylinder" args="1 6 6 25 20" />
@@ -342,6 +380,15 @@
     <NODES>
 
         <ROOT id="scene" />     <!-- identifier of root node of the scene graph; this node     -->
+
+
+        <NODE id="birdScene">
+            <MATERIAL id="null" />      
+            <TEXTURE id="null" /> 
+            <DESCENDANTS>   
+                <DESCENDANT id="seabird" />
+            </DESCENDANTS>
+        </NODE>
         
         <NODE id="scene">
             <MATERIAL id="null" />      
@@ -352,8 +399,7 @@
                 <DESCENDANT id="skyright" /> 
                 <DESCENDANT id="skyleft" />
                 <DESCENDANT id="island" /> 
-                <DESCENDANT id="ball" />  
-                <DESCENDANT id="wickedNurb" />
+                <DESCENDANT id="ball" />
             </DESCENDANTS>
         </NODE>
 
@@ -373,6 +419,7 @@
                 <DESCENDANT id="bottompart"/> 
                 <DESCENDANT id="chimney"/>
                 <DESCENDANT id="table" />
+                <DESCENDANT id="seabird" />
             </DESCENDANTS>
 
         </NODE>
@@ -1697,12 +1744,12 @@
 
             <TEXTURE id="sea" />
 
-            <TRANSLATION x="0" y="0" z="50.0"/>
+            <TRANSLATION x="25.0" y="0" z="25.0"/>
             <ROTATION axis="x" angle="-90" />
             <SCALE sx="50.0" sy="50.0" sz="50.0" />
 
             <DESCENDANTS>
-                <DESCENDANT id="square" />                               
+                <DESCENDANT id="terrain" />                               
             </DESCENDANTS>
 
         </NODE>
@@ -1737,10 +1784,144 @@
 
         </NODE>
 
+        <!--########### seabird ############-->
+
+        <NODE id="seabird">       
+            <MATERIAL id="normalAppearance" />      
+            <TEXTURE id="feathers" /> 
+
+            <TRANSLATION x="0" y="7" z="6"/>
+            <SCALE sx="0.2" sy="0.2" sz="0.2"/>
+
+            <animationref id="seaCircular"/>
+            
+             <DESCENDANTS>
+                <DESCENDANT id="leftWing"/>
+                <DESCENDANT id="rigthWing"/>
+                <DESCENDANT id="body"/>
+                <DESCENDANT id="head"/>  
+            </DESCENDANTS>
+        </NODE>
+
+
+        <NODE id="head">       
+            <MATERIAL id="normalAppearance" />      
+            <TEXTURE id="null" /> 
+
+            <TRANSLATION x="0" y="0" z="10"/>
+            
+             <DESCENDANTS>
+                <DESCENDANT id="skull"/>
+                <DESCENDANT id="leftEye"/>
+                <DESCENDANT id="rigthEye"/>
+                <DESCENDANT id="beak"/> 
+            </DESCENDANTS>
+        </NODE>
+
+
+         <NODE id="skull">       
+            <MATERIAL id="normalAppearance" />      
+            <TEXTURE id="null" />           
+             <DESCENDANTS>
+                <DESCENDANT id="sphere"/>  
+            </DESCENDANTS>
+        </NODE>
+
+
+        <NODE id="beak">       
+            <MATERIAL id="normalAppearance" />      
+            <TEXTURE id="beak" />
+            <TRANSLATION x="0" y="-1" z="1.2"/>
+            <SCALE sx="0.4" sy="0.4" sz="0.4"/>          
+             <DESCENDANTS>
+                <DESCENDANT id="beakNurb"/>  
+            </DESCENDANTS>
+        </NODE>
+
+
+        <NODE id="leftEye">       
+            <MATERIAL id="normalAppearance" />      
+            <TEXTURE id="eye" /> 
+            <TRANSLATION x="-0.4" y="0.6" z="0.8"/>
+            <SCALE sx="0.1" sy="0.1" sz="0.1"/>
+            <ROTATION axis="y" angle="90" />        
+             <DESCENDANTS>
+                <DESCENDANT id="sphere"/>  
+            </DESCENDANTS>
+        </NODE>
+
+
+        <NODE id="rigthEye">       
+            <MATERIAL id="normalAppearance" />      
+            <TEXTURE id="eye" /> 
+            <TRANSLATION x="0.4" y="0.6" z="0.8"/>
+            <SCALE sx="0.1" sy="0.1" sz="0.1"/>
+            <ROTATION axis="y" angle="90" />        
+             <DESCENDANTS>
+                <DESCENDANT id="sphere"/>  
+            </DESCENDANTS>
+        </NODE>
+
+         <NODE id="leftWing">       
+            <MATERIAL id="normalAppearance" />      
+            <TEXTURE id="null" /> 
+
+            <TRANSLATION x="2.5" y="-0.5" z="5"/>
+            <ROTATION axis="y" angle="90" />
+            
+             <DESCENDANTS>
+                <DESCENDANT id="wingNurb"/>  
+            </DESCENDANTS>
+        </NODE>
+
+        <NODE id="rigthWing">       
+            <MATERIAL id="normalAppearance" />      
+            <TEXTURE id="null" /> 
+
+            <TRANSLATION x="-2.5" y="-0.5" z="5"/>
+            <ROTATION axis="y" angle="90" />
+            
+             <DESCENDANTS>
+                <DESCENDANT id="wingNurb"/>  
+            </DESCENDANTS>
+        </NODE>
+
+
+         <NODE id="body">       
+            <MATERIAL id="normalAppearance" />      
+            <TEXTURE id="null" /> 
+
+            <TRANSLATION x="0" y="0" z="0"/>
+            
+             <DESCENDANTS>
+                <DESCENDANT id="body_front"/>  
+                <DESCENDANT id="body_back"/> 
+            </DESCENDANTS>
+        </NODE>
+
+
+         <NODE id="body_front">       
+            <MATERIAL id="normalAppearance" />      
+            <TEXTURE id="null" /> 
+
+            <TRANSLATION x="0" y="0" z="5"/>
+            
+             <DESCENDANTS>
+                <DESCENDANT id="cylinder_body_front"/>  
+            </DESCENDANTS>
+        </NODE>
+
+        <NODE id="body_back">       
+            <MATERIAL id="normalAppearance" />      
+            <TEXTURE id="null" /> 
+            
+             <DESCENDANTS>
+                <DESCENDANT id="cylinder_body_back"/>  
+            </DESCENDANTS>
+        </NODE>
+
 
     </NODES>
-
-
 
 
 </SCENE>

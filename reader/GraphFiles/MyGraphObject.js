@@ -272,10 +272,14 @@ parseFloat(this.leaves[a].args[4]));
 								this.primitives.push(geometry);
 							}else if(this.leaves[a].type == "patch") {
 
-								var object = new Plane(this.scene, this.leaves[a]);
+								var object = new Patch(this.scene, this.leaves[a]);
 								var geometry = new Geometry(object, this.leaves[a].id);
 								this.primitives.push(geometry);
 								
+							}else if(this.leaves[a].type == "terrain") {
+								var object = new Terrain(this.scene, this.leaves[a]);
+								var geometry = new Geometry(object, this.leaves[a].id);
+								this.primitives.push(geometry);
 							}
 
 

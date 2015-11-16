@@ -131,7 +131,7 @@ LightingScene.prototype.display = function ()
 
 	this.translate(0,-6,0);
 	this.scale(0.5,0.5,0.5);
-	this.rotate(-Math.PI/2, 1, 0, 0);	
+	this.rotate(Math.PI/2, 1, 0, 0);	
 	this.teapot.display();
 	this.popMatrix();
 

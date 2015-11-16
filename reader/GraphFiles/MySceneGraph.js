@@ -698,6 +698,7 @@ function getLeaves(rootElement, leavesArray) {
  * @method getGeometryNodes
  * @param  {documentElement}  rootElement 	var with .lsx info
  * @param  {array}  leavesArray			for error checking purposes
+ * @param  {array}  animationsArray			array with all the animations
  * @return {int}              rootNode if is okay, -1 if error
  */
 function getGeometryNodes(rootElement, leavesArray, animationsArray){
@@ -763,6 +764,7 @@ function getGeometryNodes(rootElement, leavesArray, animationsArray){
  * @method getGeometry
  * @param  {array}    lsxNodesArray  array with lsx node info
  * @param  {array}    leavesArray   array with leaves
+ * @param  {array}  animationsArray			array with all the animations
  * @param  {Node}    root          Node to be constructed
  * @param  {int}    	a         lsxNodeArray indice
  * @return {int}                  -1 if error, 0 if okay
@@ -821,6 +823,7 @@ function getGeometry(lsxNodesArray, leavesArray, root, a, animationsArray){
  * @method constructTree
  * @param  {array}      lsxNodesArray array with .lsx node info
  * @param  {array}      leavesArray   array with primitives
+ * @param  {array}  animationsArray			array with all the animations
  * @param  {Node}      root          Node to be constructed
  * @return {int}                    -1 if error, 0 if okay
  */
@@ -860,6 +863,7 @@ function checkLeafs(leavesArray, root){
  * @method getNodeInfo
  * @param  {lsxNode}    lsxNode Node from lsx
  * @param  {Node}    node    node to give info
+ * @param  {array}  animationsArray			array with all the animations
  */
 function getNodeInfo(lsxNode, node, animationsArray){
 

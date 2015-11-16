@@ -1240,7 +1240,7 @@
             <MATERIAL id="normalAppearance"/>
             <TEXTURE id="ball"/>
 
-            <TRANSLATION x="25.0" y="1.20" z="25.0"/>
+            <TRANSLATION x="25.0" y="1.4" z="25.0"/>
             <SCALE sx="0.2" sy="0.2" sz="0.2" />
 
             <animationref id="jumping_ball"/>

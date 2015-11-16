@@ -410,7 +410,7 @@
             <MATERIAL id="boatAppearance" />      
             <TEXTURE id="null" /> 
 
-            <TRANSLATION x="25" y="0" z="25"/>
+            <TRANSLATION x="25" y="0.5" z="25"/>
 			
 			<animationref id="circular" />
 			
@@ -1224,7 +1224,7 @@
             <MATERIAL id="normalAppearance"/>
             <TEXTURE id="null"/>
 
-            <TRANSLATION x="10.0" y="0" z="13.0"/>
+            <TRANSLATION x="10.0" y="1.19" z="13.0"/>
             <SCALE sx="0.55" sy="0.55" sz="0.55"/>
 
             <DESCENDANTS>
@@ -1240,7 +1240,7 @@
             <MATERIAL id="normalAppearance"/>
             <TEXTURE id="ball"/>
 
-            <TRANSLATION x="25.0" y="0.19" z="25.0"/>
+            <TRANSLATION x="25.0" y="1.20" z="25.0"/>
             <SCALE sx="0.2" sy="0.2" sz="0.2" />
 
             <animationref id="jumping_ball"/>

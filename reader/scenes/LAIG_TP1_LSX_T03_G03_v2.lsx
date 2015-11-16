@@ -308,47 +308,47 @@
     <LEAVES>
 
         <LEAF id="wingNurb" type="patch" order="3" partsU="20" partsV="20">
-            <controlpoint x="-1.5" y="0" z="-1.5" w="1"/>
-            <controlpoint x="-2" y="2" z="-2" w="1"/>
-            <controlpoint x="2" y="2" z="-2" w="1"/>
-            <controlpoint x="1.5" y="0" z="-1.5" w="1"/>
+            <controlpoint x="-1.5" y="0" z="-1.5"/>
+            <controlpoint x="-2" y="2" z="-2"/>
+            <controlpoint x="2" y="2" z="-2"/>
+            <controlpoint x="1.5" y="0" z="-1.5"/>
 
-            <controlpoint x="0" y="3" z="0" w="1"/>
-            <controlpoint x="-2" y="3" z="0" w="5"/>
-            <controlpoint x="2" y="3" z="0" w="5"/>
-            <controlpoint x="0" y="3" z="0" w="1"/>
+            <controlpoint x="0" y="3" z="0"/>
+            <controlpoint x="-2" y="3" z="0"/>
+            <controlpoint x="2" y="3" z="0"/>
+            <controlpoint x="0" y="3" z="0"/>
 
-            <controlpoint x="0" y="3" z="0" w="1"/>
-            <controlpoint x="-2" y="3" z="0" w="5"/>
-            <controlpoint x="2" y="3" z="0" w="5"/>
-            <controlpoint x="0" y="3" z="0" w="1"/>
+            <controlpoint x="0" y="3" z="0"/>
+            <controlpoint x="-2" y="3" z="0"/>
+            <controlpoint x="2" y="3" z="0"/>
+            <controlpoint x="0" y="3" z="0"/>
 
-            <controlpoint x="-1.5" y="0" z="1.5" w="1"/>
-            <controlpoint x="-2" y="2" z="2" w="1"/>
-            <controlpoint x="2" y="2" z="2" w="1"/>
-            <controlpoint x="1.5" y="0" z="1.5" w="1"/>
+            <controlpoint x="-1.5" y="0" z="1.5"/>
+            <controlpoint x="-2" y="2" z="2"/>
+            <controlpoint x="2" y="2" z="2"/>
+            <controlpoint x="1.5" y="0" z="1.5"/>
         </LEAF>
 
          <LEAF id="beakNurb" type="patch" order="3" partsU="20" partsV="20">
-            <controlpoint x="0" y="2" z="-1.5" w="1"/>
-            <controlpoint x="-2" y="3" z="-2" w="1"/>
-            <controlpoint x="2" y="3" z="-2" w="1"/>
-            <controlpoint x="0" y="2" z="-1.5" w="1"/>
+            <controlpoint x="0" y="2" z="-1.5"/>
+            <controlpoint x="-2" y="3" z="-2"/>
+            <controlpoint x="2" y="3" z="-2"/>
+            <controlpoint x="0" y="2" z="-1.5"/>
 
-            <controlpoint x="0" y="2" z="0" w="1"/>
-            <controlpoint x="-2" y="3" z="0" w="5"/>
-            <controlpoint x="2" y="3" z="0" w="5"/>
-            <controlpoint x="0" y="2" z="0" w="1"/>
+            <controlpoint x="0" y="2" z="0"/>
+            <controlpoint x="-2" y="3" z="0"/>
+            <controlpoint x="2" y="3" z="0"/>
+            <controlpoint x="0" y="2" z="0"/>
 
-            <controlpoint x="0" y="2" z="0" w="1"/>
-            <controlpoint x="-2" y="3" z="0" w="5"/>
-            <controlpoint x="2" y="3" z="0" w="5"/>
-            <controlpoint x="0" y="2" z="0" w="1"/>
+            <controlpoint x="0" y="2" z="0"/>
+            <controlpoint x="-2" y="3" z="0"/>
+            <controlpoint x="2" y="3" z="0"/>
+            <controlpoint x="0" y="2" z="0"/>
 
-            <controlpoint x="0" y="0.5" z="1.5" w="1"/>
-            <controlpoint x="0" y="1" z="2" w="1"/>
-            <controlpoint x="0" y="1" z="2" w="1"/>
-            <controlpoint x="0" y="0.5" z="1.5" w="1"/>
+            <controlpoint x="0" y="0.5" z="1.5"/>
+            <controlpoint x="0" y="1" z="2"/>
+            <controlpoint x="0" y="1" z="2"/>
+            <controlpoint x="0" y="0.5" z="1.5"/>
         </LEAF>
 
 

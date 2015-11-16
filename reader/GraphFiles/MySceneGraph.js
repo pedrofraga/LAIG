@@ -663,7 +663,7 @@ function getLeaves(rootElement, leavesArray) {
 				var x = parseFloat(controlPointsXML[j].attributes.getNamedItem("x").value);
 				var y = parseFloat(controlPointsXML[j].attributes.getNamedItem("y").value);
 				var z = parseFloat(controlPointsXML[j].attributes.getNamedItem("z").value);
-				var w = parseFloat(controlPointsXML[j].attributes.getNamedItem("w").value);
+				var w = 1;
 				controlPointsArray.push(vec4.fromValues(x, y, z, w));
 			}
 

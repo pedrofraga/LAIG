@@ -95,7 +95,6 @@ Node.prototype.animate = function (currTime, expectedUpdatePeriod) {
 
 			  	this.animation.initialRotAngle += angleToBeRotated;
 				
-				this.transforms[this.transforms.length - 1].angle += angleToBeRotated;
 
 			  	var x = this.animation.radius * Math.sin(this.animation.initialRotAngle);
 			  	var z = this.animation.radius * Math.cos(this.animation.initialRotAngle);

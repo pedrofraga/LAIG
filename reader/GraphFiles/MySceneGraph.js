@@ -908,7 +908,25 @@ function getNodeInfo(lsxNode, node, animationsArray){
 
 			for(var j = 0; j < animationsArray.length; j++)
 				if(animationsArray[j].id == id) {
-					node.animation = animationsArray[j];
+					switch (animationsArray[j].constructor) {
+					case CircularAnimation:
+						var id = animationsArray[j].id;
+						var span = animationsArray[j].span;
+						var centerPoint = animationsArray[j].center;
+						var initialAngle = animationsArray[j].initialAngle
+						var radius = animationsArray[j].radius;
+						var rotationAngle = animationsArray[j].rotationAngle;
+						node.animation = new CircularAnimation(id, span, centerPoint, radius, initialAngle, rotationAngle);
+						break;
+					case LinearAnimation:
+						var id = animationsArray[j].id;
+						var span = animationsArray[j].span;
+						var controlPoints = animationsArray[j].controlPoints;
+						var velocity = animationsArray[j].velocity;
+						var controlPointDistance = animationsArray[j].controlPointDistance;
+						node.animation = new LinearAnimation(id, span, controlPoints, velocity, controlPointDistance);
+						break;
+					}
 				}
 		}
 	}

@@ -4,7 +4,6 @@
 *
 */
 
-
 function CircularAnimation (id, span, centerPoint, radius, initialAngle, rotationAngle) {
 
 	this.id = id;

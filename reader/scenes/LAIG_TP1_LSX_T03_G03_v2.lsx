@@ -68,48 +68,121 @@
 
 
     <animations>
-    ​    <animation id="jumping_ball" span="30" type="linear">
-            <controlpoint xx="0" yy="4" zz="0"/>
-            <controlpoint xx="0" yy="-4" zz="0"/>
-            <controlpoint xx="0" yy="4" zz="0"/>
-            <controlpoint xx="0" yy="-4" zz="0"/>
-            <controlpoint xx="0" yy="4" zz="0"/>
-            <controlpoint xx="0" yy="-4" zz="0"/>
-            <controlpoint xx="0" yy="4" zz="0"/>
-            <controlpoint xx="0" yy="-4" zz="0"/>
-            <controlpoint xx="0" yy="4" zz="0"/>
-            <controlpoint xx="0" yy="-4" zz="0"/>
-            <controlpoint xx="0" yy="4" zz="0"/>
-            <controlpoint xx="0" yy="-4" zz="0"/>
-            <controlpoint xx="0" yy="4" zz="0"/>
-            <controlpoint xx="0" yy="-4" zz="0"/>
-            <controlpoint xx="0" yy="4" zz="0"/>
-            <controlpoint xx="0" yy="-4" zz="0"/>
-            <controlpoint xx="0" yy="4" zz="0"/>
-            <controlpoint xx="0" yy="-4" zz="0"/>
-            <controlpoint xx="0" yy="4" zz="0"/>
-            <controlpoint xx="0" yy="-4" zz="0"/>
-            <controlpoint xx="0" yy="4" zz="0"/>
-            <controlpoint xx="0" yy="-4" zz="0"/>
-            <controlpoint xx="0" yy="4" zz="0"/>
-            <controlpoint xx="0" yy="-4" zz="0"/>
-            <controlpoint xx="0" yy="4" zz="0"/>
-            <controlpoint xx="0" yy="-4" zz="0"/>
-            <controlpoint xx="0" yy="4" zz="0"/>
-            <controlpoint xx="0" yy="-4" zz="0"/>
-            <controlpoint xx="0" yy="4" zz="0"/>
-            <controlpoint xx="0" yy="-4" zz="0"/>
-            <controlpoint xx="0" yy="4" zz="0"/>
-            <controlpoint xx="0" yy="-4" zz="0"/>
-            <controlpoint xx="0" yy="4" zz="0"/>
-            <controlpoint xx="0" yy="-4" zz="0"/>
-            <controlpoint xx="0" yy="4" zz="0"/>
-            <controlpoint xx="0" yy="-4" zz="0"/>
-            <controlpoint xx="0" yy="4" zz="0"/>
-            <controlpoint xx="0" yy="-4" zz="0"/>
-            <controlpoint xx="0" yy="4" zz="0"/>
-            <controlpoint xx="0" yy="-4" zz="0"/>
+    ​    <animation id="shoalNormal" span="180" type="linear">
+            <controlpoint xx="4" yy="0" zz="4"/>
+            <controlpoint xx="-4" yy="0" zz="4"/>
+            <controlpoint xx="4" yy="0" zz="-4"/>
+            <controlpoint xx="-4" yy="0" zz="-4"/>
+            <controlpoint xx="4" yy="0" zz="4"/>
+            <controlpoint xx="-4" yy="0" zz="4"/>
+            <controlpoint xx="4" yy="0" zz="-4"/>
+            <controlpoint xx="-4" yy="0" zz="-4"/>
+            <controlpoint xx="4" yy="0" zz="4"/>
+            <controlpoint xx="-4" yy="0" zz="4"/>
+            <controlpoint xx="4" yy="0" zz="-4"/>
+            <controlpoint xx="-4" yy="0" zz="-4"/>
+            <controlpoint xx="4" yy="0" zz="4"/>
+            <controlpoint xx="-4" yy="0" zz="4"/>
+            <controlpoint xx="4" yy="0" zz="-4"/>
+            <controlpoint xx="-4" yy="0" zz="-4"/>
+            <controlpoint xx="4" yy="0" zz="4"/>
+            <controlpoint xx="-4" yy="0" zz="4"/>
+            <controlpoint xx="4" yy="0" zz="-4"/>
+            <controlpoint xx="-4" yy="0" zz="-4"/>
+            <controlpoint xx="4" yy="0" zz="4"/>
+            <controlpoint xx="-4" yy="0" zz="4"/>
+            <controlpoint xx="4" yy="0" zz="-4"/>
+            <controlpoint xx="-4" yy="0" zz="-4"/>
+            <controlpoint xx="4" yy="0" zz="4"/>
+            <controlpoint xx="-4" yy="0" zz="4"/>
+            <controlpoint xx="4" yy="0" zz="-4"/>
+            <controlpoint xx="-4" yy="0" zz="-4"/>
+            <controlpoint xx="4" yy="0" zz="4"/>
+            <controlpoint xx="-4" yy="0" zz="4"/>
+            <controlpoint xx="4" yy="0" zz="-4"/>
+            <controlpoint xx="-4" yy="0" zz="-4"/>
+            <controlpoint xx="4" yy="0" zz="4"/>
+            <controlpoint xx="-4" yy="0" zz="4"/>
+            <controlpoint xx="4" yy="0" zz="-4"/>
+            <controlpoint xx="-4" yy="0" zz="-4"/>
         </animation>
+
+
+         <animation id="shoalNormal1" span="180" type="linear">
+            <controlpoint xx="0" yy="0" zz="4"/>
+            <controlpoint xx="4" yy="0" zz="0"/>
+            <controlpoint xx="0" yy="0" zz="-4"/>
+            <controlpoint xx="-4" yy="0" zz="0"/>
+            <controlpoint xx="0" yy="0" zz="4"/>
+            <controlpoint xx="4" yy="0" zz="0"/>
+            <controlpoint xx="0" yy="0" zz="-4"/>
+            <controlpoint xx="-4" yy="0" zz="0"/>
+            <controlpoint xx="0" yy="0" zz="4"/>
+            <controlpoint xx="4" yy="0" zz="0"/>
+            <controlpoint xx="0" yy="0" zz="-4"/>
+            <controlpoint xx="-4" yy="0" zz="0"/>
+            <controlpoint xx="0" yy="0" zz="4"/>
+            <controlpoint xx="4" yy="0" zz="0"/>
+            <controlpoint xx="0" yy="0" zz="-4"/>
+            <controlpoint xx="-4" yy="0" zz="0"/>
+            <controlpoint xx="0" yy="0" zz="4"/>
+            <controlpoint xx="4" yy="0" zz="0"/>
+            <controlpoint xx="0" yy="0" zz="-4"/>
+            <controlpoint xx="-4" yy="0" zz="0"/>
+            <controlpoint xx="0" yy="0" zz="4"/>
+            <controlpoint xx="4" yy="0" zz="0"/>
+            <controlpoint xx="0" yy="0" zz="-4"/>
+            <controlpoint xx="-4" yy="0" zz="0"/>
+            <controlpoint xx="0" yy="0" zz="4"/>
+            <controlpoint xx="4" yy="0" zz="0"/>
+            <controlpoint xx="0" yy="0" zz="-4"/>
+            <controlpoint xx="-4" yy="0" zz="0"/>
+            <controlpoint xx="0" yy="0" zz="4"/>
+            <controlpoint xx="4" yy="0" zz="0"/>
+            <controlpoint xx="0" yy="0" zz="-4"/>
+            <controlpoint xx="-4" yy="0" zz="0"/>
+            <controlpoint xx="0" yy="0" zz="4"/>
+            <controlpoint xx="4" yy="0" zz="0"/>
+            <controlpoint xx="0" yy="0" zz="-4"/>
+            <controlpoint xx="-4" yy="0" zz="0"/>
+        </animation>
+
+
+        <animation id="shoalNormal2" span="180" type="linear">
+            <controlpoint xx="4" yy="0" zz="0"/>
+            <controlpoint xx="0" yy="0" zz="4"/>
+            <controlpoint xx="-4" yy="0" zz="0"/>
+            <controlpoint xx="0" yy="0" zz="-4"/>
+            <controlpoint xx="4" yy="0" zz="0"/>
+            <controlpoint xx="0" yy="0" zz="4"/>
+            <controlpoint xx="-4" yy="0" zz="0"/>
+            <controlpoint xx="0" yy="0" zz="-4"/>
+            <controlpoint xx="4" yy="0" zz="0"/>
+            <controlpoint xx="0" yy="0" zz="4"/>
+            <controlpoint xx="-4" yy="0" zz="0"/>
+            <controlpoint xx="0" yy="0" zz="-4"/>
+            <controlpoint xx="4" yy="0" zz="0"/>
+            <controlpoint xx="0" yy="0" zz="4"/>
+            <controlpoint xx="-4" yy="0" zz="0"/>
+            <controlpoint xx="0" yy="0" zz="-4"/>
+            <controlpoint xx="4" yy="0" zz="0"/>
+            <controlpoint xx="0" yy="0" zz="4"/>
+            <controlpoint xx="-4" yy="0" zz="0"/>
+            <controlpoint xx="0" yy="0" zz="-4"/>
+            <controlpoint xx="4" yy="0" zz="0"/>
+            <controlpoint xx="0" yy="0" zz="4"/>
+            <controlpoint xx="-4" yy="0" zz="0"/>
+            <controlpoint xx="0" yy="0" zz="-4"/>
+            <controlpoint xx="4" yy="0" zz="0"/>
+            <controlpoint xx="0" yy="0" zz="4"/>
+            <controlpoint xx="-4" yy="0" zz="0"/>
+            <controlpoint xx="0" yy="0" zz="-4"/>
+            <controlpoint xx="4" yy="0" zz="0"/>
+            <controlpoint xx="0" yy="0" zz="4"/>
+            <controlpoint xx="-4" yy="0" zz="0"/>
+            <controlpoint xx="0" yy="0" zz="-4"/>
+        </animation>
+
 
         <animation id="boatAnimation" span="15" type="linear">
             <controlpoint xx="2" yy="0" zz="0"/>
@@ -255,6 +328,12 @@
             <amplif_factor s="1" t="1" />                <!-- x/s, y/t -->
         </TEXTURE>
 
+
+        <TEXTURE id="fishSkin">
+            <file path="./scenes/res/fishSkin.jpg" />                 <!-- path to file -->
+            <amplif_factor s="1" t="1" />                <!-- x/s, y/t -->
+        </TEXTURE>
+
     </TEXTURES>
 
 
@@ -351,8 +430,77 @@
             <controlpoint x="0" y="0.5" z="1.5"/>
         </LEAF>
 
+         <LEAF id="fishNurb" type="patch" order="3" partsU="20" partsV="20">
 
-        <LEAF id="terrain" type="terrain" texture="scenes/shaders/terrain.vert" heightmap="scenes/shaders/terrain.frag"/>
+            <controlpoint x="-0.05" y="1.7" z="5.6"/>
+            <controlpoint x="0" y="2.25" z="5.6"/>
+            <controlpoint x="0" y="2.25" z="5.6"/>
+            <controlpoint x="0.05" y="1.7" z="5.6"/>
+
+            <controlpoint x="0.9" y="0.45" z="1.1"/>
+            <controlpoint x="0" y="4.7" z="2.45"/>
+            <controlpoint x="0" y="4.7" z="2.45"/>
+            <controlpoint x="-0.9" y="0.45" z="1.1"/>
+
+            <controlpoint x="0.9" y="0.45" z="-1.1"/>
+            <controlpoint x="0" y="4.7" z="-2.45"/>
+            <controlpoint x="0" y="4.7" z="-2.45"/>
+            <controlpoint x="-0.9" y="0.45" z="-1.1"/>
+
+            <controlpoint x="-0.05" y="1.7" z="-5.6"/>
+            <controlpoint x="0" y="2.25" z="-5.6"/>
+            <controlpoint x="0" y="2.25" z="-5.6"/>
+            <controlpoint x="0.05" y="1.7" z="-5.6"/>
+        </LEAF>
+
+
+        <LEAF id="fishTailNurb" type="patch" order="3" partsU="20" partsV="20">
+            <controlpoint x="0" y="1.15" z="0"/>
+            <controlpoint x="0" y="0.45" z="0"/>
+            <controlpoint x="0" y="-0.3" z="0"/>
+            <controlpoint x="0" y="-0.65" z="0"/>
+
+            <controlpoint x="0" y="1.15" z="0"/>
+            <controlpoint x="0" y="0.55" z="1.7"/>
+            <controlpoint x="0" y="-0.2" z="1.7"/>
+            <controlpoint x="0" y="-0.95" z="0"/>
+
+            <controlpoint x="0" y="1.15" z="0"/>
+            <controlpoint x="0" y="0.5" z="1.7"/>
+            <controlpoint x="0" y="-0.3" z="1.7"/>
+            <controlpoint x="0" y="-0.95" z="-0"/>
+
+            <controlpoint x="0" y="1.15" z="0"/>
+            <controlpoint x="0" y="0.45" z="0"/>
+            <controlpoint x="0" y="-0.3" z="0"/>
+            <controlpoint x="0" y="-0.65" z="0"/>
+        </LEAF>
+
+        <LEAF id="fishFinNurb" type="patch" order="3" partsU="20" partsV="20">
+
+            <controlpoint x="-1" y="0" z="0"/>
+            <controlpoint x="-1" y="0" z="0"/>
+            <controlpoint x="-1" y="0" z="0"/>
+            <controlpoint x="-1" y="0" z="0"/>
+
+            <controlpoint x="-0.3" y="0.4" z="0"/>
+            <controlpoint x="-0.3" y="0.15" z="0"/>
+            <controlpoint x="-0.3" y="-0.15" z="0"/>
+            <controlpoint x="-0.3" y="-0.4" z="0"/>
+
+            <controlpoint x="0.3" y="0.4" z="0"/>
+            <controlpoint x="0.3" y="0.15" z="0"/>
+            <controlpoint x="0.3" y="-0.15" z="0"/>
+            <controlpoint x="0.3" y="-0.4" z="0"/>
+
+            <controlpoint x="1" y="0" z="0"/>
+            <controlpoint x="1" y="0" z="0"/>
+            <controlpoint x="1" y="0" z="0"/>
+            <controlpoint x="1" y="0" z="0"/>
+        </LEAF>
+
+
+        <LEAF id="terrain" type="terrain" texture="scenes/res/sea.jpg" heightmap="scenes/res/sea_heightmap.jpg"/>
 
         <LEAF id="square" type="rectangle" args="0 1 1 0" />
         <LEAF id="cylinder" type="cylinder" args="1 0.5 0.5 25 20" /> 
@@ -382,11 +530,12 @@
         <ROOT id="scene" />     <!-- identifier of root node of the scene graph; this node     -->
 
 
-        <NODE id="birdScene">
+
+        <NODE id="fishScene">
             <MATERIAL id="null" />      
             <TEXTURE id="null" /> 
             <DESCENDANTS>   
-                <DESCENDANT id="seabird" />
+                <DESCENDANT id="shoal" />
             </DESCENDANTS>
         </NODE>
         
@@ -399,9 +548,11 @@
                 <DESCENDANT id="skyright" /> 
                 <DESCENDANT id="skyleft" />
                 <DESCENDANT id="island" /> 
-                <DESCENDANT id="ball" />
             </DESCENDANTS>
         </NODE>
+
+
+
 
 
         <!--########### BOAT ############-->
@@ -1740,9 +1891,26 @@
         <!--  ## Background ## -->
 
         <NODE id="sea">
-            <MATERIAL id="boatAppearance" />
+            <MATERIAL id="normalAppearance" />
 
-            <TEXTURE id="sea" />
+            <TEXTURE id="null" />
+
+            <DESCENDANTS>
+                <DESCENDANT id="seaTerrain" />
+                <DESCENDANT id="shoal1" /> 
+                <DESCENDANT id="shoal2" />
+                <DESCENDANT id="shoal3" />
+                <DESCENDANT id="shoal4" />
+                <DESCENDANT id="shoal5" />                     
+            </DESCENDANTS>
+
+        </NODE>
+
+
+        <NODE id="seaTerrain">
+            <MATERIAL id="null" />
+
+            <TEXTURE id="null" />
 
             <TRANSLATION x="25.0" y="0" z="25.0"/>
             <ROTATION axis="x" angle="-90" />
@@ -1750,6 +1918,85 @@
 
             <DESCENDANTS>
                 <DESCENDANT id="terrain" />                               
+            </DESCENDANTS>
+
+        </NODE>
+
+
+        <NODE id="shoal1">
+            <MATERIAL id="null" />
+
+            <TEXTURE id="sea" />
+
+            <TRANSLATION x="25.0" y="-5" z="40.0"/>
+
+            <animationref id="shoalNormal" />
+
+            <DESCENDANTS>
+                <DESCENDANT id="shoal" />                               
+            </DESCENDANTS>
+
+        </NODE>
+
+
+        <NODE id="shoal2">
+            <MATERIAL id="null" />
+
+            <TEXTURE id="sea" />
+
+            <TRANSLATION x="25.0" y="-5" z="25.0"/>
+
+            <animationref id="shoalNormal1" />
+
+            <DESCENDANTS>
+                <DESCENDANT id="shoal" />                               
+            </DESCENDANTS>
+
+        </NODE>
+
+        <NODE id="shoal3">
+            <MATERIAL id="null" />
+
+            <TEXTURE id="sea" />
+
+            <TRANSLATION x="5.0" y="-5" z="5.0"/>
+
+            <animationref id="shoalNormal2" />
+
+            <DESCENDANTS>
+                <DESCENDANT id="shoal" />                               
+            </DESCENDANTS>
+
+        </NODE>
+
+
+        <NODE id="shoal4">
+            <MATERIAL id="null" />
+
+            <TEXTURE id="sea" />
+
+            <TRANSLATION x="5.0" y="-5" z="40"/>
+
+            <animationref id="shoalNormal" />
+
+            <DESCENDANTS>
+                <DESCENDANT id="shoal" />                               
+            </DESCENDANTS>
+
+        </NODE>
+
+
+        <NODE id="shoal5">
+            <MATERIAL id="null" />
+
+            <TEXTURE id="sea" />
+
+            <TRANSLATION x="40.0" y="-5" z="5"/>
+
+            <animationref id="shoalNormal1" />
+
+            <DESCENDANTS>
+                <DESCENDANT id="shoal" />                               
             </DESCENDANTS>
 
         </NODE>
@@ -1918,6 +2165,202 @@
              <DESCENDANTS>
                 <DESCENDANT id="cylinder_body_back"/>  
             </DESCENDANTS>
+        </NODE>
+
+
+        <NODE id="fish">       
+            <MATERIAL id="normalAppearance" />      
+            <TEXTURE id="fishSkin" /> 
+        
+            
+             <DESCENDANTS>
+                <DESCENDANT id="fishBody"/>
+                <DESCENDANT id="fishTail"/>
+                <DESCENDANT id="leftFin"/>
+                <DESCENDANT id="rightFin"/>
+                <DESCENDANT id="leftEyeFish"/>
+                <DESCENDANT id="rightEyeFish"/> 
+            </DESCENDANTS>
+
+        </NODE>
+
+        <NODE id="fishBody">       
+            <MATERIAL id="null" />      
+            <TEXTURE id="null" /> 
+             
+            
+             <DESCENDANTS>
+                <DESCENDANT id="fishNurb"/>  
+            </DESCENDANTS>
+
+        </NODE>
+
+        <NODE id="rightFin">       
+            <MATERIAL id="null" />      
+            <TEXTURE id="null" /> 
+            <TRANSLATION x="-1.1" y="1" z="0"/>
+            <ROTATION axis="z" angle="30" />
+            <ROTATION axis="x" angle="90" />
+            
+             <DESCENDANTS>
+                <DESCENDANT id="frontFin"/>
+                <DESCENDANT id="backFin"/>  
+            </DESCENDANTS>
+
+        </NODE>
+
+         <NODE id="leftEyeFish">       
+            <MATERIAL id="null" />      
+            <TEXTURE id="eye" /> 
+            <TRANSLATION x="0.15" y="2" z="3.8"/>
+            <SCALE sx="0.15" sy="0.15" sz="0.2"/>
+            <ROTATION axis="y" angle="180" />
+            
+             <DESCENDANTS>
+                <DESCENDANT id="sphere"/> 
+            </DESCENDANTS>
+
+        </NODE>
+
+        <NODE id="rightEyeFish">       
+            <MATERIAL id="null" />      
+            <TEXTURE id="eye" /> 
+            <TRANSLATION x="-0.15" y="2" z="3.8"/>
+            <SCALE sx="0.15" sy="0.15" sz="0.15"/>
+            
+             <DESCENDANTS>
+                <DESCENDANT id="sphere"/> 
+            </DESCENDANTS>
+
+        </NODE>
+
+
+        <NODE id="leftFin">       
+            <MATERIAL id="null" />      
+            <TEXTURE id="null" /> 
+            <TRANSLATION x="1.1" y="1" z="0"/>
+            <ROTATION axis="z" angle="-30" />
+            <ROTATION axis="x" angle="90" />
+            
+             <DESCENDANTS>
+                <DESCENDANT id="frontFin"/>
+                <DESCENDANT id="backFin"/>  
+            </DESCENDANTS>
+
+        </NODE>
+
+         <NODE id="backFin">       
+            <MATERIAL id="null" />      
+            <TEXTURE id="null" /> 
+             
+            <ROTATION axis="y" angle="180" />
+             <DESCENDANTS>
+                <DESCENDANT id="fishFinNurb"/> 
+            </DESCENDANTS>
+
+        </NODE>
+
+         <NODE id="frontFin">       
+            <MATERIAL id="null" />      
+            <TEXTURE id="null" />  
+             <DESCENDANTS>
+                <DESCENDANT id="fishFinNurb"/> 
+            </DESCENDANTS>
+        </NODE>
+
+        <NODE id="fishTail">       
+            <MATERIAL id="null" />      
+            <TEXTURE id="null" /> 
+             
+            <TRANSLATION x="0" y="1.8" z="-6.4"/>
+             <DESCENDANTS>
+                <DESCENDANT id="fishTailNurb"/>  
+            </DESCENDANTS>
+
+        </NODE>
+
+
+        <NODE id="shoal">       
+            <MATERIAL id="null" />      
+            <TEXTURE id="null" /> 
+            
+             <DESCENDANTS>
+                <DESCENDANT id="fish1"/>  
+                <DESCENDANT id="fish2"/> 
+                <DESCENDANT id="fish3"/>
+                <DESCENDANT id="fish4" />
+                <DESCENDANT id="fish5" />
+            </DESCENDANTS>
+
+        </NODE>
+
+
+
+         <NODE id="fish1">       
+            <MATERIAL id="null" />      
+            <TEXTURE id="null" /> 
+
+            <SCALE sx="0.2" sy="0.2" sz="0.2" />
+            
+             <DESCENDANTS>
+                <DESCENDANT id="fish"/>  
+            </DESCENDANTS>
+
+        </NODE>
+
+
+        <NODE id="fish2">       
+            <MATERIAL id="null" />      
+            <TEXTURE id="null" /> 
+
+            <TRANSLATION x="1.5" y="1" z="1" />
+            <SCALE sx="0.2" sy="0.2" sz="0.2" />
+            
+             <DESCENDANTS>
+                <DESCENDANT id="fish"/>  
+            </DESCENDANTS>
+
+        </NODE>
+
+
+        <NODE id="fish3">       
+            <MATERIAL id="null" />      
+            <TEXTURE id="null" /> 
+
+            <TRANSLATION x="-1.5" y="0.5" z="0" />
+            <SCALE sx="0.2" sy="0.2" sz="0.2" />
+            
+             <DESCENDANTS>
+                <DESCENDANT id="fish"/>  
+            </DESCENDANTS>
+
+        </NODE>
+
+
+         <NODE id="fish4">       
+            <MATERIAL id="null" />      
+            <TEXTURE id="null" /> 
+
+            <TRANSLATION x="0.3" y="2" z="-0.5" />
+            <SCALE sx="0.2" sy="0.2" sz="0.2" />
+            
+             <DESCENDANTS>
+                <DESCENDANT id="fish"/>  
+            </DESCENDANTS>
+
+        </NODE>
+
+        <NODE id="fish5">       
+            <MATERIAL id="null" />      
+            <TEXTURE id="null" /> 
+
+            <TRANSLATION x="0.3" y="-1.5" z="-0.5" />
+            <SCALE sx="0.2" sy="0.2" sz="0.2" />
+            
+             <DESCENDANTS>
+                <DESCENDANT id="fish"/>  
+            </DESCENDANTS>
+
         </NODE>
 
 

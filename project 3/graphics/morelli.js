@@ -11,7 +11,7 @@ function getUrlVars() {
     return vars;
 }	 
 
-serialInclude(['lib/CGF.js', './graphics/Scene.js', './graphics/Animations/CircularAnimation.js', './graphics/Animations/LinearAnimation.js', './graphics/Primitives/Square.js', './graphics/Primitives/Cylinder.js', './graphics/Primitives/MySphere.js', './graphics/Primitives/Triangle.js', './graphics/Primitives/Patch.js', './graphics/Primitives/Terrain.js', 'Interface.js', 
+serialInclude(['../lib/CGF.js', 'Scene.js', 'Animations/CircularAnimation.js', 'Animations/LinearAnimation.js', 'Primitives/Square.js', 'Primitives/Cylinder.js', 'Primitives/MySphere.js', 'Primitives/Triangle.js', 'Primitives/Patch.js', 'Primitives/Terrain.js', 'Interface.js', 
 
 main=function()
 {
@@ -25,11 +25,11 @@ main=function()
 
     app.setScene(myScene);
 
-    //app.setInterface(myInterface);
+    app.setInterface(myInterface);
 
-    //myScene.setInterface(myInterface);
+    myScene.setInterface(myInterface);
 
-    //myInterface.setActiveCamera(myScene.camera);
+    myInterface.setActiveCamera(myScene.camera);
 
     app.run();
 }

@@ -3,7 +3,7 @@ function Scene() {
     CGFscene.call(this);
 }
 
-Scene.prototype = Object.create(Scene.prototype);
+Scene.prototype = Object.create(CGFscene.prototype);
 Scene.prototype.constructor = Scene;
 
 Scene.prototype.init = function (application) {
@@ -48,7 +48,7 @@ Scene.prototype.setInterface = function (interface) {
 }
 
 Scene.prototype.initCameras = function () {
-    this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(80, 10, 80), vec3.fromValues(0, 0, 0));
+    this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(20, 20, 20), vec3.fromValues(0, 0, 0));
 };
 
 Scene.prototype.setDefaultAppearance = function () {
@@ -78,8 +78,7 @@ Scene.prototype.onGraphLoaded = function ()
 
 
 	this.graphObject = new MyGraphObject(this, this.graph.rootNode, this.graph.leavesArray, this.graph.texturesArray, this.graph.materialsArray, this.graph.initialTransforms, this.expectedUpdatePeriod); 
-	
-	this.enableTextures(true);
+
 
 	this.interface.onGraphLoaded();
 
@@ -106,24 +105,12 @@ Scene.prototype.display = function () {
 
 
 /*
-*	Apply Illumination 
-*/
-Scene.prototype.getLSXIllumination = function (){
-
-	if(this.graph.background != null)
-		this.gl.clearColor(this.graph.background['r'],this.graph.background['g'],this.graph.background['b'],this.graph.background['a']);
-	
-	if(this.graph.ambient != null)
-		this.setGlobalAmbientLight(this.graph.ambient['r'],this.graph.ambient['g'],this.graph.ambient['b'],this.graph.ambient['a']);
-
-}
-
-/*
-*	function to update any of the lights
-*	@method
+*	function to update any of the lights called from the interface
+*	@method updateLight
 *	@param {string}	lightId  string containing light id
 *	@param {boolean}	enable 	enable or disable light
 */
+
 Scene.prototype.updateLight = function(lightId, enable) {
 	for (var i = 0; i < this.graph.lightsArray.length; ++i) {
 		if (this.graph.lightsArray[i].id == lightId) {

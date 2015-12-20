@@ -103,7 +103,7 @@ print_header_line(_).
 
 % Require your Prolog Files here
 
-parse_input(teste, teste).
+parse_input(teste, ok).
 parse_input(test(C,N), Res) :- test(C,Res,N).
 parse_input(quit, goodbye).
 

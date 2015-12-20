@@ -11,8 +11,6 @@ Scene.prototype.init = function (application) {
 
     this.interface = null;
 
-    this.lightsEnabled = [];
-
     this.initCameras();
 
     this.initLights();
@@ -36,9 +34,12 @@ Scene.prototype.init = function (application) {
 Scene.prototype.initLights = function () {
 
  
-	this.lights[0].setPosition(2, 3, 3, 1);
+	this.lights[0].setPosition(0, 0, 0, 0);
     this.lights[0].setDiffuse(1.0,1.0,1.0,1.0);
+    this.lights[0].setAmbient(1.0,1.0,1.0,1.0);
+    this.lights[0].setSpecular(1.0,1.0,1.0,1.0);
     this.lights[0].update();
+    this.lights[0].enable();
  
 
 };
@@ -61,28 +62,6 @@ Scene.prototype.setDefaultAppearance = function () {
 
 // Handler called when the graph is finally loaded. 
 // As loading is asynchronous, this may be called already after the application has started the run loop
-Scene.prototype.onGraphLoaded = function () 
-{
-	if(this.graph.frustum['near'] != null)
-		this.camera.near = parseFloat(this.graph.frustum['near']);
-
-	if(this.graph.frustum['far'] != null)
-		this.camera.far = parseFloat(this.graph.frustum['far']);
-
-	if (parseFloat(this.graph.reference) > 0)
-	   this.axis = new CGFaxis(this, parseFloat(this.graph.referenceLength));
-
-	this.getLSXIllumination();
-
-	this.getLSXLights();
-
-
-	this.graphObject = new MyGraphObject(this, this.graph.rootNode, this.graph.leavesArray, this.graph.texturesArray, this.graph.materialsArray, this.graph.initialTransforms, this.expectedUpdatePeriod); 
-
-
-	this.interface.onGraphLoaded();
-
-};
 
 Scene.prototype.display = function () {
 	// ---- BEGIN Background, camera and axis setup
@@ -99,6 +78,10 @@ Scene.prototype.display = function () {
 	this.axis.display();
 
 	this.setDefaultAppearance();
+
+	for(var i = 0; i < this.lights.length; i++){
+		this.lights[i].update();
+	}
 
 };
 
@@ -125,7 +108,6 @@ Scene.prototype.updateLight = function(lightId, enable) {
 
 
 Scene.prototype.update = function(currTime) {
-	console.log("updating");
 };
 
 

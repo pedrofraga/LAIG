@@ -7,6 +7,8 @@
 function MyInterface() {
 	//call CGFinterface constructor 
 	CGFinterface.call(this);
+
+	this.quit = { function(){ console.log("clicked") }};
 };
 
 MyInterface.prototype = Object.create(CGFinterface.prototype);
@@ -24,24 +26,13 @@ MyInterface.prototype.init = function(application) {
 	//  http://workshop.chromeexperiments.com/examples/gui
 	
 	this.gui = new dat.GUI();
+
+	var quitbtn = { quit:function(){ var reply = requestToPl('quit');} };
+	this.gui.add(quitbtn,'quit').name('Quit');
+
 	return true;
 };
 
-/**
-*	function to be executed when the graph is loaded
-*/
-MyInterface.prototype.onGraphLoaded = function(){
-    var group = this.gui.addFolder('Lights');
-    group.open();
-	var self = this;
-
-	for(key in this.scene.lightsEnabled){
-	    var controller = group.add(this.scene.lightsEnabled, key);
-	    controller.onChange(function(enable) {
-	    	self.scene.updateLight(this.property, enable);
-	    });
-	}
-}
 
 /**
  * processKeyboard

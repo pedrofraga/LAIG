@@ -7,6 +7,7 @@ Scene.prototype = Object.create(CGFscene.prototype);
 Scene.prototype.constructor = Scene;
 
 Scene.prototype.init = function (application) {
+
     CGFscene.prototype.init.call(this, application);
 
     this.interface = null;
@@ -27,16 +28,15 @@ Scene.prototype.init = function (application) {
 
 	this.expectedUpdatePeriod = 50;
 
-	this.setUpdatePeriod(this.expectedUpdatePeriod);
+	//this.setUpdatePeriod(this.expectedUpdatePeriod);
 
 	this.createAppearances();
 
-	this.piece = new Piece(this);
+	this.board = new Board(this);
 
 };
 
 Scene.prototype.initLights = function () {
-
  
 	this.lights[0].setPosition(0, 0, 0, 0);
     this.lights[0].setDiffuse(1.0,1.0,1.0,1.0);
@@ -44,19 +44,25 @@ Scene.prototype.initLights = function () {
     this.lights[0].setSpecular(1.0,1.0,1.0,1.0);
     this.lights[0].update();
     this.lights[0].enable();
- 
 
 };
 
 Scene.prototype.setInterface = function (interface) {
+
 	this.interface = interface;
+
 }
 
 Scene.prototype.initCameras = function () {
-    this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(20, 20, 20), vec3.fromValues(0, 0, 0));
+
+    this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(65, 48, 65), vec3.fromValues(0, -27, 0));
+
+    console.log(this.camera);
+
 };
 
 Scene.prototype.setDefaultAppearance = function () {
+
     this.setAmbient(0.2, 0.4, 0.8, 1.0);
     this.setDiffuse(0.2, 0.4, 0.8, 1.0);
     this.setSpecular(0.2, 0.4, 0.8, 1.0);
@@ -89,12 +95,13 @@ Scene.prototype.display = function () {
 		this.lights[i].update();
 	}
 
-	this.piece.display();
+	this.board.display();
 
 };
 
 
 Scene.prototype.update = function(currTime) {
+
 };
 
 
@@ -113,5 +120,48 @@ Scene.prototype.createAppearances = function () {
 	this.whiteMaterial.setDiffuse(0.8,0.8,0.8,0.5);
 	this.whiteMaterial.setSpecular(0.8,0.8,0.8,0.5);
 	this.whiteMaterial.setShininess(0);
+
+	this.redMaterial = new CGFappearance(this);
+	this.redMaterial.setAmbient(1,0.2,0.2,0.5);
+	this.redMaterial.setDiffuse(1,0.2,0.2,0.5);
+	this.redMaterial.setSpecular(1,0.2,0.2,0.5);
+	this.redMaterial.setShininess(0);
+
+
+	this.orangeMaterial = new CGFappearance(this);
+	this.orangeMaterial.setAmbient(1,0.6,0.2,0.5);
+	this.orangeMaterial.setDiffuse(1,0.6,0.2,0.5);
+	this.orangeMaterial.setSpecular(1,0.6,0.2,0.5);
+	this.orangeMaterial.setShininess(0);
+
+	this.yellowMaterial = new CGFappearance(this);
+	this.yellowMaterial.setAmbient(1,1,0.2,0.5);
+	this.yellowMaterial.setDiffuse(1,1,0.2,0.5);
+	this.yellowMaterial.setSpecular(1,1,0.2,0.5);
+	this.yellowMaterial.setShininess(0);
+
+	this.greenMaterial = new CGFappearance(this);
+	this.greenMaterial.setAmbient(0.2,1,0.2,0.5);
+	this.greenMaterial.setDiffuse(0.2,1,0.2,0.5);
+	this.greenMaterial.setSpecular(0.2,1,0.2,0.5);
+	this.greenMaterial.setShininess(0);
+
+	this.blueMaterial = new CGFappearance(this);
+	this.blueMaterial.setAmbient(0,0.5,1,0.5);
+	this.blueMaterial.setDiffuse(0,0.5,1,0.5);
+	this.blueMaterial.setSpecular(0,0.5,1,0.5);
+	this.blueMaterial.setShininess(0);
+
+	this.purpleMaterial = new CGFappearance(this);
+	this.purpleMaterial.setAmbient(0.4,0.1,1,0.5);
+	this.purpleMaterial.setDiffuse(0.4,0.1,1,0.5);
+	this.purpleMaterial.setSpecular(0.4,0.1,1,0.5);
+	this.purpleMaterial.setShininess(0);
+
+	this.lilacMaterial = new CGFappearance(this);
+	this.lilacMaterial.setAmbient(0.78,0.27,1,0.5);
+	this.lilacMaterial.setDiffuse(0.78,0.27,1,0.5);
+	this.lilacMaterial.setSpecular(0.78,0.27,1,0.5);
+	this.lilacMaterial.setShininess(0);
 
 }

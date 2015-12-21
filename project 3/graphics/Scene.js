@@ -29,6 +29,10 @@ Scene.prototype.init = function (application) {
 
 	this.setUpdatePeriod(this.expectedUpdatePeriod);
 
+	this.createAppearances();
+
+	this.piece = new Piece(this);
+
 };
 
 Scene.prototype.initLights = function () {
@@ -36,7 +40,7 @@ Scene.prototype.initLights = function () {
  
 	this.lights[0].setPosition(0, 0, 0, 0);
     this.lights[0].setDiffuse(1.0,1.0,1.0,1.0);
-    this.lights[0].setAmbient(1.0,1.0,1.0,1.0);
+    this.lights[0].setAmbient(1.0,1.0,1.0,0);
     this.lights[0].setSpecular(1.0,1.0,1.0,1.0);
     this.lights[0].update();
     this.lights[0].enable();
@@ -60,8 +64,10 @@ Scene.prototype.setDefaultAppearance = function () {
 
 };
 
-// Handler called when the graph is finally loaded. 
-// As loading is asynchronous, this may be called already after the application has started the run loop
+/*
+*	displays any element in the scene
+*	@method display
+*/
 
 Scene.prototype.display = function () {
 	// ---- BEGIN Background, camera and axis setup
@@ -83,31 +89,29 @@ Scene.prototype.display = function () {
 		this.lights[i].update();
 	}
 
+	this.piece.display();
+
 };
-
-
-
-/*
-*	function to update any of the lights called from the interface
-*	@method updateLight
-*	@param {string}	lightId  string containing light id
-*	@param {boolean}	enable 	enable or disable light
-*/
-
-Scene.prototype.updateLight = function(lightId, enable) {
-	for (var i = 0; i < this.graph.lightsArray.length; ++i) {
-		if (this.graph.lightsArray[i].id == lightId) {
-			var light = this.lights[i];
-			enable ? light.enable() : light.disable();
-			return;
-		}
-	}
-}
-
-
 
 
 Scene.prototype.update = function(currTime) {
 };
 
 
+
+
+Scene.prototype.createAppearances = function () {
+
+	this.blackMaterial = new CGFappearance(this);
+	this.blackMaterial.setAmbient(0.1,0.1,0.1,1);
+	this.blackMaterial.setDiffuse(0.1,0.1,0.1,1);
+	this.blackMaterial.setSpecular(0.1,0.1,0.1,1);
+	this.blackMaterial.setShininess(0);
+
+	this.whiteMaterial = new CGFappearance(this);
+	this.whiteMaterial.setAmbient(0.8,0.8,0.8,0.5);
+	this.whiteMaterial.setDiffuse(0.8,0.8,0.8,0.5);
+	this.whiteMaterial.setSpecular(0.8,0.8,0.8,0.5);
+	this.whiteMaterial.setShininess(0);
+
+}

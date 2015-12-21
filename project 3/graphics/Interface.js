@@ -30,6 +30,7 @@ MyInterface.prototype.init = function(application) {
 	var quitbtn = { quit:function(){ var reply = requestToPl('quit');} };
 	this.gui.add(quitbtn,'quit').name('Quit');
 
+
 	return true;
 };
 

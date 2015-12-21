@@ -3,7 +3,7 @@
  * @constructor
  */
 
- function Cylinder(scene, height, bottomRadius, topRadius, stacks, slices,  texture) {
+ function Cylinder(scene, height, bottomRadius, topRadius, stacks, slices, texture) {
  	CGFobject.call(this,scene);
 	top = typeof top !== 'undefined' ? top : false;
 	bottom = typeof bottom !== 'undefined' ? bottom : false;

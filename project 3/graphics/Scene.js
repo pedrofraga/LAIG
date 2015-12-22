@@ -38,12 +38,16 @@ Scene.prototype.init = function (application) {
 
 Scene.prototype.initLights = function () {
  
-	this.lights[0].setPosition(0, 0, 0, 0);
-    this.lights[0].setDiffuse(1.0,1.0,1.0,0);
-    this.lights[0].setAmbient(1.0,1.0,1.0,0);
-    this.lights[0].setSpecular(1.0,1.0,1.0,0.5);
+	this.lights[0].setPosition(20, 20 , 20, 20);
+    this.lights[0].setAmbient(0, 0, 0, 1);
+	this.lights[0].setDiffuse(1.0, 1.0, 1.0, 1.0);
+	this.lights[0].setSpecular(1.0, 1.0, 1.0, 1.0);
+	this.lights[0].setLinearAttenuation(1);
+	this.lights[0].setConstantAttenuation(0);
+	this.lights[0].setQuadraticAttenuation(0);
     this.lights[0].enable();
     this.lights[0].update();
+
     
 
 };
@@ -105,9 +109,9 @@ Scene.prototype.update = function(currTime) {
 Scene.prototype.createAppearances = function () {
 
 	this.blackMaterial = new CGFappearance(this);
-	this.blackMaterial.setAmbient(0.1,0.1,0.1,1);
-	this.blackMaterial.setDiffuse(0.1,0.1,0.1,1);
-	this.blackMaterial.setSpecular(0.1,0.1,0.1,1);
+	this.blackMaterial.setAmbient(0.1,0.1,0.1,0.5);
+	this.blackMaterial.setDiffuse(0.1,0.1,0.1,0.5);
+	this.blackMaterial.setSpecular(0.1,0.1,0.1,0.5);
 	this.blackMaterial.setShininess(0);
 
 	this.whiteMaterial = new CGFappearance(this);

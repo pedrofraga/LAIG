@@ -1,7 +1,14 @@
 :-use_module(library(sockets)).
 :-use_module(library(lists)).
 :-use_module(library(codesio)).
-:-ensure_loaded(library('morelli.pl')).
+:- use_module(library(random)).
+:- use_module(library(between)).
+:- use_module(library(lists)).
+:- include('auxiliar.pl').
+:- include('menu.pl').
+:- include('gamerules.pl').
+:- include('utilities.pl').
+:- include('morelli.pl').
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%                                        Server                                                   %%%%
@@ -103,11 +110,12 @@ print_header_line(_).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Require your Prolog Files here
-
-parse_input(teste, teste).
+parse_input(startgame, Board) :- startDrawingBoard(0,13, Board).
 parse_input(test(C,N), Res) :- test(C,Res,N).
 parse_input(quit, goodbye).
 
 test(_,[],N) :- N =< 0.
 test(A,[A|Bs],N) :- N1 is N-1, test(A,Bs,N1).
+
+
 	

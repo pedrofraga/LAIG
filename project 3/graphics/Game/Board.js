@@ -67,30 +67,48 @@ Board.prototype.initPrimitives = function () {
  *
  */
 
-
 Board.prototype.initBoardMatrix = function () {
 
 	this.pieces = [];
 	this.spaces = [];
 
-	for (var i = 0; i < 13; i++) {
-		this.pieces.push( new Piece(this.scene, i, 0, this.cylinder, this.top) );
-		this.pieces.push( new Piece(this.scene, i, 12, this.cylinder, this.top) );
-	}
-
-	for (var i = 0; i < 13; i++) {
-		this.pieces.push( new Piece(this.scene, 0, i, this.cylinder, this.top) );
-		this.pieces.push( new Piece(this.scene, 12, i, this.cylinder, this.top) );
-	}
-
 	for (var y = 0; y < 13; y++) {
-		
 		for (var x = 0; x < 13; x++) {
-
 			this.spaces.push( new BoardSpace(this.scene, x, y, this.space) );
 
-		}
+			if (y == 0) {
+				this.pieces.push( new Piece(this.scene, x, 0, this.cylinder, this.top) );
+				this.pieces.push( new Piece(this.scene, x, 12, this.cylinder, this.top) );
 
+				this.pieces.push( new Piece(this.scene, 0, x, this.cylinder, this.top) );
+				this.pieces.push( new Piece(this.scene, 12, x, this.cylinder, this.top) );
+			}
+		}
 	}
 
 }
+
+
+
+/**
+ * Interprets a board string from ProLog and converts it to JavaScript arrays
+ *	
+ * @method intrepertPlBoard
+ * @param 	{string} 		plBoard  	a string containing a ProLog formated board 
+ * @return 	{array}			board   	represents a game state
+ *
+ */
+
+
+ Board.prototype.intrepertPlBoard = function (plBoard) {
+
+ 	plBoard = plBoard.substring(plBoard.indexOf("[")+1, plBoard.lastIndexOf("]"));
+ 	var lines = plBoard.match(/\[(.*?)\|/g);
+ 	var board = [];
+
+ 	for (var i = 0; i < lines.length; i++) 
+ 		board.push(lines[i].match(/(\d|-\d+)/g));
+
+ 	return board;
+
+ }

@@ -1,10 +1,4 @@
-:- use_module(library(random)).
-:- use_module(library(between)).
-:- use_module(library(lists)).
-:- include('auxiliar.pl').
-:- include('menu.pl').
-:- include('gamerules.pl').
-:- include('utilities.pl').
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%% Instructions: %%%%%%%%%%%%%%%%%%%
@@ -230,7 +224,12 @@ startDrawingBoard(_, BoardSize, Board):-
 
 %%%%%% PLAYER VS. PLAYER %%%%%%%
 playGamePvP(Board,Player):-
+	write(Board),
+	nl,
+	nl,
+	nl,
 	startDrawingBoard(0,13, Board),!,
+	write(Board),
 	%gameExampleStart(Board),
 	startGame(Board, Player).
 

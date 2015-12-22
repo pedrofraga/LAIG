@@ -104,7 +104,6 @@ Piece.prototype.displayBlackTop = function ()  {
  *
  */
 
-
 Piece.prototype.createInitialMatrixes = function () {
 
 	this.transformMatrix = mat4.create();

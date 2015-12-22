@@ -27,13 +27,22 @@ MyInterface.prototype.init = function(application) {
 	
 	this.gui = new dat.GUI();
 
-	var quitbtn = { quit:function(){ var reply = requestToPl('quit');} };
-	this.gui.add(quitbtn,'quit').name('Quit');
+	this.gui.add(this,'startGame').name('Start Game');
+	this.gui.add(this,'quitGame').name('Quit');
+
 
 
 	return true;
 };
 
+
+MyInterface.prototype.startGame = function(application) {
+	this.scene.board.requestToPl('startgame');
+}
+
+MyInterface.prototype.quitGame = function(application) {
+	this.scene.board.requestToPl('quit');
+}
 
 /**
  * processKeyboard

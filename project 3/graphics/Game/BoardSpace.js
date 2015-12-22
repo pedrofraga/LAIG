@@ -18,6 +18,7 @@ function BoardSpace(scene, x, y, cube) {
 	this.x = x;
 	this.y = y;
 	this.space = cube;
+	this.piece = null;
 
 	this.getColorByPos(x, y);
 
@@ -25,6 +26,13 @@ function BoardSpace(scene, x, y, cube) {
 	mat4.identity(this.transformMatrix);
 	var posx = 5 + 2.5 * this.x; var posy =  5 + 2.5 * this.y;
 	mat4.translate(this.transformMatrix, this.transformMatrix, [posx, 0, posy]);
+
+	this.originalTransformMatrix = mat4.create();
+	mat4.identity(this.originalTransformMatrix);
+	mat4.copy(this.originalTransformMatrix, this.transformMatrix);
+
+	this.animation = null;
+	this.lastCurrTime = 0;
 
 }
 
@@ -45,6 +53,7 @@ BoardSpace.prototype.display = function () {
 	this.appearance.apply();
 	this.scene.multMatrix(this.transformMatrix);
 	this.space.display();
+	if (this.piece != null) this.piece.display();
 	this.scene.popMatrix();
 
 }
@@ -103,6 +112,64 @@ BoardSpace.prototype.getColorByPos = function (x, y) {
 	} if ( x == 6 && y == 6) {
 
 		this.appearance = this.scene.lilacMaterial;
+
+	}
+
+}
+
+/**
+ * Updates the space, reponsible for animations.
+ *	
+ * @method update
+ * @param	{int}	currTime	system time
+ *
+ */
+
+BoardSpace.prototype.update = function (currTime) {
+
+	var deltaTime = 0;
+	
+	if (this.lastCurrTime != 0)
+		deltaTime = currTime - this.lastCurrTime;
+
+	this.lastCurrTime = currTime;
+
+	if (this.animation != null && deltaTime > 0)
+		switch (this.animation.constructor) {
+			case ReplaceColorAnimation:
+				this.replaceByRot(deltaTime);
+				break;
+		}
+
+}
+
+/**
+ * Rotates the space and replaces the piece color, responsible for the animation.
+ *	
+ * @method  replaceByRot
+ * @param	{int}	deltaTime	delta since the last time there was an update
+ *
+ */
+
+BoardSpace.prototype.replaceByRot = function (deltaTime) {
+
+	if(this.animation.angle > Math.abs(this.animation.elapsedAngle)) {
+
+		mat4.copy(this.transformMatrix, this.originalTransformMatrix);
+		var angleToBeRotated = deltaTime * this.animation.angle / this.animation.time;
+
+		var direction = this.animation.color == 'black' ? 1 : -1;
+		this.animation.elapsedAngle += angleToBeRotated * direction;
+
+		mat4.rotate(this.transformMatrix, this.transformMatrix, this.animation.elapsedAngle, [1, 0, 0]);
+
+		if (this.animation.angle / 2 <=  Math.abs(this.animation.elapsedAngle) && this.piece.color != this.animation.color)
+			this.piece.color = this.animation.color;
+
+	} else {
+
+		this.animation = null;
+		mat4.copy(this.transformMatrix, this.originalTransformMatrix);
 
 	}
 

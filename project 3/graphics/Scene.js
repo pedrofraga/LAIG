@@ -100,7 +100,7 @@ Scene.prototype.display = function () {
 
 
 Scene.prototype.update = function(currTime) {
-
+	this.board.update(currTime);
 };
 
 

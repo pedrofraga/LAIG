@@ -88,8 +88,7 @@ Piece.prototype.createInitialMatrixes = function () {
 
 	this.transformMatrix = mat4.create();
  	mat4.identity(this.transformMatrix);
- 	var posx = 5 + 2.5 * this.x; var posy =  5 + 2.5 * this.y;
- 	mat4.translate(this.transformMatrix, this.transformMatrix, [posx, 0.2, posy]);
+ 	mat4.translate(this.transformMatrix, this.transformMatrix, [0, 0.2, 0]);
  	mat4.rotate(this.transformMatrix, this.transformMatrix, -Math.PI / 2, [1, 0, 0]);
 
  	this.bottomMatrix = mat4.create();

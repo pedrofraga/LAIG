@@ -31,13 +31,9 @@ Board.prototype.constructor= Board;
 
 Board.prototype.display = function () {
 
-	for (var i = 0; i < this.pieces.length; i++) {
-		this.pieces[i].display();
-	}
-
-	for (var i = 0; i < this.spaces.length; i++) {
-		this.spaces[i].display();
-	}
+	for (var y = 0; y < this.matrix.length; y++)
+		for (var x = 0; x < this.matrix[y].length; x++)
+			this.matrix[y][x].display();
 
 }
 
@@ -69,21 +65,20 @@ Board.prototype.initPrimitives = function () {
 
 Board.prototype.initBoardMatrix = function () {
 
-	this.pieces = [];
-	this.spaces = [];
+	this.matrix = [];
 
 	for (var y = 0; y < 13; y++) {
+
+		this.matrix.push([]);
+
 		for (var x = 0; x < 13; x++) {
-			this.spaces.push( new BoardSpace(this.scene, x, y, this.space) );
 
-			if (y == 0) {
-				this.pieces.push( new Piece(this.scene, x, 0, this.cylinder, this.top) );
-				this.pieces.push( new Piece(this.scene, x, 12, this.cylinder, this.top) );
+			this.matrix[y].push( new BoardSpace(this.scene, x, y, this.space) );
+			if (y == 0 || x == 0 || y == 12 || x == 12) 
+				this.matrix[y][x].piece = new Piece(this.scene, x, 0, this.cylinder, this.top);
 
-				this.pieces.push( new Piece(this.scene, 0, x, this.cylinder, this.top) );
-				this.pieces.push( new Piece(this.scene, 12, x, this.cylinder, this.top) );
-			}
 		}
+
 	}
 
 }
@@ -91,7 +86,7 @@ Board.prototype.initBoardMatrix = function () {
 
 
 /**
- * Interprets a board string from ProLog and converts it to JavaScript arrays
+ * Interprets a board string from ProLog and converts it to JavaScript arrays.
  *	
  * @method intrepertPlBoard
  * @param 	{string} 		plBoard  	a string containing a ProLog formated board 
@@ -115,7 +110,7 @@ Board.prototype.initBoardMatrix = function () {
 
 
  /**
- * Displays new game state
+ * Displays new game state.
  *	
  * @method intrepertPlBoard
  * @param	{array}		newMatrix	matrix to be displayed
@@ -124,22 +119,31 @@ Board.prototype.initBoardMatrix = function () {
 
 
  Board.prototype.replaceMatrix = function (newMatrix) {
+ 	
+ 	for (var y = 0; y < this.matrix.length; y++)
+		for (var x = 0; x < this.matrix[y].length; x++) {
 
- 	for (var i = 0; i < this.pieces.length; i++) {
-		
-		var x = this.pieces[i].x;
-		var y = this.pieces[i].y;
-
-		switch (newMatrix[y][x]) {
-			case '1':
-				this.pieces[i].color = 'black';
-				break;
-			case '2':
-				this.pieces[i].color = 'white';
-				break;
+			if (newMatrix[y][x] == '2' && this.matrix[y][x].piece.color == 'black')
+				this.matrix[y][x].animation = new ReplaceColorAnimation('white');
+			else if (newMatrix[y][x] == '1' && this.matrix[y][x].piece.color == 'white')
+				this.matrix[y][x].animation = new ReplaceColorAnimation('black');
 		}
 
-	}
-
-
  }
+
+
+/**
+ * Updates the whole board, reponsible for animations.
+ *	
+ * @method update
+ * @param	{int}	currTime	system time
+ *
+ */
+
+Board.prototype.update = function (currTime) {
+
+	for (var y = 0; y < this.matrix.length; y++)
+		for (var x = 0; x < this.matrix[y].length; x++)
+			this.matrix[y][x].update(currTime);
+
+}

@@ -42,11 +42,7 @@ Piece.prototype.display = function () {
 
 	this.scene.multMatrix(this.transformMatrix);
 
-	this.displayWhiteCylinder();
-	this.displayWhiteTop();
-
-	this.displayBlackCylinder();
-	this.displayBlackTop();
+	this.displayPiece();
 
 	this.scene.popMatrix();
 
@@ -57,45 +53,29 @@ Piece.prototype.display = function () {
  *	Not sure if it is worth to display white and black tops.
  */
 
-Piece.prototype.displayWhiteCylinder = function ()  {
+Piece.prototype.displayPiece = function ()  {
+
+	var material = this.color == 'black' ? this.scene.blackMaterial : this.scene.whiteMaterial;
 
 	this.scene.pushMatrix();
-	this.scene.whiteMaterial.apply();
+	material.apply();
 	this.cylinder.display();
 	this.scene.popMatrix();
 
-}
-
-
-Piece.prototype.displayBlackCylinder = function ()  {
-
 	this.scene.pushMatrix();
-	this.scene.blackMaterial.apply();
-	this.scene.multMatrix(this.blackCylinderTranslation);
-	this.cylinder.display();
+	material.apply();
+	this.scene.multMatrix(this.bottomMatrix);
+	this.top.display();
 	this.scene.popMatrix();
 
-}
-
-Piece.prototype.displayWhiteTop = function ()  {
-
 	this.scene.pushMatrix();
-	this.scene.whiteMaterial.apply();
-	this.scene.multMatrix(this.whiteTopMatrix);
+	material.apply();
+	this.scene.multMatrix(this.topMatrix);
 	this.top.display();
 	this.scene.popMatrix();
 
 }
 
-Piece.prototype.displayBlackTop = function ()  {
-
-	this.scene.pushMatrix();
-	this.scene.blackMaterial.apply();
-	this.scene.multMatrix(this.blackTopTranslation);
-	this.top.display();
-	this.scene.popMatrix();
-
-}
 
 /**
  * Creates initial transform matrixes, it is important to don't create them everytime a display occurs. 
@@ -112,16 +92,12 @@ Piece.prototype.createInitialMatrixes = function () {
  	mat4.translate(this.transformMatrix, this.transformMatrix, [posx, 0.2, posy]);
  	mat4.rotate(this.transformMatrix, this.transformMatrix, -Math.PI / 2, [1, 0, 0]);
 
- 	this.blackCylinderTranslation = mat4.create();
- 	mat4.identity(this.blackCylinderTranslation);
- 	mat4.translate(this.blackCylinderTranslation, this.blackCylinderTranslation, [0, 0, 0.11]);
+ 	this.bottomMatrix = mat4.create();
+ 	mat4.identity(this.bottomMatrix);
+ 	mat4.rotate(this.bottomMatrix, this.bottomMatrix, -Math.PI, [1, 0, 0]);
 
- 	this.whiteTopMatrix = mat4.create();
- 	mat4.identity(this.whiteTopMatrix);
- 	mat4.rotate(this.whiteTopMatrix, this.whiteTopMatrix, -Math.PI, [1, 0, 0]);
-
- 	this.blackTopTranslation = mat4.create();
- 	mat4.identity(this.blackTopTranslation);
- 	mat4.translate(this.blackTopTranslation, this.blackTopTranslation, [0, 0, 0.2]);
+ 	this.topMatrix = mat4.create();
+ 	mat4.identity(this.topMatrix);
+ 	mat4.translate(this.topMatrix, this.topMatrix, [0, 0, 0.2]);
 
 }

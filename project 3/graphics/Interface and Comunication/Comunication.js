@@ -23,10 +23,12 @@
 
  		console.log("Request successful. Reply: " + data.target.response); 
 
- 		if (data.target.response == 'goodbye') 
+ 		if (data.target.response == 'goodbye') {
  			location.replace("../");
- 		else
- 			board.intrepertPlBoard(data.target.response);
+ 		} else {
+ 			var matrix = board.intrepertPlBoard(data.target.response);
+ 			board.replaceMatrix(matrix);
+ 		}
 
  	};
 
@@ -36,25 +38,6 @@
  	request.send();
 
  }
-
-/**
- * Receives data from prolog, intreperts a board everytime someone plays
- *	
- * @method	getResponse
- * @param   data 	Contains data about the request
- *
- */
-
-Board.prototype.getResponse = function (data) {
-
-	console.log("Request successful. Reply: " + data.target.response); 
-	
-	if (data.target.response == 'goodbye') 
-		location.replace("../");
-
-	console.log(board);
-
-}
 
 
 /**

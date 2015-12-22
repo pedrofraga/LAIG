@@ -54,7 +54,7 @@ Board.prototype.initPrimitives = function () {
 
 	this.space = new Cube(this.scene, 2, 0.3, 2);
 	
-	this.cylinder = new Cylinder(this.scene, 0.1, 0.8, 0.8, 1, 20);
+	this.cylinder = new Cylinder(this.scene, 0.2, 0.8, 0.8, 1, 20);
 	this.top = new MyCircle(this.scene, 0.8, 20);
 
 }
@@ -110,5 +110,36 @@ Board.prototype.initBoardMatrix = function () {
  		board.push(lines[i].match(/(\d|-\d+)/g));
 
  	return board;
+
+ }
+
+
+ /**
+ * Displays new game state
+ *	
+ * @method intrepertPlBoard
+ * @param	{array}		newMatrix	matrix to be displayed
+ *
+ */
+
+
+ Board.prototype.replaceMatrix = function (newMatrix) {
+
+ 	for (var i = 0; i < this.pieces.length; i++) {
+		
+		var x = this.pieces[i].x;
+		var y = this.pieces[i].y;
+
+		switch (newMatrix[y][x]) {
+			case '1':
+				this.pieces[i].color = 'black';
+				break;
+			case '2':
+				this.pieces[i].color = 'white';
+				break;
+		}
+
+	}
+
 
  }

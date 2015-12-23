@@ -38,7 +38,7 @@ MyInterface.prototype.onGraphLoaded = function(){
 	for(key in this.scene.lightsEnabled){
 	    var controller = group.add(this.scene.lightsEnabled, key);
 	    controller.onChange(function(enable) {
-	    	self.scene.updateLight(this.property, enable);
+	    	self.scene.updateLight(key, enable);
 	    });
 	}
 }

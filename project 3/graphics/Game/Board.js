@@ -86,7 +86,7 @@ Board.prototype.initBoardMatrix = function () {
 
 
 /**
- * Interprets a board string from ProLog and converts it to JavaScript arrays.
+ * Interprets a board string from ProLog and converts it to JavaScript arrays by regular expressions.
  *	
  * @method intrepertPlBoard
  * @param 	{string} 		plBoard  	a string containing a ProLog formated board 

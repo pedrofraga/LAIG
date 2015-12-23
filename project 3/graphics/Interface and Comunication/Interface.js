@@ -9,6 +9,7 @@ function MyInterface() {
 	CGFinterface.call(this);
 
 	this.quit = { function(){ console.log("clicked") }};
+
 };
 
 MyInterface.prototype = Object.create(CGFinterface.prototype);
@@ -24,12 +25,18 @@ MyInterface.prototype.init = function(application) {
 	
 	// init GUI. For more information on the methods, check:
 	//  http://workshop.chromeexperiments.com/examples/gui
+
+	this.perspectiveNames = this.scene.getPerspesctiveNames();
+	this.perspective = this.perspectiveNames[0];
 	
 	this.gui = new dat.GUI();
 
-	this.gui.add(this,'startGame').name('Start Game');
-	this.gui.add(this,'quitGame').name('Quit');
+	var self = this;
 
+	this.gui.add(this,'startGame').name('Start Game');
+	this.gui.add(this, 'perspective', this.perspectiveNames).name('Perspective')
+	.onChange(function() { self.scene.updateCamera(self.perspective);});
+	this.gui.add(this,'quitGame').name('Quit');
 
 
 	return true;

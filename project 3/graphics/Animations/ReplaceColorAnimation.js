@@ -1,6 +1,7 @@
 /**
  * constructor of a 360 Rotation Animation, mainly used to replace a piece color in a certain space
  * @constructor ReplaceColorAnimation
+ * @param 	{String}	color  		future color
  *
  */
 

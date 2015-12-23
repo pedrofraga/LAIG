@@ -33,6 +33,8 @@ Scene.prototype.init = function (application) {
 
 	this.createAppearances();
 
+	this.setPickEnabled(true);
+
 	this.board = new Board(this);
 
 };
@@ -85,8 +87,12 @@ Scene.prototype.setDefaultAppearance = function () {
 
 Scene.prototype.display = function () {
 
+	this.getPicking();
+	this.clearPickRegistration();
+
     this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);
     this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
+    this.gl.enable(this.gl.DEPTH_TEST);
 
 	this.updateProjectionMatrix();
 
@@ -282,4 +288,22 @@ Scene.prototype.animateCamera = function (deltaTime) {
 
 		}
 
+}
+
+
+Scene.prototype.getPicking = function () {
+
+	if (this.pickMode == false) {
+		if (this.pickResults != null && this.pickResults.length > 0) {
+			for (var i=0; i< this.pickResults.length; i++) {
+				var obj = this.pickResults[i][0];
+				if (obj)
+				{
+					var customId = this.pickResults[i][1];				
+					this.board.pick(customId, obj);
+				}
+			}
+			this.pickResults.splice(0,this.pickResults.length);
+		}		
+	}
 }

@@ -137,10 +137,10 @@ BoardSpace.prototype.update = function (currTime) {
 	if (this.animation != null && deltaTime > 0)
 		switch (this.animation.constructor) {
 			case ReplaceColorAnimation:
-				this.replaceByRot(deltaTime);
+				this.animateRot(deltaTime);
 				break;
-			case SwingAnimation:
-				this.swing(deltaTime);
+			case PickAnimation:
+				this.animatePick(deltaTime);
 				break;
 		}
 
@@ -149,12 +149,12 @@ BoardSpace.prototype.update = function (currTime) {
 /**
  * Rotates the space and replaces the piece color, responsible for the animation.
  *	
- * @method  replaceByRot
+ * @method  animateRot
  * @param	{int}	deltaTime	delta since the last time there was an update
  *
  */
 
-BoardSpace.prototype.replaceByRot = function (deltaTime) {
+BoardSpace.prototype.animateRot = function (deltaTime) {
 
 	if(this.animation.angle > Math.abs(this.animation.elapsedAngle)) {
 
@@ -171,8 +171,6 @@ BoardSpace.prototype.replaceByRot = function (deltaTime) {
 
 	} else {
 
-		var velocity = deltaTime * this.animation.angle / this.animation.time;
-		this.animation = new SwingAnimation(1, velocity, this.space.width / 2);
 		mat4.copy(this.transformMatrix, this.originalTransformMatrix);
 
 	}
@@ -182,32 +180,35 @@ BoardSpace.prototype.replaceByRot = function (deltaTime) {
 
 
 /**
- * Makes a space swing
+ * Animates space down
  *	
- * @method  replaceByRot
+ * @method  animatePick
  * @param	{int}	deltaTime	delta since the last time there was an update
  *
  */
 
-BoardSpace.prototype.swing = function (deltaTime) {
+BoardSpace.prototype.animatePick = function (deltaTime) {
 
-	mat4.copy(this.transformMatrix, this.originalTransformMatrix);
+	var acDis = this.animation.acumulatedDistance;
+	var totDis = this.animation.bottom * 2;
 
-	var animation = this.animation;
-	animation.elapsedTime += deltaTime;
+	if (acDis < totDis) {
+		
+		mat4.copy(this.transformMatrix, this.originalTransformMatrix);
 
-	var angle = animation.velocity * deltaTime;
+		var yDis = deltaTime * totDis / this.animation.time;
 
-	var previousAngle = animation.angle;
+		yDis = acDis < totDis / 2 ? yDis * -1 : yDis;
 
-	animation.angle += angle;
+		this.animation.acumulatedDistance += Math.abs(yDis);
+		var pos = this.animation.position += yDis;
 
-	if (animation.angle * previousAngle < 0) {
-		animation.elapsedTime = 0;
+		mat4.translate(this.transformMatrix, this.transformMatrix, [0, pos, 0]);
+
+	} else {
+
+		mat4.copy(this.transformMatrix, this.originalTransformMatrix);
+
 	}
-
-	animation.calcVelocity();
-
-	mat4.rotate(this.transformMatrix, this.transformMatrix, animation.angle, [1, 0, 0]);
 
 }

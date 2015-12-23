@@ -11,7 +11,7 @@ function getUrlVars() {
     return vars;
 }	 
 
-serialInclude(['../lib/CGF.js', 'Scene.js', 'Game/Piece.js', 'Game/BoardSpace.js', 'Game/Board.js', 'Interface and Comunication/CameraPerspective.js', 'Interface and Comunication/Interface.js', 'Interface and Comunication/Comunication.js', 'Animations/CircularAnimation.js', 'Animations/LinearAnimation.js', 'Animations/ReplaceColorAnimation.js', 'Animations/CameraAnimation.js', 'Animations/SwingAnimation.js', 'Primitives/Cube.js', 'Primitives/Circle.js', 'Primitives/Square.js', 'Primitives/Cylinder.js', 'Primitives/MySphere.js', 'Primitives/Triangle.js', 'Primitives/Patch.js', 'Primitives/Terrain.js', 
+serialInclude(['../lib/CGF.js', 'Scene.js', 'Game/Piece.js', 'Game/BoardSpace.js', 'Game/Board.js', 'Interface and Comunication/CameraPerspective.js', 'Interface and Comunication/Interface.js', 'Interface and Comunication/Comunication.js', 'Animations/CircularAnimation.js', 'Animations/LinearAnimation.js', 'Animations/ReplaceColorAnimation.js', 'Animations/CameraAnimation.js', 'Animations/PickAnimation.js', 'Primitives/Cube.js', 'Primitives/Circle.js', 'Primitives/Square.js', 'Primitives/Cylinder.js', 'Primitives/MySphere.js', 'Primitives/Triangle.js', 'Primitives/Patch.js', 'Primitives/Terrain.js', 
 
 main=function()
 {

@@ -31,10 +31,15 @@ Board.prototype.constructor= Board;
 
 Board.prototype.display = function () {
 
-	for (var y = 0; y < this.matrix.length; y++)
-		for (var x = 0; x < this.matrix[y].length; x++)
-			this.matrix[y][x].display();
+	this.scene.pushMatrix();
 
+	for (var y = 0; y < this.matrix.length; y++)
+		for (var x = 0; x < this.matrix[y].length; x++) {
+			this.scene.registerForPick(y * 13 + x + 1, this.matrix[y][x]);
+			this.matrix[y][x].display();
+		}
+
+	this.scene.popMatrix();
 }
 
 
@@ -57,7 +62,7 @@ Board.prototype.initPrimitives = function () {
 
 
 /**
- * Initializes a default morelli game with black pieces on the borders of the board.
+ * Initializes a default morelli game with black pieces on the borders of the board, registring pieces to picking
  *	
  * @method initBoardMatrix
  *
@@ -74,6 +79,7 @@ Board.prototype.initBoardMatrix = function () {
 		for (var x = 0; x < 13; x++) {
 
 			this.matrix[y].push( new BoardSpace(this.scene, x, y, this.space) );
+
 			if (y == 0 || x == 0 || y == 12 || x == 12) 
 				this.matrix[y][x].piece = new Piece(this.scene, x, 0, this.cylinder, this.top);
 
@@ -147,3 +153,19 @@ Board.prototype.update = function (currTime) {
 			this.matrix[y][x].update(currTime);
 
 }
+
+
+/**
+ * Gets the pick history and animates space
+ *	
+ * @method pick
+ * @param 	{int}		id 		object custom id
+ * @param	{Object}	obj	  	picked object
+ *
+ */
+
+ Board.prototype.pick = function (id, obj) {
+
+ 	obj.animation = new PickAnimation();
+ 	
+ }

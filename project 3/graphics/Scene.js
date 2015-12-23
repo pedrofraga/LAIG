@@ -27,7 +27,7 @@ Scene.prototype.init = function (application) {
 
 	this.axis = new CGFaxis(this);
 
-	this.expectedUpdatePeriod = 50;
+	this.expectedUpdatePeriod = 20;
 
 	this.setUpdatePeriod(this.expectedUpdatePeriod);
 

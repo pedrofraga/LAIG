@@ -139,6 +139,9 @@ BoardSpace.prototype.update = function (currTime) {
 			case ReplaceColorAnimation:
 				this.replaceByRot(deltaTime);
 				break;
+			case SwingAnimation:
+				this.swing(deltaTime);
+				break;
 		}
 
 }
@@ -168,9 +171,43 @@ BoardSpace.prototype.replaceByRot = function (deltaTime) {
 
 	} else {
 
-		this.animation = null;
+		var velocity = deltaTime * this.animation.angle / this.animation.time;
+		this.animation = new SwingAnimation(1, velocity, this.space.width / 2);
 		mat4.copy(this.transformMatrix, this.originalTransformMatrix);
 
 	}
+
+}
+
+
+
+/**
+ * Makes a space swing
+ *	
+ * @method  replaceByRot
+ * @param	{int}	deltaTime	delta since the last time there was an update
+ *
+ */
+
+BoardSpace.prototype.swing = function (deltaTime) {
+
+	mat4.copy(this.transformMatrix, this.originalTransformMatrix);
+
+	var animation = this.animation;
+	animation.elapsedTime += deltaTime;
+
+	var angle = animation.velocity * deltaTime;
+
+	var previousAngle = animation.angle;
+
+	animation.angle += angle;
+
+	if (animation.angle * previousAngle < 0) {
+		animation.elapsedTime = 0;
+	}
+
+	animation.calcVelocity();
+
+	mat4.rotate(this.transformMatrix, this.transformMatrix, animation.angle, [1, 0, 0]);
 
 }

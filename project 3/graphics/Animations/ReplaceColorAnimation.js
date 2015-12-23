@@ -7,7 +7,7 @@
 
  function ReplaceColorAnimation(color) {
 
- 	this.time = 400;
+ 	this.time = 350;
  	this.angle = 2 * Math.PI;
  	this.elapsedAngle = 0;
  	this.color = color;

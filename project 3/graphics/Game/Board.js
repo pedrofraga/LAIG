@@ -35,7 +35,7 @@ Board.prototype.display = function () {
 
 	for (var y = 0; y < this.matrix.length; y++)
 		for (var x = 0; x < this.matrix[y].length; x++) {
-			this.scene.registerForPick(y * 13 + x + 1, this.matrix[y][x]);
+			if (this.initialized) this.scene.registerForPick(y * 13 + x + 1, this.matrix[y][x]);
 			this.matrix[y][x].display();
 		}
 
@@ -109,6 +109,8 @@ Board.prototype.initBoardMatrix = function () {
 
  	for (var i = 0; i < lines.length; i++) 
  		board.push(lines[i].match(/(\d|-\d+)/g));
+
+ 	this.initialized = true;
 
  	return board;
 

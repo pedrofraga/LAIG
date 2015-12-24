@@ -180,7 +180,7 @@ BoardSpace.prototype.animateRot = function (deltaTime) {
 
 
 /**
- * Animates space down
+ * Animates picked space 
  *	
  * @method  animatePick
  * @param	{int}	deltaTime	delta since the last time there was an update
@@ -189,26 +189,16 @@ BoardSpace.prototype.animateRot = function (deltaTime) {
 
 BoardSpace.prototype.animatePick = function (deltaTime) {
 
-	var acDis = this.animation.acumulatedDistance;
-	var totDis = this.animation.bottom * 2;
+ 	mat4.copy(this.transformMatrix, this.originalTransformMatrix);
 
-	if (acDis < totDis) {
-		
-		mat4.copy(this.transformMatrix, this.originalTransformMatrix);
-
-		var yDis = deltaTime * totDis / this.animation.time;
-
-		yDis = acDis < totDis / 2 ? yDis * -1 : yDis;
-
-		this.animation.acumulatedDistance += Math.abs(yDis);
-		var pos = this.animation.position += yDis;
-
-		mat4.translate(this.transformMatrix, this.transformMatrix, [0, pos, 0]);
-
-	} else {
-
-		mat4.copy(this.transformMatrix, this.originalTransformMatrix);
-
+ 	if (Math.abs(this.animation.vy) < 0.01) {
+		this.animation = null;
+		return;
 	}
+
+	this.animation.time = deltaTime; 	
+ 	this.animation.update();
+ 	var y = this.animation.y;
+ 	mat4.translate(this.transformMatrix, this.transformMatrix, [0, y, 0]);
 
 }

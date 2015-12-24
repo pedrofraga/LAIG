@@ -21,10 +21,13 @@
  	request.onload = onSuccess || 
  	function (data) {
 
- 		console.log("Request successful. Reply: " + data.target.response); 
+ 		console.log("Request successful. Reply: " + data.target.response);
 
- 		if (data.target.response == 'goodbye') {
+ 		var response = data.target.response; 
+ 		if (response == 'goodbye') {
  			location.replace("../");
+ 		} else if (response == 'error') {
+ 			return;
  		} else {
  			var matrix = board.intrepertPlBoard(data.target.response);
  			board.replaceMatrix(matrix);
@@ -57,4 +60,33 @@ Board.prototype.requestToPl = function (request) {
 	
 	this.getPrologRequest(request);
 	
+}
+
+
+
+Board.prototype.boardToPlList = function () {
+ 
+    var plList = "[";
+   
+   for (var y = 0; y < this.matrix.length; y++) {
+    	plList += "[";
+		for (var x = 0; x < this.matrix[y].length; x++) {
+			var object = this.matrix[y][x];
+			if(object.piece == null)
+        		plList += '0,';
+        	else {
+        		var value = object.piece.color == 'black' ? '1,' : '2,';
+        		plList += value;
+        	}
+		}
+		plList = plList.substring(0, plList.length - 1);
+        plList += "],";
+	}
+   
+    plList = plList.substring(0, plList.length - 1);
+   
+    plList += "]";
+       
+    return plList;
+ 
 }

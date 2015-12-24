@@ -16,6 +16,10 @@ function Board(scene) {
 	this.initPrimitives();
 
 	this.initBoardMatrix();
+
+	this.selectedSpaces = [];
+
+	this.playing = 'black';
 }
 
 Board.prototype = Object.create(CGFobject.prototype);
@@ -45,7 +49,7 @@ Board.prototype.display = function () {
 
 /**
  * Saves primitives that are used to display pieces and board spaces in order to don't create them everytime that an object 
- * is initialized. 
+ * is initialized.
  *	
  * @method initPrimitives
  *
@@ -104,13 +108,17 @@ Board.prototype.initBoardMatrix = function () {
  Board.prototype.intrepertPlBoard = function (plBoard) {
 
  	plBoard = plBoard.substring(plBoard.indexOf("[")+1, plBoard.lastIndexOf("]"));
+ 	plBoard = plBoard.replace(/\]\,/g, "\|\]\,").replace(/\]$/, "\|\]");
  	var lines = plBoard.match(/\[(.*?)\|/g);
  	var board = [];
 
  	for (var i = 0; i < lines.length; i++) 
  		board.push(lines[i].match(/(\d|-\d+)/g));
 
+
  	this.initialized = true;
+
+ 	console.log(plBoard);
 
  	return board;
 
@@ -135,6 +143,14 @@ Board.prototype.initBoardMatrix = function () {
 				this.matrix[y][x].animation = new ReplaceColorAnimation('white');
 			else if (newMatrix[y][x] == '1' && this.matrix[y][x].piece.color == 'white')
 				this.matrix[y][x].animation = new ReplaceColorAnimation('black');
+			else if (newMatrix[y][x] == '1' && this.matrix[y][x].piece == null)
+				this.matrix[y][x].piece = new Piece(this.scene, x, 0, this.cylinder, this.top);
+			else if (newMatrix[y][x] == '2' && this.matrix[y][x].piece == null) {
+				this.matrix[y][x].piece = new Piece(this.scene, x, 0, this.cylinder, this.top);
+				this.matrix[y][x].piece.color = white;
+			} else if (newMatrix[y][x] == '0' && this.matrix[y][x].piece != null)
+				this.matrix[y][x].piece = null;
+
 		}
 
  }
@@ -158,7 +174,7 @@ Board.prototype.update = function (currTime) {
 
 
 /**
- * Gets the pick history and animates space
+ * Gets the pick history, animates space, and sends move command to prolog
  *	
  * @method pick
  * @param 	{int}		id 		object custom id
@@ -168,6 +184,24 @@ Board.prototype.update = function (currTime) {
 
  Board.prototype.pick = function (id, obj) {
 
+ 	if (obj.piece != null) { 
+ 		this.selectedSpaces[0] = obj;
+ 	} else if (obj.piece == null) {
+ 		if (this.selectedSpaces.length) {
+ 			this.selectedSpaces[1] = obj;
+ 			var piece = this.selectedSpaces;
+ 			var boardPlList = this.boardToPlList();
+
+ 			var request = 'movePiece(' + boardPlList + ',' + piece[0].x + ',' +
+ 			 piece[0].y + ',' + piece[1].x + ',' + piece[1].y + ','
+ 			  + this.playing + 'Player)';
+			
+			console.log(request);
+
+ 			this.requestToPl(request);
+ 		}
+ 		this.selectedSpaces = [];
+ 	}
  	obj.animation = new PickAnimation();
- 	
+
  }

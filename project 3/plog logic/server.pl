@@ -111,6 +111,14 @@ print_header_line(_).
 
 % Require your Prolog Files here
 parse_input(startgame, Board) :- startDrawingBoard(0,13, Board).
+
+parse_input(movePiece(Board,CurrRow,CurrCol,DestRow,DestCol,Player), Board4) :- validInput(CurrRow, CurrCol, DestRow, DestCol, Board),
+	getPlayerColor(Player, Piece),
+	setPosElem(DestRow, DestCol, Piece, Board, Board1),
+	setPosElem(CurrRow, CurrCol, 0, Board1, Board2),
+	checkCapture(DestRow, DestCol, Piece, Board2, Board3),
+	checkCenter(DestRow, DestCol, Piece, Board3, Board4).
+
 parse_input(test(C,N), Res) :- test(C,Res,N).
 parse_input(quit, goodbye).
 

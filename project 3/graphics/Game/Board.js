@@ -198,6 +198,8 @@ Board.prototype.update = function (currTime) {
 
  Board.prototype.pick = function (id, obj) {
 
+ 	obj.animation = new SpringAnimation(-50);
+ 	
  	if (obj.piece != null) { 
  		this.selectedSpaces[0] = obj;
  	} else if (obj.piece == null) {
@@ -219,6 +221,5 @@ Board.prototype.update = function (currTime) {
  		}
  		this.selectedSpaces = [];
  	}
- 	obj.animation = new SpringAnimation(-50);
 
  }

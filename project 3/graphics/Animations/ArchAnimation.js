@@ -19,11 +19,8 @@
  	this.acumulatedDistance = 0;
  	this.time = this.distance * 80;
 
- 	this.gravity = 9.8 / 10000000;
- 	var vy = 0.5 * this.time * this.gravity;
- 	this.v0y = vy + this.gravity * Math.pow(this.time, 2);
-
- 	this.elapsedTime = 0;
+ 	this.angle = Math.PI;
+ 	this.elapsedAngle = 0;
  }
 
 
@@ -35,16 +32,16 @@
 
 ArchAnimation.prototype.update = function (deltaTime) {
 
-	this.elapsedTime += deltaTime;
-	var dx = (this.xf - this.x0) * deltaTime / this.time;
-	var dz = (this.zf - this.z0) * deltaTime / this.time;
+	this.dx = (this.xf - this.x0) * deltaTime / this.time;
+	this.dz = (this.zf - this.z0) * deltaTime / this.time;
+	var angle = this.angle * deltaTime / this.time;
 
-	this.currX += dx;
-	this.currZ += dz;
-	this.currY = this.v0y * this.elapsedTime - 0.5 * this.gravity * Math.pow(this.elapsedTime, 2);
+	this.currX += this.dx;
+	this.currZ += this.dz;
+	this.elapsedAngle += angle;
 
-	console.log(this.currY);
+	this.currY = 6 * Math.sin(this.elapsedAngle);
 
-	this.acumulatedDistance += Math.sqrt(Math.pow(dx, 2) + Math.pow(dz, 2));
+	this.acumulatedDistance += Math.sqrt(Math.pow(this.dx, 2) + Math.pow(this.dz, 2));
 
 }

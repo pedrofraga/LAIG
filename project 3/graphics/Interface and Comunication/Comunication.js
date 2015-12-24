@@ -33,7 +33,10 @@
  				board.playing = board.playing == 'black' ? 'white' : 'black';
  				var lastElement = board.orfanPieces.length - 1;
  				board.orfanPieces[lastElement].visible = true;
+ 			} else {
+ 				board.playing = 'black';
  			}
+ 			
  			console.log(board.playing);
  		} else {
  			var lastElement = board.orfanPieces.length - 1;

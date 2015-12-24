@@ -112,7 +112,11 @@ OrfanPiece.prototype.animatePieceInArch = function (deltaTime) {
 
 		mat4.copy(this.transformMatrix, this.originalTransformMatrix);
 		this.animation.update(deltaTime);
+
+		if (animation.currY < 0) animation.currY = 0;
+
 		mat4.translate(this.transformMatrix, this.transformMatrix, [this.animation.currX, this.animation.currY , this.animation.currZ]);
+		mat4.rotate(this.transformMatrix, this.transformMatrix, this.animation.elapsedAngle, [this.animation.dx, 0, this.animation.dz]);
 
 	} else {
 		this.animation = null;

@@ -10,14 +10,12 @@
  *
  */
 
-function Piece(scene, x, y, cylinder, top) {
+function Piece(scene, cylinder, top) {
 
 	CGFobject.call(this,scene);
 	
 	this.scene = scene;
 	this.color = 'black';
-	this.x = x;
-	this.y = y;
 
 	this.cylinder = cylinder;
 	this.top = top;
@@ -30,7 +28,7 @@ Piece.prototype = Object.create(CGFobject.prototype);
 Piece.prototype.constructor = Piece;
 
 /**
- * Displays pieces by manipulating white and black elements. 
+ * Displays pieces by manipulating circle and cylinder primitives. 
  *	
  * @method display
  *

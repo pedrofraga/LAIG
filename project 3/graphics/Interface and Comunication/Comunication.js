@@ -29,8 +29,15 @@
  		} else if (response != 'Bad Request') {
  			var matrix = board.intrepertPlBoard(data.target.response);
  			board.replaceMatrix(matrix);
- 			if (requestString != 'startgame') board.playing = board.playing == 'black' ? 'white' : 'black';
+ 			if (requestString != 'startgame') {
+ 				board.playing = board.playing == 'black' ? 'white' : 'black';
+ 				var lastElement = board.orfanPieces.length - 1;
+ 				board.orfanPieces[lastElement].visible = true;
+ 			}
  			console.log(board.playing);
+ 		} else {
+ 			var lastElement = board.orfanPieces.length - 1;
+ 			board.orfanPieces.splice(lastElement, 1);
  		}
 
  	};

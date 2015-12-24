@@ -18,6 +18,7 @@ function Board(scene) {
 	this.initBoardMatrix();
 
 	this.selectedSpaces = [];
+	this.orfanPieces = [];
 
 	this.playing = 'black';
 }
@@ -27,7 +28,7 @@ Board.prototype.constructor= Board;
 
 
 /**
- * Displays board elements (pieces and board spaces). 
+ * Displays board elements (pieces, orfan pieces and board spaces). 
  *	
  * @method display
  *
@@ -42,6 +43,9 @@ Board.prototype.display = function () {
 			if (this.initialized) this.scene.registerForPick(y * 13 + x + 1, this.matrix[y][x]);
 			this.matrix[y][x].display();
 		}
+
+	for (var i = 0; i < this.orfanPieces.length; i++)
+		this.orfanPieces[i].display();
 
 	this.scene.popMatrix();
 }
@@ -85,7 +89,7 @@ Board.prototype.initBoardMatrix = function () {
 			this.matrix[y].push( new BoardSpace(this.scene, x, y, this.space) );
 
 			if (y == 0 || x == 0 || y == 12 || x == 12) 
-				this.matrix[y][x].piece = new Piece(this.scene, x, 0, this.cylinder, this.top);
+				this.matrix[y][x].piece = new Piece(this.scene, this.cylinder, this.top);
 
 		}
 
@@ -118,8 +122,6 @@ Board.prototype.initBoardMatrix = function () {
 
  	this.initialized = true;
 
- 	console.log(board);
-
  	return board;
 
  }
@@ -144,16 +146,11 @@ Board.prototype.initBoardMatrix = function () {
 					this.matrix[y][x].animation = new ReplaceColorAnimation('white');
 				else if (newMatrix[y][x] == '1' && this.matrix[y][x].piece.color == 'white')
 					this.matrix[y][x].animation = new ReplaceColorAnimation('black');
-				else if (newMatrix[y][x] == '0')
+				else if (newMatrix[y][x] == '0') {
 					this.matrix[y][x].piece = null;
-			} else {
-				if (newMatrix[y][x] == '1' && this.matrix[y][x].piece == null)
-					this.matrix[y][x].piece = new Piece(this.scene, x, 0, this.cylinder, this.top);
-				else if (newMatrix[y][x] == '2' && this.matrix[y][x].piece == null) {
-					this.matrix[y][x].piece = new Piece(this.scene, x, 0, this.cylinder, this.top);
-					this.matrix[y][x].piece.color = 'white';
-				} 
-			}
+					this.matrix[y][x].animation = new SpringAnimation(-40);
+				}
+			} 
 
 		}
 
@@ -173,6 +170,19 @@ Board.prototype.update = function (currTime) {
 	for (var y = 0; y < this.matrix.length; y++)
 		for (var x = 0; x < this.matrix[y].length; x++)
 			this.matrix[y][x].update(currTime);
+
+	for (var i = 0; i < this.orfanPieces.length; i++) {
+		
+		if (this.orfanPieces[i] != null)
+			if (this.orfanPieces[i].animation == null) {
+				this.orfanPieces.splice(i, 1);
+				console.log(this.orfanPieces);
+				console.log(this.selectedSpaces);
+			} else {
+				this.orfanPieces[i].update(currTime);
+			}
+
+	}
 
 }
 
@@ -199,6 +209,11 @@ Board.prototype.update = function (currTime) {
  			var request = 'movePiece(' + boardPlList + ',' + piece[0].y + ',' +
  			 piece[0].x + ',' + piece[1].y + ',' + piece[1].x + ','
  			  + this.playing + 'Player)';
+
+			var obj = new Piece(this.scene, this.cylinder, this.top);
+			if (this.playing == 'white') obj.color = 'white';
+
+			this.orfanPieces.push(new OrfanPiece(this.scene, obj, piece[0].x, piece[0].y, piece[1].x, piece[1].y));
 
  			this.requestToPl(request);
  		}

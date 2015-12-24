@@ -17,6 +17,12 @@
  }
 
 
+/**
+ * updates spring ay, vy and y each iteration
+ * @method update
+ *
+ */
+
 SpringAnimation.prototype.update = function () {
 
  	var spring_y = this.k * ( this.y ); 

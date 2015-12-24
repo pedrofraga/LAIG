@@ -1,10 +1,10 @@
 /**
- * constructor of the picking animation
- * @constructor PickAnimation
+ * constructor of the spring animation, some physics
+ * @constructor SpringAnimation
  *
  */
 
- function PickAnimation() {
+ function SpringAnimation(v0y) {
 
  	this.time = 0;
  	this.k = -30;
@@ -12,12 +12,12 @@
 	this.mass = 0.1;
 
 	this.y = 0;
-	this.vy = -50;
+	this.vy = v0y; 
 
  }
 
 
-PickAnimation.prototype.update = function () {
+SpringAnimation.prototype.update = function () {
 
  	var spring_y = this.k * ( this.y ); 
  	var damper_y = this.b * ( this.vy );

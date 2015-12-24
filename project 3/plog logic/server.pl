@@ -113,6 +113,7 @@ print_header_line(_).
 parse_input(startgame, Board) :- startDrawingBoard(0,13, Board).
 
 parse_input(movePiece(Board,CurrRow,CurrCol,DestRow,DestCol,Player), Board4) :- validInput(CurrRow, CurrCol, DestRow, DestCol, Board),
+	getElem(CurrRow, CurrCol, Board, Piece),
 	getPlayerColor(Player, Piece),
 	setPosElem(DestRow, DestCol, Piece, Board, Board1),
 	setPosElem(CurrRow, CurrCol, 0, Board1, Board2),

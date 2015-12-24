@@ -139,7 +139,7 @@ BoardSpace.prototype.update = function (currTime) {
 			case ReplaceColorAnimation:
 				this.animateRot(deltaTime);
 				break;
-			case PickAnimation:
+			case SpringAnimation:
 				this.animatePick(deltaTime);
 				break;
 		}

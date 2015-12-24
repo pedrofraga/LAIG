@@ -26,11 +26,11 @@
  		var response = data.target.response; 
  		if (response == 'goodbye') {
  			location.replace("../");
- 		} else if (response == 'error') {
- 			return;
- 		} else {
+ 		} else if (response != 'Bad Request') {
  			var matrix = board.intrepertPlBoard(data.target.response);
  			board.replaceMatrix(matrix);
+ 			if (requestString != 'startgame') board.playing = board.playing == 'black' ? 'white' : 'black';
+ 			console.log(board.playing);
  		}
 
  	};

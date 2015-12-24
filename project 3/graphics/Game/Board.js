@@ -118,7 +118,7 @@ Board.prototype.initBoardMatrix = function () {
 
  	this.initialized = true;
 
- 	console.log(plBoard);
+ 	console.log(board);
 
  	return board;
 
@@ -139,17 +139,21 @@ Board.prototype.initBoardMatrix = function () {
  	for (var y = 0; y < this.matrix.length; y++)
 		for (var x = 0; x < this.matrix[y].length; x++) {
 
-			if (newMatrix[y][x] == '2' && this.matrix[y][x].piece.color == 'black')
-				this.matrix[y][x].animation = new ReplaceColorAnimation('white');
-			else if (newMatrix[y][x] == '1' && this.matrix[y][x].piece.color == 'white')
-				this.matrix[y][x].animation = new ReplaceColorAnimation('black');
-			else if (newMatrix[y][x] == '1' && this.matrix[y][x].piece == null)
-				this.matrix[y][x].piece = new Piece(this.scene, x, 0, this.cylinder, this.top);
-			else if (newMatrix[y][x] == '2' && this.matrix[y][x].piece == null) {
-				this.matrix[y][x].piece = new Piece(this.scene, x, 0, this.cylinder, this.top);
-				this.matrix[y][x].piece.color = white;
-			} else if (newMatrix[y][x] == '0' && this.matrix[y][x].piece != null)
-				this.matrix[y][x].piece = null;
+			if (this.matrix[y][x].piece != null) {
+				if (newMatrix[y][x] == '2' && this.matrix[y][x].piece.color == 'black')
+					this.matrix[y][x].animation = new ReplaceColorAnimation('white');
+				else if (newMatrix[y][x] == '1' && this.matrix[y][x].piece.color == 'white')
+					this.matrix[y][x].animation = new ReplaceColorAnimation('black');
+				else if (newMatrix[y][x] == '0')
+					this.matrix[y][x].piece = null;
+			} else {
+				if (newMatrix[y][x] == '1' && this.matrix[y][x].piece == null)
+					this.matrix[y][x].piece = new Piece(this.scene, x, 0, this.cylinder, this.top);
+				else if (newMatrix[y][x] == '2' && this.matrix[y][x].piece == null) {
+					this.matrix[y][x].piece = new Piece(this.scene, x, 0, this.cylinder, this.top);
+					this.matrix[y][x].piece.color = 'white';
+				} 
+			}
 
 		}
 
@@ -192,16 +196,14 @@ Board.prototype.update = function (currTime) {
  			var piece = this.selectedSpaces;
  			var boardPlList = this.boardToPlList();
 
- 			var request = 'movePiece(' + boardPlList + ',' + piece[0].x + ',' +
- 			 piece[0].y + ',' + piece[1].x + ',' + piece[1].y + ','
+ 			var request = 'movePiece(' + boardPlList + ',' + piece[0].y + ',' +
+ 			 piece[0].x + ',' + piece[1].y + ',' + piece[1].x + ','
  			  + this.playing + 'Player)';
-			
-			console.log(request);
 
  			this.requestToPl(request);
  		}
  		this.selectedSpaces = [];
  	}
- 	obj.animation = new PickAnimation();
+ 	obj.animation = new SpringAnimation(-50);
 
  }

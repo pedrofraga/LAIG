@@ -25,22 +25,33 @@
 
  		var response = data.target.response; 
  		if (response == 'goodbye') {
+
  			location.replace("../");
+
  		} else if (response != 'Bad Request') {
+
  			var matrix = board.intrepertPlBoard(data.target.response);
- 			board.replaceMatrix(matrix);
  			if (requestString != 'startgame') {
+
  				board.playing = board.playing == 'black' ? 'white' : 'black';
  				var lastElement = board.orfanPieces.length - 1;
  				board.orfanPieces[lastElement].visible = true;
+ 				board.replaceMatrix(matrix, false);
+
  			} else {
+
  				board.playing = 'black';
+ 				board.replaceMatrix(matrix, true);
+
  			}
- 			
+
  			console.log(board.playing);
+
  		} else {
+
  			var lastElement = board.orfanPieces.length - 1;
  			board.orfanPieces.splice(lastElement, 1);
+ 			
  		}
 
  	};

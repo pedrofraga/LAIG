@@ -136,21 +136,36 @@ Board.prototype.initBoardMatrix = function () {
  */
 
 
- Board.prototype.replaceMatrix = function (newMatrix) {
+ Board.prototype.replaceMatrix = function (newMatrix, starting) {
  	
  	for (var y = 0; y < this.matrix.length; y++)
 		for (var x = 0; x < this.matrix[y].length; x++) {
 
 			if (this.matrix[y][x].piece != null) {
-				if (newMatrix[y][x] == '2' && this.matrix[y][x].piece.color == 'black')
-					this.matrix[y][x].animation = new ReplaceColorAnimation('white');
-				else if (newMatrix[y][x] == '1' && this.matrix[y][x].piece.color == 'white')
-					this.matrix[y][x].animation = new ReplaceColorAnimation('black');
-				else if (newMatrix[y][x] == '0') {
+				if (newMatrix[y][x] == '2' && this.matrix[y][x].piece.color == 'black') {
+
+					this.matrix[y][x].animation = new RotationAnimation('white', 'replace');
+
+				} else if (newMatrix[y][x] == '1' && this.matrix[y][x].piece.color == 'white') {
+
+					this.matrix[y][x].animation = new RotationAnimation('black', 'replace');
+
+				} else if (newMatrix[y][x] == '0' && !starting) {
+
 					this.matrix[y][x].piece = null;
 					this.matrix[y][x].animation = new SpringAnimation(-40);
+
+				} else if ((newMatrix[y][x] == '0') && starting) {
+
+					this.matrix[y][x].animation = new RotationAnimation('', 'remove');
+
 				}
-			} 
+			} else {
+				if ((newMatrix[y][x] == '1' || newMatrix[y][x] == '2')  && starting) {
+					var color = newMatrix[y][x] == '1' ? 'black' : 'white';
+					this.matrix[y][x].animation = new RotationAnimation(color, 'insert');
+				}
+			}
 
 		}
 
@@ -176,8 +191,6 @@ Board.prototype.update = function (currTime) {
 		if (this.orfanPieces[i] != null)
 			if (this.orfanPieces[i].animation == null) {
 				this.orfanPieces.splice(i, 1);
-				console.log(this.orfanPieces);
-				console.log(this.selectedSpaces);
 			} else {
 				this.orfanPieces[i].update(currTime);
 			}
@@ -199,7 +212,7 @@ Board.prototype.update = function (currTime) {
  Board.prototype.pick = function (id, obj) {
 
  	obj.animation = new SpringAnimation(-50);
- 	
+
  	if (obj.piece != null) { 
  		this.selectedSpaces[0] = obj;
  	} else if (obj.piece == null) {

@@ -1,15 +1,17 @@
 /**
  * constructor of a 360 Rotation Animation, mainly used to replace a piece color in a certain space
- * @constructor ReplaceColorAnimation
+ * @constructor RotationAnimation
  * @param 	{String}	color  		future color
+ * @param 	{String}	purpose		remove, replace, insert piece
  *
  */
 
- function ReplaceColorAnimation(color) {
+ function RotationAnimation(color, purpose) {
 
  	this.time = 350;
  	this.angle = 2 * Math.PI;
  	this.elapsedAngle = 0;
  	this.color = color;
+ 	this.purpose = purpose;
 
  }

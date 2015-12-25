@@ -136,8 +136,13 @@ BoardSpace.prototype.update = function (currTime) {
 
 	if (this.animation != null && deltaTime > 0)
 		switch (this.animation.constructor) {
-			case ReplaceColorAnimation:
-				this.animateRot(deltaTime);
+			case RotationAnimation:
+				if (this.animation.purpose == 'replace')
+					this.replaceRot(deltaTime);
+				else if (this.animation.purpose == 'insert')
+					this.insertRot(deltaTime);
+				else if (this.animation.purpose == 'remove')
+					this.removeRot(deltaTime);
 				break;
 			case SpringAnimation:
 				this.animatePick(deltaTime);
@@ -149,12 +154,12 @@ BoardSpace.prototype.update = function (currTime) {
 /**
  * Rotates the space and replaces the piece color, responsible for the animation.
  *	
- * @method  animateRot
+ * @method  replaceRot
  * @param	{int}	deltaTime	delta since the last time there was an update
  *
  */
 
-BoardSpace.prototype.animateRot = function (deltaTime) {
+BoardSpace.prototype.replaceRot = function (deltaTime) {
 
 	if(this.animation.angle > Math.abs(this.animation.elapsedAngle)) {
 
@@ -168,6 +173,76 @@ BoardSpace.prototype.animateRot = function (deltaTime) {
 
 		if (this.animation.angle / 2 <=  Math.abs(this.animation.elapsedAngle) && this.piece.color != this.animation.color)
 			this.piece.color = this.animation.color;
+
+	} else {
+
+		mat4.copy(this.transformMatrix, this.originalTransformMatrix);
+
+	}
+}
+
+
+/**
+ * Rotates the space and inserts a piece with a certain color, responsible for the animation.
+ *	
+ * @method  insertRot
+ * @param	{int}	deltaTime	delta since the last time there was an update
+ *
+ */
+
+BoardSpace.prototype.insertRot = function (deltaTime) {
+
+	if(this.animation.angle > Math.abs(this.animation.elapsedAngle)) {
+
+		mat4.copy(this.transformMatrix, this.originalTransformMatrix);
+		var angleToBeRotated = deltaTime * this.animation.angle / this.animation.time;
+
+		var direction = this.animation.color == 'black' ? 1 : -1;
+		this.animation.elapsedAngle += angleToBeRotated * direction;
+
+		mat4.rotate(this.transformMatrix, this.transformMatrix, this.animation.elapsedAngle, [1, 0, 0]);
+
+		if (this.animation.angle / 2 <=  Math.abs(this.animation.elapsedAngle)) {
+
+			this.piece = new Piece(this.scene, this.scene.board.cylinder, this.scene.board.top);
+			this.piece.color = this.animation.color;
+
+		}
+
+	} else {
+
+		mat4.copy(this.transformMatrix, this.originalTransformMatrix);
+
+	}
+
+}
+
+
+/**
+ * Removes the piece by rotating the space, responsible for the animation.
+ *	
+ * @method  removeRot
+ * @param	{int}	deltaTime	delta since the last time there was an update
+ *
+ */
+
+BoardSpace.prototype.removeRot = function (deltaTime) {
+
+	if(this.animation.angle > Math.abs(this.animation.elapsedAngle)) {
+
+		mat4.copy(this.transformMatrix, this.originalTransformMatrix);
+		var angleToBeRotated = deltaTime * this.animation.angle / this.animation.time;
+
+		var direction =  1;
+		this.animation.elapsedAngle += angleToBeRotated * direction;
+
+		mat4.rotate(this.transformMatrix, this.transformMatrix, this.animation.elapsedAngle, [1, 0, 0]);
+
+		if (this.animation.angle / 2 <=  Math.abs(this.animation.elapsedAngle)) {
+
+			this.piece = null;
+
+		}
 
 	} else {
 

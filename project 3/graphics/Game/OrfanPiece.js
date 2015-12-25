@@ -119,11 +119,14 @@ OrfanPiece.prototype.animatePieceInArch = function (deltaTime) {
 		mat4.rotate(this.transformMatrix, this.transformMatrix, this.animation.elapsedAngle, [this.animation.dx, 0, this.animation.dz]);
 
 	} else {
+
 		this.animation = null;
 		this.visible = false;
 		this.scene.board.matrix[this.yf][this.xf].piece = new Piece(this.scene, this.scene.board.cylinder, this.scene.board.top);
 		this.scene.board.matrix[this.yf][this.xf].piece.color = this.piece.color;
+		this.scene.board.matrix[this.yf][this.xf].piece.display();
 		this.scene.board.matrix[this.yf][this.xf].animation = new SpringAnimation(-50);
+		
 	}
 
 }

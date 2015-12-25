@@ -34,17 +34,22 @@ MyInterface.prototype.init = function(application) {
 	var self = this;
 
 	this.gui.add(this,'startGame').name('Start Game');
+	this.gui.add(this,'undo').name('Undo');
 	this.gui.add(this, 'perspective', this.perspectiveNames).name('Perspective')
 	.onChange(function() { self.scene.updateCamera(self.perspective);});
 	this.gui.add(this,'quitGame').name('Quit');
 
-
 	return true;
+	
 };
 
 
 MyInterface.prototype.startGame = function(application) {
 	this.scene.board.requestToPl('startgame');
+}
+
+MyInterface.prototype.undo = function(application) {
+	this.scene.board.undo();
 }
 
 MyInterface.prototype.quitGame = function(application) {

@@ -33,25 +33,29 @@
  			var matrix = board.intrepertPlBoard(data.target.response);
  			if (requestString != 'startgame') {
 
- 				board.playing = board.playing == 'black' ? 'white' : 'black';
+ 				board.history.playing = board.history.playing == 'black' ? 'white' : 'black';
  				var lastElement = board.orfanPieces.length - 1;
  				board.orfanPieces[lastElement].visible = true;
+
+ 				var moveHis = new MoveHistory(board.orfanPieces[lastElement].x0, board.orfanPieces[lastElement].y0,
+ 					board.orfanPieces[lastElement].xf, board.orfanPieces[lastElement].yf);
+ 				board.history.movesHistory.push(moveHis);
+
  				board.replaceMatrix(matrix, false);
 
  			} else {
-
- 				board.playing = 'black';
+ 				
  				board.replaceMatrix(matrix, true);
 
  			}
 
- 			console.log(board.playing);
+ 			console.log(board.history.playing);
 
  		} else {
 
  			var lastElement = board.orfanPieces.length - 1;
  			board.orfanPieces.splice(lastElement, 1);
- 			
+
  		}
 
  	};
@@ -84,6 +88,13 @@ Board.prototype.requestToPl = function (request) {
 }
 
 
+/**
+ * Converts a matrix to a valid ProLog list of lists
+ *	
+ * @method	boardToPlList
+ * @return   {String}	plList     A valid list in ProLog
+ *
+ */
 
 Board.prototype.boardToPlList = function () {
  

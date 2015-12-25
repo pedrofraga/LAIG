@@ -8,7 +8,7 @@
 
  function RotationAnimation(color, purpose) {
 
- 	this.time = 350;
+ 	this.time = 500;
  	this.angle = 2 * Math.PI;
  	this.elapsedAngle = 0;
  	this.color = color;

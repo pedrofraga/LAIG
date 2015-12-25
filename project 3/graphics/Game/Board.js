@@ -10,17 +10,15 @@ function Board(scene) {
 	CGFobject.call(this,scene);
 
 	this.scene = scene;
-
 	this.initialized = false;
+	this.history = new GameHistory();
 
 	this.initPrimitives();
 
 	this.initBoardMatrix();
 
-	this.selectedSpaces = [];
 	this.orfanPieces = [];
 
-	this.playing = 'black';
 }
 
 Board.prototype = Object.create(CGFobject.prototype);
@@ -63,7 +61,7 @@ Board.prototype.initPrimitives = function () {
 
 	this.space = new Cube(this.scene, 2, 0.3, 2);
 	
-	this.cylinder = new Cylinder(this.scene, 0.2, 0.8, 0.8, 1, 20);
+	this.cylinder = new Cylinder(this.scene, 0.1, 0.8, 0.8, 1, 20);
 	this.top = new MyCircle(this.scene, 0.8, 20);
 
 }
@@ -142,15 +140,17 @@ Board.prototype.initBoardMatrix = function () {
 		for (var x = 0; x < this.matrix[y].length; x++) {
 
 			if (this.matrix[y][x].piece != null) {
-				if (newMatrix[y][x] == '2' && this.matrix[y][x].piece.color == 'black') {
+				if ( (newMatrix[y][x] == '2' && this.matrix[y][x].piece.color == 'black' ) || 
+					(newMatrix[y][x] == '1' && this.matrix[y][x].piece.color == 'white') ) {
 
-					this.matrix[y][x].animation = new RotationAnimation('white', 'replace');
+					var color = this.matrix[y][x].piece.color;
+					var obj = new Piece(this.scene, this.cylinder, this.top);
+					obj.color = color;
+					this.orfanPieces.push(new OrfanPiece(this.scene, obj, x, y));
+					this.matrix[y][x].piece = null;
+					this.matrix[y][x].animation = new SpringAnimation(-30);
 
-				} else if (newMatrix[y][x] == '1' && this.matrix[y][x].piece.color == 'white') {
-
-					this.matrix[y][x].animation = new RotationAnimation('black', 'replace');
-
-				} else if (newMatrix[y][x] == '0' && !starting) {
+				}  else if (newMatrix[y][x] == '0' && !starting) {
 
 					this.matrix[y][x].piece = null;
 					this.matrix[y][x].animation = new SpringAnimation(-40);
@@ -160,14 +160,19 @@ Board.prototype.initBoardMatrix = function () {
 					this.matrix[y][x].animation = new RotationAnimation('', 'remove');
 
 				}
+
 			} else {
+
 				if ((newMatrix[y][x] == '1' || newMatrix[y][x] == '2')  && starting) {
 					var color = newMatrix[y][x] == '1' ? 'black' : 'white';
 					this.matrix[y][x].animation = new RotationAnimation(color, 'insert');
 				}
+
 			}
 
 		}
+
+	if (starting) this.clearHistory();
 
  }
 
@@ -214,25 +219,115 @@ Board.prototype.update = function (currTime) {
  	obj.animation = new SpringAnimation(-50);
 
  	if (obj.piece != null) { 
- 		this.selectedSpaces[0] = obj;
+ 		this.history.selectedSpaces[0] = obj;
  	} else if (obj.piece == null) {
- 		if (this.selectedSpaces.length) {
- 			this.selectedSpaces[1] = obj;
- 			var piece = this.selectedSpaces;
+ 		if (this.history.selectedSpaces.length) {
+ 			this.history.selectedSpaces[1] = obj;
+ 			var piece = this.history.selectedSpaces;
  			var boardPlList = this.boardToPlList();
 
  			var request = 'movePiece(' + boardPlList + ',' + piece[0].y + ',' +
  			 piece[0].x + ',' + piece[1].y + ',' + piece[1].x + ','
- 			  + this.playing + 'Player)';
+ 			  + this.history.playing + 'Player)';
 
 			var obj = new Piece(this.scene, this.cylinder, this.top);
-			if (this.playing == 'white') obj.color = 'white';
+			if (this.history.playing == 'white') obj.color = 'white';
 
 			this.orfanPieces.push(new OrfanPiece(this.scene, obj, piece[0].x, piece[0].y, piece[1].x, piece[1].y));
 
  			this.requestToPl(request);
  		}
- 		this.selectedSpaces = [];
+ 		this.history.selectedSpaces = [];
  	}
+
+ }
+
+
+
+ /**
+ * Undoes previous moves by accessing moves history
+ *	
+ * @method undo
+ *
+ */
+
+
+ Board.prototype.undo = function () {
+
+ 	var size = this.history.movesHistory.length;
+ 	if (!size) return;
+
+ 	var lastMove = size - 1;
+ 	var move = this.history.movesHistory[lastMove];
+
+ 	if (move.constructor == MoveHistory)  {
+
+ 		var moveX0 = move.x0;
+ 		var moveY0 = move.y0;
+ 		var moveXf = move.xf;
+ 		var moveYf = move.yf;
+
+ 		for (var y = 0; y < this.matrix.length; y++)
+		for (var x = 0; x < this.matrix[y].length; x++)
+			if (moveXf == x && moveYf == y) {
+				var color = this.matrix[y][x].piece.color;
+				var piece =	new Piece(this.scene, this.cylinder, this.top);
+				piece.color = color;
+
+				var orfanPiece = new OrfanPiece(this.scene, piece, moveXf, moveYf, moveX0, moveY0);
+				orfanPiece.visible = true;
+				this.orfanPieces.push(orfanPiece);
+				var size = this.orfanPieces.length - 1;
+				this.orfanPieces[size].undo = true;
+				this.matrix[y][x].piece = null;
+				this.matrix[y][x].animation = new SpringAnimation(-40);
+
+				var last = this.history.movesHistory.length - 1;
+				this.history.movesHistory.splice(last, 1);
+				this.history.playing = this.history.playing == 'black' ? 'white' : 'black';
+				return;
+			}
+
+ 	} else if (move.constructor == ReplaceColorHistory) {
+
+ 		var tilex = move.x;
+ 		var tiley = move.y;
+
+ 		for (var y = 0; y < this.matrix.length; y++)
+		for (var x = 0; x < this.matrix[y].length; x++)
+			if (tilex == x && tiley == y) {
+
+				var color = this.matrix[y][x].piece.color;
+				var obj = new Piece(this.scene, this.cylinder, this.top);
+				obj.color = color;
+				var orfanPiece = new OrfanPiece(this.scene, obj, x, y);
+				this.orfanPieces.push(orfanPiece);
+				this.matrix[y][x].piece = null;
+				this.matrix[y][x].animation = new SpringAnimation(-30);
+
+				var last = this.history.movesHistory.length - 1;
+				this.history.movesHistory.splice(last, 1);
+				this.history.movesHistory.splice(last - 1, 1);
+
+				this.undo();
+			}
+
+ 	}
+
+ }
+
+
+
+ /**
+ * Clears History, sets all to default
+ *	
+ * @method undo
+ *
+ */
+
+
+ Board.prototype.clearHistory = function () {
+
+ 	this.history = new GameHistory();
 
  }

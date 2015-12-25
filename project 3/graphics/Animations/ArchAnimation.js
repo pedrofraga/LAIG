@@ -17,7 +17,7 @@
 
  	this.distance = Math.sqrt(Math.pow(this.xf - this.x0, 2) + Math.pow(this.zf - this.z0, 2));
  	this.acumulatedDistance = 0;
- 	this.time = this.distance * 80;
+ 	this.time = 80 * 4//this.distance * 80;
 
  	this.angle = Math.PI;
  	this.elapsedAngle = 0;

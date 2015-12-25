@@ -69,3 +69,8 @@ MyInterface.prototype.processKeyboard = function(event) {
 	
 	// for better cross-browser support, you may also check suggestions on using event.which in http://www.w3schools.com/jsref/event_key_keycode.asp
 };
+
+
+MyInterface.prototype.processMouseDown = function(event) {	
+	return;
+}

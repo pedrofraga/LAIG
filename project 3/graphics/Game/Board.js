@@ -65,7 +65,7 @@ Board.prototype.initPrimitives = function () {
 	this.space = new Cube(this.scene, 2, 0.3, 2);
 	
 	this.cylinder = new Cylinder(this.scene, 0.1, 0.8, 0.8, 1, 20);
-	this.towerCylinder = new Cylinder(this.scene, 0.2, 0.8, 0.8, 1, 20);
+	this.towerCylinder = new Cylinder(this.scene, 0.15, 0.8, 0.8, 1, 20);
 	this.top = new MyCircle(this.scene, 0.8, 20);
 
 }
@@ -171,10 +171,14 @@ Board.prototype.initBoardMatrix = function () {
 
 			if (this.matrix[y][x].piece != null) {
 				if ( (newMatrix[y][x] == '2' && this.matrix[y][x].piece.color == 'black' ) || 
-					(newMatrix[y][x] == '1' && this.matrix[y][x].piece.color == 'white') ) {
+					(newMatrix[y][x] == '1' && this.matrix[y][x].piece.color == 'white') ||
+					 (newMatrix[y][x] == '4' && this.matrix[y][x].piece.color == 'black' ) || 
+					(newMatrix[y][x] == '3' && this.matrix[y][x].piece.color == 'white')) {
 
 					var color = this.matrix[y][x].piece.color;
-					var obj = new Piece(this.scene, this.cylinder, this.top);
+					var cylinder = this.matrix[y][x].piece.cylinder.height == 0.15 ? this.towerCylinder : this.cylinder;
+
+					var obj = new Piece(this.scene, cylinder, this.top);
 					obj.color = color;
 					this.orfanPieces.push(new OrfanPiece(this.scene, obj, x, y));
 					this.matrix[y][x].piece = null;
@@ -185,7 +189,7 @@ Board.prototype.initBoardMatrix = function () {
 					this.matrix[y][x].piece = null;
 					this.matrix[y][x].animation = new SpringAnimation(-40);
 
-				} else if ((newMatrix[y][x] == '0') && starting) {
+				} else if ((newMatrix[y][x] == '0' || newMatrix[y][x] == '-1') && starting) {
 
 					this.matrix[y][x].animation = new RotationAnimation('', 'remove');
 
@@ -197,8 +201,11 @@ Board.prototype.initBoardMatrix = function () {
 					var color = newMatrix[y][x] == '1' ? 'black' : 'white';
 					this.matrix[y][x].animation = new RotationAnimation(color, 'insert');
 				} else if (newMatrix[y][x] == '3' || newMatrix[y][x] == '4') {
+
 					var color = newMatrix[y][x] == '3' ? 'black' : 'white';
 					this.matrix[y][x].animation = new RotationAnimation(color, 'insert');
+					this.history.movesHistory.push(new InsertHistory(color));
+
 				}
 
 			}
@@ -248,6 +255,7 @@ Board.prototype.update = function (currTime) {
 
 Board.prototype.botPlay = function () {
 
+	if(this.initialized)
 	if (this.white == 'Bot' && this.history.playing == 'white' ||
 		this.black == 'Bot' && this.history.playing == 'black') {
 
@@ -277,7 +285,12 @@ Board.prototype.botPlay = function () {
 
  Board.prototype.pick = function (id, obj) {
 
+
  	obj.animation = new SpringAnimation(-50);
+
+ 	if (this.history.playing == 'black' && this.black == 'Bot' ||
+ 		this.history.playing == 'white' && this.white == 'Bot')
+ 		return;
 
  	if (obj.piece != null) { 
  		this.history.selectedSpaces[0] = obj;
@@ -321,6 +334,16 @@ Board.prototype.botPlay = function () {
  	var lastMove = size - 1;
  	var move = this.history.movesHistory[lastMove];
 
+ 	var lastOrfan = this.orfanPieces.length - 1;
+ 	if (this.orfanPieces.length)
+ 		if (!this.orfanPieces[lastOrfan].undoAnimation && this.orfanPieces[lastOrfan].animation.constructor === ArchAnimation) {
+ 			var x = this.orfanPieces[lastOrfan].x0; y = this.orfanPieces[lastOrfan].y0;
+ 			var piece = new Piece(this.scene, this.cylinder, this.top);
+ 			piece.color = this.orfanPieces[lastOrfan].piece.color;
+ 			this.matrix[y][x].piece = piece;
+ 			this.orfanPieces.splice(lastOrfan, 1);
+ 		}
+
  	if (move.constructor == MoveHistory)  {
 
  		var moveX0 = move.x0;
@@ -331,12 +354,23 @@ Board.prototype.botPlay = function () {
  		for (var y = 0; y < this.matrix.length; y++)
 		for (var x = 0; x < this.matrix[y].length; x++)
 			if (moveXf == x && moveYf == y) {
+
+				if (this.matrix[y][x].piece == null) {
+					var last = this.history.movesHistory.length - 1;
+					this.history.movesHistory.splice(last, 1);
+					this.undo();
+					return; 
+				} 
+
 				var color = this.matrix[y][x].piece.color;
-				var piece =	new Piece(this.scene, this.cylinder, this.top);
+				var cylinder = this.matrix[y][x].piece.height == 0.15 ? this.towerCylinder : this.cylinder;
+
+				var piece =	new Piece(this.scene, cylinder, this.top);
 				piece.color = color;
 
 				var orfanPiece = new OrfanPiece(this.scene, piece, moveXf, moveYf, moveX0, moveY0);
 				orfanPiece.visible = true;
+				orfanPiece.undoAnimation = true;
 				this.orfanPieces.push(orfanPiece);
 				var size = this.orfanPieces.length - 1;
 				this.orfanPieces[size].undo = true;
@@ -362,6 +396,7 @@ Board.prototype.botPlay = function () {
 				var obj = new Piece(this.scene, this.cylinder, this.top);
 				obj.color = color;
 				var orfanPiece = new OrfanPiece(this.scene, obj, x, y);
+				orfanPiece.undoAnimation = true;
 				this.orfanPieces.push(orfanPiece);
 				this.matrix[y][x].piece = null;
 				this.matrix[y][x].animation = new SpringAnimation(-30);
@@ -369,6 +404,24 @@ Board.prototype.botPlay = function () {
 				var last = this.history.movesHistory.length - 1;
 				this.history.movesHistory.splice(last, 1);
 				this.history.movesHistory.splice(last - 1, 1);
+
+				this.undo();
+
+			}
+
+ 	} else if (move.constructor == InsertHistory) {
+
+ 		var tilex = move.x;
+ 		var tiley = move.y;
+
+ 		for (var y = 0; y < this.matrix.length; y++)
+		for (var x = 0; x < this.matrix[y].length; x++)
+			if (tilex == x && tiley == y) {
+
+				this.matrix[y][x].animation = new RotationAnimation('', 'remove');
+
+				var last = this.history.movesHistory.length - 1;
+				this.history.movesHistory.splice(last, 1);
 
 				this.undo();
 			}

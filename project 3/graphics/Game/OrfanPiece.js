@@ -27,6 +27,7 @@ function OrfanPiece(scene, piece, x0, y0, xf, yf) {
 	this.visible = typeof this.xf === "undefined" && typeof this.yf === "undefined" ? true : false;
 	
 	this.createInitialMatrixes();
+	this.undoAnimation = false;
 
 	this.animation = typeof this.xf === "undefined" && typeof this.yf === "undefined" ? new ReplaceAnimation() : new ArchAnimation(x0, y0, xf, yf);
 
@@ -166,7 +167,8 @@ OrfanPiece.prototype.replacePiece = function (deltaTime) {
 
 		this.animation = null;
 		this.visible = false;
-		this.scene.board.matrix[this.y0][this.x0].piece = new Piece(this.scene, this.scene.board.cylinder, this.scene.board.top);
+		var cylinder = this.piece.cylinder.height == 0.15 ? this.scene.board.towerCylinder : this.scene.board.cylinder;
+		this.scene.board.matrix[this.y0][this.x0].piece = new Piece(this.scene, cylinder, this.scene.board.top);
 		this.scene.board.matrix[this.y0][this.x0].piece.color = this.piece.color == 'black' ? 'white' : 'black';
 		this.scene.board.matrix[this.y0][this.x0].piece.display();
 		this.scene.board.matrix[this.y0][this.x0].animation = new SpringAnimation(-50);

@@ -32,10 +32,10 @@
   this.normals.push(0);
   this.normals.push(0);
   this.normals.push(1);
-  this.texCoords.push(this.radius,this.radius);
+  this.texCoords.push(0.5,0.5);
 
   for(var i = 0; i < this.slices; i++){
-    this.texCoords.push(this.radius*Math.cos(indice) + this.radius, this.radius - (this.radius*Math.sin(indice)));
+    this.texCoords.push(0.5*Math.cos(indice) + 0.5, 0.5 - (0.5*Math.sin(indice)));
     this.vertices.push(this.radius*Math.cos(indice));
     this.vertices.push(this.radius*Math.sin(indice));
     this.vertices.push(0);

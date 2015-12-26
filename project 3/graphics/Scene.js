@@ -139,9 +139,9 @@ Scene.prototype.createAppearances = function () {
 	this.blackMaterial.setShininess(0);
 
 	this.whiteMaterial = new CGFappearance(this);
-	this.whiteMaterial.setAmbient(0.8,0.8,0.8,0.5);
-	this.whiteMaterial.setDiffuse(0.8,0.8,0.8,0.5);
-	this.whiteMaterial.setSpecular(0.8,0.8,0.8,0.5);
+	this.whiteMaterial.setAmbient(0.9,0.9,0.9,0.5);
+	this.whiteMaterial.setDiffuse(0.9,0.9,0.9,0.5);
+	this.whiteMaterial.setSpecular(0.9,0.9,0.9,0.5);
 	this.whiteMaterial.setShininess(0);
 
 	this.redMaterial = new CGFappearance(this);

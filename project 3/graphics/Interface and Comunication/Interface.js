@@ -38,8 +38,8 @@ MyInterface.prototype.init = function(application) {
 	this.gui.add(this, 'perspective', this.perspectiveNames).name('Perspective')
 	.onChange(function() { self.scene.updateCamera(self.perspective);});
 
-	this.gui.add(this.scene.board, 'black', this.possiblePlayers).name('Black');
-	this.gui.add(this.scene.board, 'white', this.possiblePlayers).name('White');
+	this.gui.add(this.scene.board, 'black', this.possiblePlayers).name('Black').listen();
+	this.gui.add(this.scene.board, 'white', this.possiblePlayers).name('White').listen();
 
 	this.gui.add(this,'quitGame').name('Quit');
 
@@ -53,6 +53,12 @@ MyInterface.prototype.startGame = function(application) {
 }
 
 MyInterface.prototype.undo = function(application) {
+
+	if (this.scene.board.initialized) {
+		this.scene.board.black = 'Human';
+		this.scene.board.white = 'Human';
+	}
+
 	this.scene.board.undo();
 }
 

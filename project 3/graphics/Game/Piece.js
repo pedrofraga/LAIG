@@ -77,7 +77,7 @@ Piece.prototype.displayTopCylinder = function (material)  {
 Piece.prototype.displayBottomTop = function (material)  {
 
 	this.scene.pushMatrix();
-	if (this.cylinder.height == 0.2) {
+	if (this.cylinder.height == 0.15) {
 		var texture = this.color != 'black' ? this.scene.blacktower : this.scene.whitetower;
 		this.scene.defaultMaterial.setTexture(texture);
 		this.scene.defaultMaterial.apply();
@@ -94,7 +94,7 @@ Piece.prototype.displayBottomTop = function (material)  {
 Piece.prototype.displayTopTop = function (material)  {
 
 	this.scene.pushMatrix();
-	if (this.cylinder.height == 0.2) {
+	if (this.cylinder.height == 0.15) {
 		var texture = this.color == 'black' ? this.scene.blacktower : this.scene.whitetower;
 		this.scene.defaultMaterial.setTexture(texture);
 		this.scene.defaultMaterial.apply();

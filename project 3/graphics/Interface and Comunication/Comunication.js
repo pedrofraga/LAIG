@@ -47,17 +47,21 @@
 
  			} else if (cmd == 'botPlay') {
 
+                if (board.history.playing == 'black' && board.black == 'Bot' || 
+                    board.history.playing == 'white' && board.white == 'Bot') {
 
-                var matrix = board.intrepertPlBoard(data.target.response, true);
+                    var matrix = board.intrepertPlBoard(data.target.response, true);
 
-                board.history.playing = board.history.playing == 'black' ? 'white' : 'black';
-                board.replaceMatrix(matrix, false);
+                    board.history.playing = board.history.playing == 'black' ? 'white' : 'black';
+                    board.replaceMatrix(matrix, false);
+                }
 
                 board.history.botPlayed = false;
 
             } else {
  				
                 var matrix = board.intrepertPlBoard(data.target.response);
+                board.orfanPieces = [];
  				board.replaceMatrix(matrix, true);
 
  			}

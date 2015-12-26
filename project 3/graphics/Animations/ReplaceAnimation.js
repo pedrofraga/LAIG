@@ -7,7 +7,7 @@
  function ReplaceAnimation() {
 
  	this.currY = 0;
- 	this.time = 400;
+ 	this.time = 550;
  	this.angle = Math.PI;
  	this.elapsedAngle = 0;
 

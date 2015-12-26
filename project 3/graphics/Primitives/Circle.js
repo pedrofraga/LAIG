@@ -35,7 +35,7 @@
   this.texCoords.push(this.radius,this.radius);
 
   for(var i = 0; i < this.slices; i++){
-    this.texCoords.push(this.radius*Math.cos(indice) + this.radius,this.radius - (this.radius*Math.sin(indice)));
+    this.texCoords.push(this.radius*Math.cos(indice) + this.radius, this.radius - (this.radius*Math.sin(indice)));
     this.vertices.push(this.radius*Math.cos(indice));
     this.vertices.push(this.radius*Math.sin(indice));
     this.vertices.push(0);

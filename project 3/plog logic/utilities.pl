@@ -60,3 +60,4 @@ setPosElemAux(I, Elem, [H|L], [H|ResL]):-
 
 
 
+

@@ -111,15 +111,41 @@ Board.prototype.initBoardMatrix = function () {
  */
 
 
- Board.prototype.intrepertPlBoard = function (plBoard) {
+ Board.prototype.intrepertPlBoard = function (plBoard, botPlaying) {
+
+ 	botPlaying = typeof botPlaying === 'undefined' ? false : true;
 
  	plBoard = plBoard.substring(plBoard.indexOf("[")+1, plBoard.lastIndexOf("]"));
  	plBoard = plBoard.replace(/\]\,/g, "\|\]\,").replace(/\]$/, "\|\]");
  	var lines = plBoard.match(/\[(.*?)\|/g);
  	var board = [];
 
- 	for (var i = 0; i < lines.length; i++) 
- 		board.push(lines[i].match(/(\d|-\d+)/g));
+ 	for (var i = 0; i < lines.length; i++) {
+
+ 		if (botPlaying && i == 0) {
+
+ 			var newstring = lines[i].substring(0, lines[i].length - 1); //removing some garbish
+ 			newstring = newstring.substring(1, newstring.length);
+ 			var numbers = newstring.split(',');
+
+ 			var x0 = parseFloat(numbers[0]), y0 = parseFloat(numbers[1]), xf = parseFloat(numbers[2]), yf = parseFloat(numbers[3]);
+ 			var color = this.matrix[y0][x0].piece.color;
+
+ 			var obj = new Piece(this.scene, this.cylinder, this.top);
+ 			obj.color = color;
+
+ 			var orfanPiece = new OrfanPiece(this.scene, obj, x0, y0, xf, yf);
+ 			orfanPiece.visible = true;
+ 			this.orfanPieces.push(orfanPiece);
+
+ 			var moveHis = new MoveHistory(x0, y0, xf, yf);
+ 			this.history.movesHistory.push(moveHis);
+
+ 		} else {
+ 			board.push(lines[i].match(/(\d|-\d+)/g));
+ 		}
+
+ 	}
 
 
  	this.initialized = true;
@@ -354,9 +380,9 @@ Board.prototype.botPlay = function () {
 
 
  /**
- * Clears History, sets all to default
+ * Clears History, sets all to default, used when a game is started
  *	
- * @method undo
+ * @method clearHistory
  *
  */
 

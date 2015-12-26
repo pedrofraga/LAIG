@@ -30,11 +30,11 @@
 
  		} else if (response != 'Bad Request') {
 
- 			var matrix = board.intrepertPlBoard(data.target.response);
             var cmd = requestString.substring(0, 7);
             console.log(cmd);
  			if (requestString != 'startgame' && cmd != 'botPlay') {
 
+                var matrix = board.intrepertPlBoard(data.target.response);
  				board.history.playing = board.history.playing == 'black' ? 'white' : 'black';
  				var lastElement = board.orfanPieces.length - 1;
  				board.orfanPieces[lastElement].visible = true;
@@ -47,13 +47,17 @@
 
  			} else if (cmd == 'botPlay') {
 
+
+                var matrix = board.intrepertPlBoard(data.target.response, true);
+
                 board.history.playing = board.history.playing == 'black' ? 'white' : 'black';
                 board.replaceMatrix(matrix, false);
+
                 board.history.botPlayed = false;
 
             } else {
  				
-
+                var matrix = board.intrepertPlBoard(data.target.response);
  				board.replaceMatrix(matrix, true);
 
  			}

@@ -120,10 +120,16 @@ parse_input(movePiece(Board,CurrRow,CurrCol,DestRow,DestCol,Player), Board4) :- 
 	checkCapture(DestRow, DestCol, Piece, Board2, Board3),
 	checkCenter(DestRow, DestCol, Piece, Board3, Board4).
 
-parse_input(botPlay(Board,Player), BoardOut) :-
+parse_input(botPlay(Board,Player), Msg) :-
 	getPlayerColor(Player, Piece),
 	checkEnd(Board, 1, 1, 13, Piece),
-	validMoves(0, 0, 13, Piece, Board, _, BoardOut).
+	write(Piece),
+	validMoves(0, 0, 13, Piece, Board, _, BoardOut, X0, Y0, XF, YF),
+	% Preparing to JavaScript %
+	append([X0], [Y0], Initial),
+	append([XF], [YF], Final),
+	append(Initial, Final, Positions),
+	append([Positions], BoardOut, Msg).
 
 
 parse_input(test(C,N), Res) :- test(C,Res,N).
@@ -131,6 +137,3 @@ parse_input(quit, goodbye).
 
 test(_,[],N) :- N =< 0.
 test(A,[A|Bs],N) :- N1 is N-1, test(A,Bs,N1).
-
-
-	

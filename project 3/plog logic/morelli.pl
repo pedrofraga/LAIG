@@ -409,28 +409,28 @@ getRandomPlay(Board, ListOfMoves, Player):-
 	getInput(Board4, NextPlayer).
 
 
-validMoves(A, Max, Max, Piece, Board, ListOfMoves, Board4):-
+validMoves(A, Max, Max, Piece, Board, ListOfMoves, Board4, X0, Y0, XF, YF):-
 	A2 is A + 1,
 
-	validMoves(A2, 0, Max, Piece, Board, ListOfMoves, Board4).
+	validMoves(A2, 0, Max, Piece, Board, ListOfMoves, Board4, X0, Y0, XF, YF).
 
 	
-validMoves(A, B, Max, Piece, Board, ListOfMoves, Board4):-
+validMoves(A, B, Max, Piece, Board, ListOfMoves, Board4, X0, Y0, XF, YF):-
 	B2 is B + 1,
 
 	getElem(A, B, Board, Elem),
-	((Elem \= Piece) -> validMoves(A, B2, Max, Piece, Board, ListOfMoves, Board4);
+	((Elem \= Piece) -> validMoves(A, B2, Max, Piece, Board, ListOfMoves, Board4, X0, Y0, XF, YF);
 							findall([DestRow,DestCol], validInput(A, B , DestRow, DestCol, Board),Bag), append([A,B], Bag, Res), length(Res, SizeRes),
-							(SizeRes > 2 -> append(ListOfMoves, [Res], List), validMoves(A, B2, Max, Piece, Board, List, Board4); 
-								validMoves(A, B2, Max, Piece, Board, ListOfMoves, Board4))).
+							(SizeRes > 2 -> append(ListOfMoves, [Res], List), validMoves(A, B2, Max, Piece, Board, List, Board4, X0, Y0, XF, YF); 
+								validMoves(A, B2, Max, Piece, Board, ListOfMoves, Board4, X0, Y0, XF, YF))).
 
 
-validMoves(Max2, Max, Max, Piece, Board, ListOfMoves, Board4):-	
+validMoves(Max2, Max, Max, Piece, Board, ListOfMoves, Board4, X0, Y0, XF, YF):-	
 	Max2 is Max - 1,
 	getPlayerColor(Player, Piece),nl,
-	getRandomPlay(Board, ListOfMoves, Player, Board4).
+	getRandomPlay(Board, ListOfMoves, Player, Board4, X0, Y0, XF, YF).
 
-getRandomPlay(Board, ListOfMoves, Player, Board4):-
+getRandomPlay(Board, ListOfMoves, Player, Board4, X0, Y0, XF, YF):-
 	write('Valid Moves: '),nl,
 	write(ListOfMoves),nl,nl,
 	getPlayerColor(Player, Piece),
@@ -454,6 +454,11 @@ getRandomPlay(Board, ListOfMoves, Player, Board4):-
 
 	DestRow is DRow,
 	DestCol is DCol,
+
+	X0 is CurrCol,
+	Y0 is CurrRow,
+	XF is DestCol,
+	YF is DestRow,
 
 	setPosElem(DestRow, DestCol, Piece, Board, Board1),
 	setPosElem(CurrRow, CurrCol, 0, Board1, Board2),

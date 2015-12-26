@@ -194,11 +194,6 @@ Scene.prototype.createAppearances = function () {
 	this.whitetower = new CGFtexture(this, "../res/whitetower.png");
 	this.blacktower = new CGFtexture(this, "../res/blacktower.png");
 
-	/*this.blackMaterial.loadTexture('../res/blacktower.png');
-	this.blackMaterial.setTextureWrap('CLAMP_TO_EDGE', 'CLAMP_TO_EDGE');
-
-	this.whiteMaterial.loadTexture('../res/whitetower.png');
-	this.whiteMaterial.setTextureWrap('CLAMP_TO_EDGE', 'CLAMP_TO_EDGE');*/
 }
 
 
@@ -315,8 +310,7 @@ Scene.prototype.getPicking = function () {
 		if (this.pickResults != null && this.pickResults.length > 0) {
 			for (var i=0; i< this.pickResults.length; i++) {
 				var obj = this.pickResults[i][0];
-				if (obj)
-				{
+				if (obj) {
 					var customId = this.pickResults[i][1];				
 					this.board.pick(customId, obj);
 				}

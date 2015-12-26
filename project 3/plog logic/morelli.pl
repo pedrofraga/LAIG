@@ -407,3 +407,55 @@ getRandomPlay(Board, ListOfMoves, Player):-
 	checkCenter(DestRow, DestCol, Piece, Board3, Board4),
 	switchPlayer(NextPlayer, Player),
 	getInput(Board4, NextPlayer).
+
+
+validMoves(A, Max, Max, Piece, Board, ListOfMoves, Board4):-
+	A2 is A + 1,
+
+	validMoves(A2, 0, Max, Piece, Board, ListOfMoves, Board4).
+
+	
+validMoves(A, B, Max, Piece, Board, ListOfMoves, Board4):-
+	B2 is B + 1,
+
+	getElem(A, B, Board, Elem),
+	((Elem \= Piece) -> validMoves(A, B2, Max, Piece, Board, ListOfMoves, Board4);
+							findall([DestRow,DestCol], validInput(A, B , DestRow, DestCol, Board),Bag), append([A,B], Bag, Res), length(Res, SizeRes),
+							(SizeRes > 2 -> append(ListOfMoves, [Res], List), validMoves(A, B2, Max, Piece, Board, List, Board4); 
+								validMoves(A, B2, Max, Piece, Board, ListOfMoves, Board4))).
+
+
+validMoves(Max2, Max, Max, Piece, Board, ListOfMoves, Board4):-	
+	Max2 is Max - 1,
+	getPlayerColor(Player, Piece),nl,
+	getRandomPlay(Board, ListOfMoves, Player, Board4).
+
+getRandomPlay(Board, ListOfMoves, Player, Board4):-
+	write('Valid Moves: '),nl,
+	write(ListOfMoves),nl,nl,
+	getPlayerColor(Player, Piece),
+
+	length(ListOfMoves, LengthList),
+	LL is LengthList + 1,nl,
+	random(1, LL, Pos),
+	nth0(Pos, ListOfMoves, List), %random between 0 and Length of the list
+	nth0(0, List, PieceRow),
+	nth0(1, List, PieceCol),
+
+	CurrRow is PieceRow,
+	CurrCol is PieceCol,
+
+	length(List, LengthList2),
+	LL2 is LengthList2 + 1,nl,
+	random(2, LL2, PosDest), %random between 2 and Length of the list
+	nth0(PosDest, List, Play), 
+	nth0(0, Play, DRow),
+	nth0(1, Play, DCol),
+
+	DestRow is DRow,
+	DestCol is DCol,
+
+	setPosElem(DestRow, DestCol, Piece, Board, Board1),
+	setPosElem(CurrRow, CurrCol, 0, Board1, Board2),
+	checkCapture(DestRow, DestCol, Piece, Board2, Board3),
+	checkCenter(DestRow, DestCol, Piece, Board3, Board4).

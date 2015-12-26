@@ -32,8 +32,10 @@ Scene.prototype.init = function (application) {
 	this.setUpdatePeriod(this.expectedUpdatePeriod);
 
 	this.createAppearances();
+	this.enableTextures(true);
 
 	this.setPickEnabled(true);
+
 
 	this.board = new Board(this);
 
@@ -41,7 +43,7 @@ Scene.prototype.init = function (application) {
 
 Scene.prototype.initLights = function () {
  	
-	this.lights[0].setPosition(20, 20 , 20, 20);
+	this.lights[0].setPosition(20, 20 , 100, 20);
     this.lights[0].setAmbient(0, 0, 0, 1);
 	this.lights[0].setDiffuse(1.0, 1.0, 1.0, 1.0);
 	this.lights[0].setSpecular(1.0, 1.0, 1.0, 1.0);
@@ -106,6 +108,8 @@ Scene.prototype.display = function () {
 
 	this.board.display();
 
+
+
 };
 
 
@@ -126,10 +130,12 @@ Scene.prototype.update = function(currTime) {
 
 Scene.prototype.createAppearances = function () {
 
+	this.defaultMaterial = new CGFappearance(this);
+
 	this.blackMaterial = new CGFappearance(this);
-	this.blackMaterial.setAmbient(0.1,0.1,0.1,0.5);
-	this.blackMaterial.setDiffuse(0.1,0.1,0.1,0.5);
-	this.blackMaterial.setSpecular(0.1,0.1,0.1,0.5);
+	this.blackMaterial.setAmbient(0.13,0.13,0.13,0.5);
+	this.blackMaterial.setDiffuse(0.13,0.13,0.13,0.5);
+	this.blackMaterial.setSpecular(0.13,0.13,0.13,0.5);
 	this.blackMaterial.setShininess(0);
 
 	this.whiteMaterial = new CGFappearance(this);
@@ -181,6 +187,18 @@ Scene.prototype.createAppearances = function () {
 	this.lilacMaterial.setSpecular(0.78,0.27,1,0);
 	this.lilacMaterial.setShininess(0);
 
+	this.textShader = new CGFshader(this.gl, "shaders/font.vert", "shaders/font.frag");
+	this.textShader.setUniformsValues({'dims': [16, 16]});
+	this.fontTexture = new CGFtexture(this, "textures/oolite-font.png");
+
+	this.whitetower = new CGFtexture(this, "../res/whitetower.png");
+	this.blacktower = new CGFtexture(this, "../res/blacktower.png");
+
+	/*this.blackMaterial.loadTexture('../res/blacktower.png');
+	this.blackMaterial.setTextureWrap('CLAMP_TO_EDGE', 'CLAMP_TO_EDGE');
+
+	this.whiteMaterial.loadTexture('../res/whitetower.png');
+	this.whiteMaterial.setTextureWrap('CLAMP_TO_EDGE', 'CLAMP_TO_EDGE');*/
 }
 
 

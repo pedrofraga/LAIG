@@ -47,6 +47,7 @@
 
 
   indice = 1;
+  
   for(var i = 0; i < this.slices; i++){
     this.indices.push(0);
     if(i == this.slices - 1){

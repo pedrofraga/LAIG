@@ -31,20 +31,29 @@
  		} else if (response != 'Bad Request') {
 
  			var matrix = board.intrepertPlBoard(data.target.response);
- 			if (requestString != 'startgame') {
+            var cmd = requestString.substring(0, 7);
+            console.log(cmd);
+ 			if (requestString != 'startgame' && cmd != 'botPlay') {
 
  				board.history.playing = board.history.playing == 'black' ? 'white' : 'black';
  				var lastElement = board.orfanPieces.length - 1;
  				board.orfanPieces[lastElement].visible = true;
 
  				var moveHis = new MoveHistory(board.orfanPieces[lastElement].x0, board.orfanPieces[lastElement].y0,
- 					board.orfanPieces[lastElement].xf, board.orfanPieces[lastElement].yf);
+ 				board.orfanPieces[lastElement].xf, board.orfanPieces[lastElement].yf);
  				board.history.movesHistory.push(moveHis);
 
  				board.replaceMatrix(matrix, false);
 
- 			} else {
+ 			} else if (cmd == 'botPlay') {
+
+                board.history.playing = board.history.playing == 'black' ? 'white' : 'black';
+                board.replaceMatrix(matrix, false);
+                board.history.botPlayed = false;
+
+            } else {
  				
+
  				board.replaceMatrix(matrix, true);
 
  			}
@@ -107,7 +116,12 @@ Board.prototype.boardToPlList = function () {
 			if(object.piece == null)
         		plList += '0,';
         	else {
-        		var value = object.piece.color == 'black' ? '1,' : '2,';
+        		
+        		if (object.piece.cylinder.height == 0.1)
+        			var value = object.piece.color == 'black' ? '1,' : '2,';
+        		else
+        			var value = object.piece.color == 'black' ? '3,' : '4,';
+
         		plList += value;
         	}
 		}

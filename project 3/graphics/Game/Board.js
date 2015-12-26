@@ -19,6 +19,9 @@ function Board(scene) {
 
 	this.orfanPieces = [];
 
+	this.white = 'Human';
+	this.black = 'Human';
+
 }
 
 Board.prototype = Object.create(CGFobject.prototype);
@@ -62,6 +65,7 @@ Board.prototype.initPrimitives = function () {
 	this.space = new Cube(this.scene, 2, 0.3, 2);
 	
 	this.cylinder = new Cylinder(this.scene, 0.1, 0.8, 0.8, 1, 20);
+	this.towerCylinder = new Cylinder(this.scene, 0.2, 0.8, 0.8, 1, 20);
 	this.top = new MyCircle(this.scene, 0.8, 20);
 
 }
@@ -166,6 +170,9 @@ Board.prototype.initBoardMatrix = function () {
 				if ((newMatrix[y][x] == '1' || newMatrix[y][x] == '2')  && starting) {
 					var color = newMatrix[y][x] == '1' ? 'black' : 'white';
 					this.matrix[y][x].animation = new RotationAnimation(color, 'insert');
+				} else if (newMatrix[y][x] == '3' || newMatrix[y][x] == '4') {
+					var color = newMatrix[y][x] == '3' ? 'black' : 'white';
+					this.matrix[y][x].animation = new RotationAnimation(color, 'insert');
 				}
 
 			}
@@ -178,7 +185,7 @@ Board.prototype.initBoardMatrix = function () {
 
 
 /**
- * Updates the whole board, reponsible for animations.
+ * Updates the whole board, reponsible for animations, the bot plays if it's ment to play.
  *	
  * @method update
  * @param	{int}	currTime	system time
@@ -202,7 +209,35 @@ Board.prototype.update = function (currTime) {
 
 	}
 
+	this.botPlay();
+
 }
+
+/**
+ * The bot makes a move if there are no animations ocurring and if it's bot turn.
+ *	
+ * @method botPlays
+ *
+ */
+
+Board.prototype.botPlay = function () {
+
+	if (this.white == 'Bot' && this.history.playing == 'white' ||
+		this.black == 'Bot' && this.history.playing == 'black') {
+
+		if (!this.orfanPieces.length && !this.history.botPlayed) {
+
+			var plBoard = this.boardToPlList();
+			var request = 'botPlay(' + plBoard + ',' + this.history.playing + 'Player)';
+			this.requestToPl(request);
+			this.history.botPlayed = true;
+
+		}
+
+	}
+
+}
+
 
 
 /**

@@ -10,5 +10,6 @@ function GameHistory () {
 	this.selectedSpaces = [];
 	this.movesHistory = [];
 	this.playing = 'black';
+	this.botPlayed = false;
 
 }

@@ -203,8 +203,8 @@ BoardSpace.prototype.insertRot = function (deltaTime) {
 		mat4.rotate(this.transformMatrix, this.transformMatrix, this.animation.elapsedAngle, [1, 0, 0]);
 
 		if (this.animation.angle / 2 <=  Math.abs(this.animation.elapsedAngle)) {
-
-			this.piece = new Piece(this.scene, this.scene.board.cylinder, this.scene.board.top);
+			var cylinder = this.x == 6 && this.y == 6 ? this.scene.board.towerCylinder : this.scene.board.cylinder;
+			this.piece = new Piece(this.scene, cylinder, this.scene.board.top);
 			this.piece.color = this.animation.color;
 
 		}

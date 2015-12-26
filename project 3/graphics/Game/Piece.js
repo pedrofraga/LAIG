@@ -68,7 +68,7 @@ Piece.prototype.displayTopCylinder = function (material)  {
 
 	this.scene.pushMatrix();
 	material.apply();
-	this.scene.multMatrix(this.blackCylinderTranslation);
+	this.scene.multMatrix(this.cylinderTranslation);
 	this.cylinder.display();
 	this.scene.popMatrix();
 
@@ -77,8 +77,15 @@ Piece.prototype.displayTopCylinder = function (material)  {
 Piece.prototype.displayBottomTop = function (material)  {
 
 	this.scene.pushMatrix();
-	material.apply();
-	this.scene.multMatrix(this.whiteTopMatrix);
+	if (this.cylinder.height == 0.2) {
+		var texture = this.color != 'black' ? this.scene.blacktower : this.scene.whitetower;
+		this.scene.defaultMaterial.setTexture(texture);
+		this.scene.defaultMaterial.apply();
+	} else {
+		material.apply();
+	}
+
+	this.scene.multMatrix(this.topMatrix);
 	this.top.display();
 	this.scene.popMatrix();
 
@@ -87,8 +94,14 @@ Piece.prototype.displayBottomTop = function (material)  {
 Piece.prototype.displayTopTop = function (material)  {
 
 	this.scene.pushMatrix();
-	material.apply();
-	this.scene.multMatrix(this.blackTopTranslation);
+	if (this.cylinder.height == 0.2) {
+		var texture = this.color == 'black' ? this.scene.blacktower : this.scene.whitetower;
+		this.scene.defaultMaterial.setTexture(texture);
+		this.scene.defaultMaterial.apply();
+	} else {
+		material.apply();
+	}
+	this.scene.multMatrix(this.bottomMatrix);
 	this.top.display();
 	this.scene.popMatrix();
 
@@ -107,21 +120,22 @@ Piece.prototype.displayTopTop = function (material)  {
 
 Piece.prototype.createInitialMatrixes = function () {
 
+	var height = this.cylinder.height
 	this.transformMatrix = mat4.create();
  	mat4.identity(this.transformMatrix);
  	mat4.translate(this.transformMatrix, this.transformMatrix, [0, 0.2, 0]);
  	mat4.rotate(this.transformMatrix, this.transformMatrix, -Math.PI / 2, [1, 0, 0]);
 
- 	this.blackCylinderTranslation = mat4.create();
- 	mat4.identity(this.blackCylinderTranslation);
- 	mat4.translate(this.blackCylinderTranslation, this.blackCylinderTranslation, [0, 0, 0.1]);
+ 	this.cylinderTranslation = mat4.create();
+ 	mat4.identity(this.cylinderTranslation);
+ 	mat4.translate(this.cylinderTranslation, this.cylinderTranslation, [0, 0, height]);
 
- 	this.whiteTopMatrix = mat4.create();
- 	mat4.identity(this.whiteTopMatrix);
- 	mat4.rotate(this.whiteTopMatrix, this.whiteTopMatrix, -Math.PI, [1, 0, 0]);
+ 	this.topMatrix = mat4.create();
+ 	mat4.identity(this.topMatrix);
+ 	mat4.rotate(this.topMatrix, this.topMatrix, -Math.PI, [1, 0, 0]);
 
- 	this.blackTopTranslation = mat4.create();
- 	mat4.identity(this.blackTopTranslation);
- 	mat4.translate(this.blackTopTranslation, this.blackTopTranslation, [0, 0, 0.2]);
+ 	this.bottomMatrix = mat4.create();
+ 	mat4.identity(this.bottomMatrix);
+ 	mat4.translate(this.bottomMatrix, this.bottomMatrix, [0, 0, height * 2]);
 
 }

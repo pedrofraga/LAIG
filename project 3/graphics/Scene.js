@@ -60,11 +60,6 @@ Scene.prototype.initLights = function () {
 
 };
 
-Scene.prototype.setInterface = function (interface) {
-
-	this.interface = interface;
-
-}
 
 Scene.prototype.initCameras = function () {
 
@@ -198,8 +193,8 @@ Scene.prototype.createAppearances = function () {
 	this.textShader.setUniformsValues({'dims': [16, 16]});
 	this.fontTexture = new CGFtexture(this, "textures/oolite-font.png");
 
-	this.whitetower = new CGFtexture(this, "../res/whitetower.png");
-	this.blacktower = new CGFtexture(this, "../res/blacktower.png");
+	this.whitetower = new CGFtexture(this, "textures/whitetower.png");
+	this.blacktower = new CGFtexture(this, "textures/blacktower.png");
 
 }
 

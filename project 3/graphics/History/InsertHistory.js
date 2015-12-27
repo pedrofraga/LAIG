@@ -58,8 +58,8 @@ InsertHistory.prototype.replay = function () {
 
 				this.scene.board.matrix[y][x].animation = new RotationAnimation(this.color, 'insert');
 
-				var last = this.scene.board.history.replayHistory.length - 1;
-				this.scene.board.history.replayHistory.splice(last, 1);
+				var last = this.scene.board.history.movesReplay.length - 1;
+				this.scene.board.history.movesReplay.splice(last, 1);
 				this.scene.board.history.replayIt++;
 
 				this.scene.board.replay();

@@ -27,8 +27,6 @@ main=function()
 
     app.setInterface(myInterface);
 
-    myScene.setInterface(myInterface);
-
     app.run();
 }
 

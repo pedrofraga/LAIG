@@ -68,6 +68,7 @@ close_stream(Stream) :- flush_output(Stream), close(Stream).
 % Returns 200 OK on successful aplication of parse_input on request
 % Returns 400 Bad Request on syntax error (received from parser) or on failure of parse_input
 handle_request(Request, MyReply, '200 OK') :- catch(parse_input(Request, MyReply),error(_,_),fail), !.
+handle_request(botPlay(_,_), win, '200 OK').
 handle_request(syntax_error, 'Syntax Error', '400 Bad Request') :- !.
 handle_request(_, 'Bad Request', '400 Bad Request').
 
@@ -110,26 +111,37 @@ print_header_line(_).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Require your Prolog Files here
+
 parse_input(startgame, Board) :- startDrawingBoard(0,13, Board).
 
-parse_input(movePiece(Board,CurrRow,CurrCol,DestRow,DestCol,Player), Board4) :- validInput(CurrRow, CurrCol, DestRow, DestCol, Board),
+
+parse_input(movePiece(Board,CurrRow,CurrCol,DestRow,DestCol,Player), Board4) :- 
+	validInput(CurrRow, CurrCol, DestRow, DestCol, Board),
 	getElem(CurrRow, CurrCol, Board, Piece),
 	getPlayerColor(Player, Piece),
 	setPosElem(DestRow, DestCol, Piece, Board, Board1),
 	setPosElem(CurrRow, CurrCol, 0, Board1, Board2),
 	checkCapture(DestRow, DestCol, Piece, Board2, Board3),
-	checkCenter(DestRow, DestCol, Piece, Board3, Board4).
+	checkCenter(DestRow, DestCol, Piece, Board3, Board4),
+	write('Checking End..\n'),
+	checkEnd(Board, 1, 1, 13, Piece).
+
+parse_input(movePiece(Board,_,_,_,_,Player), Msg) :- getPlayerColor(Player, Piece), checkEnd(Board, 1, 1, 13, Piece), Msg = 'Bad Request'. %checking if its just an invalid play
+
+parse_input(movePiece(_,_,_,_,_,_), Msg) :- Msg = win.
+
 
 parse_input(botPlay(Board,Player), Msg) :-
 	getPlayerColor(Player, Piece),
-	checkEnd(Board, 1, 1, 13, Piece),
 	write(Piece),
 	validMoves(0, 0, 13, Piece, Board, _, BoardOut, X0, Y0, XF, YF),
 	% Preparing to JavaScript %
 	append([X0], [Y0], Initial),
 	append([XF], [YF], Final),
 	append(Initial, Final, Positions),
-	append([Positions], BoardOut, Msg).
+	append([Positions], BoardOut, Msg),
+	checkEnd(Board, 1, 1, 13, Piece).
+
 
 
 parse_input(test(C,N), Res) :- test(C,Res,N).

@@ -425,21 +425,20 @@ checkCenter(_,_,_,Board,Board1):-
 
 %goes through all the pieces and checks if there is any move in any direction 
 
-checkEnd(Board, Row, Max, Max, Piece):-
+checkEnd(Board, Row, Max, Max, Piece, Answer):-
 	Row2 is Row + 1, 
-	(Row2 < 13 -> Row2 =< Max, checkEnd(Board, Row2, 1, Max, Piece); 
-	
-	gameOver(Board)). %if the predicate goes through all the board is because there is no moves left, the game end
+	(Row2 < 13 -> Row2 =< Max, checkEnd(Board, Row2, 1, Max, Piece, Answer); 
+	gameOver(Board, Answer)). %if the predicate goes through all the board is because there is no moves left, the game end
 
 
-checkEnd(Board, Row, Col, Max, Piece):-
+checkEnd(Board, Row, Col, Max, Piece, Answer):-
 	RowPlus is Row + 1,
 	RowMinus is Row - 1,
 	ColPlus is Col + 1,
 	ColMinus is Col - 1,
 
 	getElem(Row, Col, Board, Elem),
-	(Elem \= Piece -> checkEnd(Board, Row, ColPlus, Max,Piece);
+	(Elem \= Piece -> checkEnd(Board, Row, ColPlus, Max, Piece, Answer);
 
 
 	noMovement(Row, Col, RowPlus, Col, Board), 
@@ -451,6 +450,11 @@ checkEnd(Board, Row, Col, Max, Piece):-
 	noMovement(Row, Col, RowMinus, ColPlus, Board), 
 	noMovement(Row, Col, RowMinus, ColMinus, Board), 
 	
-	checkEnd(Board, Row, ColPlus, Max, Piece)).
+	checkEnd(Board, Row, ColPlus, Max, Piece), Answer).
 
 checkEnd(_,_,_,_,_).
+
+
+gameOver(_, Answer) :-
+	trace,
+	Answer = win.

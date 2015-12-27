@@ -23,15 +23,21 @@
 
  		console.log("Request successful. Reply: " + data.target.response);
 
- 		var response = data.target.response; 
+ 		var response = data.target.response;
+        var cmd = requestString.substring(0, 7);
+
  		if (response == 'goodbye') {
 
  			location.replace("../");
 
- 		} else if (response != 'Bad Request') {
+ 		} else if (response == 'win') {
 
-            var cmd = requestString.substring(0, 7);
-            console.log(cmd);
+            var winner = board.history.playing == 'black' ? 'Black' : 'White';
+            this.botPlayed = true;
+            swal(winner + ' win!');
+
+        } else if (response != 'Bad Request') {
+
  			if (requestString != 'startgame' && cmd != 'botPlay') {
 
                 var matrix = board.intrepertPlBoard(data.target.response);
@@ -70,6 +76,7 @@
 
  		} else {
 
+            board.history.botPlayed = false;
  			var lastElement = board.orfanPieces.length - 1;
  			board.orfanPieces.splice(lastElement, 1);
 

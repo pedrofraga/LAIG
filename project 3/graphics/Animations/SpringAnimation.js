@@ -28,7 +28,7 @@ SpringAnimation.prototype.update = function () {
  	var spring_y = this.k * ( this.y ); 
  	var damper_y = this.b * ( this.vy );
  	this.ay = ( spring_y + damper_y ) / this.mass;
- 	this.vy += this.ay * (this.time/1350);
- 	this.y += this.vy * (this.time/1350);
+ 	this.vy += this.ay * (this.time/1250);
+ 	this.y += this.vy * (this.time/1250);
 
 }

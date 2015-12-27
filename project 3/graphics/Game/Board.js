@@ -204,7 +204,7 @@ Board.prototype.initBoardMatrix = function () {
 
 					var color = newMatrix[y][x] == '3' ? 'black' : 'white';
 					this.matrix[y][x].animation = new RotationAnimation(color, 'insert');
-					this.history.movesHistory.push(new InsertHistory(this, color));
+					this.history.movesHistory.push(new InsertHistory(this.scene, color));
 
 				}
 

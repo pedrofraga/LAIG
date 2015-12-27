@@ -164,7 +164,7 @@ Board.prototype.initBoardMatrix = function () {
  */
 
 
- Board.prototype.replaceMatrix = function (newMatrix, starting) {
+ Board.prototype.replaceMatrix = function (newMatrix, starting, replaying) {
  	
  	for (var y = 0; y < this.matrix.length; y++)
 		for (var x = 0; x < this.matrix[y].length; x++) {
@@ -184,12 +184,12 @@ Board.prototype.initBoardMatrix = function () {
 					this.matrix[y][x].piece = null;
 					this.matrix[y][x].animation = new SpringAnimation(-30);
 
-				}  else if (newMatrix[y][x] == '0' && !starting) {
+				}  else if (newMatrix[y][x] == '0' && !starting && !replaying) {
 
 					this.matrix[y][x].piece = null;
 					this.matrix[y][x].animation = new SpringAnimation(-40);
 
-				} else if ((newMatrix[y][x] == '0' || newMatrix[y][x] == '-1') && starting) {
+				} else if ((newMatrix[y][x] == '0' || newMatrix[y][x] == '-1') && (starting || replaying)) {
 
 					this.matrix[y][x].animation = new RotationAnimation('', 'remove');
 
@@ -197,7 +197,7 @@ Board.prototype.initBoardMatrix = function () {
 
 			} else {
 
-				if ((newMatrix[y][x] == '1' || newMatrix[y][x] == '2')  && starting) {
+				if ((newMatrix[y][x] == '1' || newMatrix[y][x] == '2')  && (starting || replaying)) {
 					var color = newMatrix[y][x] == '1' ? 'black' : 'white';
 					this.matrix[y][x].animation = new RotationAnimation(color, 'insert');
 				} else if (newMatrix[y][x] == '3' || newMatrix[y][x] == '4') {
@@ -212,7 +212,10 @@ Board.prototype.initBoardMatrix = function () {
 
 		}
 
-	if (starting) this.clearHistory();
+	if (starting) {
+	 	this.clearHistory();
+	 	this.history.initialMatrix = newMatrix;
+	}
 
  }
 
@@ -242,7 +245,10 @@ Board.prototype.update = function (currTime) {
 
 	}
 
-	this.botPlay();
+	if(!this.scene.replaying)
+		this.botPlay();
+	else
+		this.replay();
 
 }
 
@@ -345,6 +351,63 @@ Board.prototype.botPlay = function () {
  		}
 
  	move.undo();
+
+ }
+
+  /**
+ * Replays previous moves by accessing moves history
+ *	
+ * @method replay
+ *
+ */
+
+
+ Board.prototype.replay = function () {
+
+ 	if(!this.scene.replayStarted)
+ 		if(this.boardAnimating()) return;
+ 		else this.scene.replayStarted = true;
+
+ 	var size = this.history.movesReplay.length;
+ 	if (!size) {
+ 		this.scene.replaying = false;
+ 		this.scene.replayStarted = false;
+ 		var board = this;
+ 		setTimeout (function () {
+ 			board.scene.app.interface.replay(false);
+ 		}, 600);
+ 		return;
+ 	}
+
+ 	var lastOrfan = this.orfanPieces.length - 1;
+ 	if (this.orfanPieces.length)
+ 		return;
+
+ 	var lastMove = size - 1;
+ 	var move = this.history.movesReplay[lastMove];
+
+ 	move.replay();
+
+    this.scene.app.interface.logItVal();
+
+
+ }
+
+ /**
+ * Checks if board is animating
+ *	
+ * @method boardAnimating
+ * @return {Boolean} 	true if board is being animated, false if it's not
+ *
+ */
+
+ Board.prototype.boardAnimating = function () {
+
+ 	for (var y = 0; y < this.matrix.length; y++)
+		for (var x = 0; x < this.matrix[y].length; x++)
+			if (this.matrix[y][x].animation != null) return true;
+
+	return false;
 
  }
 

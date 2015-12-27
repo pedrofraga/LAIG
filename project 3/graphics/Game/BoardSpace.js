@@ -177,6 +177,7 @@ BoardSpace.prototype.replaceRot = function (deltaTime) {
 	} else {
 
 		mat4.copy(this.transformMatrix, this.originalTransformMatrix);
+		this.animation = null;
 
 	}
 }
@@ -212,6 +213,7 @@ BoardSpace.prototype.insertRot = function (deltaTime) {
 	} else {
 
 		mat4.copy(this.transformMatrix, this.originalTransformMatrix);
+		this.animation = null;
 
 	}
 
@@ -247,6 +249,7 @@ BoardSpace.prototype.removeRot = function (deltaTime) {
 	} else {
 
 		mat4.copy(this.transformMatrix, this.originalTransformMatrix);
+		this.animation = null;
 
 	}
 

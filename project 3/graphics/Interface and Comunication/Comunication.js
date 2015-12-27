@@ -49,7 +49,7 @@
  				board.orfanPieces[lastElement].xf, board.orfanPieces[lastElement].yf);
  				board.history.movesHistory.push(moveHis);
 
- 				board.replaceMatrix(matrix, false);
+ 				board.replaceMatrix(matrix, false, false);
 
  			} else if (cmd == 'botPlay') {
 
@@ -59,7 +59,7 @@
                     var matrix = board.intrepertPlBoard(data.target.response, true);
 
                     board.history.playing = board.history.playing == 'black' ? 'white' : 'black';
-                    board.replaceMatrix(matrix, false);
+                    board.replaceMatrix(matrix, false, false);
                 }
 
                 board.history.botPlayed = false;
@@ -68,7 +68,7 @@
  				
                 var matrix = board.intrepertPlBoard(data.target.response);
                 board.orfanPieces = [];
- 				board.replaceMatrix(matrix, true);
+ 				board.replaceMatrix(matrix, true, false);
 
  			}
 

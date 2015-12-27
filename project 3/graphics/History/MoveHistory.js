@@ -63,3 +63,48 @@ MoveHistory.prototype.undo = function () {
 				return;
 			}
 }
+
+
+
+/**
+ * Replays previous moves by accessing moves history
+ *	
+ * @method replay
+ *
+ */
+
+MoveHistory.prototype.replay = function () {
+
+	for (var y = 0; y < this.scene.board.matrix.length; y++)
+		for (var x = 0; x < this.scene.board.matrix[y].length; x++)
+			if (this.x0 == x && this.y0 == y) {
+
+				if (this.scene.board.matrix[y][x].piece == null) {
+					var last = this.scene.board.history.movesReplay.length - 1;
+					this.scene.board.history.movesReplay.splice(last, 1);
+					this.scene.board.replay();
+					return; 
+				} 
+
+				var color = this.scene.board.matrix[y][x].piece.color;
+				var cylinder = this.scene.board.matrix[y][x].piece.height == 0.15 ? this.scene.board.towerCylinder : this.scene.board.cylinder;
+
+				var piece =	new Piece(this.scene, cylinder, this.scene.board.top);
+				piece.color = color;
+
+				var orfanPiece = new OrfanPiece(this.scene, piece, this.x0, this.y0, this.xf, this.yf);
+				orfanPiece.visible = true;
+				this.scene.board.orfanPieces.push(orfanPiece);
+				var size = this.scene.board.orfanPieces.length - 1;
+				this.scene.board.orfanPieces[size].undo = true;
+				this.scene.board.matrix[y][x].piece = null;
+				this.scene.board.matrix[y][x].animation = new SpringAnimation(-40);
+
+				var last = this.scene.board.history.movesReplay.length - 1;
+				this.scene.board.history.movesReplay.splice(last, 1);
+				this.scene.board.history.playing = this.scene.board.history.playing == 'black' ? 'white' : 'black';
+				this.scene.board.history.replayIt++;
+				return;
+			}
+
+}

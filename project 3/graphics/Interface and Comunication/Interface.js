@@ -28,20 +28,29 @@ MyInterface.prototype.init = function(application) {
 
 	this.initGUIVars();
 	
+	this.app = application;
 	this.gui = new dat.GUI();
+	this.gui.autoListen = false;
 
 	var self = this;
+	this.defaultControls = [];
+	this.replayControls = [];
 
-	this.gui.add(this,'startGame').name('Start Game');
-	this.gui.add(this,'undo').name('Undo');
+	this.defaultControls[0] = this.gui.add(this,'startGame').name('Start Game');
+	this.defaultControls[1] = this.gui.add(this,'undo').name('Undo');
+	this.defaultControls[2] = this.gui.add(this.scene,'replay').name('Replay');
 
 	this.gui.add(this, 'perspective', this.perspectiveNames).name('Perspective')
 	.onChange(function() { self.scene.updateCamera(self.perspective);});
 
-	this.gui.add(this.scene.board, 'black', this.possiblePlayers).name('Black').listen();
-	this.gui.add(this.scene.board, 'white', this.possiblePlayers).name('White').listen();
+	this.defaultControls[3] = this.gui.add(this.scene.board, 'black', this.possiblePlayers).name('Black').listen();
+	this.defaultControls[4] = this.gui.add(this.scene.board, 'white', this.possiblePlayers).name('White').listen();
 
-	this.gui.add(this,'quitGame').name('Quit');
+	this.defaultControls[5] = this.gui.add(this,'quitGame').name('Quit');
+
+	this.replayControls[0] = this.gui.add(this, 'replayPercent', 0, 100).name('Replaying').listen();
+
+	toggleMenuItem(this.replayControls[0], false);
 
 	return true;
 	
@@ -70,6 +79,7 @@ MyInterface.prototype.initGUIVars = function() {
 	this.perspectiveNames = this.scene.getPerspesctiveNames();
 	this.perspective = this.perspectiveNames[0];
 	this.possiblePlayers = ['Human', 'Bot'];
+	this.replayPercent = 0;
 }
 
 /**
@@ -85,3 +95,29 @@ MyInterface.prototype.processKeyboard = function(event) {
 	
 	// for better cross-browser support, you may also check suggestions on using event.which in http://www.w3schools.com/jsref/event_key_keycode.asp
 };
+
+MyInterface.prototype.logItVal = function() {
+	this.replayPercent = this.scene.board.history.replayIt / this.scene.board.history.movesHistory.length * 100;
+}
+
+
+MyInterface.prototype.replay = function(replaying) {
+
+	for (var i = 0; i < this.defaultControls.length; i++)
+		toggleMenuItem(this.defaultControls[i], !replaying);
+
+	toggleMenuItem(this.replayControls[0], replaying);
+
+	this.scene.board.history.replayIt = 0;
+	this.replayPercent = 0;
+}
+
+
+function toggleMenuItem(item, visible) {
+	item.__li.style.display = visible ? "" : "none";
+}
+
+
+function isMenuItemVisible(item) {
+	return item.__li.style.display != "none";
+}

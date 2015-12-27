@@ -40,3 +40,30 @@ InsertHistory.prototype.undo = function () {
 
 
 }
+
+
+
+/**
+ * Replays previous moves by accessing moves history
+ *	
+ * @method replay
+ *
+ */
+
+InsertHistory.prototype.replay = function () {
+
+	for (var y = 0; y < this.scene.board.matrix.length; y++)
+		for (var x = 0; x < this.scene.board.matrix[y].length; x++)
+			if (this.x == x && this.y == y) {
+
+				this.scene.board.matrix[y][x].animation = new RotationAnimation(this.color, 'insert');
+
+				var last = this.scene.board.history.replayHistory.length - 1;
+				this.scene.board.history.replayHistory.splice(last, 1);
+				this.scene.board.history.replayIt++;
+
+				this.scene.board.replay();
+			}
+
+
+}

@@ -10,6 +10,8 @@ Scene.prototype.init = function (application) {
 
     CGFscene.prototype.init.call(this, application);
 
+    this.app = application;
+
     this.interface = null;
     this.lastCurrTime = 0;
 
@@ -35,6 +37,9 @@ Scene.prototype.init = function (application) {
 	this.enableTextures(true);
 
 	this.setPickEnabled(true);
+
+	this.replaying = false;
+	this.replayStarted = false;
 
 
 	this.board = new Board(this);
@@ -89,8 +94,10 @@ Scene.prototype.setDefaultAppearance = function () {
 
 Scene.prototype.display = function () {
 
-	this.getPicking();
-	this.clearPickRegistration();
+	if(!this.replaying) {
+		this.getPicking();
+		this.clearPickRegistration();	
+	}
 
     this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);
     this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
@@ -318,4 +325,27 @@ Scene.prototype.getPicking = function () {
 			this.pickResults.splice(0,this.pickResults.length);
 		}		
 	}
+}
+
+
+
+Scene.prototype.replay = function () {
+
+	this.replaying = !this.board.history.movesHistory.length ? false : true;
+
+	if (this.replaying == false) swal("Oops...", "There is nothing to replay yet.", "error");
+	else {
+
+		this.app.interface.replay(true);
+		this.board.history.movesReplay = this.board.history.movesHistory.slice();
+		this.board.history.movesReplay.reverse();
+		this.board.black = 'Human';
+		this.board.white = 'Human';
+		this.board.history.playing = 'black';
+		var matrix = this.board.history.initialMatrix;
+		this.board.orfanPieces = [];
+		this.board.replaceMatrix(matrix, false, true);
+
+	}
+	
 }

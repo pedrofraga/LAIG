@@ -51,3 +51,42 @@ ReplaceColorHistory.prototype.undo = function () {
 			}
 
 }
+
+
+
+/**
+ * Replays previous moves by accessing moves history
+ *	
+ * @method replay
+ *
+ */
+
+ReplaceColorHistory.prototype.replay = function () {
+
+	for (var y = 0; y < this.scene.board.matrix.length; y++)
+		for (var x = 0; x < this.scene.board.matrix[y].length; x++)
+			if (this.x == x && this.y == y) {
+
+				var color = this.scene.board.matrix[y][x].piece.color;
+				var obj = new Piece(this.scene, this.scene.board.cylinder, this.scene.board.top);
+				obj.color = color;
+				var orfanPiece = new OrfanPiece(this.scene, obj, x, y);
+				this.scene.board.orfanPieces.push(orfanPiece);
+				this.scene.board.matrix[y][x].piece = null;
+				this.scene.board.matrix[y][x].animation = new SpringAnimation(-30);
+
+				var last = this.scene.board.history.movesReplay.length - 1;
+				this.scene.board.history.movesReplay.splice(last, 1);
+
+				var lastHis = this.scene.board.history.movesHistory.length - 1;
+				this.scene.board.history.movesHistory.splice(lastHis, 1);
+
+				console.log(this.scene.board.history.movesHistory);
+				
+				this.scene.board.history.replayIt++;
+
+				this.scene.board.replay();
+
+			}
+
+}

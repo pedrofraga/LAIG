@@ -34,7 +34,7 @@ function OrfanPiece(scene, piece, x0, y0, xf, yf) {
 	if (typeof this.xf === "undefined" && typeof this.yf === "undefined") {
 
 		var color = this.piece.color;
-		this.scene.board.history.movesHistory.push(new ReplaceColorHistory(color, this.x0, this.y0));
+		this.scene.board.history.movesHistory.push(new ReplaceColorHistory(this.scene, color, this.x0, this.y0));
 
 	}
 

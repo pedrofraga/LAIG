@@ -39,7 +39,7 @@
  				var lastElement = board.orfanPieces.length - 1;
  				board.orfanPieces[lastElement].visible = true;
 
- 				var moveHis = new MoveHistory(board.orfanPieces[lastElement].x0, board.orfanPieces[lastElement].y0,
+ 				var moveHis = new MoveHistory(board.scene, board.orfanPieces[lastElement].x0, board.orfanPieces[lastElement].y0,
  				board.orfanPieces[lastElement].xf, board.orfanPieces[lastElement].yf);
  				board.history.movesHistory.push(moveHis);
 

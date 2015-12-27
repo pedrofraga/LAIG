@@ -405,7 +405,8 @@ Board.prototype.botPlay = function () {
 
  	for (var y = 0; y < this.matrix.length; y++)
 		for (var x = 0; x < this.matrix[y].length; x++)
-			if (this.matrix[y][x].animation != null) return true;
+			if (this.matrix[y][x].animation != null)
+			if (this.matrix[y][x].animation.constructor == RotationAnimation) return true;
 
 	return false;
 

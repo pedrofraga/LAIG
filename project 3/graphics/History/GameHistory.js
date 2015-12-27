@@ -12,8 +12,9 @@ function GameHistory () {
 	this.playing = 'black';
 	this.botPlayed = false;
 
+	/* Replay vars */
 	this.movesReplay = [];
 	this.initialMatrix = [];
-	this.replayIt = 5;
+	this.replayIt = 0;
 
 }

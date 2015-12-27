@@ -145,7 +145,7 @@ BoardSpace.prototype.update = function (currTime) {
 					this.removeRot(deltaTime);
 				break;
 			case SpringAnimation:
-				this.animatePick(deltaTime);
+				this.animateSpring(deltaTime);
 				break;
 		}
 
@@ -161,12 +161,13 @@ BoardSpace.prototype.update = function (currTime) {
 
 BoardSpace.prototype.replaceRot = function (deltaTime) {
 
+	var direction = this.animation.color == 'black' ? 1 : -1;
+
 	if(this.animation.angle > Math.abs(this.animation.elapsedAngle)) {
 
 		mat4.copy(this.transformMatrix, this.originalTransformMatrix);
 		var angleToBeRotated = deltaTime * this.animation.angle / this.animation.time;
 
-		var direction = this.animation.color == 'black' ? 1 : -1;
 		this.animation.elapsedAngle += angleToBeRotated * direction;
 
 		mat4.rotate(this.transformMatrix, this.transformMatrix, this.animation.elapsedAngle, [1, 0, 0]);
@@ -177,7 +178,8 @@ BoardSpace.prototype.replaceRot = function (deltaTime) {
 	} else {
 
 		mat4.copy(this.transformMatrix, this.originalTransformMatrix);
-		this.animation = null;
+		this.animation = new SpringAnimation(30 * direction, true, 1500);
+
 
 	}
 }
@@ -193,12 +195,13 @@ BoardSpace.prototype.replaceRot = function (deltaTime) {
 
 BoardSpace.prototype.insertRot = function (deltaTime) {
 
+	var direction = this.animation.color == 'black' ? 1 : -1;
+
 	if(this.animation.angle > Math.abs(this.animation.elapsedAngle)) {
 
 		mat4.copy(this.transformMatrix, this.originalTransformMatrix);
 		var angleToBeRotated = deltaTime * this.animation.angle / this.animation.time;
 
-		var direction = this.animation.color == 'black' ? 1 : -1;
 		this.animation.elapsedAngle += angleToBeRotated * direction;
 
 		mat4.rotate(this.transformMatrix, this.transformMatrix, this.animation.elapsedAngle, [1, 0, 0]);
@@ -213,7 +216,7 @@ BoardSpace.prototype.insertRot = function (deltaTime) {
 	} else {
 
 		mat4.copy(this.transformMatrix, this.originalTransformMatrix);
-		this.animation = null;
+		this.animation = new SpringAnimation(30 * direction, true, 1500);
 
 	}
 
@@ -230,12 +233,13 @@ BoardSpace.prototype.insertRot = function (deltaTime) {
 
 BoardSpace.prototype.removeRot = function (deltaTime) {
 
+	var direction = this.animation.color == 'black' ? 1 : -1;
+
 	if(this.animation.angle > Math.abs(this.animation.elapsedAngle)) {
 
 		mat4.copy(this.transformMatrix, this.originalTransformMatrix);
 		var angleToBeRotated = deltaTime * this.animation.angle / this.animation.time;
 
-		var direction =  1;
 		this.animation.elapsedAngle += angleToBeRotated * direction;
 
 		mat4.rotate(this.transformMatrix, this.transformMatrix, this.animation.elapsedAngle, [1, 0, 0]);
@@ -249,7 +253,8 @@ BoardSpace.prototype.removeRot = function (deltaTime) {
 	} else {
 
 		mat4.copy(this.transformMatrix, this.originalTransformMatrix);
-		this.animation = null;
+		this.animation = new SpringAnimation(30 * direction, true, 1500);
+
 
 	}
 
@@ -258,14 +263,14 @@ BoardSpace.prototype.removeRot = function (deltaTime) {
 
 
 /**
- * Animates picked space 
+ * Animates springed space 
  *	
- * @method  animatePick
+ * @method  animateSpring
  * @param	{int}	deltaTime	delta since the last time there was an update
  *
  */
 
-BoardSpace.prototype.animatePick = function (deltaTime) {
+BoardSpace.prototype.animateSpring = function (deltaTime) {
 
  	mat4.copy(this.transformMatrix, this.originalTransformMatrix);
 
@@ -277,6 +282,10 @@ BoardSpace.prototype.animatePick = function (deltaTime) {
 	this.animation.time = deltaTime; 	
  	this.animation.update();
  	var y = this.animation.y;
- 	mat4.translate(this.transformMatrix, this.transformMatrix, [0, y, 0]);
+
+ 	if (!this.animation.swing)
+ 		mat4.translate(this.transformMatrix, this.transformMatrix, [0, y, 0]);
+ 	else 
+ 		mat4.rotate(this.transformMatrix, this.transformMatrix, y, [1, 0, 0]);
 
 }

@@ -55,6 +55,10 @@ Counter.prototype.initMatrixes = function () {
 
 Counter.prototype.display = function () {
 
+	var bot = (this.scene.board.black == 'Bot' && this.scene.board.history.playing == 'black'
+				|| this.scene.board.white == 'Bot' && this.scene.board.history.playing == 'white') ? 
+				true : false;
+
 	this.scene.pushMatrix();
 		this.scene.multMatrix(this.originalTransformMatrix);
 
@@ -65,7 +69,7 @@ Counter.prototype.display = function () {
 
 		this.scene.pushMatrix();
 			this.scene.multMatrix(this.timerMatrix);
-			if (!this.scene.replaying) this.timer.display();
+			if (!this.scene.replaying && !bot) this.timer.display();
 		this.scene.popMatrix();
 
 	this.scene.popMatrix();
@@ -73,6 +77,10 @@ Counter.prototype.display = function () {
 
 
 Counter.prototype.update = function (currTime) {
+
+	var bot = (this.scene.board.black == 'Bot' && this.scene.board.history.playing == 'black'
+				|| this.scene.board.white == 'Bot' && this.scene.board.history.playing == 'white') ? 
+				true : false;
 	
 	var deltaTime = 0;
 	
@@ -82,7 +90,7 @@ Counter.prototype.update = function (currTime) {
 	this.lastCurrTime = currTime;
 
 	if (this.scene.board.initialized) {
-		if (!this.scene.replaying) this.timer.update(deltaTime);
+		if (!this.scene.replaying && !bot) this.timer.update(deltaTime);
 		this.pieceCounter.update(deltaTime);
 	}
 	

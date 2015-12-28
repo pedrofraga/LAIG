@@ -122,7 +122,6 @@ MyInterface.prototype.replay = function(replaying) {
 
 
 function toggleMenuItem(item, visible) {
-	console.log(item);
 	item.__li.style.display = visible ? "" : "none";
 }
 

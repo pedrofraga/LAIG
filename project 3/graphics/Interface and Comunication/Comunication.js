@@ -72,6 +72,7 @@
 
  			}
 
+            board.scene.counter.timer.createTime();
  			console.log(board.history.playing);
 
  		} else {

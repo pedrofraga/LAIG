@@ -60,6 +60,7 @@ MoveHistory.prototype.undo = function () {
 				var last = this.scene.board.history.movesHistory.length - 1;
 				this.scene.board.history.movesHistory.splice(last, 1);
 				this.scene.board.history.playing = this.scene.board.history.playing == 'black' ? 'white' : 'black';
+				this.scene.counter.timer.createTime();
 				return;
 			}
 }

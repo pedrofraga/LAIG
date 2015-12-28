@@ -88,6 +88,7 @@ PieceCounter.prototype.checkPieceNumbers = function (deltaTime) {
 
 	for (var y = 0; y < this.scene.board.matrix.length; y++ )
 		for (var x = 0; x < this.scene.board.matrix.length; x++ )
+			if(!(x == 6 && y== 6))
 			if (this.scene.board.matrix[y][x].piece != null) 
 				this.scene.board.matrix[y][x].piece.color == 'black' ? this.blackPiecesNumber++ : this.whitePiecesNumber++;
 			

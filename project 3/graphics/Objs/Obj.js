@@ -43,22 +43,24 @@ Obj.prototype.initBuffers = function (info) {
 		if (elements[0] == 'o') {
 			
 			if (objects > 0) {
-				var obj = new ObjObject(this.scene, info, lastVerticeNmbr);
+				var obj = new ObjObject(this.scene, info, lastVerticeNmbr, vertices);
 				this.objects.push(obj);
 				lastVerticeNmbr += vertices;
 				vertices = 0;
 				info = [];
 			}
-
 			objects++;
+
 		} else if (elements[0] == 'f' || elements[0] == 'v') {
+
 			info.push(lines[line]);
 			if (elements[0] == 'v') vertices++;
+			
 		}
 
 	}
 
-	this.objects.push(new ObjObject(this.scene, info, lastVerticeNmbr));
+	this.objects.push(new ObjObject(this.scene, info, lastVerticeNmbr,vertices));
 
 }
 

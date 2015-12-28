@@ -1,11 +1,11 @@
 
 
-function ObjObject(scene, info, lastVerticesNumber) {
+function ObjObject(scene, info, lastVerticesNumber, verticesNumber) {
 	this.scene = scene;
 	this.lines = info;
 	this.vCount = lastVerticesNumber;
+	this.vNumb = verticesNumber;
 	this.initBuffers();
-
 }
 
 
@@ -19,7 +19,7 @@ ObjObject.prototype.initBuffers = function () {
 	this.normals = [];
 	this.indices = [];
 	
-
+	var repeated = 0;
 
 	for (line in this.lines) {
 		var elements = this.lines[line].split(' ');
@@ -42,12 +42,17 @@ ObjObject.prototype.initBuffers = function () {
 
 				vec3.cross(normal, vec1, vec2);
 
-				for (var i = 0; i < v.length; i++)
-					if (this.normals[v[i] * 3] == null) {
-						this.normals[v[i] * 3] = normal[0];
-						this.normals[v[i] * 3 + 1] = normal[1];
-						this.normals[v[i] * 3 + 2] = normal[2];
+				for (var i = 0; i < v.length; i++) {
+					if (this.normals[v[i] * 3] != null) {
+						this.vertices.push(this.vertices[v[i] * 3],
+							this.vertices[v[i] * 3 + 1], this.vertices[v[i] * 3 + 2]);
+						v[i] = this.vNumb + repeated;
+						repeated++;
 					}
+					this.normals[v[i] * 3] = normal[0];
+					this.normals[v[i] * 3 + 1] = normal[1];
+					this.normals[v[i] * 3 + 2] = normal[2];
+				}
 
 				this.indices.push(v[0], v[1], v[2]);
 
@@ -60,3 +65,4 @@ ObjObject.prototype.initBuffers = function () {
 
 
 }
+

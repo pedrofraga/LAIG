@@ -370,10 +370,10 @@ Board.prototype.botPlay = function () {
 
  	var size = this.history.movesReplay.length;
  	if (!size) {
- 		this.scene.replaying = false;
- 		this.scene.replayStarted = false;
  		var board = this;
  		setTimeout (function () {
+ 			board.scene.replaying = false;
+ 			board.scene.replayStarted = false;
  			board.scene.app.interface.replay(false);
  		}, 600);
  		return;

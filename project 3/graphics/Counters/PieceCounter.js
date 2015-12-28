@@ -8,8 +8,8 @@ function PieceCounter(scene) {
 	this.initPrimitives();
 	this.initObjects();
 
-	this.blackPiecesNumber = 13;
-	this.whitePiecesNumber = 13;
+	this.blackPiecesNumber = 24;
+	this.whitePiecesNumber = 24;
 
 };
 
@@ -70,10 +70,26 @@ PieceCounter.prototype.display = function () {
 
 PieceCounter.prototype.update = function (deltaTime) {
 
-	this.blackDozensPlacard.update(deltaTime, 1);
-	this.blackUnitsPlacard.update(deltaTime, 3);
 
-	this.whiteDozensPlacard.update(deltaTime, 1);
-	this.whiteUnitsPlacard.update(deltaTime, 3);
-	
+	var blackDozens = this.blackPiecesNumber / 10 - (this.blackPiecesNumber % 10) / 10;
+	this.blackDozensPlacard.update(deltaTime, blackDozens);
+	this.blackUnitsPlacard.update(deltaTime, this.blackPiecesNumber % 10);
+
+	var whiteDozens = this.whitePiecesNumber / 10 - (this.whitePiecesNumber % 10) / 10;
+	this.whiteDozensPlacard.update(deltaTime, whiteDozens);
+	this.whiteUnitsPlacard.update(deltaTime, this.whitePiecesNumber % 10);
+
+}
+
+
+PieceCounter.prototype.checkPieceNumbers = function (deltaTime) {
+	this.blackPiecesNumber = 0;
+	this.whitePiecesNumber = 0;
+
+	for (var y = 0; y < this.scene.board.matrix.length; y++ )
+		for (var x = 0; x < this.scene.board.matrix.length; x++ )
+			if (this.scene.board.matrix[y][x].piece != null) 
+				this.scene.board.matrix[y][x].piece.color == 'black' ? this.blackPiecesNumber++ : this.whitePiecesNumber++;
+			
+
 }

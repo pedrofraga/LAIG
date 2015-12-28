@@ -46,7 +46,7 @@ MyInterface.prototype.init = function(application) {
 	this.defaultControls[3] = this.gui.add(this.scene.board, 'black', this.possiblePlayers).name('Black').listen();
 	this.defaultControls[4] = this.gui.add(this.scene.board, 'white', this.possiblePlayers).name('White').listen();
 	
-	this.defaultControls[5] = this.gui.add(this, 'roundTime', 15, 60, 1).name('Round Time');
+	this.defaultControls[5] = this.gui.add(this, 'roundTime', 15, 60).step(1).name('Round Time');
 	this.defaultControls[5].onChange(function() { 
 		self.scene.counter.timer.elapsedMiliSeconds = -1;
 		self.scene.counter.timer.roundTime = self.roundTime;

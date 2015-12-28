@@ -65,7 +65,7 @@ Counter.prototype.display = function () {
 
 		this.scene.pushMatrix();
 			this.scene.multMatrix(this.timerMatrix);
-			this.timer.display();
+			if (!this.scene.replaying) this.timer.display();
 		this.scene.popMatrix();
 
 	this.scene.popMatrix();
@@ -82,7 +82,7 @@ Counter.prototype.update = function (currTime) {
 	this.lastCurrTime = currTime;
 
 	if (this.scene.board.initialized) {
-		this.timer.update(deltaTime);
+		if (!this.scene.replaying) this.timer.update(deltaTime);
 		this.pieceCounter.update(deltaTime);
 	}
 	

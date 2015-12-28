@@ -137,6 +137,7 @@ OrfanPiece.prototype.animatePieceInArch = function (deltaTime) {
 		this.scene.board.matrix[this.yf][this.xf].piece.color = this.piece.color;
 		this.scene.board.matrix[this.yf][this.xf].piece.display();
 		this.scene.board.matrix[this.yf][this.xf].animation = new SpringAnimation(-50);
+		this.scene.counter.pieceCounter.checkPieceNumbers();
 
 	}
 
@@ -172,6 +173,7 @@ OrfanPiece.prototype.replacePiece = function (deltaTime) {
 		this.scene.board.matrix[this.y0][this.x0].piece.color = this.piece.color == 'black' ? 'white' : 'black';
 		this.scene.board.matrix[this.y0][this.x0].piece.display();
 		this.scene.board.matrix[this.y0][this.x0].animation = new SpringAnimation(-50);
+		this.scene.counter.pieceCounter.checkPieceNumbers();
 
 	}
 

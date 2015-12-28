@@ -60,7 +60,7 @@ Placard.prototype.frontDisplay = function () {
 	this.scene.pushMatrix();
 		this.scene.multMatrix(this.frontMatrix);
 		this.scene.textMaterial.apply();
-		this.scene.activeShader.setUniformsValues({'charCoords': [this.value % 10,3]});
+		this.scene.activeShader.setUniformsValues({'charCoords': [this.value % 10 - 0.15,3]});
 		this.frontSquare.display();
 	this.scene.popMatrix();
 

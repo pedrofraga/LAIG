@@ -45,8 +45,14 @@ MyInterface.prototype.init = function(application) {
 
 	this.defaultControls[3] = this.gui.add(this.scene.board, 'black', this.possiblePlayers).name('Black').listen();
 	this.defaultControls[4] = this.gui.add(this.scene.board, 'white', this.possiblePlayers).name('White').listen();
+	
+	this.defaultControls[5] = this.gui.add(this, 'roundTime', 15, 60, 1).name('Round Time');
+	this.defaultControls[5].onChange(function() { 
+		self.scene.counter.timer.elapsedMiliSeconds = -1;
+		self.scene.counter.timer.roundTime = self.roundTime;
+	});
 
-	this.defaultControls[5] = this.gui.add(this,'quitGame').name('Quit');
+	this.defaultControls[6] = this.gui.add(this,'quitGame').name('Quit');
 
 	this.replayControls[0] = this.gui.add(this, 'replayPercent', 0, 100).name('Replaying').listen();
 
@@ -80,6 +86,7 @@ MyInterface.prototype.initGUIVars = function() {
 	this.perspective = this.perspectiveNames[0];
 	this.possiblePlayers = ['Human', 'Bot'];
 	this.replayPercent = 0;
+	this.roundTime = 30;
 }
 
 /**
@@ -103,8 +110,9 @@ MyInterface.prototype.logItVal = function() {
 
 MyInterface.prototype.replay = function(replaying) {
 
-	for (var i = 0; i < this.defaultControls.length; i++)
+	for (var i = 0; i < this.defaultControls.length; i++) 
 		toggleMenuItem(this.defaultControls[i], !replaying);
+
 
 	toggleMenuItem(this.replayControls[0], replaying);
 
@@ -114,6 +122,7 @@ MyInterface.prototype.replay = function(replaying) {
 
 
 function toggleMenuItem(item, visible) {
+	console.log(item);
 	item.__li.style.display = visible ? "" : "none";
 }
 

@@ -1,6 +1,7 @@
 /* Created by Pedro Fraga MIEIC up201303095, It displays .obj files*/
 /* Obj reader for files exported from 3d Builder, windows 10 app */
 
+
 function Obj(scene, path) {
 
 	this.scene = scene;

@@ -11,6 +11,7 @@ function Counter(scene) {
 	this.scene = scene;
 
 	this.initObjects();
+	this.initMatrixes();
 
 	this.lastCurrentTime = 0;
 
@@ -24,6 +25,30 @@ Counter.prototype.constructor = Counter;
 Counter.prototype.initObjects = function () {
 
 	this.timer = new Timer(this.scene);
+	this.pieceCounter = new PieceCounter(this.scene);
+	
+}
+
+
+Counter.prototype.initMatrixes = function () {
+
+	this.transformMatrix = mat4.create();
+ 	mat4.identity(this.transformMatrix);
+ 	mat4.translate(this.transformMatrix, this.transformMatrix, [20, 0, -10]);
+ 	//mat4.rotate(this.transformMatrix, this.transformMatrix, Math.PI / 2, [0, 1, 0]);
+
+ 	this.originalTransformMatrix = mat4.create();
+ 	mat4.identity(this.originalTransformMatrix);
+ 	mat4.copy(this.originalTransformMatrix, this.transformMatrix);
+
+
+	this.timerMatrix = mat4.create();
+	mat4.identity(this.timerMatrix);
+	mat4.translate(this.timerMatrix, this.timerMatrix, [0, 3, 0]);
+
+	this.pieceCounterMatrix = mat4.create();
+	mat4.identity(this.pieceCounterMatrix);
+	mat4.translate(this.pieceCounterMatrix, this.pieceCounterMatrix, [0, -3, 0]);
 	
 }
 
@@ -31,9 +56,19 @@ Counter.prototype.initObjects = function () {
 Counter.prototype.display = function () {
 
 	this.scene.pushMatrix();
-		this.timer.display();
-	this.scene.popMatrix();
+		this.scene.multMatrix(this.originalTransformMatrix);
 
+		this.scene.pushMatrix();
+			this.scene.multMatrix(this.pieceCounterMatrix);
+			this.pieceCounter.display();
+		this.scene.popMatrix();
+
+		this.scene.pushMatrix();
+			this.scene.multMatrix(this.timerMatrix);
+			this.timer.display();
+		this.scene.popMatrix();
+
+	this.scene.popMatrix();
 }
 
 
@@ -46,6 +81,9 @@ Counter.prototype.update = function (currTime) {
 
 	this.lastCurrTime = currTime;
 
-	this.timer.update(deltaTime);
+	if (this.scene.board.initialized) {
+		this.timer.update(deltaTime);
+		this.pieceCounter.update(deltaTime);
+	}
 	
 }

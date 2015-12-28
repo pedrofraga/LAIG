@@ -65,12 +65,12 @@ Scene.prototype.initLights = function () {
 Scene.prototype.initCameras = function () {
 
 	this.cameraPerspectives = [];
-	this.cameraPerspectives[0] = new CameraPerspective('Camera 1', vec3.fromValues(65, 48, 65), vec3.fromValues(0, -27, 0));
-	this.cameraPerspectives[1] = new CameraPerspective('Camera 2', vec3.fromValues(-18, 65, 18), vec3.fromValues(18, 0, 18));
+	this.cameraPerspectives[0] = new CameraPerspective('Camera 1', vec3.fromValues(80, 55, 80), vec3.fromValues(0, -20, 0));
+	this.cameraPerspectives[1] = new CameraPerspective('Camera 2', vec3.fromValues(-18, 80, 18), vec3.fromValues(18, 0, 18));
 
 	this.cameraAnimation = null;
 
-    this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(20, 20, 20), vec3.fromValues(0, 0, 0) /*this.cameraPerspectives[0].position, this.cameraPerspectives[0].direction*/);
+    this.camera = new CGFcamera(0.4, 0.1, 500, this.cameraPerspectives[0].position, this.cameraPerspectives[0].direction);
 
 };
 
@@ -110,7 +110,7 @@ Scene.prototype.display = function () {
 	this.setDefaultAppearance();
 
 	this.counter.display();
-	//this.board.display();
+	this.board.display();
 
 
 
@@ -119,8 +119,8 @@ Scene.prototype.display = function () {
 
 Scene.prototype.update = function(currTime) {
 	
-	//this.board.update(currTime);
 	this.counter.update(currTime);
+	this.board.update(currTime);
 
 
 	if (this.lastCurrTime != 0)

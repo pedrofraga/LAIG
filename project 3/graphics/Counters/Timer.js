@@ -11,10 +11,11 @@ function Timer(scene) {
 	this.scene = scene;
 
 	this.initPrimitives();
-	this.initPlacards();
+	this.initObjects();
 	this.initMatrixes();
 
-	this.createTime(30);
+	this.roundTime = 30;
+	this.createTime();
 
 };
 
@@ -34,10 +35,10 @@ Timer.prototype.initMatrixes = function () {
 }
 
 
-Timer.prototype.initPlacards = function () {
+Timer.prototype.initObjects = function () {
 	this.dozensPlacard = new Placard(this.scene, this.cube, -1.7);
 	this.unitsPlacard = new Placard(this.scene, this.cube, 1.7);
-	this.text = new Obj(this.scene, 'Objs/text.obj');
+	this.text = new Obj(this.scene, 'Objs/timer.obj');
 }
 
 
@@ -61,21 +62,22 @@ Timer.prototype.update = function (deltaTime) {
 	if (this.elapsedMiliSeconds > 0) {
 		this.elapsedSeconds = this.elapsedMiliSeconds < this.elapsedSeconds * 1000 ? this.elapsedSeconds - 1 : this.elapsedSeconds;
 		this.elapsedDozens = this.elapsedMiliSeconds < this.elapsedDozens * 10000 ? this.elapsedDozens - 1 : this.elapsedDozens;
-
+		
 		this.unitsPlacard.update(deltaTime, this.elapsedSeconds);
 		this.dozensPlacard.update(deltaTime, this.elapsedDozens);
 
 	} else {
-		this.createTime(30);
+		this.createTime();
 	}
 
 }
 
 
-Timer.prototype.createTime = function (seconds) {
+Timer.prototype.createTime = function () {
 
+	var seconds = this.roundTime;
 	this.elapsedSeconds = seconds;
-	this.elapsedDozens = seconds / 10 - seconds % 10;
+	this.elapsedDozens = seconds / 10 - (seconds % 10 * 0.1);
 	this.elapsedMiliSeconds = (seconds + 1) * 1000;
 
 }

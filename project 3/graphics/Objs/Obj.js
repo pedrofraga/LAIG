@@ -22,8 +22,6 @@ function Obj(scene, path) {
     }
     rawFile.send(null);
 
-    this.objects = [];
-
 }
 
 Obj.prototype = Object.create(CGFobject.prototype);
@@ -33,24 +31,41 @@ Obj.prototype.initBuffers = function (info) {
 	
 	var lines = info.split('\n');
 
+	this.objects = [];
+
 	var info = [];
 	var objects = 0;
+	var lastVerticeNmbr = 0;
+	var vertices = 0;
 
 	for (line in lines) {
 		var elements = lines[line].split(' ');
 		if (elements[0] == 'o') {
 			
 			if (objects > 0) {
-				this.objects.push(new ObjObject(this.scene, info));
-				info
+				var obj = new ObjObject(this.scene, info, lastVerticeNmbr);
+				this.objects.push(obj);
+				lastVerticeNmbr += vertices;
+				vertices = 0;
+				info = [];
 			}
 
 			objects++;
 		} else if (elements[0] == 'f' || elements[0] == 'v') {
 			info.push(lines[line]);
+			if (elements[0] == 'v') vertices++;
 		}
 
 	}
 
+	this.objects.push(new ObjObject(this.scene, info, lastVerticeNmbr));
+
+}
+
+
+Obj.prototype.display = function () {
+
+	for (i in this.objects)
+		this.objects[i].display();
 
 }

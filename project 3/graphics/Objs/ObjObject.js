@@ -1,8 +1,9 @@
 
 
-function ObjObject(this.scene, info) {
+function ObjObject(scene, info, lastVerticesNumber) {
 	this.scene = scene;
 	this.lines = info;
+	this.vCount = lastVerticesNumber;
 	this.initBuffers();
 
 }
@@ -17,9 +18,11 @@ ObjObject.prototype.initBuffers = function () {
 	this.vertices = [];
 	this.normals = [];
 	this.indices = [];
+	
 
-	for (line in lines) {
-		var elements = lines[line].split(' ');
+
+	for (line in this.lines) {
+		var elements = this.lines[line].split(' ');
 		switch(elements[0]) {
 			case 'v':
 				this.vertices.push(parseFloat(elements[1]),
@@ -27,7 +30,7 @@ ObjObject.prototype.initBuffers = function () {
 				break;
 			case 'f':
 				var v = [];
-				v[0] = parseFloat(elements[1]) - 1; v[1] = parseFloat(elements[2]) - 1; v[2] =  parseFloat(elements[3]) - 1;
+				v[0] = parseFloat(elements[1]) - 1 - this.vCount; v[1] = parseFloat(elements[2]) - 1 - this.vCount; v[2] =  parseFloat(elements[3]) - 1 - this.vCount;
 
 				var p0 = []; p0[0] = this.vertices[v[0] * 3]; p0[1] = this.vertices[v[0] * 3 + 1]; p0[2] = this.vertices[v[0] * 3 + 2];
 				var p1 = []; p1[0] = this.vertices[v[1] * 3]; p1[1] = this.vertices[v[1] * 3 + 1]; p1[2] = this.vertices[v[1] * 3 + 2];

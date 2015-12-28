@@ -44,7 +44,6 @@ Scene.prototype.init = function (application) {
 
 	this.board = new Board(this);
 	this.counter = new Counter(this);
-	this.obj = new Obj(this, 'Objs/shuttle.obj');
 
 };
 
@@ -110,8 +109,7 @@ Scene.prototype.display = function () {
 
 	this.setDefaultAppearance();
 
-	this.obj.display();
-	//this.counter.display();
+	this.counter.display();
 	//this.board.display();
 
 
@@ -122,7 +120,7 @@ Scene.prototype.display = function () {
 Scene.prototype.update = function(currTime) {
 	
 	//this.board.update(currTime);
-	//this.counter.update(currTime);
+	this.counter.update(currTime);
 
 
 	if (this.lastCurrTime != 0)

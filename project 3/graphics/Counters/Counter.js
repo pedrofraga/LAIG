@@ -10,7 +10,9 @@ function Counter(scene) {
 	CGFobject.call(this,scene);
 	this.scene = scene;
 
-	this.initPrimitives();
+	this.initObjects();
+
+	this.lastCurrentTime = 0;
 
 };
 
@@ -19,8 +21,31 @@ Counter.prototype.constructor = Counter;
 
 
 
-Counter.prototype.initPrimitives = function () {
+Counter.prototype.initObjects = function () {
 
-	this.placard = new Cube(this.scene, 3, 0.1, 3);
+	this.timer = new Timer(this.scene);
+	
+}
+
+
+Counter.prototype.display = function () {
+
+	this.scene.pushMatrix();
+		this.timer.display();
+	this.scene.popMatrix();
+
+}
+
+
+Counter.prototype.update = function (currTime) {
+	
+	var deltaTime = 0;
+	
+	if (this.lastCurrTime != 0)
+		deltaTime = currTime - this.lastCurrTime;
+
+	this.lastCurrTime = currTime;
+
+	this.timer.update(deltaTime);
 	
 }

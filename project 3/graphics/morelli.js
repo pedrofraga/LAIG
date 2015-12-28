@@ -17,7 +17,7 @@ serialInclude(['../lib/CGF.js', 'Scene.js',
     'Animations/CircularAnimation.js', 'Animations/LinearAnimation.js', 'Animations/RotationAnimation.js', 'Animations/CameraAnimation.js', 'Animations/SpringAnimation.js', 'Animations/ArchAnimation.js', 'Animations/ReplaceAnimation.js', 
     'Primitives/Cube.js', 'Primitives/Circle.js', 'Primitives/Square.js', 'Primitives/Cylinder.js', 'Primitives/MySphere.js', 'Primitives/Triangle.js', 'Primitives/Patch.js', 'Primitives/Terrain.js', 
     'History/GameHistory.js', 'History/MoveHistory.js', 'History/ReplaceColorHistory.js', 'History/InsertHistory.js',
-    'Counters/Counter.js',
+    'Counters/Counter.js', 'Counters/Timer.js', 'Counters/Placard.js',
 
 main=function()
 {

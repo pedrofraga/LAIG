@@ -43,6 +43,7 @@ Scene.prototype.init = function (application) {
 
 
 	this.board = new Board(this);
+	this.counter = new Counter(this);
 
 };
 
@@ -69,7 +70,7 @@ Scene.prototype.initCameras = function () {
 
 	this.cameraAnimation = null;
 
-    this.camera = new CGFcamera(0.4, 0.1, 500, this.cameraPerspectives[0].position, this.cameraPerspectives[0].direction);
+    this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(20, 20, 20), vec3.fromValues(0, 0, 0) /*this.cameraPerspectives[0].position, this.cameraPerspectives[0].direction*/);
 
 };
 
@@ -108,7 +109,8 @@ Scene.prototype.display = function () {
 
 	this.setDefaultAppearance();
 
-	this.board.display();
+	this.counter.display();
+	//this.board.display();
 
 
 
@@ -117,7 +119,8 @@ Scene.prototype.display = function () {
 
 Scene.prototype.update = function(currTime) {
 	
-	this.board.update(currTime);
+	//this.board.update(currTime);
+	this.counter.update(currTime);
 
 
 	if (this.lastCurrTime != 0)
@@ -133,6 +136,7 @@ Scene.prototype.update = function(currTime) {
 Scene.prototype.createAppearances = function () {
 
 	this.defaultMaterial = new CGFappearance(this);
+	this.textMaterial = new CGFappearance(this);
 
 	this.blackMaterial = new CGFappearance(this);
 	this.blackMaterial.setAmbient(0.13,0.13,0.13,0.5);
@@ -195,6 +199,8 @@ Scene.prototype.createAppearances = function () {
 
 	this.whitetower = new CGFtexture(this, "textures/whitetower.png");
 	this.blacktower = new CGFtexture(this, "textures/blacktower.png");
+
+	this.textMaterial.setTexture(this.fontTexture);
 
 }
 

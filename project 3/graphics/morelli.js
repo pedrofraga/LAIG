@@ -19,6 +19,7 @@ serialInclude(['../lib/CGF.js', 'Scene.js',
     'History/GameHistory.js', 'History/MoveHistory.js', 'History/ReplaceColorHistory.js', 'History/InsertHistory.js',
     'Counters/Counter.js', 'Counters/Timer.js', 'Counters/Placard.js', 'Counters/PieceCounter.js',
     'Objs/Obj.js', 'Objs/ObjObject.js',
+    'Environments/Environment.js',
 
 main=function()
 {

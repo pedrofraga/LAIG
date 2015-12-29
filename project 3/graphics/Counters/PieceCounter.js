@@ -54,11 +54,11 @@ PieceCounter.prototype.initMatrixes = function () {
 
 PieceCounter.prototype.initObjects = function () {
 
-	this.blackText = new Obj(this.scene, 'Objs/blackText.obj');
+	this.blackText = new Obj(this.scene, 'res/blackText.obj');
 	this.blackDozensPlacard = new Placard(this.scene, this.cube, 6.7);
 	this.blackUnitsPlacard = new Placard(this.scene, this.cube, 10.4);
 
-	this.whiteText = new Obj(this.scene, 'Objs/whiteText.obj');
+	this.whiteText = new Obj(this.scene, 'res/whiteText.obj');
 	this.whiteDozensPlacard = new Placard(this.scene, this.cube, -10.4);
 	this.whiteUnitsPlacard = new Placard(this.scene, this.cube, -6.7);
 

@@ -49,7 +49,7 @@ Timer.prototype.initMatrixes = function () {
 Timer.prototype.initObjects = function () {
 	this.dozensPlacard = new Placard(this.scene, this.cube, -1.7);
 	this.unitsPlacard = new Placard(this.scene, this.cube, 1.7);
-	this.text = new Obj(this.scene, 'Objs/timer.obj');
+	this.text = new Obj(this.scene, 'res/timer.obj');
 }
 
 
@@ -91,7 +91,7 @@ Timer.prototype.update = function (deltaTime) {
 				|| this.scene.board.white == 'Bot' && this.scene.board.history.playing == 'white') ? 
 				true : false;
 
-	if (bot) { this.elapsedSeconds = 0; this.elapsedDozens = 0;}
+	if (bot || this.scene.replaying) { this.elapsedSeconds = 0; this.elapsedDozens = 0;}
 
 	if (this.elapsedMiliSeconds > 0) {
 		this.elapsedSeconds = this.elapsedMiliSeconds < this.elapsedSeconds * 1000 ? this.elapsedSeconds - 1 : this.elapsedSeconds;

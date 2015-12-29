@@ -88,7 +88,7 @@ Counter.prototype.update = function (currTime) {
 	this.lastCurrTime = currTime;
 
 	if (this.scene.board.initialized) {
-		if (!this.scene.replaying) this.timer.update(deltaTime);
+		this.timer.update(deltaTime);
 		this.pieceCounter.update(deltaTime);
 	}
 	

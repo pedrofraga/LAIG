@@ -33,7 +33,6 @@ Scene.prototype.init = function (application) {
 
 	this.setUpdatePeriod(this.expectedUpdatePeriod);
 
-	this.createAppearances();
 	this.enableTextures(true);
 
 	this.setPickEnabled(true);
@@ -41,7 +40,7 @@ Scene.prototype.init = function (application) {
 	this.replaying = false;
 	this.replayStarted = false;
 
-
+	this.environment = new Environment(this);
 	this.board = new Board(this);
 	this.counter = new Counter(this);
 
@@ -111,6 +110,7 @@ Scene.prototype.display = function () {
 
 	if (this.cameraAnimation == null) this.counter.display();
 	this.board.display();
+	if (this.app.interface.environment) this.environment.display();
 
 
 
@@ -133,79 +133,6 @@ Scene.prototype.update = function(currTime) {
 };
 
 
-Scene.prototype.createAppearances = function () {
-
-	this.defaultMaterial = new CGFappearance(this);
-	this.textMaterial = new CGFappearance(this);
-	this.woodMaterial = new CGFappearance(this);
-
-	this.blackMaterial = new CGFappearance(this);
-	this.blackMaterial.setAmbient(0.13,0.13,0.13,0.5);
-	this.blackMaterial.setDiffuse(0.13,0.13,0.13,0.5);
-	this.blackMaterial.setSpecular(0.13,0.13,0.13,0.5);
-	this.blackMaterial.setShininess(0);
-
-	this.whiteMaterial = new CGFappearance(this);
-	this.whiteMaterial.setAmbient(0.9,0.9,0.9,0.5);
-	this.whiteMaterial.setDiffuse(0.9,0.9,0.9,0.5);
-	this.whiteMaterial.setSpecular(0.9,0.9,0.9,0.5);
-	this.whiteMaterial.setShininess(0);
-
-	this.redMaterial = new CGFappearance(this);
-	this.redMaterial.setAmbient(1,0.2,0.2,0);
-	this.redMaterial.setDiffuse(1,0.2,0.2,0.5);
-	this.redMaterial.setSpecular(1,0.2,0.2,0);
-	this.redMaterial.setShininess(0);
-
-
-	this.orangeMaterial = new CGFappearance(this);
-	this.orangeMaterial.setAmbient(1,0.6,0.2,0);
-	this.orangeMaterial.setDiffuse(1,0.6,0.2,0.5);
-	this.orangeMaterial.setSpecular(1,0.6,0.2,0);
-	this.orangeMaterial.setShininess(0);
-
-	this.yellowMaterial = new CGFappearance(this);
-	this.yellowMaterial.setAmbient(1,1,0.2,0);
-	this.yellowMaterial.setDiffuse(1,1,0.2,0.5);
-	this.yellowMaterial.setSpecular(1,1,0.2,0);
-	this.yellowMaterial.setShininess(0);
-
-	this.greenMaterial = new CGFappearance(this);
-	this.greenMaterial.setAmbient(0.2,1,0.2,0);
-	this.greenMaterial.setDiffuse(0.2,1,0.2,0.5);
-	this.greenMaterial.setSpecular(0.2,1,0.2,0);
-	this.greenMaterial.setShininess(0);
-
-	this.blueMaterial = new CGFappearance(this);
-	this.blueMaterial.setAmbient(0,0.5,1,0);
-	this.blueMaterial.setDiffuse(0,0.5,1,0.5);
-	this.blueMaterial.setSpecular(0,0.5,1,0);
-	this.blueMaterial.setShininess(0);
-
-	this.purpleMaterial = new CGFappearance(this);
-	this.purpleMaterial.setAmbient(0.4,0.1,1,0);
-	this.purpleMaterial.setDiffuse(0.4,0.1,1,0.5);
-	this.purpleMaterial.setSpecular(0.4,0.1,1,00);
-	this.purpleMaterial.setShininess(0);
-
-	this.lilacMaterial = new CGFappearance(this);
-	this.lilacMaterial.setAmbient(0.78,0.27,1,0);
-	this.lilacMaterial.setDiffuse(0.78,0.27,1,0.5);
-	this.lilacMaterial.setSpecular(0.78,0.27,1,0);
-	this.lilacMaterial.setShininess(0);
-
-	this.textShader = new CGFshader(this.gl, "shaders/font.vert", "shaders/font.frag");
-	this.textShader.setUniformsValues({'dims': [16, 16]});
-	this.fontTexture = new CGFtexture(this, "res/oolite-font.png");
-
-	this.whitetower = new CGFtexture(this, "res/whitetower.png");
-	this.blacktower = new CGFtexture(this, "res/blacktower.png");
-	this.wood = new CGFtexture(this, "res/wood.jpeg");
-
-	this.textMaterial.setTexture(this.fontTexture);
-	this.woodMaterial.setTexture(this.wood);
-
-}
 
 
 

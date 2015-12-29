@@ -30,7 +30,10 @@ MyInterface.prototype.init = function(application) {
 	
 	this.app = application;
 	this.gui = new dat.GUI();
+	this.gui2 = new dat.GUI();
+	
 	this.gui.autoListen = false;
+	this.gui2.autoListen = false;
 
 	var self = this;
 	this.defaultControls = [];
@@ -64,6 +67,9 @@ MyInterface.prototype.init = function(application) {
 
 	toggleMenuItem(this.replayControls[0], false);
 
+
+	this.gui2.add(this, 'environment').name('Environment');
+
 	return true;
 	
 };
@@ -94,6 +100,7 @@ MyInterface.prototype.initGUIVars = function() {
 	this.replayPercent = 0;
 	this.roundTime = 30;
 	this.playing = 'black';
+	this.environment = true;
 }
 
 /**

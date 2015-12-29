@@ -35,7 +35,6 @@ Counter.prototype.initMatrixes = function () {
 	this.transformMatrix = mat4.create();
  	mat4.identity(this.transformMatrix);
  	mat4.translate(this.transformMatrix, this.transformMatrix, [20, 5, 0]);
- 	//mat4.rotate(this.transformMatrix, this.transformMatrix, Math.PI / 2, [0, 1, 0]);
 
  	this.originalTransformMatrix = mat4.create();
  	mat4.identity(this.originalTransformMatrix);
@@ -43,7 +42,7 @@ Counter.prototype.initMatrixes = function () {
 
  	this.camera2Matrix = mat4.create();
 	mat4.identity(this.camera2Matrix);
-	mat4.translate(this.camera2Matrix, this.camera2Matrix, [0, 0, -10]);
+	mat4.translate(this.camera2Matrix, this.camera2Matrix, [0, 0, -13]);
 	mat4.rotate(this.camera2Matrix, this.camera2Matrix, -Math.PI / 2, [0, 0, 1]);
 	mat4.rotate(this.camera2Matrix, this.camera2Matrix, -Math.PI / 2, [0, 1, 0]);
 
@@ -60,10 +59,6 @@ Counter.prototype.initMatrixes = function () {
 
 Counter.prototype.display = function () {
 
-	var bot = (this.scene.board.black == 'Bot' && this.scene.board.history.playing == 'black'
-				|| this.scene.board.white == 'Bot' && this.scene.board.history.playing == 'white') ? 
-				true : false;
-
 	this.scene.pushMatrix();
 		this.scene.multMatrix(this.originalTransformMatrix);
 		if (this.scene.app.interface.perspective == 'Camera 2') this.scene.multMatrix(this.camera2Matrix);
@@ -75,7 +70,7 @@ Counter.prototype.display = function () {
 
 		this.scene.pushMatrix();
 			this.scene.multMatrix(this.timerMatrix);
-			if (!this.scene.replaying && !bot) this.timer.display();
+		    this.timer.display();
 		this.scene.popMatrix();
 
 	this.scene.popMatrix();
@@ -84,9 +79,6 @@ Counter.prototype.display = function () {
 
 Counter.prototype.update = function (currTime) {
 
-	var bot = (this.scene.board.black == 'Bot' && this.scene.board.history.playing == 'black'
-				|| this.scene.board.white == 'Bot' && this.scene.board.history.playing == 'white') ? 
-				true : false;
 	
 	var deltaTime = 0;
 	
@@ -96,7 +88,7 @@ Counter.prototype.update = function (currTime) {
 	this.lastCurrTime = currTime;
 
 	if (this.scene.board.initialized) {
-		if (!this.scene.replaying && !bot) this.timer.update(deltaTime);
+		if (!this.scene.replaying) this.timer.update(deltaTime);
 		this.pieceCounter.update(deltaTime);
 	}
 	

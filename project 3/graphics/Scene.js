@@ -65,12 +65,12 @@ Scene.prototype.initLights = function () {
 Scene.prototype.initCameras = function () {
 
 	this.cameraPerspectives = [];
-	this.cameraPerspectives[0] = new CameraPerspective('Camera 1', vec3.fromValues(85, 57, 85), vec3.fromValues(0, -20, 0));
+	this.cameraPerspectives[0] = new CameraPerspective('Camera 1', vec3.fromValues(85, 57, 85), vec3.fromValues(0, -15, 0));
 	this.cameraPerspectives[1] = new CameraPerspective('Camera 2', vec3.fromValues(-18, 120, 18), vec3.fromValues(18, 0, 18));
 
 	this.cameraAnimation = null;
 
-    this.camera = new CGFcamera(0.4, 0.1, 500, this.cameraPerspectives[0].position, this.cameraPerspectives[0].direction);
+    this.camera = new CGFcamera(0.4, 0.1, 500, /*vec3.fromValues(30, 30, 30), vec3.fromValues( 0, 0, 0)*/this.cameraPerspectives[0].position, this.cameraPerspectives[0].direction);
 
 };
 
@@ -137,6 +137,7 @@ Scene.prototype.createAppearances = function () {
 
 	this.defaultMaterial = new CGFappearance(this);
 	this.textMaterial = new CGFappearance(this);
+	this.woodMaterial = new CGFappearance(this);
 
 	this.blackMaterial = new CGFappearance(this);
 	this.blackMaterial.setAmbient(0.13,0.13,0.13,0.5);
@@ -195,12 +196,14 @@ Scene.prototype.createAppearances = function () {
 
 	this.textShader = new CGFshader(this.gl, "shaders/font.vert", "shaders/font.frag");
 	this.textShader.setUniformsValues({'dims': [16, 16]});
-	this.fontTexture = new CGFtexture(this, "textures/oolite-font.png");
+	this.fontTexture = new CGFtexture(this, "res/oolite-font.png");
 
-	this.whitetower = new CGFtexture(this, "textures/whitetower.png");
-	this.blacktower = new CGFtexture(this, "textures/blacktower.png");
+	this.whitetower = new CGFtexture(this, "res/whitetower.png");
+	this.blacktower = new CGFtexture(this, "res/blacktower.png");
+	this.wood = new CGFtexture(this, "res/wood.jpeg");
 
 	this.textMaterial.setTexture(this.fontTexture);
+	this.woodMaterial.setTexture(this.wood);
 
 }
 

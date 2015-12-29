@@ -18,28 +18,49 @@ PieceCounter.prototype.constructor = PieceCounter;
 
 PieceCounter.prototype.initPrimitives = function () {
 	this.cube = new Cube(this.scene, 3, 3, 0.1);
+	this.support = new Cube(this.scene, 8, 11, 0.3);
+	this.rotationAxis = new Cube(this.scene, 8, 0.05, 0.05);
 }
 
 
 PieceCounter.prototype.initMatrixes = function () {
 	this.blackTextMatrix = mat4.create();
 	mat4.identity(this.blackTextMatrix);
-	mat4.translate(this.blackTextMatrix, this.blackTextMatrix, [6.55, 5, -0.6]);
+	mat4.translate(this.blackTextMatrix, this.blackTextMatrix, [8.55, 5, 0.4]);
 
 	this.whiteTextMatrix = mat4.create();
 	mat4.identity(this.whiteTextMatrix);
-	mat4.translate(this.whiteTextMatrix, this.whiteTextMatrix, [-6.55, 5, -0.6]);
+	mat4.translate(this.whiteTextMatrix, this.whiteTextMatrix, [-8.55, 5, 0.4]);
+
+	this.supportMatrix = mat4.create();
+	mat4.identity(this.supportMatrix);
+	mat4.translate(this.supportMatrix, this.supportMatrix, [0, 3, -0.2]);
+
+	this.rotationAxisMatrix = mat4.create();
+	mat4.identity(this.rotationAxisMatrix);
+	mat4.translate(this.rotationAxisMatrix, this.rotationAxisMatrix, [0, -5, -0.4]);
+
+	this.rotationAxisSupportMatrixLeft = mat4.create();
+	mat4.identity(this.rotationAxisSupportMatrixLeft);
+	mat4.translate(this.rotationAxisSupportMatrixLeft, this.rotationAxisSupportMatrixLeft, [-4, -1, -0.4]);
+	mat4.rotate(this.rotationAxisSupportMatrixLeft, this.rotationAxisSupportMatrixLeft, Math.PI / 2, [0, 0, 1]);
+
+	this.rotationAxisSupportMatrixRight = mat4.create();
+	mat4.identity(this.rotationAxisSupportMatrixRight);
+	mat4.translate(this.rotationAxisSupportMatrixRight, this.rotationAxisSupportMatrixRight, [ 4, -1, -0.4]);
+	mat4.rotate(this.rotationAxisSupportMatrixRight, this.rotationAxisSupportMatrixRight, Math.PI / 2, [0, 0, 1]);
+
 }
 
 PieceCounter.prototype.initObjects = function () {
 
 	this.blackText = new Obj(this.scene, 'Objs/blackText.obj');
-	this.blackDozensPlacard = new Placard(this.scene, this.cube, 4.7);
-	this.blackUnitsPlacard = new Placard(this.scene, this.cube, 8.4);
+	this.blackDozensPlacard = new Placard(this.scene, this.cube, 6.7);
+	this.blackUnitsPlacard = new Placard(this.scene, this.cube, 10.4);
 
 	this.whiteText = new Obj(this.scene, 'Objs/whiteText.obj');
-	this.whiteDozensPlacard = new Placard(this.scene, this.cube, -8.4);
-	this.whiteUnitsPlacard = new Placard(this.scene, this.cube, -4.7);
+	this.whiteDozensPlacard = new Placard(this.scene, this.cube, -10.4);
+	this.whiteUnitsPlacard = new Placard(this.scene, this.cube, -6.7);
 
 }
 
@@ -57,15 +78,44 @@ PieceCounter.prototype.display = function () {
 
 	this.scene.pushMatrix();
 		this.scene.multMatrix(this.blackTextMatrix);
+		this.displaySupport();
 		this.blackText.display();
 	this.scene.popMatrix();
 
 	this.scene.pushMatrix();
 		this.scene.multMatrix(this.whiteTextMatrix);
+		this.displaySupport();
 		this.whiteText.display();
 	this.scene.popMatrix();
 
 }
+
+PieceCounter.prototype.displaySupport = function () {
+	this.scene.pushMatrix();
+		this.scene.multMatrix(this.supportMatrix);
+		this.scene.woodMaterial.apply();
+		this.support.display();
+	this.scene.popMatrix();
+
+	this.scene.pushMatrix();
+		this.scene.multMatrix(this.rotationAxisMatrix);
+		this.scene.defaultMaterial.apply();
+		this.rotationAxis.display();
+	this.scene.popMatrix();
+
+	this.scene.pushMatrix();
+		this.scene.multMatrix(this.rotationAxisSupportMatrixLeft);
+		this.scene.defaultMaterial.apply();
+		this.rotationAxis.display();
+	this.scene.popMatrix();
+
+	this.scene.pushMatrix();
+		this.scene.multMatrix(this.rotationAxisSupportMatrixRight);
+		this.scene.defaultMaterial.apply();
+		this.rotationAxis.display();
+	this.scene.popMatrix();
+}
+
 
 
 PieceCounter.prototype.update = function (deltaTime) {

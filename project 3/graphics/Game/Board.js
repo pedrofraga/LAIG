@@ -372,6 +372,7 @@ Board.prototype.botPlay = function () {
  	if (!size) {
  		var board = this;
  		setTimeout (function () {
+ 			board.scene.counter.timer.createTime();
  			board.scene.replaying = false;
  			board.scene.replayStarted = false;
  			board.scene.app.interface.replay(false);

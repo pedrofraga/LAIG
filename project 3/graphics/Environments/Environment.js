@@ -12,6 +12,7 @@ function Environment(scene) {
 	this.wall = new Cube(this.scene, 250, 200, 1);
 	this.floor = new Cube(this.scene, 400, 400, 1);
 	this.carpet = new Cube(this.scene, 110, 1, 175);
+	this.paint = new Cube(this.scene, 1, 50, 75);
 
 	this.initMatrixes();
 
@@ -68,6 +69,12 @@ Environment.prototype.display = function () {
 	this.carpet.display();
 	this.scene.popMatrix();
 
+	this.scene.pushMatrix();
+	this.scene.multMatrix(this.paintMatrix);
+	this.scene.paintMaterial.apply();
+	this.paint.display();
+	this.scene.popMatrix();
+
 }
 
 
@@ -108,6 +115,15 @@ Environment.prototype.initMatrixes = function () {
 	mat4.identity(this.carpetMatrix);
 	mat4.translate(this.carpetMatrix, this.carpetMatrix, [ 60, -145, 25]);
 
+	this.floorMatrix = mat4.create();
+	mat4.identity(this.floorMatrix);
+	mat4.translate(this.floorMatrix, this.floorMatrix, [ -25, -150, -25]);
+	mat4.rotate(this.floorMatrix, this.floorMatrix, Math.PI / 2, [1, 0, 0]);
+
+	this.paintMatrix = mat4.create();
+	mat4.identity(this.paintMatrix);
+	mat4.translate(this.paintMatrix, this.paintMatrix, [ -200, -50, -75]);
+
 }
 
 
@@ -119,6 +135,7 @@ Environment.prototype.initSceneAppearances = function () {
 	this.scene.woodMaterial = new CGFappearance(this.scene);
 	this.scene.carpetMaterial = new CGFappearance(this.scene);
 	this.scene.floorMaterial = new CGFappearance(this.scene);
+	this.scene.paintMaterial = new CGFappearance(this.scene);
 
 	this.scene.blackMaterial = new CGFappearance(this.scene);
 	this.scene.blackMaterial.setAmbient(0.13,0.13,0.13,0.5);
@@ -184,10 +201,12 @@ Environment.prototype.initSceneAppearances = function () {
 	this.scene.wood = new CGFtexture(this.scene, "res/wood.jpeg");
 	this.scene.carpet = new CGFtexture(this.scene, "res/carpet.jpg");
 	this.scene.floor = new CGFtexture(this.scene, "res/floor.jpg");
+	this.scene.paint = new CGFtexture(this.scene, "res/paint.jpg");
 
 	this.scene.textMaterial.setTexture(this.scene.fontTexture);
 	this.scene.woodMaterial.setTexture(this.scene.wood);
 	this.scene.carpetMaterial.setTexture(this.scene.carpet);
+	this.scene.paintMaterial.setTexture(this.scene.paint);
 	this.scene.floorMaterial.setTexture(this.scene.floor);
 	this.scene.floorMaterial.setTextureWrap('REPEAT', 'REPEAT');
 

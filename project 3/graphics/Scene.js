@@ -48,15 +48,28 @@ Scene.prototype.init = function (application) {
 
 Scene.prototype.initLights = function () {
  	
-	this.lights[0].setPosition(20, 20 , 100, 20);
+	this.lights[0].setPosition(20, 20, 100, 20);
     this.lights[0].setAmbient(0, 0, 0, 1);
 	this.lights[0].setDiffuse(1.0, 1.0, 1.0, 1.0);
-	this.lights[0].setSpecular(1.0, 1.0, 1.0, 1.0);
+	this.lights[0].setSpecular(0.7, 0.7, 0.7, 1.0);
 	this.lights[0].setLinearAttenuation(1);
 	this.lights[0].setConstantAttenuation(0);
 	this.lights[0].setQuadraticAttenuation(0);
     this.lights[0].enable();
     this.lights[0].update();
+
+
+    this.lights[1].setPosition(0, 0, 0, 1);
+	this.lights[1].setAmbient(0, 0, 0, 1);
+	this.lights[1].setSpecular( 1, 1, 0, 1);
+	this.lights[1].setDiffuse(1.0, 1.0, 1.0, 1.0);
+	this.lights[1].setLinearAttenuation(0);
+	this.lights[1].setConstantAttenuation(0);
+	this.lights[1].setQuadraticAttenuation(0.2);
+	this.lights[1].enable();
+	this.lights[1].setVisible(true);
+	this.lights[1].update();
+
 
 };
 
@@ -103,8 +116,6 @@ Scene.prototype.display = function () {
     this.loadIdentity();
 
 	this.applyViewMatrix();
-
-	this.axis.display();
 
 	this.setDefaultAppearance();
 

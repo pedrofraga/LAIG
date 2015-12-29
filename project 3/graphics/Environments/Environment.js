@@ -9,7 +9,7 @@ function Environment(scene) {
 	this.table = new Obj(this.scene, 'res/table.obj');
 	this.shuttle = new Obj(this.scene, 'res/shuttle.obj');
 	this.chess = new Obj(this.scene, 'res/chess.obj');
-	this.wall = new Cube(this.scene, 200, 200, 1);
+	this.wall = new Cube(this.scene, 250, 200, 1);
 	this.floor = new Cube(this.scene, 400, 400, 1);
 	this.carpet = new Cube(this.scene, 110, 1, 175);
 
@@ -46,7 +46,7 @@ Environment.prototype.display = function () {
 
 	this.scene.pushMatrix();
 	this.scene.multMatrix(this.wallMatrix);
-	this.scene.defaultMaterial.apply();
+	this.scene.wallMaterial.apply();
 	this.wall.display();
 	this.scene.popMatrix();
 
@@ -92,11 +92,11 @@ Environment.prototype.initMatrixes = function () {
 
 	this.wallMatrix = mat4.create();
 	mat4.identity(this.wallMatrix);
-	mat4.translate(this.wallMatrix, this.wallMatrix, [ -125, -50, -225]);
+	mat4.translate(this.wallMatrix, this.wallMatrix, [ -100, -50, -225]);
 
 	this.wallMatrix2 = mat4.create();
 	mat4.identity(this.wallMatrix2);
-	mat4.translate(this.wallMatrix2, this.wallMatrix2, [ -225, -50, -125]);
+	mat4.translate(this.wallMatrix2, this.wallMatrix2, [ -225, -50, -100]);
 	mat4.rotate(this.wallMatrix2, this.wallMatrix2, Math.PI / 2, [0, 1, 0]);
 
 	this.floorMatrix = mat4.create();
@@ -114,6 +114,7 @@ Environment.prototype.initMatrixes = function () {
 Environment.prototype.initSceneAppearances = function () {
 
 	this.scene.defaultMaterial = new CGFappearance(this.scene);
+	this.scene.wallMaterial = new CGFappearance(this.scene);
 	this.scene.textMaterial = new CGFappearance(this.scene);
 	this.scene.woodMaterial = new CGFappearance(this.scene);
 	this.scene.carpetMaterial = new CGFappearance(this.scene);

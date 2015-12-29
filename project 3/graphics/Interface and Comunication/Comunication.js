@@ -41,7 +41,7 @@
  			if (requestString != 'startgame' && cmd != 'botPlay') {
 
                 var matrix = board.intrepertPlBoard(data.target.response);
- 				board.history.playing = board.history.playing == 'black' ? 'white' : 'black';
+ 				board.scene.app.interface.playing = board.history.playing = board.history.playing == 'black' ? 'white' : 'black';
  				var lastElement = board.orfanPieces.length - 1;
  				board.orfanPieces[lastElement].visible = true;
 
@@ -58,7 +58,7 @@
 
                     var matrix = board.intrepertPlBoard(data.target.response, true);
 
-                    board.history.playing = board.history.playing == 'black' ? 'white' : 'black';
+                    board.scene.app.interface.playing = board.history.playing = board.history.playing == 'black' ? 'white' : 'black';
                     board.replaceMatrix(matrix, false, false);
                 }
 

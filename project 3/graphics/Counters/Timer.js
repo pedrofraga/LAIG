@@ -15,6 +15,7 @@ function Timer(scene) {
 	this.initMatrixes();
 
 	this.roundTime = 30;
+	this.roundTimeChanged = false;
 	this.createTime();
 
 };
@@ -67,7 +68,13 @@ Timer.prototype.update = function (deltaTime) {
 		this.dozensPlacard.update(deltaTime, this.elapsedDozens);
 
 	} else {
+		
+		if (!this.roundTimeChanged)
+			this.scene.app.interface.playing = this.scene.board.history.playing = this.scene.board.history.playing == 'black' ? 'white' : 'black';
+
 		this.createTime();
+
+		this.roundTimeChanged = false;
 	}
 
 }

@@ -65,8 +65,8 @@ Scene.prototype.initLights = function () {
 Scene.prototype.initCameras = function () {
 
 	this.cameraPerspectives = [];
-	this.cameraPerspectives[0] = new CameraPerspective('Camera 1', vec3.fromValues(80, 55, 80), vec3.fromValues(0, -20, 0));
-	this.cameraPerspectives[1] = new CameraPerspective('Camera 2', vec3.fromValues(-18, 80, 18), vec3.fromValues(18, 0, 18));
+	this.cameraPerspectives[0] = new CameraPerspective('Camera 1', vec3.fromValues(85, 57, 85), vec3.fromValues(0, -20, 0));
+	this.cameraPerspectives[1] = new CameraPerspective('Camera 2', vec3.fromValues(-18, 120, 18), vec3.fromValues(18, 0, 18));
 
 	this.cameraAnimation = null;
 
@@ -109,7 +109,7 @@ Scene.prototype.display = function () {
 
 	this.setDefaultAppearance();
 
-	this.counter.display();
+	if (this.cameraAnimation == null) this.counter.display();
 	this.board.display();
 
 
@@ -246,6 +246,7 @@ Scene.prototype.animateCamera = function (deltaTime) {
 			Math.abs(animation.travelledDirDist[0]) < Math.abs(animation.dirDist[0]) ||
 			Math.abs(animation.travelledDirDist[1]) < Math.abs(animation.dirDist[1]) ||
 			Math.abs(animation.travelledDirDist[2]) < Math.abs(animation.dirDist[2]) ) {
+
 			
 			var distPosX = animation.velPos[0] * deltaTime;
 			var distPosY = animation.velPos[1] * deltaTime;
@@ -343,6 +344,7 @@ Scene.prototype.replay = function () {
 		this.board.black = 'Human';
 		this.board.white = 'Human';
 		this.board.history.playing = 'black';
+		this.app.interface.playing = 'black';
 		var matrix = this.board.history.initialMatrix;
 		this.board.orfanPieces = [];
 		this.board.replaceMatrix(matrix, false, true);

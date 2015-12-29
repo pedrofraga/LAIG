@@ -34,13 +34,18 @@ Counter.prototype.initMatrixes = function () {
 
 	this.transformMatrix = mat4.create();
  	mat4.identity(this.transformMatrix);
- 	mat4.translate(this.transformMatrix, this.transformMatrix, [20, 0, -10]);
+ 	mat4.translate(this.transformMatrix, this.transformMatrix, [20, 5, 0]);
  	//mat4.rotate(this.transformMatrix, this.transformMatrix, Math.PI / 2, [0, 1, 0]);
 
  	this.originalTransformMatrix = mat4.create();
  	mat4.identity(this.originalTransformMatrix);
  	mat4.copy(this.originalTransformMatrix, this.transformMatrix);
 
+ 	this.camera2Matrix = mat4.create();
+	mat4.identity(this.camera2Matrix);
+	mat4.translate(this.camera2Matrix, this.camera2Matrix, [0, 0, -10]);
+	mat4.rotate(this.camera2Matrix, this.camera2Matrix, -Math.PI / 2, [0, 0, 1]);
+	mat4.rotate(this.camera2Matrix, this.camera2Matrix, -Math.PI / 2, [0, 1, 0]);
 
 	this.timerMatrix = mat4.create();
 	mat4.identity(this.timerMatrix);
@@ -61,6 +66,7 @@ Counter.prototype.display = function () {
 
 	this.scene.pushMatrix();
 		this.scene.multMatrix(this.originalTransformMatrix);
+		if (this.scene.app.interface.perspective == 'Camera 2') this.scene.multMatrix(this.camera2Matrix);
 
 		this.scene.pushMatrix();
 			this.scene.multMatrix(this.pieceCounterMatrix);

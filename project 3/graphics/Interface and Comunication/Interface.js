@@ -41,7 +41,7 @@ MyInterface.prototype.init = function(application) {
 	this.defaultControls[2] = this.gui.add(this.scene,'replay').name('Replay');
 
 	this.gui.add(this, 'perspective', this.perspectiveNames).name('Perspective')
-	.onChange(function() { self.scene.updateCamera(self.perspective);});
+	.onChange(function() { self.scene.updateCamera(self.perspective); });
 
 	this.defaultControls[3] = this.gui.add(this.scene.board, 'black', this.possiblePlayers).name('Black').listen();
 	this.defaultControls[4] = this.gui.add(this.scene.board, 'white', this.possiblePlayers).name('White').listen();
@@ -50,9 +50,15 @@ MyInterface.prototype.init = function(application) {
 	this.defaultControls[5].onChange(function() { 
 		self.scene.counter.timer.elapsedMiliSeconds = -1;
 		self.scene.counter.timer.roundTime = self.roundTime;
+		self.scene.counter.timer.roundTimeChanged = true;
 	});
 
-	this.defaultControls[6] = this.gui.add(this,'quitGame').name('Quit');
+	this.defaultControls[6] = this.gui.add(this, 'playing').name('Playing').listen();
+	this.defaultControls[6].onChange(function() { 
+		self.playing = self.scene.board.history.playing;
+	});
+
+	this.defaultControls[7] = this.gui.add(this,'quitGame').name('Quit');
 
 	this.replayControls[0] = this.gui.add(this, 'replayPercent', 0, 100).name('Replaying').listen();
 
@@ -87,6 +93,7 @@ MyInterface.prototype.initGUIVars = function() {
 	this.possiblePlayers = ['Human', 'Bot'];
 	this.replayPercent = 0;
 	this.roundTime = 30;
+	this.playing = 'black';
 }
 
 /**

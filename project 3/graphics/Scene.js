@@ -58,6 +58,11 @@ Scene.prototype.initLights = function () {
     this.lights[0].enable();
     this.lights[0].update();
 
+    this.lights[1].setAmbient(-30, 0, -30, 1);
+	this.lights[1].setDiffuse(0.15, 0.15, 0.15, 1.0);
+	this.lights[1].enable();
+	this.lights[1].update();
+
 };
 
 
@@ -103,8 +108,6 @@ Scene.prototype.display = function () {
     this.loadIdentity();
 
 	this.applyViewMatrix();
-
-	this.axis.display();
 
 	this.setDefaultAppearance();
 

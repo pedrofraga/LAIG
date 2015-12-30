@@ -75,7 +75,7 @@ Timer.prototype.displaySupport = function () {
 
 	this.scene.pushMatrix();
 		this.scene.multMatrix(this.rotationAxisMatrix);
-		this.scene.defaultMaterial.apply();
+		this.scene.roomWallMaterial.apply();
 		this.rotationAxis.display();
 	this.scene.popMatrix();
 

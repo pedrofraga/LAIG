@@ -1,5 +1,7 @@
 /* Created by Pedro Fraga MIEIC up201303095, It displays .obj files*/
 /* Obj reader for files exported from 3d Builder, windows 10 app */
+/* Texture can't be applied though, you're free to implement texCoords and improve this parser */
+/* The most awful code in history! */
 
 
 function Obj(scene, path) {

@@ -94,11 +94,11 @@ MyInterface.prototype.initGUIVars = function() {
 	this.perspectiveNames = this.scene.getPerspesctiveNames();
 	this.perspective = this.perspectiveNames[0];
 	this.possiblePlayers = ['Human', 'Bot'];
-	this.possibleEnvironments = ['None', 'Room'];
 	this.replayPercent = 0;
 	this.roundTime = 30;
 	this.playing = 'black';
-	this.environment = true;
+	this.environment = 'Room';
+	this.possibleEnvironments = ['None', 'Room', 'Porch'];
 }
 
 /**

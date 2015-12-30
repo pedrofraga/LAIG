@@ -5,41 +5,49 @@ function Environment(scene) {
 	this.scene = scene;
 	this.initSceneAppearances();
 
-
-	this.table = new Obj(this.scene, 'res/table.obj');
-	this.wall = new Cube(this.scene, 250, 200, 1);
-	this.floor = new Cube(this.scene, 400, 400, 1);
-	this.carpet = new Cube(this.scene, 110, 1, 175);
-	this.paint = new Cube(this.scene, 1, 50, 75);
-
-	this.initMatrixes();
+	this.initRoom();
+	this.initPorch();
 
 }
 
+
 Environment.prototype.display = function () {
 
+	switch (this.scene.app.interface.environment) {
+		case 'Room':
+			this.displayRoom();
+			break;
+		case 'Porch':
+			this.displayPorch();
+			break;
+	}
+}
+
+
+Environment.prototype.displayRoom = function () {
+
 	this.scene.pushMatrix();
-	this.scene.multMatrix(this.tableMatrix);
+	this.scene.multMatrix(this.roomTableMatrix);
 	this.scene.blackMaterial.apply();
-	this.table.display();
+	this.roomTable.display();
 	this.scene.popMatrix();
 
 	this.scene.pushMatrix();
-	this.scene.multMatrix(this.wallMatrix);
-	this.scene.wallMaterial.apply();
-	this.wall.display();
+	this.scene.multMatrix(this.roomWallMatrix);
+	this.scene.roomWallMaterial.apply();
+	this.roomWall.display();
 	this.scene.popMatrix();
 
 	this.scene.pushMatrix();
-	this.scene.multMatrix(this.wallMatrix2);
-	this.scene.defaultMaterial.apply();
-	this.wall.display();
+	this.scene.multMatrix(this.roomWallMatrix2);
+	this.scene.roomWallMaterial.apply();
+	this.roomWall.display();
 	this.scene.popMatrix();
 
 	this.scene.pushMatrix();
 	this.scene.multMatrix(this.floorMatrix);
-	this.scene.floorMaterial.apply();
-	this.floor.display();
+	this.scene.roomFloorMaterial.apply();
+	this.roomFloor.display();
 	this.scene.popMatrix();
 
 	this.scene.pushMatrix();
@@ -56,22 +64,35 @@ Environment.prototype.display = function () {
 
 }
 
+Environment.prototype.initRoom = function () {
 
-Environment.prototype.initMatrixes = function () {
+	this.roomTable = new Obj(this.scene, 'res/table.obj');
+	this.roomWall = new Cube(this.scene, 250, 200, 1);
+	this.roomFloor = new Cube(this.scene, 400, 400, 1);
+	this.carpet = new Cube(this.scene, 110, 1, 175);
+	this.paint = new Cube(this.scene, 1, 50, 75);
 
-	this.tableMatrix = mat4.create();
-	mat4.identity(this.tableMatrix);
-	mat4.translate(this.tableMatrix, this.tableMatrix, [20, -2, 20]);
-	mat4.rotate(this.tableMatrix, this.tableMatrix, Math.PI / 2, [0, 1, 0]);
+	this.initRoomMatrixes();
 
-	this.wallMatrix = mat4.create();
-	mat4.identity(this.wallMatrix);
-	mat4.translate(this.wallMatrix, this.wallMatrix, [ -100, -50, -225]);
+}
 
-	this.wallMatrix2 = mat4.create();
-	mat4.identity(this.wallMatrix2);
-	mat4.translate(this.wallMatrix2, this.wallMatrix2, [ -225, -50, -100]);
-	mat4.rotate(this.wallMatrix2, this.wallMatrix2, Math.PI / 2, [0, 1, 0]);
+
+
+Environment.prototype.initRoomMatrixes = function () {
+
+	this.roomTableMatrix = mat4.create();
+	mat4.identity(this.roomTableMatrix);
+	mat4.translate(this.roomTableMatrix, this.roomTableMatrix, [20, -2, 20]);
+	mat4.rotate(this.roomTableMatrix, this.roomTableMatrix, Math.PI / 2, [0, 1, 0]);
+
+	this.roomWallMatrix = mat4.create();
+	mat4.identity(this.roomWallMatrix);
+	mat4.translate(this.roomWallMatrix, this.roomWallMatrix, [ -100, -50, -225]);
+
+	this.roomWallMatrix2 = mat4.create();
+	mat4.identity(this.roomWallMatrix2);
+	mat4.translate(this.roomWallMatrix2, this.roomWallMatrix2, [ -225, -50, -100]);
+	mat4.rotate(this.roomWallMatrix2, this.roomWallMatrix2, Math.PI / 2, [0, 1, 0]);
 
 	this.floorMatrix = mat4.create();
 	mat4.identity(this.floorMatrix);
@@ -93,16 +114,151 @@ Environment.prototype.initMatrixes = function () {
 
 }
 
+Environment.prototype.displayPorch = function () {
+
+	this.scene.pushMatrix();
+	this.scene.multMatrix(this.porchTableMatrix);
+	this.scene.darkWoodMaterial.apply();
+	this.porchTable.display();
+	this.scene.popMatrix();
+
+	this.scene.pushMatrix();
+	this.scene.multMatrix(this.porchFloorMatrix);
+	this.scene.tilesMaterial.apply();
+	this.porchFloor.display();
+	this.scene.popMatrix();
+
+	this.scene.pushMatrix();
+	this.scene.multMatrix(this.porchTableSupportMatrix1);
+	this.scene.roomWallMaterial.apply();
+	this.porchTableSupport.display();
+	this.scene.popMatrix();
+
+	this.scene.pushMatrix();
+	this.scene.multMatrix(this.porchTableSupportMatrix2);
+	this.scene.roomWallMaterial.apply();
+	this.porchTableSupport.display();
+	this.scene.popMatrix();
+
+	this.scene.pushMatrix();
+	this.scene.multMatrix(this.porchWallMatrix);
+	this.scene.brickMaterial.apply();
+	this.porchWall.display();
+	this.scene.popMatrix();
+
+	this.scene.pushMatrix();
+	this.scene.multMatrix(this.railMatrix);
+	this.scene.darkWoodMaterial2.apply();
+	this.rail.display();
+	this.scene.popMatrix();
+
+	this.scene.pushMatrix();
+	this.scene.multMatrix(this.railSupportMatrix);
+	this.scene.darkWoodMaterial2.apply();
+	this.porchTableSupport.display();
+	this.scene.popMatrix();
+
+	this.scene.pushMatrix();
+	this.scene.multMatrix(this.railSupportMatrix2);
+	this.scene.darkWoodMaterial2.apply();
+	this.porchTableSupport.display();
+	this.scene.popMatrix();
+
+	this.scene.pushMatrix();
+	this.scene.multMatrix(this.railSupportMatrix3);
+	this.scene.darkWoodMaterial2.apply();
+	this.porchTableSupport.display();
+	this.scene.popMatrix();
+
+	this.scene.pushMatrix();
+	this.scene.multMatrix(this.landscapeMatrix);
+	this.scene.landscapeMaterial.apply();
+	this.landscape.display();
+	this.scene.popMatrix();
+}
+
+
+Environment.prototype.initPorch = function () {
+
+	this.porchTable = new Cube(this.scene, 50, 1, 60);
+	this.porchTableSupport = new Cylinder(this.scene, 40, 2, 2, 1, 20);
+	this.porchFloor = new Cube(this.scene, 150, 250, 1);
+	this.porchWall = new Cube(this.scene, 75, 150, 1);
+	this.rail = new Cylinder(this.scene, 300, 6, 3, 1, 4);
+	this.landscape = new Cube(this.scene, 1, 180, 300);
+
+	this.initPorchMatrixes();
+
+}
+
+
+
+Environment.prototype.initPorchMatrixes = function () {
+
+	this.porchTableMatrix = mat4.create();
+	mat4.identity(this.porchTableMatrix);
+	mat4.translate(this.porchTableMatrix, this.porchTableMatrix, [ 20, -3, 15]);
+
+	this.porchTableSupportMatrix1 = mat4.create();
+	mat4.identity(this.porchTableSupportMatrix1);
+	mat4.translate(this.porchTableSupportMatrix1, this.porchTableSupportMatrix1, [ 1, -3, 42]);
+	mat4.rotate(this.porchTableSupportMatrix1, this.porchTableSupportMatrix1, Math.PI / 2, [1, 0, 0]);
+
+	this.porchTableSupportMatrix2 = mat4.create();
+	mat4.identity(this.porchTableSupportMatrix2);
+	mat4.translate(this.porchTableSupportMatrix2, this.porchTableSupportMatrix2, [ 42, -3, -9]);
+	mat4.rotate(this.porchTableSupportMatrix2, this.porchTableSupportMatrix2, Math.PI / 2, [1, 0, 0]);
+
+	this.porchWallMatrix = mat4.create();
+	mat4.identity(this.porchWallMatrix);
+	mat4.translate(this.porchWallMatrix, this.porchWallMatrix, [ -10, -50, -125]);
+
+	this.railMatrix = mat4.create();
+	mat4.identity(this.railMatrix);
+	mat4.translate(this.railMatrix, this.railMatrix, [ -50, -10, -150]);
+
+	this.railSupportMatrix = mat4.create();
+	mat4.identity(this.railSupportMatrix);
+	mat4.translate(this.railSupportMatrix, this.railSupportMatrix, [ -50, -10, -10]);
+	mat4.rotate(this.railSupportMatrix, this.railSupportMatrix, Math.PI / 2, [1, 0, 0]);
+
+	this.railSupportMatrix2 = mat4.create();
+	mat4.identity(this.railSupportMatrix2);
+	mat4.translate(this.railSupportMatrix2, this.railSupportMatrix2, [ -50, -10, -60]);
+	mat4.rotate(this.railSupportMatrix2, this.railSupportMatrix2, Math.PI / 2, [1, 0, 0]);
+
+
+	this.railSupportMatrix3 = mat4.create();
+	mat4.identity(this.railSupportMatrix3);
+	mat4.translate(this.railSupportMatrix3, this.railSupportMatrix3, [ -50, -10, 40]);
+	mat4.rotate(this.railSupportMatrix3, this.railSupportMatrix3, Math.PI / 2, [1, 0, 0]);
+
+
+	this.porchFloorMatrix = mat4.create();
+	mat4.identity(this.porchFloorMatrix);
+	mat4.translate(this.porchFloorMatrix, this.porchFloorMatrix, [ 25, -50, -25]);
+	mat4.rotate(this.porchFloorMatrix, this.porchFloorMatrix, Math.PI / 2, [1, 0, 0]);
+
+	this.landscapeMatrix = mat4.create();
+	mat4.identity(this.landscapeMatrix);
+	mat4.translate(this.landscapeMatrix, this.landscapeMatrix, [ -80, -40, -50]);
+}
+
 
 Environment.prototype.initSceneAppearances = function () {
 
 	this.scene.defaultMaterial = new CGFappearance(this.scene);
-	this.scene.wallMaterial = new CGFappearance(this.scene);
+	this.scene.roomWallMaterial = new CGFappearance(this.scene);
 	this.scene.textMaterial = new CGFappearance(this.scene);
 	this.scene.woodMaterial = new CGFappearance(this.scene);
 	this.scene.carpetMaterial = new CGFappearance(this.scene);
-	this.scene.floorMaterial = new CGFappearance(this.scene);
+	this.scene.roomFloorMaterial = new CGFappearance(this.scene);
 	this.scene.paintMaterial = new CGFappearance(this.scene);
+	this.scene.darkWoodMaterial = new CGFappearance(this.scene);
+	this.scene.darkWoodMaterial2 = new CGFappearance(this.scene);
+	this.scene.tilesMaterial = new CGFappearance(this.scene);
+	this.scene.brickMaterial = new CGFappearance(this.scene);
+	this.scene.landscapeMaterial = new CGFappearance(this.scene);
 
 	this.scene.blackMaterial = new CGFappearance(this.scene);
 	this.scene.blackMaterial.setAmbient(0.13,0.13,0.13,1);
@@ -169,12 +325,21 @@ Environment.prototype.initSceneAppearances = function () {
 	this.scene.carpet = new CGFtexture(this.scene, "res/carpet.jpg");
 	this.scene.floor = new CGFtexture(this.scene, "res/floor.jpg");
 	this.scene.paint = new CGFtexture(this.scene, "res/paint.jpg");
+	this.scene.darkWood = new CGFtexture(this.scene, "res/darkWood.jpg");
+	this.scene.darkWood2 = new CGFtexture(this.scene, "res/darkWood2.jpg");
+	this.scene.tiles = new CGFtexture(this.scene, "res/tiles.jpg");
+	this.scene.brick = new CGFtexture(this.scene, "res/brick.jpg");
+	this.scene.landscape = new CGFtexture(this.scene, "res/landscape.jpg");
 
 	this.scene.textMaterial.setTexture(this.scene.fontTexture);
 	this.scene.woodMaterial.setTexture(this.scene.wood);
 	this.scene.carpetMaterial.setTexture(this.scene.carpet);
 	this.scene.paintMaterial.setTexture(this.scene.paint);
-	this.scene.floorMaterial.setTexture(this.scene.floor);
-	this.scene.floorMaterial.setTextureWrap('REPEAT', 'REPEAT');
+	this.scene.roomFloorMaterial.setTexture(this.scene.floor);
+	this.scene.darkWoodMaterial.setTexture(this.scene.darkWood);
+	this.scene.darkWoodMaterial2.setTexture(this.scene.darkWood2);
+	this.scene.tilesMaterial.setTexture(this.scene.tiles);
+	this.scene.brickMaterial.setTexture(this.scene.brick);
+	this.scene.landscapeMaterial.setTexture(this.scene.landscape);
 
 }

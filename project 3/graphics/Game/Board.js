@@ -215,6 +215,8 @@ Board.prototype.initBoardMatrix = function () {
 	if (starting) {
 	 	this.clearHistory();
 	 	this.history.initialMatrix = newMatrix;
+	 	this.history.playing = 'black';
+	 	this.scene.app.interface.playing = 'black';
 	}
 
  }

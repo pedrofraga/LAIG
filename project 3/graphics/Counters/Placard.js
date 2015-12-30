@@ -45,7 +45,7 @@ Placard.prototype.display = function () {
 
 	this.scene.pushMatrix();
 		this.scene.multMatrix(this.transformMatrix);
-		this.scene.defaultMaterial.apply();
+		this.scene.roomWallMaterial.apply();
 		this.obj.display();
 		this.frontDisplay();
 	this.scene.popMatrix();

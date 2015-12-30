@@ -97,8 +97,8 @@ MyInterface.prototype.initGUIVars = function() {
 	this.replayPercent = 0;
 	this.roundTime = 30;
 	this.playing = 'black';
-	this.environment = 'Room';
-	this.possibleEnvironments = ['None', 'Room', 'Porch'];
+	this.environment = 'Casino';
+	this.possibleEnvironments = ['None', 'Room', 'Porch', 'Casino'];
 }
 
 /**

@@ -7,6 +7,7 @@ function Environment(scene) {
 
 	this.initRoom();
 	this.initPorch();
+	this.initCasino();
 
 }
 
@@ -19,6 +20,9 @@ Environment.prototype.display = function () {
 			break;
 		case 'Porch':
 			this.displayPorch();
+			break;
+		case 'Casino':
+			this.displayCasino();
 			break;
 	}
 }
@@ -233,7 +237,6 @@ Environment.prototype.initPorchMatrixes = function () {
 	mat4.translate(this.railSupportMatrix3, this.railSupportMatrix3, [ -50, -10, 40]);
 	mat4.rotate(this.railSupportMatrix3, this.railSupportMatrix3, Math.PI / 2, [1, 0, 0]);
 
-
 	this.porchFloorMatrix = mat4.create();
 	mat4.identity(this.porchFloorMatrix);
 	mat4.translate(this.porchFloorMatrix, this.porchFloorMatrix, [ 25, -50, -25]);
@@ -242,6 +245,89 @@ Environment.prototype.initPorchMatrixes = function () {
 	this.landscapeMatrix = mat4.create();
 	mat4.identity(this.landscapeMatrix);
 	mat4.translate(this.landscapeMatrix, this.landscapeMatrix, [ -80, -40, -50]);
+}
+
+
+
+Environment.prototype.displayCasino = function () {
+	
+	this.scene.pushMatrix();
+	this.scene.multMatrix(this.casinoTableMatrix);
+	this.scene.casinoTableMaterial.apply();
+	this.casinoTable.display();
+	this.scene.popMatrix();
+
+	this.scene.pushMatrix();
+	this.scene.multMatrix(this.railTableMatrix);
+	this.scene.darkWoodMaterial2.apply();
+	this.tableRail.display();
+	this.scene.popMatrix();
+
+	this.scene.pushMatrix();
+	this.scene.multMatrix(this.railTableMatrix2);
+	this.scene.darkWoodMaterial2.apply();
+	this.tableRail.display();
+	this.scene.popMatrix();
+
+	this.scene.pushMatrix();
+	this.scene.multMatrix(this.sideRailTableMatrix);
+	this.scene.darkWoodMaterial2.apply();
+	this.tableRail.display();
+	this.scene.popMatrix();
+
+	this.scene.pushMatrix();
+	this.scene.multMatrix(this.sideRailTableMatrix2);
+	this.scene.darkWoodMaterial2.apply();
+	this.tableRail.display();
+	this.scene.popMatrix();
+
+	this.scene.pushMatrix();
+	this.scene.multMatrix(this.porchFloorMatrix);
+	this.scene.casinoFloorMaterial.apply();
+	this.porchFloor.display();
+	this.scene.popMatrix();
+
+}
+
+
+Environment.prototype.initCasino = function () {
+
+	this.casinoTable = new Cube(this.scene, 51, 1, 51);
+	this.tableRail = new Cube(this.scene, 6, 1, 60);
+	this.tableRail = new Cube(this.scene, 6, 1, 60);
+
+	this.initCasinoMatrixes();
+
+}
+
+
+
+Environment.prototype.initCasinoMatrixes = function () {
+
+	this.casinoTableMatrix = mat4.create();
+	mat4.identity(this.casinoTableMatrix);
+	mat4.translate(this.casinoTableMatrix, this.casinoTableMatrix, [ 20, -3, 19]);
+
+	this.railTableMatrix = mat4.create();
+	mat4.identity(this.railTableMatrix);
+	mat4.translate(this.railTableMatrix, this.railTableMatrix, [ -5, -1, 20]);
+
+	this.railTableMatrix2 = mat4.create();
+	mat4.identity(this.railTableMatrix2);
+	mat4.translate(this.railTableMatrix2, this.railTableMatrix2, [ 45, -1, 20]);
+
+	this.sideRailTableMatrix = mat4.create();
+	mat4.identity(this.sideRailTableMatrix);
+	mat4.translate(this.sideRailTableMatrix, this.sideRailTableMatrix, [ 20, -1, -7]);
+	mat4.scale(this.sideRailTableMatrix, this.sideRailTableMatrix, [0.75, 1, 1]);
+	mat4.rotate(this.sideRailTableMatrix, this.sideRailTableMatrix, Math.PI / 2, [ 0, 1, 0]);
+
+	this.sideRailTableMatrix2 = mat4.create();
+	mat4.identity(this.sideRailTableMatrix2);
+	mat4.translate(this.sideRailTableMatrix2, this.sideRailTableMatrix2, [ 20, -1, 47]);
+	mat4.scale(this.sideRailTableMatrix2, this.sideRailTableMatrix2, [0.75, 1, 1]);
+	mat4.rotate(this.sideRailTableMatrix2, this.sideRailTableMatrix2, Math.PI / 2, [ 0, 1, 0]);
+	
 }
 
 
@@ -259,6 +345,8 @@ Environment.prototype.initSceneAppearances = function () {
 	this.scene.tilesMaterial = new CGFappearance(this.scene);
 	this.scene.brickMaterial = new CGFappearance(this.scene);
 	this.scene.landscapeMaterial = new CGFappearance(this.scene);
+	this.scene.casinoTableMaterial = new CGFappearance(this.scene);
+	this.scene.casinoFloorMaterial = new CGFappearance(this.scene);
 
 	this.scene.blackMaterial = new CGFappearance(this.scene);
 	this.scene.blackMaterial.setAmbient(0.13,0.13,0.13,1);
@@ -277,7 +365,6 @@ Environment.prototype.initSceneAppearances = function () {
 	this.scene.redMaterial.setDiffuse(1,0.2,0.2,1);
 	this.scene.redMaterial.setSpecular(1,0.2,0.2,1);
 	this.scene.redMaterial.setShininess(0);
-
 
 	this.scene.orangeMaterial = new CGFappearance(this.scene);
 	this.scene.orangeMaterial.setAmbient(1,0.6,0.2,1);
@@ -330,6 +417,8 @@ Environment.prototype.initSceneAppearances = function () {
 	this.scene.tiles = new CGFtexture(this.scene, "res/tiles.jpg");
 	this.scene.brick = new CGFtexture(this.scene, "res/brick.jpg");
 	this.scene.landscape = new CGFtexture(this.scene, "res/landscape.jpg");
+	this.scene.casinoTable = new CGFtexture(this.scene, "res/casinoTable.jpg");
+	this.scene.casinoFloor = new CGFtexture(this.scene, "res/casinoFloor.jpg");
 
 	this.scene.textMaterial.setTexture(this.scene.fontTexture);
 	this.scene.woodMaterial.setTexture(this.scene.wood);
@@ -341,5 +430,7 @@ Environment.prototype.initSceneAppearances = function () {
 	this.scene.tilesMaterial.setTexture(this.scene.tiles);
 	this.scene.brickMaterial.setTexture(this.scene.brick);
 	this.scene.landscapeMaterial.setTexture(this.scene.landscape);
+	this.scene.casinoTableMaterial.setTexture(this.scene.casinoTable);
+	this.scene.casinoFloorMaterial.setTexture(this.scene.casinoFloor);
 
 }

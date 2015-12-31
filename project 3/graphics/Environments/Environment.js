@@ -282,10 +282,52 @@ Environment.prototype.displayCasino = function () {
 	this.scene.popMatrix();
 
 	this.scene.pushMatrix();
-	this.scene.multMatrix(this.porchFloorMatrix);
+	this.scene.multMatrix(this.casinoFloorMatrix);
 	this.scene.casinoFloorMaterial.apply();
-	this.porchFloor.display();
+	this.casinoFloor.display();
 	this.scene.popMatrix();
+
+	this.scene.pushMatrix();
+	this.scene.multMatrix(this.counterMatrix);
+	this.scene.woodMaterial.apply();
+	this.counter.display();
+	this.scene.popMatrix();
+
+	this.scene.pushMatrix();
+	this.scene.multMatrix(this.counterTopMatrix);
+	this.scene.darkWoodMaterial2.apply();
+	this.counterTop.display();
+	this.scene.popMatrix()
+
+	this.scene.pushMatrix();
+	this.scene.multMatrix(this.casinoChairMatrix);
+	this.scene.blackMaterial.apply();
+	this.counterChair.display();
+	this.scene.popMatrix();
+
+	this.scene.pushMatrix();
+	this.scene.multMatrix(this.casinoChairMatrix2);
+	this.scene.blackMaterial.apply();
+	this.counterChair.display();
+	this.scene.popMatrix();
+
+	this.scene.pushMatrix();
+	this.scene.multMatrix(this.casinoChairMatrix3);
+	this.scene.blackMaterial.apply();
+	this.counterChair.display();
+	this.scene.popMatrix();
+
+	this.scene.pushMatrix();
+	this.scene.multMatrix(this.casinoChairMatrix4);
+	this.scene.blackMaterial.apply();
+	this.counterChair.display();
+	this.scene.popMatrix();
+
+	this.scene.pushMatrix();
+	this.scene.multMatrix(this.sideCounterMatrix);
+	this.scene.woodMaterial.apply();
+	this.sideCounter.display();
+	this.scene.popMatrix()
 
 }
 
@@ -294,7 +336,11 @@ Environment.prototype.initCasino = function () {
 
 	this.casinoTable = new Cube(this.scene, 51, 1, 51);
 	this.tableRail = new Cube(this.scene, 6, 1, 60);
-	this.tableRail = new Cube(this.scene, 6, 1, 60);
+	this.counter = new Cube(this.scene, 10, 50, 200);
+	this.counterTop = new Cube(this.scene, 20, 10, 200);
+	this.sideCounter = new Cube(this.scene, 100, 50, 10);
+	this.casinoFloor = new Cube(this.scene, 170, 280, 1);
+	this.counterChair = new Obj(this.scene, 'res/counterChair.obj');
 
 	this.initCasinoMatrixes();
 
@@ -327,6 +373,43 @@ Environment.prototype.initCasinoMatrixes = function () {
 	mat4.translate(this.sideRailTableMatrix2, this.sideRailTableMatrix2, [ 20, -1, 47]);
 	mat4.scale(this.sideRailTableMatrix2, this.sideRailTableMatrix2, [0.75, 1, 1]);
 	mat4.rotate(this.sideRailTableMatrix2, this.sideRailTableMatrix2, Math.PI / 2, [ 0, 1, 0]);
+
+	this.counterMatrix = mat4.create();
+	mat4.identity(this.counterMatrix);
+	mat4.translate(this.counterMatrix, this.counterMatrix, [ -70, -25, -50]);
+
+	this.counterTopMatrix = mat4.create();
+	mat4.identity(this.counterTopMatrix);
+	mat4.translate(this.counterTopMatrix, this.counterTopMatrix, [ -70, -4, -50]);
+
+
+	this.casinoFloorMatrix = mat4.create();
+	mat4.identity(this.casinoFloorMatrix);
+	mat4.translate(this.casinoFloorMatrix, this.casinoFloorMatrix, [ 5, -50, -5]);
+	mat4.rotate(this.casinoFloorMatrix, this.casinoFloorMatrix, Math.PI / 2, [1, 0, 0]);
+
+
+	this.casinoChairMatrix = mat4.create();
+	mat4.identity(this.casinoChairMatrix);
+	mat4.translate(this.casinoChairMatrix, this.casinoChairMatrix, [ -45, -23, 10]);
+
+
+	this.casinoChairMatrix2 = mat4.create();
+	mat4.identity(this.casinoChairMatrix2);
+	mat4.translate(this.casinoChairMatrix2, this.casinoChairMatrix2, [ -45, -23, -40]);
+
+	this.casinoChairMatrix3 = mat4.create();
+	mat4.identity(this.casinoChairMatrix3);
+	mat4.translate(this.casinoChairMatrix3, this.casinoChairMatrix3, [ -45, -23, -90]);
+
+	this.casinoChairMatrix4 = mat4.create();
+	mat4.identity(this.casinoChairMatrix4);
+	mat4.translate(this.casinoChairMatrix4, this.casinoChairMatrix4, [ 0, -23, -100]);
+	mat4.rotate(this.casinoChairMatrix4, this.casinoChairMatrix4, -Math.PI / 2, [0, 1, 0]);
+
+	this.sideCounterMatrix = mat4.create();
+	mat4.identity(this.sideCounterMatrix);
+	mat4.translate(this.sideCounterMatrix, this.sideCounterMatrix, [ -10, -25, -125]);
 	
 }
 

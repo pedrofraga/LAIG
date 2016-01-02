@@ -45,23 +45,26 @@ MyInterface.prototype.init = function(application) {
 		self.playing = self.scene.board.history.playing;
 	});
 
-
 	this.optionsFolder = this.gui.addFolder('Options');
 	this.optionsFolder.open();
 
 	this.optionsFolder.add(this, 'perspective', this.perspectiveNames).name('Perspective')
 	.onChange(function() { self.scene.updateCamera(self.perspective); });
-	this.defaultControls[4] = this.optionsFolder.add(this.scene.board, 'black', this.possiblePlayers).name('Black').listen();
-	this.defaultControls[5] = this.optionsFolder.add(this.scene.board, 'white', this.possiblePlayers).name('White').listen();
-	this.defaultControls[6] = this.optionsFolder.add(this, 'roundTime', 15, 60).step(1).name('Round Time');
-	this.defaultControls[6].onChange(function() { 
+	this.defaultControls[4] = this.optionsFolder.add(this, 'difficulty', this.difficulties).name('Difficulty').listen();
+	this.defaultControls[4].onChange(function() { 
+		swal('This option is not implemented, the ProLog project used to develop this project does not support this type of function.');
+	});
+	this.defaultControls[5] = this.optionsFolder.add(this.scene.board, 'black', this.possiblePlayers).name('Black').listen();
+	this.defaultControls[6] = this.optionsFolder.add(this.scene.board, 'white', this.possiblePlayers).name('White').listen();
+	this.defaultControls[7] = this.optionsFolder.add(this, 'roundTime', 15, 60).step(1).name('Round Time');
+	this.defaultControls[7].onChange(function() { 
 		self.scene.counter.timer.elapsedMiliSeconds = -1;
 		self.scene.counter.timer.roundTime = self.roundTime;
 		self.scene.counter.timer.roundTimeChanged = true;
 	});
 
 	this.optionsFolder.add(this, 'environment', this.possibleEnvironments).name('Environment');
-	this.defaultControls[7] = this.gui.add(this,'quitGame').name('Quit');
+	this.defaultControls[8] = this.gui.add(this,'quitGame').name('Quit');
 
 	
 	this.replayControls[0] = this.gui.add(this, 'replayPercent', 0, 100).name('Replaying').listen();
@@ -99,6 +102,9 @@ MyInterface.prototype.initGUIVars = function() {
 	this.playing = 'black';
 	this.environment = 'Casino';
 	this.possibleEnvironments = ['None', 'Room', 'Porch', 'Casino'];
+
+	this.difficulty = 'Medium';
+	this.difficulties = [ 'Easy', 'Medium', 'Hard'];
 }
 
 /**

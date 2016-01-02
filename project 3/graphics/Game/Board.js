@@ -43,8 +43,10 @@ Board.prototype.display = function () {
 
 	for (var y = 0; y < this.matrix.length; y++)
 		for (var x = 0; x < this.matrix[y].length; x++) {
-			if (this.initialized) this.scene.registerForPick(y * 13 + x + 1, this.matrix[y][x]);
+			this.scene.pushMatrix();
+			if (this.initialized && this.matrix[y][x] != null) this.scene.registerForPick(y * 13 + x + 1, this.matrix[y][x]);
 			this.matrix[y][x].display();
+			this.scene.popMatrix();
 		}
 
 	for (var i = 0; i < this.orfanPieces.length; i++)

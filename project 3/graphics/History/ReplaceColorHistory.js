@@ -83,7 +83,6 @@ ReplaceColorHistory.prototype.replay = function () {
 				var lastHis = this.scene.board.history.movesHistory.length - 1;
 				this.scene.board.history.movesHistory.splice(lastHis, 1);
 
-				console.log(this.scene.board.history.movesHistory);
 				
 				this.scene.board.history.replayIt++;
 

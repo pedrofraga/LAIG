@@ -47,7 +47,7 @@ BoardSpace.prototype.constructor= BoardSpace;
  *
  */
 
-BoardSpace.prototype.display = function () {
+BoardSpace.prototype.display = function (x, y) {
 
 	this.scene.pushMatrix();
 	this.appearance.apply();

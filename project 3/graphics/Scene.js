@@ -95,9 +95,10 @@ Scene.prototype.setDefaultAppearance = function () {
 Scene.prototype.display = function () {
 
 	if(!this.replaying) {
-		this.getPicking();
-		this.clearPickRegistration();	
+		this.getPicking();	
 	}
+
+	this.clearPickRegistration();
 
     this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);
     this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
@@ -112,8 +113,8 @@ Scene.prototype.display = function () {
 	this.setDefaultAppearance();
 
 	if (this.cameraAnimation == null) this.counter.display();
-	this.board.display();
 	if (this.app.interface.environment) this.environment.display();
+	this.board.display();
 
 
 
@@ -250,7 +251,7 @@ Scene.prototype.getPicking = function () {
 
 	if (this.pickMode == false) {
 		if (this.pickResults != null && this.pickResults.length > 0) {
-			for (var i=0; i< this.pickResults.length; i++) {
+			for (var i=0; i < this.pickResults.length; i++) {
 				var obj = this.pickResults[i][0];
 				if (obj) {
 					var customId = this.pickResults[i][1];				

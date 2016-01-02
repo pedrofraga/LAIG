@@ -102,8 +102,10 @@ Timer.prototype.update = function (deltaTime) {
 
 	} else {
 		
-		if (!this.roundTimeChanged)
+		if (!this.roundTimeChanged) {
 			this.scene.app.interface.playing = this.scene.board.history.playing = this.scene.board.history.playing == 'black' ? 'white' : 'black';
+			this.scene.board.history.swaps++;
+		}
 
 		this.createTime();
 

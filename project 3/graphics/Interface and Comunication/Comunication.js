@@ -26,6 +26,8 @@
  		var response = data.target.response;
         var cmd = requestString.substring(0, 7);
 
+        if (response == 'play') return;
+
  		if (response == 'goodbye') {
 
  			location.replace("../");
@@ -48,6 +50,8 @@
  				board.history.movesHistory.push(moveHis);
 
  				board.replaceMatrix(matrix, false, false);
+
+                board.requestToPl('checkend(' + board.history.playing + 'Player,' + data.target.response + ')');
 
  			} else if (cmd == 'botPlay') {
 
@@ -128,7 +132,8 @@ Board.prototype.boardToPlList = function () {
 		for (var x = 0; x < this.matrix[y].length; x++) {
 			var object = this.matrix[y][x];
 			if(object.piece == null)
-        		plList += '0,';
+                if (x == 6 && y == 6) plList += '-1,';
+                else plList += '0,';
         	else {
         		
         		if (object.piece.cylinder.height == 0.1)

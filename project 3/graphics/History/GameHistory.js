@@ -11,6 +11,7 @@ function GameHistory () {
 	this.movesHistory = [];
 	this.playing = 'black';
 	this.botPlayed = false;
+	this.swaps = 0;
 
 	/* Replay vars */
 	this.movesReplay = [];

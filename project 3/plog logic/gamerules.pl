@@ -44,7 +44,7 @@ searchVector(CurrRow, CurrCol, DeltaRow, DeltaCol, It, dr, Board):-
 	NewCurrRow = CurrRow + 1,
 	NewCurrCol = CurrCol + 1,
 	getElem(NewCurrRow, NewCurrCol, Board, Elem),
-	Elem =< 0,
+	Elem =:= 0,
 	searchVector(NewCurrRow, NewCurrCol, DeltaRow, DeltaCol, It1, dr, Board).
 
 searchVector(_,_,X,X,X1,ul,_):-
@@ -57,7 +57,7 @@ searchVector(CurrRow, CurrCol, DeltaRow, DeltaCol, It, ul, Board):-
 	NewCurrRow = CurrRow - 1,
 	NewCurrCol = CurrCol - 1,
 	getElem(NewCurrRow, NewCurrCol, Board, Elem),
-	Elem =< 0,
+	Elem =:= 0,
 	searchVector(NewCurrRow, NewCurrCol, DeltaRow, DeltaCol, It1, ul, Board).
 
 searchVector(_,_,X1,X,X1,dl,_):-
@@ -70,7 +70,7 @@ searchVector(CurrRow, CurrCol, DeltaRow, DeltaCol, It, dl, Board):-
 	NewCurrRow = CurrRow + 1,
 	NewCurrCol = CurrCol - 1,
 	getElem(NewCurrRow, NewCurrCol, Board, Elem),
-	Elem =< 0,
+	Elem =:= 0,
 	searchVector(NewCurrRow, NewCurrCol, DeltaRow, DeltaCol, It1, dl, Board).
 
 searchVector(_,_,X1,X,X,ur,_):-
@@ -83,7 +83,7 @@ searchVector(CurrRow, CurrCol, DeltaRow, DeltaCol, It, ur, Board):-
 	NewCurrRow = CurrRow - 1,
 	NewCurrCol = CurrCol + 1,
 	getElem(NewCurrRow, NewCurrCol, Board, Elem),
-	Elem =< 0,
+	Elem =:= 0,
 	searchVector(NewCurrRow, NewCurrCol, DeltaRow, DeltaCol, It1, ur, Board).
 	
 searchVector(_,_,0,X,X,r,_).
@@ -93,7 +93,7 @@ searchVector(CurrRow, CurrCol, DeltaRow, DeltaCol, It,  r, Board):-
 	It1 =< abs(DeltaCol),
 	NewCurrCol = CurrCol + 1,
 	getElem(CurrRow, NewCurrCol, Board, Elem),
-	Elem =< 0,
+	Elem =:= 0,
 	searchVector(CurrRow, NewCurrCol, DeltaRow, DeltaCol, It1, r, Board).
 	
 searchVector(_,_,0,X1,X,l,_):-
@@ -104,7 +104,7 @@ searchVector(CurrRow, CurrCol, DeltaRow, DeltaCol, It, l, Board):-
 	It1 =< abs(DeltaCol),
 	NewCurrCol = CurrCol - 1,
 	getElem(CurrRow, NewCurrCol, Board, Elem),
-	Elem =< 0,
+	Elem =:= 0,
 	searchVector(CurrRow, NewCurrCol, DeltaRow, DeltaCol, It1, l, Board).
 
 searchVector(_,_,X,0,X,d,_).
@@ -114,7 +114,7 @@ searchVector(CurrRow, CurrCol, DeltaRow, DeltaCol, It, d, Board):-
 	It1 =< abs(DeltaRow),
 	NewCurrRow = CurrRow + 1,
 	getElem(NewCurrRow, CurrCol, Board, Elem),
-	Elem =< 0,
+	Elem =:= 0,
 	searchVector(NewCurrRow, CurrCol, DeltaRow, DeltaCol, It1, d, Board).
 
 searchVector(_,_,X1,0,X,u,_):-
@@ -125,7 +125,7 @@ searchVector(CurrRow, CurrCol, DeltaRow, DeltaCol, It, u, Board):-
 	It1 =< abs(DeltaRow),
 	NewCurrRow = CurrRow - 1,
 	getElem(NewCurrRow, CurrCol, Board, Elem),
-	Elem =< 0,
+	Elem =:= 0,
 	searchVector(NewCurrRow, CurrCol, DeltaRow, DeltaCol, It1, u, Board).
 
 validInput(CurrRow,CurrCol, DestRow, DestCol, Board):-

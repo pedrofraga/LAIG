@@ -276,8 +276,8 @@ Scene.prototype.replay = function () {
 		this.board.history.movesReplay.reverse();
 		this.board.black = 'Human';
 		this.board.white = 'Human';
-		this.board.history.playing = 'black';
-		this.app.interface.playing = 'black';
+		if (this.board.history.swaps == 0) { this.board.history.playing = 'black'; this.app.interface.playing = 'black'; } 
+		else { var playing = this.board.history.swaps % 2 == 0 ? 'black' : 'white'; this.board.history.playing = playing; this.app.interface.playing = playing; }
 		var matrix = this.board.history.initialMatrix;
 		this.board.orfanPieces = [];
 		this.board.replaceMatrix(matrix, false, true);

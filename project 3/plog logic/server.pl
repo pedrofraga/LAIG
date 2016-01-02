@@ -114,6 +114,10 @@ print_header_line(_).
 parse_input(startgame, Board) :- startDrawingBoard(0,13, Board).
 
 
+
+parse_input(checkend(Player,Board), Msg) :- getPlayerColor(Player, Piece), checkEnd(Board, 1, 1, 13, Piece, Msg), Msg == win.
+parse_input(checkend(_,_), Msg) :- Msg = play.
+
 parse_input(movePiece(Board,CurrRow,CurrCol,DestRow,DestCol,Player), Board4) :- 
 	validInput(CurrRow, CurrCol, DestRow, DestCol, Board),
 	getElem(CurrRow, CurrCol, Board, Piece),
@@ -121,13 +125,9 @@ parse_input(movePiece(Board,CurrRow,CurrCol,DestRow,DestCol,Player), Board4) :-
 	setPosElem(DestRow, DestCol, Piece, Board, Board1),
 	setPosElem(CurrRow, CurrCol, 0, Board1, Board2),
 	checkCapture(DestRow, DestCol, Piece, Board2, Board3),
-	checkCenter(DestRow, DestCol, Piece, Board3, Board4),
-	write('Checking End..\n'),
-	checkEnd(Board, 1, 1, 13, Piece).
-
+	checkCenter(DestRow, DestCol, Piece, Board3, Board4).
 
 parse_input(botPlay(Board,Player), Msg) :- getPlayerColor(Player, Piece), checkEnd(Board, 1, 1, 13, Piece, Msg), Msg == win.
-
 
 parse_input(botPlay(Board,Player), Msg) :-
 	getPlayerColor(Player, Piece),

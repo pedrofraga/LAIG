@@ -449,7 +449,7 @@ Board.prototype.showWinner = function () {
  	this.finished = true;
 
  	if (winner != 'tie')
- 		var winString = winner + ' win!';
+ 		var winString = winner + ' wins!';
  	else
  		var winString = 'It\'s a tie!';
 

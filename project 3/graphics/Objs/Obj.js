@@ -1,8 +1,14 @@
-/* Created by Pedro Fraga MIEIC up201303095, It displays .obj files*/
-/* Obj reader for files exported from 3d Builder, windows 10 app */
-/* Texture can't be applied though, you're free to implement texCoords and improve this parser */
-/* The most awful code in history! */
-/* 26/12/2015 */
+/**
+ * Obj reader for files exported from 3d Builder, windows 10 app 
+ * Texture can't be applied though, you're free to implement texCoords and improve this parser 
+ * 26/12/2015 
+ * Constructor of a Obj object. 
+ *	
+ * @constructor Obj
+ * @param {CGFScene} scene 	Scene that will display this object
+ * @param {String}	path 	Path to the .obj file
+ *
+ */
 
 
 function Obj(scene, path) {
@@ -30,6 +36,15 @@ function Obj(scene, path) {
 
 Obj.prototype = Object.create(CGFobject.prototype);
 Obj.prototype.constructor = Obj;
+
+
+
+/**
+ * Initiates the several .obj elements. 
+ *	
+ * @method initBuffers
+ * @param {String}     info		.obj file info
+ */
 
 Obj.prototype.initBuffers = function (info) {
 	
@@ -68,6 +83,11 @@ Obj.prototype.initBuffers = function (info) {
 
 }
 
+/**
+ * Displays the several .obj objects. 
+ *	
+ * @method display
+ */
 
 Obj.prototype.display = function () {
 

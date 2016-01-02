@@ -1,3 +1,8 @@
+ /**
+ * Terrain
+ * @constructor
+ */
+
 function Terrain(scene, terrain) {
 
 	CGFobject.call(this,scene);

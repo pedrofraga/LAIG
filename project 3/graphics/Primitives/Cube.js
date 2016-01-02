@@ -1,3 +1,8 @@
+ /**
+ * Cube
+ * @constructor
+ */
+
 function Cube(scene, width, height, depth) {
   
   CGFobject.call(this,scene);

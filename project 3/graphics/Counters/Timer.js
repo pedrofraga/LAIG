@@ -24,12 +24,26 @@ Timer.prototype = Object.create(CGFobject.prototype);
 Timer.prototype.constructor = Timer;
 
 
+/**
+ * Initiates the primitives that are part of this counter. 
+ *	
+ * @method initPrimitives
+ *
+ */
 
 Timer.prototype.initPrimitives = function () {
 	this.cube = new Cube(this.scene, 3, 3, 0.1);
 	this.support = new Cube(this.scene, 10, 5, 0.3);
 	this.rotationAxis = new Cube(this.scene, 10, 0.05, 0.05);
 }
+
+
+/**
+ * Initiates the transformation matrixes that are used to display the timer. 
+ *	
+ * @method initMatrixes
+ */
+
 
 Timer.prototype.initMatrixes = function () {
 	this.textMatrix = mat4.create();
@@ -46,12 +60,26 @@ Timer.prototype.initMatrixes = function () {
 }
 
 
+/**
+ * Initiates the objects that are part of the timer.
+ *	
+ * @method initPrimitives
+ *
+ */
+
 Timer.prototype.initObjects = function () {
 	this.dozensPlacard = new Placard(this.scene, this.cube, -1.7);
 	this.unitsPlacard = new Placard(this.scene, this.cube, 1.7);
 	this.text = new Obj(this.scene, 'res/timer.obj');
 }
 
+
+/**
+ * Used to display the object.
+ *	
+ * @method display
+ *
+ */
 
 Timer.prototype.display = function () {
 
@@ -65,6 +93,13 @@ Timer.prototype.display = function () {
 	this.scene.popMatrix();
 
 }
+
+/**
+ * Used to display the timer support (visual purposes).
+ *	
+ * @method displaySupport
+ *
+ */
 
 Timer.prototype.displaySupport = function () {
 	this.scene.pushMatrix();
@@ -82,6 +117,14 @@ Timer.prototype.displaySupport = function () {
 }
 
 
+
+/**
+ * A method used to update/animate this object.
+ *	
+ * @method update
+ * @param	{int} 	deltaTime 	time since last update in ms
+ *
+ */
 
 Timer.prototype.update = function (deltaTime) {
 
@@ -114,6 +157,13 @@ Timer.prototype.update = function (deltaTime) {
 
 }
 
+
+/**
+ * A function used to create a new countdown.
+ *	
+ * @method createTime
+ *
+ */
 
 Timer.prototype.createTime = function () {
 

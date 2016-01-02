@@ -3,8 +3,6 @@
  *	
  * @constructor Piece
  * @param  {CGFScene}	scene	current scene
- * @param  {int}		x		border x position
- * @param  {int}		y		border y position
  * @param  {CGFObject}	cylinder		this cylinder object is passed as argument to save resources (see initPrimitives method in Board.js)
  * @param  {CGFObject}	top		this top object is passed as argument to save resources (see initPrimitives method in Board.js)
  *
@@ -54,6 +52,14 @@ Piece.prototype.display = function () {
 }
 
 
+/**
+ * Displays the bottom cylinder that is part of a piece object.
+ *	
+ * @method displayBottomCylinder
+ * @param 	{CGFApperance} 	material 	Material to be applied
+ *
+ */
+
 Piece.prototype.displayBottomCylinder = function (material)  {
 
 	this.scene.pushMatrix();
@@ -64,6 +70,14 @@ Piece.prototype.displayBottomCylinder = function (material)  {
 }
 
 
+/**
+ * Displays the top cylinder that is part of a piece object. 
+ *	
+ * @method displayTopCylinder
+ * @param 	{CGFApperance} 	material 	Material to be applied
+ *
+ */
+
 Piece.prototype.displayTopCylinder = function (material)  {
 
 	this.scene.pushMatrix();
@@ -73,6 +87,14 @@ Piece.prototype.displayTopCylinder = function (material)  {
 	this.scene.popMatrix();
 
 }
+
+/**
+ * Displays piece bottom (circle). 
+ *	
+ * @method displayBottomTop
+ * @param 	{CGFApperance} 	material 	Material to be applied
+ *
+ */
 
 Piece.prototype.displayBottomTop = function (material)  {
 
@@ -90,6 +112,15 @@ Piece.prototype.displayBottomTop = function (material)  {
 	this.scene.popMatrix();
 
 }
+
+
+/**
+ * Displays piece Top (circle). 
+ *	
+ * @method displayTopTop
+ * @param 	{CGFApperance} 	material 	Material to be applied
+ *
+ */
 
 Piece.prototype.displayTopTop = function (material)  {
 

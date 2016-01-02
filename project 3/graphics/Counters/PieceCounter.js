@@ -1,3 +1,9 @@
+/**
+ * Constructor of a PieceCounter object. Used to display current number of pieces for each side.
+ *	
+ * @constructor PieceCounter
+ *
+ */
 
 function PieceCounter(scene) {
 
@@ -16,12 +22,25 @@ function PieceCounter(scene) {
 PieceCounter.prototype = Object.create(CGFobject.prototype);
 PieceCounter.prototype.constructor = PieceCounter;
 
+/**
+ * Initiates the primitives that are part of this counter. 
+ *	
+ * @method initPrimitives
+ *
+ */
+
 PieceCounter.prototype.initPrimitives = function () {
 	this.cube = new Cube(this.scene, 3, 3, 0.1);
 	this.support = new Cube(this.scene, 8, 11, 0.3);
 	this.rotationAxis = new Cube(this.scene, 8, 0.05, 0.05);
 }
 
+
+/**
+ * Initiates the transformation matrixes that are used to display the piece counter. 
+ *	
+ * @method initMatrixes
+ */
 
 PieceCounter.prototype.initMatrixes = function () {
 	this.blackTextMatrix = mat4.create();
@@ -52,6 +71,13 @@ PieceCounter.prototype.initMatrixes = function () {
 
 }
 
+/**
+ * Initiates the objects that are part of this counter, including .obj files.
+ *	
+ * @method initPrimitives
+ *
+ */
+
 PieceCounter.prototype.initObjects = function () {
 
 	this.blackText = new Obj(this.scene, 'res/blackText.obj');
@@ -66,6 +92,12 @@ PieceCounter.prototype.initObjects = function () {
 
 
 
+/**
+ * Used to displays this object.
+ *	
+ * @method display
+ *
+ */
 
 PieceCounter.prototype.display = function () {
 
@@ -89,6 +121,14 @@ PieceCounter.prototype.display = function () {
 	this.scene.popMatrix();
 
 }
+
+
+/**
+ * Used to display the pieceCounter support (visual purposes).
+ *	
+ * @method displaySupport
+ *
+ */
 
 PieceCounter.prototype.displaySupport = function () {
 	this.scene.pushMatrix();
@@ -117,6 +157,13 @@ PieceCounter.prototype.displaySupport = function () {
 }
 
 
+/**
+ * A method used to update/animate this object.
+ *	
+ * @method update
+ * @param	{int} 	deltaTime 	time since last update in ms
+ *
+ */
 
 PieceCounter.prototype.update = function (deltaTime) {
 
@@ -132,7 +179,14 @@ PieceCounter.prototype.update = function (deltaTime) {
 }
 
 
-PieceCounter.prototype.checkPieceNumbers = function (deltaTime) {
+/**
+ * A method used to save the right number of pieces to each side.
+ *	
+ * @method checkPieceNumbers
+ *
+ */
+
+PieceCounter.prototype.checkPieceNumbers = function () {
 	this.blackPiecesNumber = 0;
 	this.whitePiecesNumber = 0;
 

@@ -1,3 +1,7 @@
+ /**
+ * Patch
+ * @constructor
+ */
 
 function Patch(scene, nurbs) {
 

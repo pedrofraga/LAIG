@@ -1,3 +1,7 @@
+ /**
+ * MyCircle
+ * @constructor
+ */
 
  function MyCircle(scene, radius, slices) {
  	CGFobject.call(this,scene);

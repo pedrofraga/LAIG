@@ -19,6 +19,7 @@ MyInterface.prototype.constructor = MyInterface;
  * init
  * @param {CGFapplication} application
  */
+
 MyInterface.prototype.init = function(application) {
 	// call CGFinterface init
 	CGFinterface.prototype.init.call(this, application);
@@ -75,11 +76,26 @@ MyInterface.prototype.init = function(application) {
 };
 
 
-MyInterface.prototype.startGame = function(application) {
+
+/**
+ * Listener used when the 'Start Game' button is clicked. 
+ *	
+ * @method startGame
+ *
+ */
+
+MyInterface.prototype.startGame = function() {
 	this.scene.board.requestToPl('startgame');
 }
 
-MyInterface.prototype.undo = function(application) {
+/**
+ * Listener used when the 'Undo' button is clicked. 
+ *	
+ * @method undo
+ *
+ */
+
+MyInterface.prototype.undo = function() {
 
 	if (this.scene.board.initialized) {
 		this.scene.board.black = 'Human';
@@ -89,9 +105,25 @@ MyInterface.prototype.undo = function(application) {
 	this.scene.board.undo();
 }
 
-MyInterface.prototype.quitGame = function(application) {
+
+/**
+ * Listener used when the 'Quit' button is clicked. 
+ *	
+ * @method quitGame
+ *
+ */
+
+MyInterface.prototype.quitGame = function() {
 	this.scene.board.requestToPl('quit');
 }
+
+
+/**
+ * Initiates the vars used to create this interface list elements. 
+ *	
+ * @method initGUIVars
+ *
+ */
 
 MyInterface.prototype.initGUIVars = function() {
 	this.perspectiveNames = this.scene.getPerspesctiveNames();
@@ -111,6 +143,7 @@ MyInterface.prototype.initGUIVars = function() {
  * processKeyboard
  * @param event {Event}
  */
+
 MyInterface.prototype.processKeyboard = function(event) {
 	// call CGFinterface default code (omit if you want to override)
 	CGFinterface.prototype.processKeyboard.call(this,event);
@@ -121,10 +154,25 @@ MyInterface.prototype.processKeyboard = function(event) {
 	// for better cross-browser support, you may also check suggestions on using event.which in http://www.w3schools.com/jsref/event_key_keycode.asp
 };
 
+
+/**
+ * Used to update de replay progression. 
+ *	
+ * @method logItVal
+ *
+ */
+
 MyInterface.prototype.logItVal = function() {
 	this.replayPercent = this.scene.board.history.replayIt / this.scene.board.history.movesHistory.length * 100;
 }
 
+/**
+ * Used to hide and display the list elements during a replay. 
+ *	
+ * @method replay
+ * @param 	{boolean} replaying 	True if a replay is occurring, false if it's not
+ *
+ */
 
 MyInterface.prototype.replay = function(replaying) {
 

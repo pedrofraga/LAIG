@@ -1,5 +1,5 @@
 /**
- * MyObject
+ * Square
  * @constructor
  */
 function Square(scene, minX, minY, maxX, maxY) {

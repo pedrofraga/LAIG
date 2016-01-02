@@ -23,6 +23,12 @@ function Placard(scene, cube, translation) {
 Placard.prototype = Object.create(CGFobject.prototype);
 Placard.prototype.constructor = Placard;
 
+/**
+ * Initiates the transformation matrixes that are used to display the placard object. 
+ *	
+ * @method initMatrixes
+ *
+ */
 
 Placard.prototype.initMatrixes = function (translation) {
 
@@ -40,6 +46,12 @@ Placard.prototype.initMatrixes = function (translation) {
 
 }
 
+/**
+ * Used to display this object.
+ *	
+ * @method display
+ *
+ */
 
 Placard.prototype.display = function () {
 
@@ -52,6 +64,12 @@ Placard.prototype.display = function () {
 
 }
 
+/**
+ * Method to display a char in this object.
+ *	
+ * @method display
+ *
+ */
 
 Placard.prototype.frontDisplay = function () {
 
@@ -69,6 +87,14 @@ Placard.prototype.frontDisplay = function () {
 }
 
 
+/**
+ * A method used to update/animate this object.
+ *	
+ * @method update
+ * @param	{int} 	deltaTime 	Time since the last update in ms
+ * @param	{int} 	value 	Value of the next char
+ *
+ */
 
 Placard.prototype.update = function (deltaTime, value) {
 
@@ -91,7 +117,13 @@ Placard.prototype.update = function (deltaTime, value) {
 
 }
 
-
+/**
+ * A method used to rotate this object, it's also used to replace the old value
+ *	
+ * @method rotate
+ * @param	{int} 	deltaTime 	Time since the last update in ms
+ *
+ */
 
 Placard.prototype.rotate = function (deltaTime) {
 
@@ -118,7 +150,13 @@ Placard.prototype.rotate = function (deltaTime) {
 }
 
 
-
+/**
+ * A method used to the apply the swing animation to a placard
+ *	
+ * @method swing
+ * @param	{int} 	deltaTime 	Time since the last update in ms
+ *
+ */
 
 Placard.prototype.swing = function (deltaTime) {
 

@@ -1,3 +1,9 @@
+/**
+ * Constructor of a Scene object. 
+ *	
+ * @constructor Scene
+ *
+ */
 
 function Scene() {
     CGFscene.call(this);
@@ -5,6 +11,14 @@ function Scene() {
 
 Scene.prototype = Object.create(CGFscene.prototype);
 Scene.prototype.constructor = Scene;
+
+
+/**
+ * Initiates the scene elements, inclding the board, cameras and lights. 
+ *	
+ * @method init
+ * @param {CGFapplication} application
+ */
 
 Scene.prototype.init = function (application) {
 
@@ -46,6 +60,12 @@ Scene.prototype.init = function (application) {
 
 };
 
+/**
+ * Initiates the lights. 
+ *	
+ * @method initLights
+ */
+
 Scene.prototype.initLights = function () {
  	
 	this.lights[0].setPosition(20, 20 , 100, 20);
@@ -65,6 +85,12 @@ Scene.prototype.initLights = function () {
 
 };
 
+/**
+ * Initiates the CGFCamera and both Camera Prespectives. 
+ *	
+ * @method initCameras
+ *
+ */
 
 Scene.prototype.initCameras = function () {
 
@@ -77,6 +103,13 @@ Scene.prototype.initCameras = function () {
     this.camera = new CGFcamera(0.4, 0.1, 500, /*vec3.fromValues(30, 30, 30), vec3.fromValues( 0, 0, 0)*/this.cameraPerspectives[0].position, this.cameraPerspectives[0].direction);
 
 };
+
+/**
+ * Sets default scene appearance. 
+ *	
+ * @method setDefaultAppearance
+ *
+ */
 
 Scene.prototype.setDefaultAppearance = function () {
 
@@ -121,6 +154,14 @@ Scene.prototype.display = function () {
 };
 
 
+/**
+ * Updates the scene, reponsible for animations.
+ *	
+ * @method update
+ * @param	{int}	currTime	system time
+ *
+ */
+
 Scene.prototype.update = function(currTime) {
 	
 	this.counter.update(currTime);
@@ -138,7 +179,13 @@ Scene.prototype.update = function(currTime) {
 
 
 
-
+/**
+ * Method to return Camera Perspective names.
+ *	
+ * @method getPerspesctiveNames
+ * @return {Array} 	names 	Names of Camera Perspectives
+ *
+ */
 
 Scene.prototype.getPerspesctiveNames = function () {
 	
@@ -152,6 +199,12 @@ Scene.prototype.getPerspesctiveNames = function () {
 }
 
 
+/**
+ * Updates the camera, reponsible for camera animations.
+ *	
+ * @method updateCamera
+ *
+ */
 
 Scene.prototype.updateCamera = function (perspective) {
 	
@@ -166,7 +219,13 @@ Scene.prototype.updateCamera = function (perspective) {
 
 }
 
-
+/**
+ * Animates camera when Camera Perspective has changed.
+ *	
+ * @method 	animateCamera 
+ * @param	{int}	deltaTime	delta since the last time there was an update
+ *
+ */
 
 Scene.prototype.animateCamera = function (deltaTime) {
 
@@ -247,6 +306,14 @@ Scene.prototype.animateCamera = function (deltaTime) {
 }
 
 
+
+/**
+ * Method to register a pick action.
+ *	
+ * @method 	getPicking 
+ *
+ */
+
 Scene.prototype.getPicking = function () {
 
 	if (this.pickMode == false) {
@@ -263,7 +330,12 @@ Scene.prototype.getPicking = function () {
 	}
 }
 
-
+/**
+ * Method to initiate the replay proccess.
+ *	
+ * @method 	replay 
+ *
+ */
 
 Scene.prototype.replay = function () {
 

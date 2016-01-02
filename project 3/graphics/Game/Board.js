@@ -439,7 +439,12 @@ Board.prototype.botPlay = function () {
  }
 
 
-
+ /**
+ * Displays the winner, including an option to replay the whole game.
+ *	
+ * @method showWinner
+ *
+ */
 
 Board.prototype.showWinner = function () {
 
@@ -454,7 +459,7 @@ Board.prototype.showWinner = function () {
  		var winString = 'It\'s a tie!';
 
  	var self = this;
- 	var thisSwal = swal({   title: winString,   
+ 	swal({   title: winString,   
  		text: 'Would you like to replay the game?',   
  		type: "success",   
  		showCancelButton: true,   

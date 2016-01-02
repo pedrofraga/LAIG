@@ -21,6 +21,12 @@ Counter.prototype = Object.create(CGFobject.prototype);
 Counter.prototype.constructor = Counter;
 
 
+/**
+ * Initiates the objects that are part of the counter. 
+ *	
+ * @method initObjects
+ *
+ */
 
 Counter.prototype.initObjects = function () {
 
@@ -29,6 +35,12 @@ Counter.prototype.initObjects = function () {
 	
 }
 
+/**
+ * Initiates the transformation matrixes that are used to display the timer and the piece counter. 
+ *	
+ * @method initMatrixes
+ *
+ */
 
 Counter.prototype.initMatrixes = function () {
 
@@ -57,6 +69,13 @@ Counter.prototype.initMatrixes = function () {
 }
 
 
+/**
+ * Function used to display this object.
+ *	
+ * @method display
+ *
+ */
+
 Counter.prototype.display = function () {
 
 	this.scene.pushMatrix();
@@ -76,6 +95,14 @@ Counter.prototype.display = function () {
 	this.scene.popMatrix();
 }
 
+
+/**
+ * Function used to update/animate this object.
+ *	
+ * @method update
+ * @param	{int} currTime 	sytem time in ms
+ *
+ */
 
 Counter.prototype.update = function (currTime) {
 

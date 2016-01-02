@@ -1,4 +1,9 @@
-
+/**
+ * Constructor of an Environment object. Used to display current environment and to initiate the Appearances used to display the scene objects.
+ *	
+ * @constructor Environment
+ *
+ */
 
 function Environment(scene) {
 
@@ -11,6 +16,13 @@ function Environment(scene) {
 
 }
 
+
+/**
+ * Used to display the current environment.
+ *	
+ * @method display
+ *
+ */
 
 Environment.prototype.display = function () {
 
@@ -27,6 +39,13 @@ Environment.prototype.display = function () {
 	}
 }
 
+
+/**
+ * Used to display the room environment.
+ *	
+ * @method displayRoom
+ *
+ */
 
 Environment.prototype.displayRoom = function () {
 
@@ -68,6 +87,14 @@ Environment.prototype.displayRoom = function () {
 
 }
 
+
+/**
+ * Method used to initiate the room Primitives.
+ *	
+ * @method initRoom
+ *
+ */
+
 Environment.prototype.initRoom = function () {
 
 	this.roomTable = new Obj(this.scene, 'res/table.obj');
@@ -80,7 +107,12 @@ Environment.prototype.initRoom = function () {
 
 }
 
-
+/**
+ * Method used to initiate the room transformation matrixes.
+ *	
+ * @method initRoomMatrixes
+ *
+ */
 
 Environment.prototype.initRoomMatrixes = function () {
 
@@ -117,6 +149,14 @@ Environment.prototype.initRoomMatrixes = function () {
 	mat4.translate(this.paintMatrix, this.paintMatrix, [ -200, -50, -75]);
 
 }
+
+
+/**
+ * Used to display the porch environment.
+ *	
+ * @method displayPorch
+ *
+ */
 
 Environment.prototype.displayPorch = function () {
 
@@ -182,6 +222,13 @@ Environment.prototype.displayPorch = function () {
 }
 
 
+/**
+ * Method used to initiate the porch Primitives.
+ *	
+ * @method initPorch
+ *
+ */
+
 Environment.prototype.initPorch = function () {
 
 	this.porchTable = new Cube(this.scene, 50, 1, 60);
@@ -195,7 +242,12 @@ Environment.prototype.initPorch = function () {
 
 }
 
-
+/**
+ * Method used to initiate the porch transformation matrixes.
+ *	
+ * @method initPorchMatrixes
+ *
+ */
 
 Environment.prototype.initPorchMatrixes = function () {
 
@@ -247,7 +299,12 @@ Environment.prototype.initPorchMatrixes = function () {
 	mat4.translate(this.landscapeMatrix, this.landscapeMatrix, [ -80, -40, -50]);
 }
 
-
+/**
+ * Used to display the casino environment.
+ *	
+ * @method displayCasino
+ *
+ */
 
 Environment.prototype.displayCasino = function () {
 	
@@ -331,6 +388,12 @@ Environment.prototype.displayCasino = function () {
 
 }
 
+/**
+ * Method used to initiate the casino Primitives.
+ *	
+ * @method initCasino
+ *
+ */
 
 Environment.prototype.initCasino = function () {
 
@@ -347,6 +410,12 @@ Environment.prototype.initCasino = function () {
 }
 
 
+/**
+ * Method used to initiate the casino transformation matrixes.
+ *	
+ * @method initCasinoMatrixes
+ *
+ */
 
 Environment.prototype.initCasinoMatrixes = function () {
 
@@ -413,6 +482,13 @@ Environment.prototype.initCasinoMatrixes = function () {
 	
 }
 
+
+/**
+ * Method used to initiate the scene appearances.
+ *	
+ * @method initSceneAppearances
+ *
+ */
 
 Environment.prototype.initSceneAppearances = function () {
 

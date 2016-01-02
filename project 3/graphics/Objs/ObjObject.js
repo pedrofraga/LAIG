@@ -1,4 +1,16 @@
-
+/**
+ * Obj reader for files exported from 3d Builder, windows 10 app 
+ * Texture can't be applied though, you're free to implement texCoords and improve this parser 
+ * 26/12/2015 
+ * Constructor of a Obj object. 
+ *	
+ * @constructor ObjObject
+ * @param {CGFScene} scene 	Scene that will display this object
+ * @param {CGFScene} info 	Info from the .obj file to initiate this obj
+ * @param {int}	lastVerticesNumber	Object number of vertices, important to create superimposed vertices
+ * @param {int} verticesNumber 	.obj accumulated number of vertices, important to create several objects (example: text .obj files)
+ *
+ */
 
 function ObjObject(scene, info, lastVerticesNumber, verticesNumber) {
 	this.scene = scene;
@@ -12,6 +24,11 @@ function ObjObject(scene, info, lastVerticesNumber, verticesNumber) {
 ObjObject.prototype = Object.create(CGFobject.prototype);
 ObjObject.prototype.constructor = ObjObject;
 
+/**
+ * Initiates the .obj Object elements. 
+ *	
+ * @method initBuffers
+ */
 
 ObjObject.prototype.initBuffers = function () {
 

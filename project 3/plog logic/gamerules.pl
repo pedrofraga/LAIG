@@ -450,11 +450,11 @@ checkEnd(Board, Row, Col, Max, Piece, Answer):-
 	noMovement(Row, Col, RowMinus, ColPlus, Board), 
 	noMovement(Row, Col, RowMinus, ColMinus, Board), 
 	
-	checkEnd(Board, Row, ColPlus, Max, Piece), Answer).
-
-checkEnd(_,_,_,_,_).
+	checkEnd(Board, Row, ColPlus, Max, Piece, Answer)).
 
 
-gameOver(_, Answer) :-
-	trace,
-	Answer = win.
+checkEnd(_,_,_,_,_, Msg) :- Msg == win.
+checkEnd(_,_,_,_,_,_) :- fail.
+
+
+gameOver(_, Answer) :- Answer = win.

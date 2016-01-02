@@ -99,19 +99,19 @@ PieceCounter.prototype.displaySupport = function () {
 
 	this.scene.pushMatrix();
 		this.scene.multMatrix(this.rotationAxisMatrix);
-		this.scene.defaultMaterial.apply();
+		this.scene.roomWallMaterial.apply();
 		this.rotationAxis.display();
 	this.scene.popMatrix();
 
 	this.scene.pushMatrix();
 		this.scene.multMatrix(this.rotationAxisSupportMatrixLeft);
-		this.scene.defaultMaterial.apply();
+		this.scene.roomWallMaterial.apply();
 		this.rotationAxis.display();
 	this.scene.popMatrix();
 
 	this.scene.pushMatrix();
 		this.scene.multMatrix(this.rotationAxisSupportMatrixRight);
-		this.scene.defaultMaterial.apply();
+		this.scene.roomWallMaterial.apply();
 		this.rotationAxis.display();
 	this.scene.popMatrix();
 }

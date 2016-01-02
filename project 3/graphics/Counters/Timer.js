@@ -88,7 +88,7 @@ Timer.prototype.update = function (deltaTime) {
 	this.elapsedMiliSeconds -= deltaTime;
 
 	var bot = (this.scene.board.black == 'Bot' && this.scene.board.history.playing == 'black'
-				|| this.scene.board.white == 'Bot' && this.scene.board.history.playing == 'white') ? 
+				|| this.scene.board.white == 'Bot' && this.scene.board.history.playing == 'white' || this.scene.board.finished) ? 
 				true : false;
 
 	if (bot || this.scene.replaying) { this.elapsedSeconds = 0; this.elapsedDozens = 0;}

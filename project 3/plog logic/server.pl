@@ -68,7 +68,6 @@ close_stream(Stream) :- flush_output(Stream), close(Stream).
 % Returns 200 OK on successful aplication of parse_input on request
 % Returns 400 Bad Request on syntax error (received from parser) or on failure of parse_input
 handle_request(Request, MyReply, '200 OK') :- catch(parse_input(Request, MyReply),error(_,_),fail), !.
-handle_request(botPlay(_,_), win, '200 OK').
 handle_request(syntax_error, 'Syntax Error', '400 Bad Request') :- !.
 handle_request(_, 'Bad Request', '400 Bad Request').
 
@@ -126,9 +125,8 @@ parse_input(movePiece(Board,CurrRow,CurrCol,DestRow,DestCol,Player), Board4) :-
 	write('Checking End..\n'),
 	checkEnd(Board, 1, 1, 13, Piece).
 
-parse_input(movePiece(Board,_,_,_,_,Player), Msg) :- getPlayerColor(Player, Piece), checkEnd(Board, 1, 1, 13, Piece), Msg = 'Bad Request'. %checking if its just an invalid play
 
-parse_input(movePiece(_,_,_,_,_,_), Msg) :- Msg = win.
+parse_input(botPlay(Board,Player), Msg) :- getPlayerColor(Player, Piece), checkEnd(Board, 1, 1, 13, Piece, Msg), Msg == win.
 
 
 parse_input(botPlay(Board,Player), Msg) :-
@@ -139,9 +137,7 @@ parse_input(botPlay(Board,Player), Msg) :-
 	append([X0], [Y0], Initial),
 	append([XF], [YF], Final),
 	append(Initial, Final, Positions),
-	append([Positions], BoardOut, Msg),
-	checkEnd(Board, 1, 1, 13, Piece).
-
+	append([Positions], BoardOut, Msg).
 
 
 parse_input(test(C,N), Res) :- test(C,Res,N).

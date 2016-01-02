@@ -34,7 +34,8 @@ ReplaceColorHistory.prototype.undo = function () {
 			if (this.x == x && this.y == y) {
 
 				var color = this.scene.board.matrix[y][x].piece.color;
-				var obj = new Piece(this.scene, this.scene.board.cylinder, this.scene.board.top);
+				var cylinder = this.scene.board.matrix[y][x].piece.cylinder.height == 0.15 ? this.scene.board.towerCylinder : this.scene.board.cylinder;
+				var obj = new Piece(this.scene, cylinder, this.scene.board.top);
 				obj.color = color;
 				var orfanPiece = new OrfanPiece(this.scene, obj, x, y);
 				orfanPiece.undoAnimation = true;
@@ -68,7 +69,8 @@ ReplaceColorHistory.prototype.replay = function () {
 			if (this.x == x && this.y == y) {
 
 				var color = this.scene.board.matrix[y][x].piece.color;
-				var obj = new Piece(this.scene, this.scene.board.cylinder, this.scene.board.top);
+				var cylinder = this.scene.board.matrix[y][x].piece.cylinder.height == 0.15 ? this.scene.board.towerCylinder : this.scene.board.cylinder;
+				var obj = new Piece(this.scene, cylinder, this.scene.board.top);
 				obj.color = color;
 				var orfanPiece = new OrfanPiece(this.scene, obj, x, y);
 				this.scene.board.orfanPieces.push(orfanPiece);

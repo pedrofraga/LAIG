@@ -434,7 +434,6 @@ getRandomPlay(Board, ListOfMoves, Player, Board4, X0, Y0, XF, YF):-
 	write('Valid Moves: '),nl,
 	write(ListOfMoves),nl,nl,
 	getPlayerColor(Player, Piece),
-
 	length(ListOfMoves, LengthList),
 	LL is LengthList + 1,nl,
 	random(1, LL, Pos),

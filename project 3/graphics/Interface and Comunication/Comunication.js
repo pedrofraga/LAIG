@@ -32,9 +32,7 @@
 
  		} else if (response == 'win') {
 
-            var winner = board.history.playing == 'black' ? 'Black' : 'White';
-            this.botPlayed = true;
-            swal(winner + ' win!');
+            board.showWinner();
 
         } else if (response != 'Bad Request') {
 

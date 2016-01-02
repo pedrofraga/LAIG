@@ -11,6 +11,7 @@ function Board(scene) {
 
 	this.scene = scene;
 	this.initialized = false;
+	this.finished = false;
 	this.history = new GameHistory();
 
 	this.initPrimitives();
@@ -18,6 +19,7 @@ function Board(scene) {
 	this.initBoardMatrix();
 
 	this.orfanPieces = [];
+
 
 	this.white = 'Human';
 	this.black = 'Human';
@@ -374,10 +376,13 @@ Board.prototype.botPlay = function () {
  	if (!size) {
  		var board = this;
  		setTimeout (function () {
- 			board.scene.counter.timer.createTime();
  			board.scene.replaying = false;
  			board.scene.replayStarted = false;
  			board.scene.app.interface.replay(false);
+ 			if (!board.finished)
+ 				board.scene.counter.timer.createTime();
+ 			else
+ 				board.showWinner();
  		}, 600);
  		return;
  	}
@@ -428,5 +433,41 @@ Board.prototype.botPlay = function () {
  Board.prototype.clearHistory = function () {
 
  	this.history = new GameHistory();
+
+ }
+
+
+
+
+Board.prototype.showWinner = function () {
+
+ 	var winner = this.matrix[6][6].piece == null ? 'tie' : this.matrix[6][6].piece.color;
+
+ 	this.botPlayed = true;
+ 	this.finished = true;
+
+ 	if (winner != 'tie')
+ 		var winString = winner + ' win!';
+ 	else
+ 		var winString = 'It\'s a tie!';
+
+ 	var self = this;
+ 	var thisSwal = swal({   title: winString,   
+ 		text: 'Would you like to replay the game?',   
+ 		type: "success",   
+ 		showCancelButton: true,   
+ 		confirmButtonColor: "#DD6B55",   
+ 		confirmButtonText: "Replay",   
+ 		cancelButtonText: "Quit",   
+ 		closeOnConfirm: true,   
+ 		closeOnCancel: true }, 
+ 		function(isConfirm){   
+ 			if (isConfirm) {     
+ 				self.scene.replay();
+ 			} else {     
+ 				self.requestToPl('quit');
+ 			} });
+
+
 
  }

@@ -13,7 +13,7 @@
 ### Description
 
 The main goal of this subject was to develop 3D environments focused in [Computer Graphics](https://en.wikipedia.org/wiki/Computer_graphics).
-We developed projects written in [JavaScript] (https://en.wikipedia.org/wiki/JavaScript) with the appropriated technology of image synthesys. This whole subject was based in [WebGL](https://en.wikipedia.org/wiki/WebGL).
+We developed projects written in [JavaScript] (https://en.wikipedia.org/wiki/JavaScript) with the appropriated technology of image synthesys. This whole subject was based on [WebGL](https://en.wikipedia.org/wiki/WebGL).
 
 ***
 

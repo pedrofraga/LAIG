@@ -34,7 +34,7 @@ The aim of this projects was to introduce new graphic techniques like 2D/3D surf
 
 ### Project 3
 
-It was intended to create a 3D environment developed in WebGL to represent the game states of a [Prolog] (https://en.wikipedia.org/wiki/Prolog) board game and make use of a game interface [dat.gui](https://code.google.com/p/dat-gui/). We also developed a [parser](./project 3/graphics/Objs) to import .obj files into the scene. A project with following requirements:
+It was intended to create a 3D environment developed in WebGL to represent the game states of a [Prolog] (https://en.wikipedia.org/wiki/Prolog) board game and make use of a game interface [dat.gui](https://code.google.com/p/dat-gui/). We also developed a [parser](./project 3/graphics/Objs) to import .obj files into the scene. A project with the following requirements:
 
 - [x] Create a game scene
 - [x] Modeling and movement of game pieces
